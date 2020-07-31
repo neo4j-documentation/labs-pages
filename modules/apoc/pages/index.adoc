@@ -1,0 +1,5 @@
+= Explanation of the library
+
+- What it is
+- Why you would use it
+- When to use it

@@ -1,0 +1,43 @@
+= Neo4j Labs Pages
+
+Built with link:https://antora.org/[Antora^].
+
+- link:https://docs.antora.org/antora/2.3/standard-directories/[Standard File and Directory Set^]
+- link:https://docs.antora.org/antora/2.3/module-directories/[Module Directories and Modules^]
+
+== Installation
+
+To build these docs locally you will need link:https://nodejs.org/en/download/package-manager/[Node & NPM^] installed.
+
+To install the dependencies run:
+
+[source,sh]
+npm install
+
+
+== Live Preview
+
+To preview the docs, run:
+
+[source,sh]
+npm run dev
+
+
+This will build a set of HTML files in `build/site` and then serve them through an express server at http://localhost:8000.
+The dev script will also listen for changes and automatically rebuild the files automatically.
+You'll still need to refresh the page to view the changes.
+
+
+== Publishing
+
+Pushing to the `publish` branch of this repo will trigger a rebuild of the HTML and CSS files in the link:https://github.com/neo4j-documentation/docs-refresh[Docs Refresh^] repo using a Github Action.
+
+
+[source,sh]
+git clone https://github.com/neo4j-documentation/labs-pages
+git add .
+git commit -m "My changes"
+git push origin HEAD:publish
+
+At the end of the build process, the files are uploaded to the `static-content.neo4j.com` S3 Bucket.  From there, they are synced up to the Neo4j.com server once an hour, on the hour by a cronjob.
+
