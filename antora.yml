@@ -1,9 +1,9 @@
 name: labs
 version: master
-title: Neo4j Docs
+title: Neo4j Labs
 start_page: ROOT:index.adoc
 nav:
-- modules/ROOT/nav.adoc
+# - modules/ROOT/nav.adoc
 - modules/apoc/nav.adoc
 - modules/etl/nav.adoc
 - modules/grandstack/nav.adoc
@@ -15,3 +15,8 @@ nav:
 asciidoc:
   attributes:
     theme: labs
+
+    community-name: Neo4j Community Site
+    community-url: https://community.neo4j.com/
+    neosemantics-category-name: Linked Data, RDF, Ontology
+    neosemantics-category-url: https://community.neo4j.com/c/integrations/linked-data-rdf-ontology/162

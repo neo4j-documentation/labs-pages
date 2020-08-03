@@ -65,6 +65,7 @@ Each of the functions in this tutorial have similar signatures.
 Depending on the source of your RDF query, you can run suffix each procedure with `.fetch` or `.inline`.
 If your RDF is hosted at a remote URL, you can call the `.fetch` procedure with the first argument as the URL and the format second parameter.
 
+
 .Fetch Example
 [source,cypher]
 ----

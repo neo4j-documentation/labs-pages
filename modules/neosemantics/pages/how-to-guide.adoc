@@ -1,14 +1,62 @@
 = How to import Wikidata into Neo4j
 :page-pagination:
 
+[NOTE]
+We're assuming that you have read the xref:installation.adoc[Installation Guide] and that you are familiar with the procedures.
+If you haven't already done so, take a look at the xref:installation.adoc[read the Installation instructions] and xref:tutorial.adoc[Getting Started Tutorial].
+
 In this guide, we will show you how to import Wikidata into Neo4j using the link:https://query.wikidata.org/[Wikidata Query Service^].
 
 == Graph Config
 
+As with the xref:tutorial.adoc[Get Started Tutorial], we will use the mapping procedures in n10s to translate the data from Wikidata's #schema# into our Neo4j database.
+For this, we'll need to create a config using the `n10s.graphconfig.init`.
+We can also use this configuration to apply some additional mapping to transformation to the content.
+
 [source,cypher]
+----
 CALL n10s.graphconfig.init({
-  handleVocabUris: 'MAP'
+  handleVocabUris: 'MAP', <1>
+  handleMultival: 'ARRAY', <2>
+  keepLangTag: true, <3>
+  keepCustomDataTypes: true <4>
 })
+----
+
+<1> Setting `handleVocabUris` to `MAP` instructs neosemantics to apply mappings
+<2> Bar
+<3> Bar
+<4> Bar
+
+'MAP' vocabulary element mappings are applied on import
+
+* keep language tag, handlemultival = array
+
+* hide applyNeo4jNaming if handlevocaburis = ignore
+
+
+[source]
+describe <entity uri>
+
+
+
+=== Handle Vocabulary URIs
+
+This `handleVocabUris` option
+
+=== Handle Multival
+
+The `handleMultival` option instructs
+
+
+
+'LABELS', rdf:type statements are imported as node labels in Neo4j
+
+'NODES', rdf:type statements are imported as rdf__type relationships to a node representing the class
+
+'LABELS_AND_NODES' rdf:type statements are stored (in a redu
+
+===
 
 == Mapping
 

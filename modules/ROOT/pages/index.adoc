@@ -4,7 +4,7 @@
 :page-theme: labs
 :page-herotitle: Neo4j Labs
 :page-herosubtitle: Incubating the Next Generation of Graph Developer Tooling
-:toc-levels: 1
+
 
 == What is Neo4j Labs?
 Neo4j Labs is a collection of the latest innovations in graph technology.

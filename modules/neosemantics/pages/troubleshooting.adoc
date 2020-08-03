@@ -1,0 +1,30 @@
+= Troubleshooting Neosemantics Errors
+:page-pagination:
+
+== Non-empty Graphs
+
+If you encounter an error informing you that:
+
+[source]
+Error Running Query
+...
+Caused by: n10s.graphconfig.GraphConfigProcedures$GraphConfigException:
+The graph is non-empty. Config cannot be changed.
+
+This is caused by attempting to amend the n10s config by calling either `n10s.graphconfig.init` or `n10s.graphconfig.set` while the graph still contains RDF data.
+Changing the configuration while there is data already in the graph may lead to data-loss.
+
+
+[discrete]
+=== Solution
+
+The configuration can be changed on an empty graph as many times as necessary.
+However, in order to update the configuration you will need to delete the data from your graph the graph.
+To resolve this error, you can try the following:
+
+* *Remove the data* with a link:/developer/cypher-basics-i[Cypher query^] or by using the `n10s.rdf.delete.*` procedures.
+* You could also link:/developer/manage-multiple-databases/[create a new database^] to test the new configuration.
+
+== Still stuck?
+
+If you are still experiencing problems, feel free to create an issue in the link:{neosemantics-category-url}[{neosemantics-category-name}^] category on the link:{community-url}[{community-name} ^].
