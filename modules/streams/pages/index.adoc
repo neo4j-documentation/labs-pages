@@ -1,5 +1,81 @@
-= Explanation of the library
+= Neo4j Streams Kafka Integration
+:docs: https://neo4j.com/docs/labs/neo4j-streams/current
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:slug: kafka
+:author: Michael Hunger, David Allen, Andrea Santurbano, Mauro Roiter
+:category: labs
+:tags: apache-kafka, events, extensions, procedures, data-stream
+:neo4j-versions: 3.5, 4.0
+:excerpt: Neo4j Streams integrates Neo4j with Apache Kafka event streams, to serve as a source of data, for instance change data (CDC) or a sink to ingest any kind of Kafka event into your graph.
+:featured-media: labs_beaker
+:page-aliases: kafka:index.adoc
 
-- What it is
-- Why you would use it
-- When to use it
+image::neo4j-loves-confluent.png[width=500]
+
+Neo4j Streams integrates Neo4j with Apache Kafka event streams, to serve as a source of data, for instance change data (CDC) or a sink to ingest any kind of Kafka event into your graph.
+
+Our *Kafka Connect Plugin* offers the sink functionality.
+
+The *Neo4j Server Extension* provides both sink and source, as it has also access to the transaction events.
+It will also add *procedures* you can call to send and receive data from Kafka.
+
+Neo4j Streams has graduated from Neo4j Labs and is now a fully supported component of Neo4j for Enterprise customers.
+
+== Availability & Installation
+
+You can install the Kafka Connect Neo4j Sink Plugin into Confluent Cloud or your own Connect instance.
+
+Alternatively, you can add the Neo4j Server extension to your own installations.
+Just download the matching release version into the plugins folder and configuring it according to the documentation (see below for both).
+
+Enterprise users may use Neo4j Streams under their existing support agremeents.  Neo4j Community users may also use Neo4j Streams, with
+community support.
+
+image::connect-hub-neo4j-sink.png[link="https://www.confluent.io/connector/kafka-connect-neo4j-sink/"]
+
+== Functionality Includes
+
+* {docs}/#_kafka_connect[Kafka Connect: Neo4j Source Plugin^] (https://www.confluent.io/connector/kafka-connect-neo4j-sink/[Confluent Hub^])
+* {docs}/#_neo4j_streams_producer[Neo4j Plugin: Change Data Source^]
+* {docs}/#_neo4j_streams_consumer[Neo4j Plugin: Sink^]
+* {docs}/#_procedures[Neo4j Plugin: Procedures^]
+* {docs}/#docker[Docker Compose setups^]
+
+image::kafka-source-flow.png[link={docs}/#_neo4j_streams_producer, width=800]
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:gift[] Releases | https://neo4j.com/download-center/#integrations
+| icon:book[] Documentation | https://neo4j.com/docs/labs/neo4j-streams/
+| icon:comments[] Enterprise Customer Support | https://support.neo4j.com/hc/en-us[Customer Support]
+| icon:comments[] Community Support | https://community.neo4j.com/c/integrations/stream-processing[Neo4j Online Community]
+| icon:user[] Authors | Michael Hunger, David Allen and Andrea Santurbano, Mauro Roiter from our partners http://larus-ba.it/neo4j/[Larus BA, Italy^]
+| icon:github[] Source | https://github.com/neo4j-contrib/neo4j-streams
+| icon:github[] Overview | https://github.com/neo4j-contrib/neo4j-streams/blob/master/readme.adoc
+| icon:medkit[] Issues | https://github.com/neo4j-contrib/neo4j-streams/issues
+
+// | icon:book[] Article |
+// | icon:play-circle[] Example | A `:play apoc` browser guide shows some of the functionality.
+|===
+
+image::kafka-sink-flow.png[link={docs}/#_neo4j_streams_consumer]
+
+== Videos & Tutorials
+
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/ncrART5vDfY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/kp6FDGa1QMY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Recent Articles
+
+* https://www.buzzsprout.com/186154/1640956[Confluent Podcast: Connecting to Apache Kafka with Neo4j]
+* https://www.confluent.io/blog/kafka-graph-visualizations[Confluent Blog: Using Graph Processing for Kafka Stream Visualizations]
+* https://www.confluent.io/blog/kafka-connect-neo4j-sink-plugin[Confluent: All About the Kafka Connect Neo4j Sink Plugin^]
+* https://medium.com/free-code-camp/how-to-embrace-event-driven-graph-analytics-using-neo4j-and-apache-kafka-474c9f405e06[How to embrace event-driven graph analytics using Neo4j and Apache Kafka^]
+* https://medium.com/free-code-camp/how-to-produce-and-consume-data-streams-directly-via-cypher-with-streams-procedures-52cbc5f543f1[How to produce and consume Kafka data streams directly via Cypher with Streams Procedures^]
+* https://medium.com/free-code-camp/how-to-ingest-data-into-neo4j-from-a-kafka-stream-a34f574f5655[How to ingest data into Neo4j from a Kafka stream^]
+* https://medium.com/free-code-camp/how-to-leverage-neo4j-streams-and-build-a-just-in-time-data-warehouse-64adf290f093[How to leverage Neo4j Streams and build a just-in-time data warehouse with Apache Kafka^]
+* https://medium.com/neo4j/a-new-neo4j-integration-with-apache-kafka-6099c14851d2[A New Neo4j Integration with Apache Kafka^]

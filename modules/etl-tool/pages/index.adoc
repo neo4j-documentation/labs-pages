@@ -1,0 +1,67 @@
+= Neo4j ETL Tool - Interactive Relational Database Data Import
+:docs:
+:slug: etl-tool
+:author: Michael Hunger, Larus BA
+:tags: etl, import, relational-database, relational-graph, graph-apps
+:neo4j-versions: 3.5, 4.0
+
+image::neo4j-etl-tool-icon.jpg[float=right,width=200]
+
+Many people want to import the data from their relational systems into Neo4j.
+The Neo4j ETL tool was developed to make this initial import straightforward.
+
+It extracts the schema from any relational database and allows you to turn it into the graph schema you need.
+
+Then it takes care of importing the data into your graph either in bulk or online mode.
+You don't need to know Cypher to use this tool, it takes care of all the heavy-lifting.
+
+This allows you to explore datasets that you already know as a graph.
+
+image::etl11c_save_mapping_next.jpg[]
+
+== Availability & Installation
+
+The ETL-Tool Graph App can be installed into your Neo4j Desktop via https://install.graphapp.io
+
+From there it can connect to any RDBMS and local Neo4j databases (online or offline) as explained in the https://neo4j.com/developer/neo4j-etl[user guide^].
+
+It can also be run as a https://neo4j-contrib.github.io/neo4j-etl[command line-tool^] please download the appropriate zip file from the release.
+
+== Functionality Includes
+
+* Neo4j-ETL Graph App in Neo4j Desktop
+* Manage multiple RDBMS connections
+* automatically extract database metadata from relational database
+* derive graph model
+* visually edit labels, relationship-types, property-names and types
+* visualize current model as a graph
+* persist mapping as json
+* retrieve relevant CSV data from relational databases
+* run bulk or online-import
+* bundles MySQL, PostgreSQL, allows custom JDBC driver with Neo4j Enterprise
+
+image::etl10_mapping_rule3.jpg[]
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | Neo4j Labs and our Partners http://larus-ba.it/neo4j[Larus BA, Italy^] and https://tsl.io[The Silver Logic^] ,FL, USA
+| icon:gift[] Releases | https://github.com/neo4j-contrib/neo4j-etl/releases
+// | icon:github[] Source | https://github.com/neo4j-contrib/neo4j-etl
+| icon:book[] User Guide | https://neo4j.com/developer/neo4j-etl
+| icon:book[] Docs | https://neo4j-contrib.github.io/neo4j-etl
+// | icon:book[] Article |
+// | icon:play-circle[] Example |
+|===
+
+== Videos & Tutorials
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/V7zPe_jmNiw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Recent Articles
+
+* https://medium.com/neo4j/neo4j-etl-tool-1-3-1-release-white-winter-2fc3c794d6a5[Neo4j ETL Tool 1.3.1 Release: White Winter^]
+* https://medium.com/neo4j/tap-into-hidden-connections-translating-your-relational-data-to-graph-d3a2591d4026[Tap into Hidden Connections — Translating Your Relational Data to Graph by Jennifer Reif^]

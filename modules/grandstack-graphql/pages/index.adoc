@@ -1,0 +1,90 @@
+= Neo4j GraphQL and GRANDstack
+:docs: https://grandstack.io/docs
+:!figure-caption:
+:author: William Lyon, Michael Graham
+:tags: graphql, grandstack, applications, integrations, fullstack, extensions
+:neo4j-versions: 3.4, 3.5, 4.0
+
+image::https://grandstack.io/img/GrandStack-Logo-SiteIcon-512x512.png[float=right, width=200, position="top"]
+
+The Neo4j GraphQL integrations for Javascript and the JVM allow you to develop modern API Backends that make best use of your underlying graph based data platform.
+
+https://grandstack.io/docs/getting-started-neo4j-graphql.html[GRANDstack^] is a full development stack, combining our Javascript library with Apollo Tools, React and Neo4j.
+
+We use an annotated GraphQL Schema to translate any GraphQL query to a *single* Cypher query that is executed against Neo4j.
+
+== Availability & Installation
+
+Neo4j GraphQL for JavaScript and Java can be used as a regular library dependency with your package manager.
+
+GRANDstack integrates the Javascript library seamlessly, it can be used via a starter package.
+
+A Neo4j Server extension that uses the Java library can be installed in Neo4j Desktop.
+
+image::https://grandstack.io/assets/img/grandstack_architecture.png[]
+
+== GRANDstack
+
+[cols="1,4"]
+|===
+| icon:comments[] Support | https://community.neo4j.com/c/drivers-stacks/graphql-grandstack[Neo4j Online Community]
+| icon:user[] Authors | William Lyon, Michael Graham
+| icon:book[] Site | https://grandstack.io
+| icon:gift[] Releases | https://github.com/neo4j-graphql/neo4j-graphql-js/releases
+| icon:github[] Source | https://github.com/neo4j-graphql/neo4j-graphql-js
+| icon:book[] Docs | https://grandstack.io/docs
+// | icon:book[] Article |
+| icon:play-circle[] Example | https://grandstack.io/docs/getting-started-grand-stack-starter.html[The GRANDstack starter]
+| icon:rss[] Blog | https://blog.grandstack.io
+|===
+
+== Neo4j GraphQL Java
+
+[cols="1,4"]
+|===
+| icon:comments[] Support | https://community.neo4j.com/c/drivers-stacks/graphql-grandstack[Neo4j Online Community]
+| icon:user[] Authors | Michael Hunger, Andrea Santurbano
+| icon:gift[] Releases | https://github.com/neo4j-graphql/neo4j-graphql-java/releases
+| icon:github[] Source | https://github.com/neo4j-graphql/neo4j-graphql-java
+| icon:book[] Docs | https://github.com/neo4j-graphql/neo4j-graphql-java
+| icon:book[] Docs | https://grandstack.io/docs/neo4j-graphql-overview.html[Neo4j GraphQL Server Plugin]
+| icon:medkit[] Source | https://github.com/neo4j-graphql/neo4j-graphql-java/issues
+// | icon:book[] Article |
+// | icon:play-circle[] Example | A `:play apoc` browser guide shows some of the functionality.
+|===
+
+== Tutorials & Videos
+
+////
+* https://egghead.io/courses/build-a-neo4j-graphql-api[Course: Build a Neo4J & GraphQL API]
+* https://dzone.com/refcardz/an-overview-of-graphql[Refcard: An Overview of GraphQL (DZone)]
+////
+
+.Course: Build a Neo4J & GraphQL API
+image:https://d2eip9sf3oo6c2.cloudfront.net/series/square_covers/000/000/260/full/EGH_GraphQL_Neo4j_Final.png[width=320,link="https://egghead.io/courses/build-a-neo4j-graphql-api","Course: Build a Neo4J & GraphQL API"]
+image:https://dz2cdn2.dzone.com/storage/rc-covers/6811681-refcard-cover249.jpg[width=320, link="https://dzone.com/refcardz/an-overview-of-graphql"]
+
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/ai-wG7laIsI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/rPC71lUhK_I" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/MMg4n68wodo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/AsnXiGQ_Hi4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Documentation
+
+* https://grandstack.io/docs/guide-graphql-schema-design.html[Schema Design^]
+* https://grandstack.io/docs/neo4j-graphql-js.html[neo4j-graphql-js User Guide^]
+* https://grandstack.io/docs/graphql-schema-generation-augmentation.html[GraphQL Schema Generation And Augmentation^]
+* https://grandstack.io/docs/graphql-filtering.html[Complex GraphQL Filtering^]
+* https://grandstack.io/docs/graphql-relationship-types.html[Relationship Types^]
+* https://grandstack.io/docs/graphql-temporal-types-datetime.html[Temporal Types^]
+
+
+== Recent Articles
+
+* https://blog.grandstack.io/making-complex-data-simple-with-the-grand-stack-4c0c3435777b[Making Complex Data Simple With The GRAND Stack]
+* https://blog.grandstack.io/inferring-graphql-type-definitions-from-an-existing-neo4j-database-dadca2138b25[Inferring GraphQL Type Definitions From An Existing Neo4j Database]
+* https://blog.grandstack.io/authorization-in-graphql-using-custom-schema-directives-eafa6f5b4658[Authorization In GraphQL Using Custom Schema Directives]
+* https://blog.grandstack.io/complex-graphql-filtering-with-neo4j-graphql-js-aef19ad06c3e[Complex GraphQL Filtering With neo4j-graphql.js]
+* https://medium.com/free-code-camp/building-the-2018-world-cup-graphql-api-fab40ccecb9e[How we built the 2018 World Cup GraphQL API]

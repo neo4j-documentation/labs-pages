@@ -1,5 +1,60 @@
-= Explanation of the library
+= Halin - Neo4j Monitoring Tool
+:docs: https://moxious.github.io/halin
+:slug: halin
+:author: David Allen
+:category: labs
+:tags: monitoring, performance, cluster, integrations, extensions, graph-apps
+:neo4j-versions: 3.5, 4.0
 
-- What it is
-- Why you would use it
-- When to use it
+image::https://halin.graphapp.io/img/halin-icon.png[float=right,width=200]
+
+Halin is a cluster-enabled monitoring tool for Neo4j, that provides insights into live metrics, queries, configuration and more.
+
+You can use it to identify bottlenecks or misconfigurations and to track system load interactively.
+
+It's not an automated monitoring solution with alerting and such.
+
+== Availability & Installation
+
+Halin runs online in your browser at https://halin.graphapp.io[halin.graphapp.io] and can connect to your local and remote databases.
+
+The application can also be installed as a graph app from https://install.graphapp.io into https://neo4j.com/developer/neo4j-desktop[Neo4j Desktop^].
+
+There are also Docker containers, and you can also clone and run the application locally.
+
+image::https://pbs.twimg.com/media/D8JmEnYXkAAJ5wt.jpg[]
+
+== Functionality Includes
+
+* Cluster overview
+* Per Machine Monitoring
+* Diagnostics Advisor
+* Configuration Listing
+* Active Queries
+* Metrics
+* Log file streaming
+* User Management
+
+image::https://pbs.twimg.com/media/D8JmM2eWwAMMR4i.jpg[]
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/mdavidallens[David Allen^]
+| icon:gift[] Releases | https://github.com/moxious/halin/releases
+| icon:github[] Source | https://github.com/moxious/halin
+| icon:book[] Docs | https://r.neo4j.com/halin
+// | icon:book[] Article |
+// | icon:play-circle[] Example |
+|===
+
+== Videos & Tutorials
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hKndQ2qF5ts" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Recent Articles
+
+* https://medium.com/neo4j/monitoring-neo4j-with-halin-4c11429b46ff[Monitoring Neo4j with Halin	^]

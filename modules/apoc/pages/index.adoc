@@ -1,5 +1,63 @@
-= Explanation of the library
+= Awesome Procedures On Cypher (APOC)
+:docs: https://neo4j.com/docs/labs/apoc/current
+:slug: apoc
+:author: Michael Hunger
+:category: labs
+:tags: apoc, procedures, functions, utilities, extensions, libraries
+:neo4j-versions: 3.5, 4.0
 
-- What it is
-- Why you would use it
-- When to use it
+
+APOC is an add-on library for Neo4j that provides hundreds of procedures and functions adding a lot of useful functionality.
+
+The library covers a lot of things, that's why we provide a link:{docs}/overview/[searchable Overview of all APOC functions and procedures^]
+
+== Availability & Installation
+
+It can be installed with a single click in Neo4j Desktop, is available in all Neo4j Sandboxes and in Neo4j Cloud.
+
+Downloading the appropriate release for your Neo4j into the plugins folder adds APOC to any Neo4j installation.
+
+You can learn more in the https://neo4j.com/developer/neo4j-apoc/[APOC Developer Guide^].
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | Michael Hunger, lots of internal and external contributors, especially the team from http://larus-ba.it/neo4j/[Larus BA, Italy^] lead by Andrea Santurbano
+| icon:gift[] Releases | https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases
+| icon:github[] Source | https://github.com/neo4j-contrib/neo4j-apoc-procedures
+| icon:book[] Developer Guide | https://neo4j.com/developer/neo4j-apoc/
+| icon:book[] Docs | {docs}
+// | icon:book[] Article |
+| icon:play-circle[] Example | A `:play apoc` browser guide shows some of the functionality.
+|===
+
+== Documentation
+
+* {docs}/import[Data Import^] and {docs}/export[Export^]
+* {docs}/database-integration[Integration with other Databases^]
+* {docs}/database-introspection[visual, tabular, structured Schema Information^]
+* {docs}/misc[Utility functions for conversions, formatting, collections, maps and much more^]
+* {docs}/cypher-execution[Dynamic Cypher Execution^]
+* {docs}/graph-updates/data-creation[Dynamically Creating and Updating Nodes and Relationships^]
+* {docs}/algorithms/path-finding-procedures[Advanced Path Finding Procedures^]
+* {docs}/virtual[Virtual Nodes and Relationships for visualizing aggregation and more^]
+
+== Quick Videos
+
+We recorded the https://r.neo4j.com/apoc-videos[APOC Video Series^].
+Here are the latest videos.
+
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/V1DTBjetIfk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/x34FuSLt0l8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/HvTvy4G9uJk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/0p4jBOXNgc8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQPqceydXxc6n9ocJgDur4Ri3bGq8RD2r_e-5-cWrti04v8Icrynf8A9H0XZwfsoAKig8cRrXQ-6T96/embed?start=false&loop=false&delayms=3000" frameborder="0" width="320" height="180" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+++++
+
+== Recent Articles
+
+* https://medium.com/neo4j/efficient-neo4j-data-import-using-cypher-scripts-7d1268b0747[Efficient Neo4j Data Import Using Cypher-Scripts by Andrea Santurbano^]
+* https://medium.com/neo4j/streaming-graph-loading-with-neo4j-and-apoc-triggers-188ed4dd40d5[Streaming Graph Loading with Neo4j and APOC Triggers by David Allen^]
+* https://markhneedham.com/blog/tag/apoc/[APOC Articles by Mark Needham^]
