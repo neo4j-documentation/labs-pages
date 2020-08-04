@@ -1,5 +1,8 @@
 = Neo4j Labs Pages
 
+image::https://github.com/neo4j-documentation/labs-pages/workflows/Trigger%20Publish/badge.svg[Trigger Publish]
+image::https://github.com/neo4j-documentation/docs-refresh/workflows/Publish%20Labs/badge.svg[Publish Labs]
+
 Built with link:https://antora.org/[Antora^].
 
 - link:https://docs.antora.org/antora/2.3/standard-directories/[Standard File and Directory Set^]
