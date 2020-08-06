@@ -41,7 +41,7 @@ image::https://pbs.twimg.com/media/D8JmM2eWwAMMR4i.jpg[]
 
 [cols="1,4"]
 |===
-| icon:user[] Authors | https://twitter.com/mdavidallens[David Allen^]
+| icon:user[] Authors | https://twitter.com/mdavidallen[David Allen^]
 | icon:gift[] Releases | https://github.com/moxious/halin/releases
 | icon:github[] Source | https://github.com/moxious/halin
 | icon:book[] Docs | https://r.neo4j.com/halin
