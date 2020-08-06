@@ -58,6 +58,12 @@ xref:neosemantics:index.adoc[Neosemantics] integrates RDF and Linked Data with N
 It allows to import a wide variety of RDF formats and to expose Neo4j property graphs as Linked Data.
 Ontology and Inference are also partially supported.
 
+=== xref:neo4jhelm:index.adoc[Neo4j-Helm]
+
+xref:neo4jhelm:index.adoc[Neo4j-Helm] is a tool for configuring and deploying Neo4j instances on Kubernetes.  By using the Helm
+package manager for Kubernetes, it makes it simple to specify advanced configurations of Neo4j, both standalone and cluster, and
+run them with Kubernetes across many cloud platforms.
+
 === Other Active Projects
 
 * link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web
