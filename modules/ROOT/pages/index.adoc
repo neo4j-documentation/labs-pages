@@ -5,7 +5,7 @@
 :page-herotitle: Neo4j Labs
 :page-herosubtitle: Incubating the Next Generation of Graph Developer Tooling
 
-
+[.secondary]
 == What is Neo4j Labs?
 Neo4j Labs is a collection of the latest innovations in graph technology.
 These projects are designed and developed by the Neo4j team as a way to test functionality and extensions of our link:https://neo4j.com/product/?ref=labs[product offerings].
@@ -14,7 +14,7 @@ A project typically either graduates to being maintained as a formal Neo4j proje
 These Labs are supported via the link:https://community.neo4j.com/?_ga=2.65967848.79768660.1594637016-1548419832.1589810895[online community].
 They are actively developed and maintained, but we don't provide any SLAs or guarantees around backwards compatibility and deprecation.
 
-[.secondary]
+
 == Current Projects
 
 ===  link:https://neo4j.com/developer/graph-algorithms/[Graph Algorithms Library]
@@ -69,7 +69,7 @@ run them with Kubernetes across many cloud platforms.
 * link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web
 * link:https://github.com/neo4j-contrib/neo4j-spark-connector/[The Neo4j-Spark-Connector^], library to exchange graph data between Neo4j and Apache Spark
 
-
+[.secondary]
 == Frequently Asked Questions
 
 === Are these safe to use in production?
