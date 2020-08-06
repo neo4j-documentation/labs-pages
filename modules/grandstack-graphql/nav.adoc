@@ -4,3 +4,4 @@
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 // *** link:./docs/current[Documentation]
+*** link:https://www.grandstack.io/docs/[Documentation^]

@@ -1,1 +1,2 @@
-* xref:index.adoc[Neo4j Labs]
+* xref:index.adoc[Labs Home]
+* link:/developer/graph-algorithms[Graph Algorithms Library^]

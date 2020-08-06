@@ -23,9 +23,9 @@ To enable large scale graph analytics and to support machine learning pipelines,
 The library offers highly parallelized implementation that works well with large scale graphs.
 
 [#goals.incremental]
-=== xref:grandstack:index.adoc[GraphQL and GRANDstack]
+=== xref:grandstack-graphql:index.adoc[GraphQL and GRANDstack]
 GraphQL has become a comprehensive stack for API development and consolidation.
-Our link:https://neo4j.com/labs/grandstack-graphql[GRANDstack^] and Neo4j-GraphQL-js offerings combine the most common tools and frameworks: GraphQL, React, Apollo and Neo4j Database.
+Our link:https://www.grandstack.io[GRANDstack^] and Neo4j-GraphQL-js offerings combine the most common tools and frameworks: GraphQL, React, Apollo and Neo4j Database.
 
 
 === xref:apoc:index.adoc[Awesome Procedures on Cypher (APOC)]
@@ -39,17 +39,17 @@ The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monito
 The app also provides access to metrics and logs.
 
 
-=== xref:streams:index.adoc[Kafka Integration]
+=== xref:kafka:index.adoc[Kafka Integration]
 
 Streaming event data is an integral part of most modern data architectures.
-With xref:streams:index.adoc[Neo4j Kafka Integration] you can integrate Neo4j both as a sink or source into your setup.
+With xref:kafka:index.adoc[Neo4j Kafka Integration] you can integrate Neo4j both as a sink or source into your setup.
 The integration is available as a Kafka Connect plugin and Neo4j Server extension..
 
 
-=== xref:etl:index.adoc[ETL Tool]
+=== xref:etl-tool:index.adoc[ETL Tool]
 
 Having an easy way of loading data from relational databases into Neo4j is one of the first steps many users take.
-The xref:etl:index.adoc[Neo4j-ETL Tool] makes this easy by inferring a graph model from the relational meta model that you can then adapt to fit your needs.
+The xref:etl-tool:index.adoc[Neo4j-ETL Tool] makes this easy by inferring a graph model from the relational meta model that you can then adapt to fit your needs.
 Given that transformation, this tool also handles the actual import for you.
 
 === xref:neosemantics:index.adoc[Neosemantics]

@@ -6,4 +6,7 @@
 *** xref:troubleshooting.adoc[Troubleshooting]
 *** xref:graph-app.adoc[Graph App]
 *** xref:acknowledgements.adoc[Acknowledgements]
-*** link:/labs/neosemantics/docs/current[Documentation]
+*** Documentation
+// **** link:/labs/neosemantics/4.1[4.1]
+**** link:/labs/neosemantics/4.0[4.0 (Current)]
+**** link:https://neo4j.com/docs/labs/nsmntx/3.5/[3.5^]

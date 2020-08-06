@@ -1,11 +1,15 @@
 site:
-  title: Neo4j Labs
+  title: Neo4j Labs Docs
   url: /labs
 
 content:
   sources:
-  - url: ./
-    branches: master
+  - url: https://github.com/neo4j-contrib/neo4j-apoc-procedures.git
+    branches: ['4.1', '4.0']
+    start_path: docs/asciidoc
+  - url: https://github.com/mroiter-larus/neo4j-streams.git
+    branches: ['antora_docs']
+    start_path: doc/docs
 
 ui:
   bundle:
@@ -14,6 +18,9 @@ ui:
     snapshot: true
 urls:
   html_extension_style: indexify
+
+output:
+  dir: ./build/site/labs/
 
 asciidoc:
   extensions:

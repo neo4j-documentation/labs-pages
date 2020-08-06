@@ -3,4 +3,7 @@
 // *** xref:installation.adoc[Installation]
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
-// *** link:./docs/current[Documentation]
+*** Documentation
+**** link:/labs/apoc/4.1[4.1 (Current)]
+**** link:/labs/apoc/4.0[4.0]
+**** link:https://neo4j.com/docs/labs/apoc/3.5/[3.5^]

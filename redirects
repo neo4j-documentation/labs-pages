@@ -1,0 +1,4 @@
+# Just to keep track of the redirects
+# Add these to github.com/neo-technology/neo4j.com => /src/nginx/includes/neo4j.com.redirects
+
+rewrite ^/labs/nsmtx-rdf*$ /labs/neosemantics/ permanent;

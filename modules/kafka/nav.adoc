@@ -1,7 +1,10 @@
-** xref:index.adoc[Neo4j ETL Tool]
+** xref:index.adoc[Neo4j Streams]
 // *** xref:index.adoc[Introduction]
 // *** xref:installation.adoc[Installation]
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 // *** link:./docs/current[Documentation]
-*** link:https://neo4j-contrib.github.io/neo4j-etl/[Documentation^]
+*** Documentation
+// **** link:/labs/streams/4.1[4.1 (Current)]
+**** link:/labs/kafka/4.0[4.0 (Current)]
+**** link:https://neo4j.com/docs/labs/neo4j-streams/3.5/[3.5^]

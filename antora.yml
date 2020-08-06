@@ -3,14 +3,14 @@ version: master
 title: Neo4j Labs
 start_page: ROOT:index.adoc
 nav:
-# - modules/ROOT/nav.adoc
+- modules/ROOT/nav.adoc
 - modules/apoc/nav.adoc
 - modules/etl-tool/nav.adoc
 - modules/grandstack-graphql/nav.adoc
 # - modules/graph-algorithms/nav.adoc
 - modules/halin/nav.adoc
 - modules/neosemantics/nav.adoc
-- modules/streams/nav.adoc
+- modules/kafka/nav.adoc
 
 asciidoc:
   attributes:
