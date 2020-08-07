@@ -4,4 +4,4 @@
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 // *** link:./docs/current[Documentation]
-*** link:https://neo4j-contrib.github.io/neo4j-etl/[Documentation^]
+*** link:/labs/etl-tool/1.5.0/[Documentation^]
