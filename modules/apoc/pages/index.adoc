@@ -1,5 +1,5 @@
 = Awesome Procedures On Cypher (APOC)
-:docs: https://neo4j.com/docs/labs/apoc/current
+:docs: https://neo4j.com/labs/apoc/4.1
 :slug: apoc
 :author: Michael Hunger
 :category: labs
