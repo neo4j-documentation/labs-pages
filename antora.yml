@@ -15,7 +15,7 @@ nav:
 
 asciidoc:
   attributes:
-    theme: labs
+    page-theme: labs
 
     community-name: Neo4j Community Site
     community-url: https://community.neo4j.com/
