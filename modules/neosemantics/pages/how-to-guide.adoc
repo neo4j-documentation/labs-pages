@@ -11,10 +11,9 @@ Specifically, this article will query the Wikidata Query Service using the SPARQ
 == Graph Config
 
 Before we can import RDF data into Neo4j, we first need to create a Graph Config to instruct Neosemantics on how to store the data.  For this, we'll need to call the `n10s.graphconfig.init` procedure with a map of parameters.
-As with the xref:tutorial.adoc[Get Started Tutorial], we will use the mapping procedures in n10s to automatically rename the data retrieved from Wikidata's #schema# when it is persisted into our Neo4j database.
+As with the xref:tutorial.adoc[Get Started Tutorial], we will use the mapping procedures in n10s to automatically rename the vocabulary terms used in the data retrieved from Wikidata when it is persisted into our Neo4j database.
 
-Depending on the Graph Config, Neosemantics will treat multilingual data in a number of ways.  By default, each new value will overwrite the previous value, but in some cases it may make sense to keep the data.  We can apply a configuration setting to store an array of these values in Neo4j.
-
+Depending on the Graph Config, Neosemantics will treat multivalued properties in different ways (multivalued properties are a common feature in multilingual datasets like Wikidata, where we find multiple values for names, one for each available language: United Kingdom, Regno Unito, Royaume Uni, etc). By default, Neosemantics will assume properties are single valued and each new value for the same property on the same node will overwrite the previous value, but in some cases it may make sense to keep all the values. We can apply a configuration setting to store an array of these values in Neo4j.
 
 [source,cypher]
 ----
@@ -30,32 +29,32 @@ CALL n10s.graphconfig.init({
 <1> Setting `handleVocabUris` to `MAP` instructs neosemantics to apply mappings to schema elements as they are added to the graph using the `n10s.nsprefixes.add` and `n10s.mapping.add` procedures
 <2> This setting ensures that multiple values are stored in Neo4j as an array, in this case we're interested in the `rdf:label` of the element in multiple languages.
 <3> Keeping the language tag will mean that each translated property will be suffixed, eg: `United Kingdom@en` or `Regno Unito@it`
-<4> This setting ensures that any custom data types are saved in Neo4j as a string, followed by their data type URI.
+<4> This setting ensures that any custom (user defined non- XML Schema) data types are also saved in Neo4j as a string, followed by their data type URI.
 <5> Apply Neo4j recommended naming to Graph Elements - All capital letters for relationship types, Upper Camel Case for labels, etc.
 
 
 == Buiding a SPARQL query
 
-In order to import the data into Neo4j, we will first need write a query to retrieve a list of triples from Wikidata.
-Our final RDF query will return information as triples of subject, predicate and object which are all mapped to one or more #schemas#.
-These schema elements may be confusing at first, but luckily the Wikidata Query Service comes with auto-completion and we can also browse the triples on link:https://Wikidata.org[Wikidata.org^].
+In order to import the data into Neo4j, we will first need write a query to retrieve a list of triples from Wikidata. We will use SPARQL CONSTRUCT and SPARQL DESCRIBE for that. 
+Our final RDF query will return information as triples of subject, predicate and object which use terms from several vocabularies/schemas.
+Both unique identifiers for things and vocabulary elements may be confusing at first because they are all numeric codes, but luckily the Wikidata Query Service comes with auto-completion and we can also browse the triples on link:https://Wikidata.org[Wikidata.org^].
 
-If you navigate to a Wikipedia Entry, you will also see a *Wikidata item* entry on the left hand navigation.
+Wikipedia (mostly for human consumption) is linked to Wikidata (structured data for programatic use). If you navigate to a Wikipedia Entry, you will also see a *Wikidata item* link on the left hand navigation.
 This can also be opened using a keyboard shortcut: `Ctrl+Option+G` on a Mac.
 
 Take for example the link:https://en.wikipedia.org/wiki/United_Kingdom[United Kingdom^] wikipedia entry, this has a reference of link:https://www.wikidata.org/wiki/Q145[`Q145` ^] on Wikidata.
-The Wikidata entry displays a table of all triples stored against the item, including names, population by year and life expectancy.
+The Wikidata entry displays a human readable table of all triples stored against the item, including names, population by year and life expectancy.
 
-We can also use the link:https://query.wikidata.org/#describe%20wd%3AQ145[Wikidata Query Service] to return all known tripples for the element using a `DESCRIBE` SPARQL query.
+We can try the programatic access using the link:https://query.wikidata.org/#describe%20wd%3AQ145[Wikidata Query Service] to return all known tripples for the element using a `DESCRIBE` SPARQL query.
 
 [source,sparql]
 describe wd:Q145
 
-In total there are over 800,000 entries, so we should probably be more specific about the data that we are specifically interested in.
+In total there are over 800,000 triples, so we should probably be more specific about the data that we are specifically interested in.
 // Instead, we can cherrypick the information that we are interested in by building a `CONSTRUCT` statement using the Wikidata Query Service UI.
 
-Under the *Statements* header, we can see that United Kingdom is lised as an link:https://www.wikidata.org/wiki/Property:P31[instance of (`wdt:P31`)] a *Commonwealth realm*, *island nation* and most importantly a sovereign state - link:https://www.wikidata.org/wiki/Q3624078[`Q3624078`^].
-We can use this predicate to identify all countries and bind them to a `?country` variable.
+Under the *Statements* header, we can see that United Kingdom is lised as an link:https://www.wikidata.org/wiki/Property:P31[instance of (`wdt:P31`)] a *Commonwealth realm*, an *island nation* and most importantly a sovereign state - link:https://www.wikidata.org/wiki/Q3624078[`Q3624078`^].
+We can use this triple pattern (something being an instance of a sovereign state) to identify all countries and bind them to a `?country` variable.
 
 [source,sparql]
 ----
@@ -94,15 +93,15 @@ The combination of configuration settings from the `n10s.graphconfig.init` call 
 [TIP]
 ====
 Alternatively, setting `handleMultival` to `OVERWRITE` would only keep a single value.
-This would be useful if we filtered the language in the SPARQL query using a filter statement:
+This would be useful if we wanted to keep property values in Neo4j atomic (single valued instead of arrays) but in that case we would need to filter the language in the SPARQL query to get the one we are interested in. We can use a filter statement in SPARQL for that:
 
 [source]
 filter(lang(?countryLabel) = "en")`
 ====
 
-To demonstrate the ability to import a relationship from a predicate, we can add the link:https://www.wikidata.org/wiki/Property:P30[continent property (`wdt:P30`)^] to the query.
-Then to demonstrate a relationship we can add a property, we can also add link:https://www.wikidata.org/wiki/Property:P1082[the population (`wdt:P1082`)^].
-For the sake of brevity, we'll add filters to only return population counts after 2010 and to restrict the languages of each label to English, Arabic, Russian and Chinese.
+To demonstrate the ability to import a relationship from a predicate, we can add the link:https://www.wikidata.org/wiki/Property:P30[continent property (`wdt:P30`)^] to the query. This property in RDF links a country to its continent.
+Then we also add a property, the country's link:https://www.wikidata.org/wiki/Property:P1082[population (`wdt:P1082`)^].
+Wikidata has certain properties mesured at different points in time. Population is one of them. For the sake of brevity, we will not explain the intricacies of Wikidata's model but we'll just add filters to our query so that it only returns population counts after 2010 and also restrict the languages of each label to English, Arabic, Russian and Chinese. For more details, check Wikidata's documentation and examples.
 
 Here is the updated query:
 
@@ -131,9 +130,9 @@ Then we can use the information from the `WHERE` clause to construct our triples
 
 == Constructing Triples
 
-To instruct the Wikidata to return a #stream# of triples, we can replace the `SELECT` section of the query with a `CONSTRUCT` clause.
-The `CONSTRUCT` command defines how the data retrieved in the `WHERE` clause by defining the triplets that should be returned.
-The output of this query is a stream of subject, predicate and object which represent an RDF graph.
+We've seen that SPARQL SELECT queries return tabular results, but we want to get RDF data instead. To instruct the Wikidata query service to return triples we can replace the `SELECT` section of the query with a `CONSTRUCT` clause.
+The `CONSTRUCT` section defines how the data retrieved in the `WHERE` clause should be returned. So we can use this section to rename certain terms or even restructure the information as we wish.
+The output of a SPARQL CONSTRUCT query is a stream of subject, predicate and object triples which together represent an RDF graph.
 
 [source,sparql]
 ----
@@ -161,13 +160,13 @@ WHERE {
 LIMIT 10
 ----
 
-<1> This statement defines a `neo4j://` #namespace#, prefixed as neo for temporary use during the export
+<1> This statement defines a `neo4j://` namespace. We are going to define new terms (Country, continentName, etc) so we have to give them a fully qualified name in RDF.
 <2> The `CONSTRUCT` section of the query defines the triplets that we want to
-<3> Neosemantics will apply a `:Country` label to the node
-<4> The country node will have a property of `countryName` with the #element's# label
-<5> The country will have an `inContinent` relationship to it's continent
+<3> We replace the `wd:Q3624078` with `neo:Country`. Neosemantics will translate this statement into a `:Country` label on the country nodes
+<4> The country node will have a property of `countryName` (instead of `rdf:label`) with the element's label
+<5> The country will have an `inContinent` relationship to it's continent replacing `p:P1082`
 <6> The continent will have a `continentName` property corresponding to `?continentLabel`
-<7> For the population counts, #create a triple to represent the relationship to a new node with properties for the date and the count#
+<7> For the population counts, create a triple to represent the relationship to a new node with properties for the date and the count
 
 [%headers]
 |===
@@ -195,7 +194,7 @@ As the URL requires an encoded version of the query, we can use the <<APOC>> `ap
 The endpoint also requires that we send an `Accept` header with the content type that we wish to consume, in this case `Turtle`.
 
 
-If we run the query using the `n10s.rdf.stream.fetch` procedure, we can see the list of triples along with some additional metaadata derived by neosemantics.
+If we run the query using the `n10s.rdf.stream.fetch` procedure, we can see the list of triples along with some additional metadata like the datatype and the language tag.
 
 .Streaming RDF Triples
 [source,cypher]
@@ -259,6 +258,8 @@ RETURN subject, predicate, object, isLiteral, literalType, literalLang
 | "http://www.wikidata.org/entity/Q712" | "neo4j://voc#countryName" | "Fiji" | true | "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" | "en"
 |===
 
+
+The `fetch` method is useful when we want to preview in neo4j the triples returned by an RDF source, in this case our SPARQL query on Wikidata, but also if we want to process them with cypher instead of delegating the import to neosemsntics. 
 
 We can also use the `n10s.rdf.*preview*.fetch` procedure in <<NEO4J_BROWSER>> to preview the data as a graph.
 
@@ -531,6 +532,7 @@ This will return the following output:
 == Conclusion
 
 In this guide we have learned how to:
+
 * Use the Wikidata Query Service to retrieve data using an RDF query and imported the data into Neo4j.
 * Updated neosemantics configuration to store certain values as an array
 * Extract specific language data from an array using Neosemantics helper functions
