@@ -108,7 +108,8 @@ include::example$tutorial.cypher[tags=preview.fetch]
 include::example$tutorial.cypher[tags=preview.inline]
 ----
 
-// #image here?#
+image:preview-3.png[]
+
 
 Neosemantics has performed the following transformations on the RDF data:
 
@@ -166,7 +167,7 @@ CALL n10s.mapping.add(
 
 Re-running the preview query above should now show that the Relationship Type has been renamed from `runsOn` to `RUNS_ON`.
 
-// #image here#
+image:preview-4.png[]
 
 [TIP]
 You can also extract the namespaces from an RDF document using the `n10s.nsprefixes.addFromText` procedure and passing the header part of the document where the namespace definitions are normally found.
