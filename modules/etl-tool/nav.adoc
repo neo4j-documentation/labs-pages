@@ -4,4 +4,4 @@
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 // *** link:./docs/current[Documentation]
-*** link:/labs/etl-tool/1.5.0/[Documentation^]
+*** link:/labs/etl-tool/1.5.0/[Documentation]
