@@ -15,7 +15,7 @@ We're assuming that you have read the xref:installation.adoc[Installation Guide]
 If you haven't already done so, head back and xref:installation.adoc[read the Installation instructions] first.
 
 Now that you have installed the plugin, it's time to get started with importing data.
-In this tutorial, we will begin with a basic RDF query using an link:https://raw.githubusercontent.com/neo4j-labs/neosemantics/3.5/docs/rdf/nsmntx.ttl[example RDF query in Turtle format^].
+In this tutorial, we will begin with a basic RDF document containing link:https://raw.githubusercontent.com/neo4j-labs/neosemantics/3.5/docs/rdf/nsmntx.ttl[a few triples in Turtle format^].
 This file is hosted on the link:https://raw.githubusercontent.com/neo4j-labs/neosemantics/[Neosemantics Github Repository^].
 
 [source,turtle]
@@ -23,17 +23,22 @@ This file is hosted on the link:https://raw.githubusercontent.com/neo4j-labs/neo
 include::example$tutorial.ttl[]
 ----
 
-The RDF query contains four elements including:
+The RDF fragment describes four elements (resources) including:
 
 * **Neo4j** - a Graph Platform with a version property of 3.5.5
-* **NSMNTX** - A Neo4j Plugin with a version 3.5.0.2 released on 3 June 2019 which runs on the the Neo4j
+* **NSMNTX** - A Neo4j Plugin with a version 3.5.0.2 released on 3 June 2019 which runs on the the Neo4j platform
+* **APOC** - A Neo4j Plugin with a version 3.5.0.4 released on 31 May 2019 which runs on the the Neo4j platform
+* **Neo4j-GraphQL** - A Neo4j Plugin with a version 3.5.0.3 released on 5 May 2019 which runs on the the Neo4j platform
 
-In Neo4j's Property Graph Model, these Neo4j and NSMNTX will become Nodes in the database with properties to represent the versions.
-The `neo4voc:runsOn` #element# will become a Relationship.
+In Neo4j's Property Graph Model, resources will become Nodes in the database with properties to represent the versions.
+The `neo4voc:runsOn` predicate will become a Relationship. 
+
+[NOTE]
+The general idea is that triples with literal values as objects will become node properties an triples with resources as objects will become relationships.
 
 
 == Creating a Constraint
-When Neosemantics creates data in Neo4j, it will automatically add a `:Resource` label to each node.
+When Neosemantics imports an RDF resource into Neo4j, it creates a node and automatically adds a `:Resource` label to it.
 In order to make our queries efficient, a unique constraint is required on the URI property for nodes with a label of `:Resource`.
 Creating a constraint will ensure that a URI will be unique across the database, and also that lookups on a `:Resource` node by it's `uri` property will use an index rather than scanning through all nodes to find the relevent record.
 
@@ -55,9 +60,9 @@ CALL n10s.graphconfig.init({
   handleVocabUris: 'MAP'
 })
 
-By default the `handleVocabUri` is set to `SHORTEN` - meaning that the namespace is prefixed with an automatically generated string, for example `http://neo4j.org/vocab/sw#Neo4jPlugin` would be shortened to `ns0__Neo4jPlugin`.
+By default the `handleVocabUri` is set to `SHORTEN` - meaning that the namespace is prefixed with an automatically generated string, for example `http://neo4j.org/vocab/sw#Neo4jPlugin` would be shortened to `ns0__Neo4jPlugin` and at the same time the `ns0` prefix will be associated with the namespace `http://neo4j.org/vocab/sw#`. This is useful if we want to be able to regenerate the RDF again.
 
-By setting this value to `MAP`, we are able to map these namespaces to custom values, making the Property Graph more readable.
+In this example we will set the `handleVocabUri` param to `MAP`, which means that instead of shortening the namespaces, we will map the long URIs to custom simple names, making the Property Graph more readable.
 
 == Choosing between Inline and Fetch
 
@@ -85,9 +90,9 @@ You can view the difference between the two types of procedure by toggling the c
 
 
 == Previewing Data
-Now that the Graph Config has been created, we can start to manipulate the RDF into a suitable format for the property graph.
-To do this we can use the `n10s.rdf.preview.*` procedures.
-As our RDF query is hosted online, we can use `n10s.rdf.preview.fetch` to _fetch_ the RDF from a remote URL.
+Now that the Graph Config has been created, we can start to manipulate the RDF into a suitable format for the property graph by changing the import configuration parameters.
+After each change we can use the `n10s.rdf.preview.*` procedures to preview the effect on the resulting property graph.
+As our RDF document is hosted online, we can use `n10s.rdf.preview.fetch` to _fetch_ the RDF from a remote URL.
 
 [.tabs]
 
@@ -107,11 +112,11 @@ include::example$tutorial.cypher[tags=preview.inline]
 
 Neosemantics has performed the following transformations on the RDF data:
 
-* `neo4j355` has become a Node with two labels: `GraphPlatform` and `AwesomePlatform`
-** The node has a URI property of `http://neo4j.org/ind#neo4j355`
-** `neo4voc:name` and `neo4voc:version` have been shortened and assigned as properties on the Node
-* `nsmntx3502`, `apoc3502` and `graphql3502` have become Nodes with a label of `Neo4jPlugin` based on their #rdf:type#
-** `neo4voc:version`, `neo4voc:releaseDate` and `neo4voc:runsOn` have been shortened and converted to properties on these nodes
+* `neo4j355` has become a Node with two labels: `GraphPlatform` and `AwesomePlatform`, one for each rdf:type statement
+** The node has a URI property of `http://neo4j.org/ind#neo4j355` (the URI of the resource)
+** `neo4voc:name` and `neo4voc:version` have been stripped of the namespace and assigned as properties on the Node
+* `nsmntx3502`, `apoc3502` and `graphql3502` have become Nodes with a label of `Neo4jPlugin` based on their rdf:type
+** `neo4voc:version`, `neo4voc:releaseDate` and `neo4voc:runsOn` have been stripped of the namespace and converted to properties on these nodes
 * A Relationship has been created between the `GraphPlatform` node and each of the `Neo4jPlugin` nodes with the type of `runsOn`
 
 [TIP]
@@ -119,7 +124,7 @@ You can also use the `n10s.rdf.preview.inline(rdf: string, format: string)`, pas
 
 
 == Mappings
-We can change the values that Neosemantics assigns to a Graph Element by creating a *Mapping*.
+We can change the names that Neosemantics assigns to a Graph schema element (property name, rel type or node label) by creating a *Mapping*.
 For example, you may want to change the type of the Relationship that is created between the `Neo4jPlugin` and `GraphPlatform`.
 
 First, we will need to ensure that Neosemantics is aware of the namespace.
@@ -127,9 +132,9 @@ To do this, we use the `n10s.nsprefixes.add` procedure.
 This procedure takes two parameters:
 
 1. The prefix for the namespace
-2. The #fully qualified URI# of the namespace
+2. The full URI of the namespace
 
-In this example, the `http://neo4j.org/vocab/sw#` namespace should be mapped to `neo4voc`.
+In this example, the `http://neo4j.org/vocab/sw#` namespace will be mapped to `neo4voc`.
 
 [source,cypher]
 CALL n10s.nsprefixes.add(
@@ -137,14 +142,14 @@ CALL n10s.nsprefixes.add(
     'http://neo4j.org/vocab/sw#' // <2>
 )
 
-<1> The prefix used in our query is `neo4voc`
+<1> The prefix that we will use from now on to refer to the namespace is `neo4voc`
 <2> The full namespace is `http://neo4j.org/vocab/sw#`
 
-Now we can create the mapping.
+Now we can create the mapping for vocabulary elements in this namespace.
 We do this using the `n10s.mapping.add` procedure.
 This procedure takes two parameters:
 
-1. The full URI of the Schema Element
+1. The full URI of the Schema Element (including the namespace part)
 2. The value that the Schema Element should be renamed to in the graph
 
 As we would like to rename the `neo4voc:runsOn` element to `RUNS_ON`, we can run the following procedure:
@@ -155,7 +160,7 @@ CALL n10s.mapping.add(
   'RUNS_ON' // <2>
 )
 
-<1> The fully URI of the `runsOn` triple
+<1> The fully URI of the `runsOn` RDF predicate
 <2> The name of the the relationship that will be persisted in Neo4j
 
 
@@ -164,12 +169,12 @@ Re-running the preview query above should now show that the Relationship Type ha
 #image here#
 
 [TIP]
-If you already have an RDF query, you can extract the namespaces from an RDF query using the `n10s.nsprefixes.addFromText` procedure.
+You can also extract the namespaces from an RDF document using the `n10s.nsprefixes.addFromText` procedure and passing the header part of the document where the namespace definitions are normally found.
 
 == Importing Data
 
-The signature of the import procedure is similar to the preview - all you need to do is swap `preview` for `import`.
-Running the following Cypher query should return a summary of the procedure including the status of the query (`terminationStatus`), number of triples that were loaded from the RDF query (`triplesLoaded`), the number of triples that were imported into Neo4j (`triplesParsed`).
+The signature of the import procedure is similar to the preview - all you need to do is swap `preview` for `import`. The difference is that this one will persist the graph in Neo4j while the preview one would just show what the result of importing RDF would be but without any effect on the graph.
+Running the following Cypher query should run the import and return a summary of the execution including whether the import was successful or failed (`terminationStatus`), the number of triples from the RDF source that were effectively persisted in Neo4j (`triplesLoaded`), the number of triples that were parsed in the RDF source (`triplesParsed`). Note that some triples may be filtered based on the configuration options.
 
 [.tabs]
 .Fetch
@@ -207,12 +212,12 @@ include::example$tutorial.cypher[tags=import.inline]
 
 Neosemantics offers two methods for exporting data out of Neo4j back into RDF format.
 
-=== Using the Cypher Procedure
+=== Using the Cypher `n10s.rdf.export` Procedure
 
 [CAUTION]
 This is an experimental feature.  The procedure may change in future.
 
-You can export the results of a Cypher query to RDF using the `n10s.rdf.export.cypher` procedure.
+You can export the results of a Cypher query as RDF triples using the `n10s.rdf.export.cypher` procedure.
 The procedure takes a Cypher statement as the first parameter and an optional map of params.
 The result of the query is stream of triples.
 
@@ -295,7 +300,7 @@ This will provide us with the following RDF output:
 <http://neo4j.org/ind#nsmntx3502> neovoc:RUNS_ON <http://neo4j.org/ind#neo4j355> .
 ----
 
-== Deleting Data
+== Deleting Data as Triples
 
 To delete RDF data from our Neo4j Graph, we can use the `n10s.rdf.delete.fetch` procedure.
 As with the preview and import procedures, this accepts two arguments: the URL of the RDF query and the format.
