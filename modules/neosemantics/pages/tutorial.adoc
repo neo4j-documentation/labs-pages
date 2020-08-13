@@ -31,7 +31,7 @@ The RDF fragment describes four elements (resources) including:
 * **Neo4j-GraphQL** - A Neo4j Plugin with a version 3.5.0.3 released on 5 May 2019 which runs on the the Neo4j platform
 
 In Neo4j's Property Graph Model, resources will become Nodes in the database with properties to represent the versions.
-The `neo4voc:runsOn` predicate will become a Relationship. 
+The `neo4voc:runsOn` predicate will become a Relationship.
 
 [NOTE]
 The general idea is that triples with literal values as objects will become node properties an triples with resources as objects will become relationships.
@@ -108,7 +108,7 @@ include::example$tutorial.cypher[tags=preview.fetch]
 include::example$tutorial.cypher[tags=preview.inline]
 ----
 
-#image here#
+// #image here?#
 
 Neosemantics has performed the following transformations on the RDF data:
 
@@ -166,7 +166,7 @@ CALL n10s.mapping.add(
 
 Re-running the preview query above should now show that the Relationship Type has been renamed from `runsOn` to `RUNS_ON`.
 
-#image here#
+// #image here#
 
 [TIP]
 You can also extract the namespaces from an RDF document using the `n10s.nsprefixes.addFromText` procedure and passing the header part of the document where the namespace definitions are normally found.
