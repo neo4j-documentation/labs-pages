@@ -1,2 +1,2 @@
 ** xref:index.adoc[Neo4j-Helm]
-*** link:./1.0.0[Documentation]
+*** link:/labs/neo4j-helm/1.0.0[Documentation]
