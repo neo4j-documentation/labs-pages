@@ -6,6 +6,7 @@
 :tags: rdf, integrations, extensions, data-import, data-export, ontologies
 :neo4j-versions: 3.5, 4.0
 :page-pagination:
+:page-product: Neosemantics
 
 
 ==  Neo4j RDF & Semantics toolkit

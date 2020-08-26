@@ -1,5 +1,7 @@
 = How to import Wikidata into Neo4j
 :page-pagination:
+:page-type: How-To Guide
+:page-product: Neosemantics
 
 [NOTE]
 We're assuming that you have read the xref:installation.adoc[Installation Guide] and that you are familiar with the procedures.
@@ -35,7 +37,7 @@ CALL n10s.graphconfig.init({
 
 == Buiding a SPARQL query
 
-In order to import the data into Neo4j, we will first need write a query to retrieve a list of triples from Wikidata. We will use SPARQL CONSTRUCT and SPARQL DESCRIBE for that. 
+In order to import the data into Neo4j, we will first need write a query to retrieve a list of triples from Wikidata. We will use SPARQL CONSTRUCT and SPARQL DESCRIBE for that.
 Our final RDF query will return information as triples of subject, predicate and object which use terms from several vocabularies/schemas.
 Both unique identifiers for things and vocabulary elements may be confusing at first because they are all numeric codes, but luckily the Wikidata Query Service comes with auto-completion and we can also browse the triples on link:https://Wikidata.org[Wikidata.org^].
 
@@ -259,7 +261,7 @@ RETURN subject, predicate, object, isLiteral, literalType, literalLang
 |===
 
 
-The `fetch` method is useful when we want to preview in neo4j the triples returned by an RDF source, in this case our SPARQL query on Wikidata, but also if we want to process them with cypher instead of delegating the import to neosemsntics. 
+The `fetch` method is useful when we want to preview in neo4j the triples returned by an RDF source, in this case our SPARQL query on Wikidata, but also if we want to process them with cypher instead of delegating the import to neosemsntics.
 
 We can also use the `n10s.rdf.*preview*.fetch` procedure in <<NEO4J_BROWSER>> to preview the data as a graph.
 

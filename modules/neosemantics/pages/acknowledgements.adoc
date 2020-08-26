@@ -1,5 +1,6 @@
 = Acknowledgements
 :page-pagination:
+:page-product: Neosemantics
 
 == Acknowledgements
 Neosemantics uses https://rdf4j.eclipse.org/[rdf4j] for parsing and serialising RDF. Eclipse rdf4j is a powerful Java framework for processing and handling RDF data.

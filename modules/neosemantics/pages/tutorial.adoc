@@ -1,5 +1,7 @@
 = Getting Started with Neosemantics
 :page-pagination:
+:page-type: Tutorial
+:page-product: Neosemantics
 
 // - learn by doing
 // - getting started

@@ -1,5 +1,7 @@
 = Troubleshooting Neosemantics Errors
 :page-pagination:
+:page-type: Troubleshooting
+:page-product: Neosemantics
 
 == Non-empty Graphs
 

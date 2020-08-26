@@ -1,5 +1,6 @@
 = Neosemantics Graph App
 :page-pagination:
+:page-product: Neosemantics
 
 The *Neosemantics Graph App* is an extension of link:/developer/neo4j-desktop[Neo4j Desktop] that guides you through the process of importing and exporting data with Neosemantics.
 

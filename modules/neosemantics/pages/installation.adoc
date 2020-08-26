@@ -1,5 +1,7 @@
 = Installing neosemantics
 :page-pagination:
+:page-type: Installation
+:page-product: Neosemantics
 
 To install Neosemantics you will need to download a prebuilt `.jar` from the https://github.com/neo4j-labs/neosemantics/releases[releases area^]  on the Github repository.
 
