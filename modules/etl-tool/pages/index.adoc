@@ -4,6 +4,7 @@
 :author: Michael Hunger, Larus BA
 :tags: etl, import, relational-database, relational-graph, graph-apps
 :neo4j-versions: 3.5, 4.0
+:page-product: ETL Tool
 
 image::neo4j-etl-tool-icon.jpg[float=right,width=200]
 

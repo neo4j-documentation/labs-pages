@@ -8,6 +8,7 @@
 :neo4j-versions: 3.5, 4.0
 :excerpt: Neo4j Streams integrates Neo4j with Apache Kafka event streams, to serve as a source of data, for instance change data (CDC) or a sink to ingest any kind of Kafka event into your graph.
 :featured-media: labs_beaker
+:page-product: Neo4j Streams
 
 image::neo4j-loves-confluent.png[width=500]
 

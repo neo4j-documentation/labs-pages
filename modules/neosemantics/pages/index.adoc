@@ -1,4 +1,4 @@
-= neosemantics (n10s)
+= neosemantics (n10s) /
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: neosemantics-rdf
 :author: Jesús Barrasa

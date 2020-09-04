@@ -5,6 +5,7 @@
 :category: labs
 :tags: apoc, procedures, functions, utilities, extensions, libraries
 :neo4j-versions: 3.5, 4.0
+:page-product: apoc
 
 
 APOC is an add-on library for Neo4j that provides hundreds of procedures and functions adding a lot of useful functionality.

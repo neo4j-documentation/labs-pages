@@ -5,6 +5,7 @@
 :category: labs
 :tags: cluster, kubernetes, helm, docker, containers
 :neo4j-versions: 4+
+:page-product: Neo4j Helm
 
 Neo4j-helm allows users to deploy multi-node Neo4j Enterprise Causal Clusters to Kubernetes instances, with configuration options for the most common scenarios. It represents a very rapid way to get started running the world leading native graph database on top of Kubernetes.
 
