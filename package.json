@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "serve": "node server.js",
     "preview": "antora --stacktrace preview.yml",
-    "dev": "npm start & npm-watch preview",
+    "start": "npm run serve & npm-watch preview",
     "publish": "git push origin HEAD:publish"
   },
   "keywords": [],
