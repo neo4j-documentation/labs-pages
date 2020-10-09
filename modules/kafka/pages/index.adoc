@@ -23,10 +23,10 @@ Neo4j Streams has graduated from Neo4j Labs and is now a fully supported compone
 
 == Availability & Installation
 
-You can install the Kafka Connect Neo4j Sink Plugin into Confluent Cloud or your own Connect instance.
+The Kafka Connect Neo4j Sink Plugin will work with Confluent Cloud and also most forms of Apache Kafka, including run on premise, using a separate Connect framework & infrastructure.  This approach is recommended for those who need data sink capabilities.
 
 Alternatively, you can add the Neo4j Server extension to your own installations.
-Just download the matching release version into the plugins folder and configuring it according to the documentation (see below for both).
+Just download the matching release version into the plugins folder and configuring it according to the documentation (see below for both).  This approach is recommended only for those who need data source capabilities.
 
 Enterprise users may use Neo4j Streams under their existing support agremeents.  Neo4j Community users may also use Neo4j Streams, with
 community support.
