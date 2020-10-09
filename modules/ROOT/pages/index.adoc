@@ -2,7 +2,6 @@
 :description: Incubating the next generation of graph developer tooling. GraphQL and GRANDstack, Algorithms, APOC, Kafka, ETL Tool, neovis.js, and more.
 :page-layout: landing
 :page-theme: labs
-
 :page-toclevels: -1
 
 [.hero]
