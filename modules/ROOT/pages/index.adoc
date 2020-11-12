@@ -17,6 +17,7 @@ Graph Developer Tooling
 * <<Frequently Asked Questions, FAQs>>
 
 
+
 [.secondary.leading]
 == What is Neo4j Labs?
 Neo4j Labs is a collection of the latest innovations in graph technology.
