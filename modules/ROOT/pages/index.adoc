@@ -14,6 +14,7 @@ Graph Developer Tooling
 [.buttons]
 * <<What is Neo4j Labs?, About>>
 * <<Current Projects>>
+* <<Graduated Projects>>
 * <<Frequently Asked Questions, FAQs>>
 
 
@@ -21,11 +22,11 @@ Graph Developer Tooling
 [.secondary.leading]
 == What is Neo4j Labs?
 Neo4j Labs is a collection of the latest innovations in graph technology.
-These projects are designed and developed by the Neo4j team as a way to test functionality and extensions of our link:https://neo4j.com/product/?ref=labs[product offerings].
+These projects are designed and developed by the Neo4j team as a way to test functionality and extensions of our link:/product/?ref=labs[product offerings].
 A project typically either graduates to being maintained as a formal Neo4j project or is deprecated with source made available publicly.
 
 These Labs are supported via the link:https://community.neo4j.com/?_ga=2.65967848.79768660.1594637016-1548419832.1589810895[online community].
-They are actively developed and maintained, but we don't provide any SLAs or guarantees around backwards compatibility and deprecation.
+They are actively developed and maintained, but we don't provide any SLAs or guarantees around backwards compatibility and deprecation, see the FAQ below.
 
 
 == Current Projects
@@ -45,14 +46,6 @@ APOC includes data integration, graph refactoring, data conversion, operational 
 
 The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
 The app also provides access to metrics and logs.
-
-
-=== xref:kafka:index.adoc[Kafka Integration]
-
-Streaming event data is an integral part of most modern data architectures.
-With xref:kafka:index.adoc[Neo4j Kafka Integration] you can integrate Neo4j both as a sink or source into your setup.
-The integration is available as a Kafka Connect plugin and Neo4j Server extension..
-
 
 === xref:etl-tool:index.adoc[ETL Tool]
 
@@ -75,7 +68,32 @@ run them with Kubernetes across many cloud platforms.
 === Other Active Projects
 
 * link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web
-* link:https://github.com/neo4j-contrib/neo4j-spark-connector/[The Neo4j-Spark-Connector^], library to exchange graph data between Neo4j and Apache Spark
+
+== Graduated Projects
+
+The following projects were successfully developed, incubated, and validated within Neo4j Labs and have graduated to official and supported Neo4j products ready for production use at scale.
+
+=== link:/graph-data-science[Graph Data Science Library]
+
+To enable larg scale graph analytics and support machine learning pipelines we developed the Neo4j Graph Algorithms library, which covers many widely used algorithms. The library offers highly parallelized implementations that work well with large scale graphs.
+It graduated and is now available as part of the Neo4j Graph Platform as link:/graph-data-science[Graph Data Science Library]. link:/developer/graph-data-science[Educational content] is available from Neo4j Labs.
+
+=== xref:kafka:index.adoc[Neo4j Connector for Apache Kafka]
+
+Streaming event data is an integral part of most modern data architectures.
+With the xref:kafka:index.adoc[Neo4j Connector for Apache Kafka] you can integrate Neo4j both as a sink or source into your setup.
+The integration is available as a Kafka Connect plugin and Neo4j Server extension. It is officially supported as an Ecosystem Connector.
+
+=== link:/developer/spark[Neo4j Connector for Apache Spark]
+
+Data processing in Apache Spark is commonplace and available on all cloud platforms.
+With the link:/developer/spark[Neo4j Connector for Apache Spark] you can read from and write to Neo4j from your Spark Jobs.
+Built on the new DataSource API it supports usage from Python, R and Scala. It is officially supported as an Ecosystem Connector.
+
+=== link:/developer/docker[Neo4j Docker Container]
+
+The link:https://hub.docker.com/_/neo4j[Neo4j Docker containers] started off as a Labs project to explore how well Neo4j would run in a containerized environment.
+They quickly gained popularity and are heavily used by both Neo4j and customers, so we've graduated them to be officially part of the https://neo4j.com/docs/operations-manual/current/docker/[Neo4j release distribution].
 
 [.secondary]
 == Frequently Asked Questions
@@ -85,16 +103,6 @@ Current Neo4j Labs projects are being actively worked on by our engineers, and m
 
 === How do I contribute?
 We welcome contributions for those labs which are open source projects. You'll find links to GitHub repositories - feel free to submit PRs. We've also created a discussion category for Labs on link:https://community.neo4j.com[community.neo4j.com^]
-
-=== Which Neo4j Labs projects have graduated?
-The link:https://hub.docker.com/_/neo4j[Neo4j Docker containers] started off as a Labs project to explore how well Neo4j would run in a containerized environment.
-They quickly gained popularity and are heavily used by both Neo4j and customers, so we've graduated them to be officially part of the Neo4j release distribution.
-
-The link:https://neo4j.com/graph-data-science-library/[Graph Data Science Library^] started off as the Graph Algorithms Library, a Labs project that was launched in 2017.
-The library offered highly parallelized implementation that work well with large scale graphs, and graduated in early 2020.
-
-We've also had features originally implemented as plugins and extensions moved into the core product.
-This includes link:https://neo4j.com/graphconnect-2018/session/neo4j-spatial-mapping[spatial functionality^] and APOC link:https://neo4j.com/docs/operations-manual/3.5/reference/procedures/[meta graph^] plus link:https://neo4j.com/docs/operations-manual/current/performance/index-configuration/fulltext/[full text indexing^].
 
 === Which Neo4j Labs projects have been deprecated?
 The MongoDB Doc Manager and Cassandra Connector have both been deprecated. The source is still available on GitHub, but we found most developers could accomplish similiar goals by using APOC, Kafka and other technologies.
