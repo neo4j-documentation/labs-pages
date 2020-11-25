@@ -71,6 +71,8 @@ run them with Kubernetes across many cloud platforms.
 
 == Graduated Projects
 
+The following projects were successfully developed, incubated, and validated within Neo4j Labs and have graduated to official and supported Neo4j products ready for production use at scale.
+
 === link:/graph-data-science[Graph Data Science Library]
 
 To enable larg scale graph analytics and support machine learning pipelines we developed the Neo4j Graph Algorithms library, which covers many widely used algorithms. The library offers highly parallelized implementations that work well with large scale graphs.
@@ -88,6 +90,10 @@ Data processing in Apache Spark is commonplace and available on all cloud platfo
 With the link:/developer/spark[Neo4j Connector for Apache Spark] you can read from and write to Neo4j from your Spark Jobs.
 Built on the new DataSource API it supports usage from Python, R and Scala. It is officially supported as an Ecosystem Connector.
 
+=== link:/developer/docker[Neo4j Docker Container]
+
+The link:https://hub.docker.com/_/neo4j[Neo4j Docker containers] started off as a Labs project to explore how well Neo4j would run in a containerized environment.
+They quickly gained popularity and are heavily used by both Neo4j and customers, so we've graduated them to be officially part of the https://neo4j.com/docs/operations-manual/current/docker/[Neo4j release distribution].
 
 [.secondary]
 == Frequently Asked Questions
@@ -97,16 +103,6 @@ Current Neo4j Labs projects are being actively worked on by our engineers, and m
 
 === How do I contribute?
 We welcome contributions for those labs which are open source projects. You'll find links to GitHub repositories - feel free to submit PRs. We've also created a discussion category for Labs on link:https://community.neo4j.com[community.neo4j.com^]
-
-=== Which Neo4j Labs projects have graduated?
-The link:https://hub.docker.com/_/neo4j[Neo4j Docker containers] started off as a Labs project to explore how well Neo4j would run in a containerized environment.
-They quickly gained popularity and are heavily used by both Neo4j and customers, so we've graduated them to be officially part of the Neo4j release distribution.
-
-The link:https://neo4j.com/graph-data-science-library/[Graph Data Science Library^] started off as the Graph Algorithms Library, a Labs project that was launched in 2017.
-The library offered highly parallelized implementation that work well with large scale graphs, and graduated in early 2020.
-
-We've also had features originally implemented as plugins and extensions moved into the core product.
-This includes link:https://neo4j.com/graphconnect-2018/session/neo4j-spatial-mapping[spatial functionality^] and APOC link:https://neo4j.com/docs/operations-manual/3.5/reference/procedures/[meta graph^] plus link:https://neo4j.com/docs/operations-manual/current/performance/index-configuration/fulltext/[full text indexing^].
 
 === Which Neo4j Labs projects have been deprecated?
 The MongoDB Doc Manager and Cassandra Connector have both been deprecated. The source is still available on GitHub, but we found most developers could accomplish similiar goals by using APOC, Kafka and other technologies.
