@@ -9,15 +9,21 @@ image::https://arrows.app/about/assets/arrows_logo.svg[float=right, width=100, p
 
 Web-based tool for drawing pictures of graphs. Try it at link:https://arrows.app[arrows.app^]
 
-== Features
-
 image::https://arrows.app/about/assets/homepage_screenshot.png[]
 
-* Quick
-* Neo4j Property Graph Model
-* Fine-grained Styling
-* Export as image or Cypher
+== Features
+
+* **Quick** Intuitive drawing with a mouse.
+* **Neo4j Property Graph Model** Draw: nodes, relationships, properties, labels.
+* **Fine-grained Styling** Control: sizes, layouts, colors.
+* **Export as image or Cypher** Use images in documents or presentations. Run Cypher to create graphs in Neo4j.
+
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/ZHJ-BrKJ8A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 == Feedback
 
-Arrows.app is for drawing pictures of graphs. For visualising your Neo4j graph database, please see our pages about link:https://neo4j.com/bloom[Neo4j Bloom], link:https://neo4j.com/developer/neo4j-browser/[Neo4j Browser], and link:https://neo4j.com/developer/tools-graph-visualization/[Graph Visualization] in general.
+Arrows.app is for drawing pictures of graphs. For visualizing your Neo4j graph database, please see our pages about link:https://neo4j.com/bloom[Neo4j Bloom], link:https://neo4j.com/developer/neo4j-browser/[Neo4j Browser], and link:https://neo4j.com/developer/tools-graph-visualization/[Graph Visualization] in general.
+
+To submit feedback please link:https://github.com/neo4j-labs/arrows.app/issues[create an issue on Github.]

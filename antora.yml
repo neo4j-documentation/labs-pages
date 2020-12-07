@@ -5,6 +5,7 @@ start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/nav.adoc
 - modules/apoc/nav.adoc
+- modules/arrows/nav.adoc
 - modules/etl-tool/nav.adoc
 - modules/grandstack-graphql/nav.adoc
 # - modules/graph-algorithms/nav.adoc
