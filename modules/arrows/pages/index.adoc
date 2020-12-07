@@ -29,3 +29,16 @@ Web-based tool for drawing pictures of graphs. Try it at link:https://arrows.app
 Arrows.app is for drawing pictures of graphs. For visualizing your Neo4j graph database, please see our pages about link:https://neo4j.com/bloom[Neo4j Bloom], link:https://neo4j.com/developer/neo4j-browser/[Neo4j Browser], and link:https://neo4j.com/developer/tools-graph-visualization/[Graph Visualization] in general.
 
 To submit feedback please link:https://github.com/neo4j-labs/arrows.app/issues[create an issue on Github.]
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | Alistair Jones, Irfan Karaca
+| icon:gift[] Availability | link:https://arrows.app/[arrows.app^]
+// | icon:github[] Source | https://github.com/neo4j-contrib/neo4j-etl
+| icon:play-circle[] Usage Video | link:https://youtu.be/ZHJ-BrKJ8A4[Video^]
+| icon:github[] Issues | link:https://github.com/neo4j-labs/arrows.app[https://github.com/neo4j-labs/arrows.app^]
+// | icon:book[] Article |
+// | icon:play-circle[] Example |
+|===
