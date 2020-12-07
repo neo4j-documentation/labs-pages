@@ -4,4 +4,4 @@
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 // *** link:./docs/current[Documentation]
-*** link:https://arrows.app/[Run Arrows^]
+*** link:https://arrows.app/[Launch Arrows^]

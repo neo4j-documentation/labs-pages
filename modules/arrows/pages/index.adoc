@@ -9,7 +9,9 @@ image::https://arrows.app/about/assets/arrows_logo.svg[float=right, width=100, p
 
 Web-based tool for drawing pictures of graphs. Try it at link:https://arrows.app[arrows.app^]
 
-image::https://arrows.app/about/assets/homepage_screenshot.png[]
+++++
+<style>.resheaderimage {width: 60%; height: auto; margin: auto;}</style><img src="https://arrows.app/about/assets/homepage_screenshot.png" class='resheaderimage' />
+++++
 
 == Features
 
@@ -19,7 +21,7 @@ image::https://arrows.app/about/assets/homepage_screenshot.png[]
 * **Export as image or Cypher** Use images in documents or presentations. Run Cypher to create graphs in Neo4j.
 
 ++++
-<iframe width="320" height="180" src="https://www.youtube.com/embed/ZHJ-BrKJ8A4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe src='https://www.youtube.com/embed/ZHJ-BrKJ8A4' frameborder='0' allowfullscreen></iframe></div>
 ++++
 
 == Feedback
