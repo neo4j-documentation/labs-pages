@@ -32,20 +32,14 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 == Current Projects
 
 [#goals.incremental]
-=== xref:grandstack-graphql:index.adoc[GraphQL and GRANDstack]
-GraphQL has become a comprehensive stack for API development and consolidation.
-Our link:https://www.grandstack.io[GRANDstack^] and Neo4j-GraphQL-js offerings combine the most common tools and frameworks: GraphQL, React, Apollo and Neo4j Database.
+=== xref:arrows:index.adoc[arrows.app]
 
+A web-based tool for drawing pictures of graphs. Try it at link:https://arrows.app[arrows.app^]
 
 === xref:apoc:index.adoc[Awesome Procedures on Cypher (APOC)]
 
 As the most comprehensive developer toolkit for Neo4j, the xref:apoc:index.adoc[APOC library] provides a wide range of procedures and functions that make your life as a Neo4j user easier.
 APOC includes data integration, graph refactoring, data conversion, operational functionality and more.
-
-=== xref:halin:index.adoc[Halin Monitoring App]
-
-The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
-The app also provides access to metrics and logs.
 
 === xref:etl-tool:index.adoc[ETL Tool]
 
@@ -53,17 +47,27 @@ Having an easy way of loading data from relational databases into Neo4j is one o
 The xref:etl-tool:index.adoc[Neo4j-ETL Tool] makes this easy by inferring a graph model from the relational meta model that you can then adapt to fit your needs.
 Given that transformation, this tool also handles the actual import for you.
 
-=== xref:neosemantics:index.adoc[Neosemantics]
+=== xref:grandstack-graphql:index.adoc[GraphQL and GRANDstack]
 
-xref:neosemantics:index.adoc[Neosemantics] integrates RDF and Linked Data with Neo4j.
-It allows to import a wide variety of RDF formats and to expose Neo4j property graphs as Linked Data.
-Ontology and Inference are also partially supported.
+GraphQL has become a comprehensive stack for API development and consolidation.
+Our link:https://www.grandstack.io[GRANDstack^] and Neo4j-GraphQL-js offerings combine the most common tools and frameworks: GraphQL, React, Apollo and Neo4j Database.
+
+=== xref:halin:index.adoc[Halin Monitoring App]
+
+The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
+The app also provides access to metrics and logs.
 
 === xref:neo4j-helm:index.adoc[Neo4j-Helm]
 
 xref:neo4j-helm:index.adoc[Neo4j-Helm] is a tool for configuring and deploying Neo4j instances on Kubernetes.  By using the Helm
 package manager for Kubernetes, it makes it simple to specify advanced configurations of Neo4j, both standalone and cluster, and
 run them with Kubernetes across many cloud platforms.
+
+=== xref:neosemantics:index.adoc[Neosemantics]
+
+xref:neosemantics:index.adoc[Neosemantics] integrates RDF and Linked Data with Neo4j.
+It allows to import a wide variety of RDF formats and to expose Neo4j property graphs as Linked Data.
+Ontology and Inference are also partially supported.
 
 === Other Active Projects
 
