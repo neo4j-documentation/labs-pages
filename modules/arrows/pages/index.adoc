@@ -5,12 +5,12 @@
 :tags: dataviz, diagram, modeling
 :neo4j-versions: 3.4, 3.5, 4.0, 4.1, 4.2
 
-image::https://arrows.app/about/assets/arrows_logo.svg[float=right, width=100, position="top"]
+image::arrows_logo.svg[float=right, width=100, position="top"]
 
 Web-based tool for drawing pictures of graphs. Try it at link:https://arrows.app[arrows.app^]
 
 ++++
-<style>.resheaderimage {width: 60%; height: auto; margin: auto;}</style><img src="https://arrows.app/about/assets/homepage_screenshot.png" class='resheaderimage' />
+<style>.resheaderimage {width: 60%; height: auto; margin: auto;}</style><img src="_images/screenshot.png" class='resheaderimage' />
 ++++
 
 == Features
