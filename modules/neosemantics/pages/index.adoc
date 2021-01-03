@@ -1,4 +1,4 @@
-= neosemantics (n10s) /
+= neosemantics (n10s): Neo4j RDF & Semantics toolkit
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: neosemantics-rdf
 :author: Jesús Barrasa
@@ -8,15 +8,13 @@
 :page-pagination:
 :page-product: Neosemantics
 
-
-==  Neo4j RDF & Semantics toolkit
-// image::n10s-logo.png[float=right,width=500]
+image::n10s-logo.png[float=right,width=200]
 
 neosemantics (n10s) is a plugin that enables the **use of RDF and its associated vocabularies like (OWL,RDFS,SKOS and others) in Neo4j**. https://www.w3.org/RDF/[RDF is a W3C standard model] for data interchange.
 
 You can use n10s to build integrations with RDF-generating / RDF-consuming components. You can also use it to validate your graph against constraints expressed in https://www.w3.org/TR/shacl/[SHACL] or to run basic inferencing.
 
-// image::n10s-block-diagram.png[float=right,width=200]
+//image::n10s-block-diagram.png[float=right,width=150]
 
 == Availability & Installation
 
@@ -26,7 +24,7 @@ The n10s GraphApp will help you get started with neosemantics
 
 == Functionality Includes
 
-* Import/Export of RDF in multiple formats (Turtle, N-Triples, JSON-LD, RDF/XML, TriG and N-Quads)
+* Import/Export of RDF and RDF* in multiple formats (Turtle, N-Triples, JSON-LD, RDF/XML, TriG and N-Quads, Turtle*, TriG*)
 * Model mapping on import/export
 * Import and export of Ontologies/Taxonomies in different vocabularies (OWL,SKOS,RDFS)
 * Graph validation based on SHACL constraints
@@ -49,11 +47,11 @@ The n10s GraphApp will help you get started with neosemantics
 == Videos & Tutorials
 
 ++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/9AionSzdTWk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/embed/tDPK4CTamKg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/embed/vs7tYqnrBZI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <iframe width="320" height="180" src="https://www.youtube.com/embed/LO-OvQaBq8s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="320" height="180" src="https://www.youtube.com/embed/SvwIqzaoYMo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/embed/5wluUfomasg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/embed/OVweE--RJqM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
