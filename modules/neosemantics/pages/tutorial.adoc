@@ -28,7 +28,7 @@ include::example$tutorial.ttl[]
 The RDF fragment describes four elements (resources) including:
 
 * **Neo4j** - a Graph Platform with a version property of 3.5.5
-* **NSMNTX** - A Neo4j Plugin with a version 3.5.0.2 released on 3 June 2019 which runs on the the Neo4j platform
+* **Neosemantics (n10s)** - A Neo4j Plugin with a version 3.5.0.2 released on 3 June 2019 which runs on the the Neo4j platform
 * **APOC** - A Neo4j Plugin with a version 3.5.0.4 released on 31 May 2019 which runs on the the Neo4j platform
 * **Neo4j-GraphQL** - A Neo4j Plugin with a version 3.5.0.3 released on 5 May 2019 which runs on the the Neo4j platform
 
