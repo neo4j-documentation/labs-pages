@@ -57,6 +57,10 @@ Our link:https://www.grandstack.io[GRANDstack^] and Neo4j-GraphQL-js offerings c
 The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
 The app also provides access to metrics and logs.
 
+=== xref:liquibase:index.adoc[Neo4j plugin for Liquibase]
+
+Liquibase is an open source project for tracking, managing and applying database schema changes. The link:https://github.com/liquibase/liquibase-neo4j[Neo4j plugin for Liquibase] allows you to define and execute changes against Neo4j, with all the features Liquibase supports.
+
 === xref:neo4j-helm:index.adoc[Neo4j-Helm]
 
 xref:neo4j-helm:index.adoc[Neo4j-Helm] is a tool for configuring and deploying Neo4j instances on Kubernetes.  By using the Helm
