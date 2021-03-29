@@ -7,9 +7,9 @@
 
 image::logo.svg[float=right, width=100, position="top"]
 
-Liquibase is an open source project for tracking, managing and applying database schema changes.
-This plugin allows you to define and execute changes against Neo4j, with all the features Liquibase supports.
-Try the link:https://github.com/liquibase/liquibase-neo4j[Liquibase Neo4j plugin^] now!
+https://www.liquibase.org/[Liquibase] is an open-source project for tracking, managing and applying database schema changes.
+This plugin allows you to define and execute changes against Neo4j, with most, if not all, of the features Liquibase Community Edition supports.
+Try the https://github.com/liquibase/liquibase-neo4j[Liquibase Neo4j plugin^] now!
 
 == Features
 
@@ -19,17 +19,17 @@ Try the link:https://github.com/liquibase/liquibase-neo4j[Liquibase Neo4j plugin
 
 == Feedback
 
-The Liquibase Neo4j plugin allows you to define and execute database changes.
+The Liquibase Neo4j plugin allows you to define and execute database changes against the Neo4j database.
 
 For visualizing these changes in your Neo4j graph database, please see our pages about link:https://neo4j.com/bloom[Neo4j Bloom], link:https://neo4j.com/developer/neo4j-browser/[Neo4j Browser], and link:https://neo4j.com/developer/tools-graph-visualization/[Graph Visualization] in general.
 
-To submit feedback, please link:https://github.com/liquibase/liquibase-neo4j/issues[create an issue on Github.]
+To submit feedback, please https://github.com/liquibase/liquibase-neo4j/issues[create an issue on Github.]
 
 == Relevant Links
 
 [cols="1,4"]
 |===
 | icon:user[] Authors | Florent Biville
-| icon:gift[] Availability | link:https://github.com/liquibase/liquibase-neo4j/[Liquibase Neo4j plugin^]
-| icon:github[] Issues | link:https://github.com/liquibase/liquibase-neo4j/issues[github.com/liquibase/liquibase-neo4j^]
+| icon:gift[] Availability | https://github.com/liquibase/liquibase-neo4j/[Liquibase Neo4j plugin^]
+| icon:github[] Issues | https://github.com/liquibase/liquibase-neo4j/issues[github.com/liquibase/liquibase-neo4j^]
 |===
