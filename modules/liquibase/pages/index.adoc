@@ -5,7 +5,7 @@
 :tags: migrations, refactoring, modeling
 :neo4j-versions: 3.5, 4.0, 4.1, 4.2
 
-image::logo.svg
+image::logo.svg[]
 
 Liquibase tracks, versions, and deploys database schema changes. This open source project helps millions of developers and teams around the world automate their database change process. 
 
