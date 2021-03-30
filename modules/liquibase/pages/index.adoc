@@ -5,9 +5,9 @@
 :tags: migrations, refactoring, modeling
 :neo4j-versions: 3.5, 4.0, 4.1, 4.2
 
-image::logo.svg
+image::logo.svg[float=right, width=200, position="top"]
 
-Liquibase tracks, versions, and deploys database schema changes. This open source project helps millions of developers and teams around the world automate their database change process. 
+Liquibase tracks, versions, and deploys database schema changes. This open source project helps millions of developers and teams around the world automate their database change process.
 
 The Liquibase Neo4j plugin allows you to track, version, and execute database changes against Neo4j.
 Try the link:https://github.com/liquibase/liquibase-neo4j[Liquibase Neo4j plugin^] now!
@@ -18,7 +18,7 @@ To see these changes in your Neo4j graph database, please see our pages about li
 
 * **Easy to use** Create your changes and Liquibase will automatically order and run them.
 * **Powerful & Customizable** Easily fine tune deployments for specific environments using labels, contexts, and preconditions.
-* **Works well with other tools** Works with most CI/CD tools you're already using. 
+* **Works well with other tools** Works with most CI/CD tools you're already using.
 * **Rollbacks included** Undo database changes, either automatically or via custom rollback scripts.
 * **Battle-tested** Liquibase is used by millions around the world since its creation in 2006.
 
