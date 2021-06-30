@@ -83,7 +83,7 @@ The following projects were successfully developed, incubated, and validated wit
 
 === link:/graph-data-science[Graph Data Science Library]
 
-To enable larg scale graph analytics and support machine learning pipelines we developed the Neo4j Graph Algorithms library, which covers many widely used algorithms. The library offers highly parallelized implementations that work well with large scale graphs.
+To enable large scale graph analytics and support machine learning pipelines we developed the Neo4j Graph Algorithms library, which covers many widely used algorithms. The library offers highly parallelized implementations that work well with large scale graphs.
 It graduated and is now available as part of the Neo4j Graph Platform as link:/graph-data-science[Graph Data Science Library]. link:/developer/graph-data-science[Educational content] is available from Neo4j Labs.
 
 === xref:kafka:index.adoc[Neo4j Connector for Apache Kafka]
