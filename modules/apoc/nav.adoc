@@ -4,7 +4,8 @@
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 *** Documentation
-**** link:/labs/apoc/4.2[4.2 (Current)]
+**** link:/labs/apoc/4.3[4.3 (Current)]
+**** link:/labs/apoc/4.2[4.2]
 **** link:/labs/apoc/4.1[4.1]
 **** link:/labs/apoc/4.0[4.0]
 **** link:https://neo4j.com/docs/labs/apoc/3.5/[3.5^]
