@@ -7,7 +7,8 @@
 *** xref:graph-app.adoc[Graph App]
 *** xref:acknowledgements.adoc[Acknowledgements]
 *** Documentation
-**** link:/labs/neosemantics/4.2[4.2 (Current)]
+**** link:/labs/neosemantics/4.3[4.3 (Current)]
+**** link:/labs/neosemantics/4.2[4.2]
 **** link:/labs/neosemantics/4.1[4.1]
 **** link:/labs/neosemantics/4.0[4.0]
 **** link:https://neo4j.com/docs/labs/nsmntx/3.5/[3.5^]
