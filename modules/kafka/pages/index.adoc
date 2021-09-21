@@ -48,7 +48,7 @@ image::kafka-source-flow.png[link={docs}/#_neo4j_streams_producer, width=800]
 [cols="1,4"]
 |===
 | icon:gift[] Releases | https://neo4j.com/download-center/#integrations
-| icon:book[] Documentation | https://neo4j.com/labs/kafka/4.0/
+| icon:book[] Documentation | https://neo4j.com/labs/kafka/4.1/
 | icon:comments[] Enterprise Customer Support | https://support.neo4j.com/hc/en-us[Customer Support]
 | icon:comments[] Community Support | https://community.neo4j.com/c/integrations/stream-processing[Neo4j Online Community]
 | icon:user[] Authors | Michael Hunger, David Allen and Andrea Santurbano, Mauro Roiter from our partners http://larus-ba.it/neo4j/[Larus BA, Italy^]
