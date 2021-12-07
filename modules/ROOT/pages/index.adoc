@@ -68,7 +68,7 @@ By using the Helm package manager for Kubernetes, it makes it simple to specify 
 
 === xref:neo4j-migrations:index.adoc[Neo4j-Migrations]
 
-xref:neo4j-helm:index.adoc[Neo4j-Migrations] is a set of tools to make your schema migrations as easy as possible. 
+xref:neo4j-migrations:index.adoc[Neo4j-Migrations] is a set of tools to make your schema migrations as easy as possible. 
 It provides a uniform way for applications, the command line and build tools alike to track, manage and apply changes to your database.
 It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts. 
 Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j from 3.5 up to 4.4, including enterprise features such as multidatabase support and impersonation.
