@@ -63,14 +63,15 @@ Liquibase is an open source project for tracking, managing and applying database
 
 === xref:neo4j-helm:index.adoc[Neo4j-Helm]
 
-xref:neo4j-helm:index.adoc[Neo4j-Helm] is a tool for configuring and deploying Neo4j instances on Kubernetes.  By using the Helm
-package manager for Kubernetes, it makes it simple to specify advanced configurations of Neo4j, both standalone and cluster, and
-run them with Kubernetes across many cloud platforms.
+xref:neo4j-helm:index.adoc[Neo4j-Helm] is a tool for configuring and deploying Neo4j instances on Kubernetes.  
+By using the Helm package manager for Kubernetes, it makes it simple to specify advanced configurations of Neo4j, both standalone and cluster, and run them with Kubernetes across many cloud platforms.
 
 === xref:neo4j-migrations:index.adoc[Neo4j-Migrations]
 
 xref:neo4j-helm:index.adoc[Neo4j-Migrations] is a set of tools to make your schema migrations as easy as possible. 
-It provides a uniform way for applications, the command line and build tools alike to track, manage and apply changes to your database. It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts. Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j from 3.5 up to 4.4, including enterprise features such as multidatabase support and impersonation.
+It provides a uniform way for applications, the command line and build tools alike to track, manage and apply changes to your database.
+It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts. 
+Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j from 3.5 up to 4.4, including enterprise features such as multidatabase support and impersonation.
 
 === xref:neosemantics:index.adoc[Neosemantics]
 
