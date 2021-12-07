@@ -1,0 +1,35 @@
+= Neo4j-Migrations: Manage schema changes with ease
+:docs: https://github.com/michael-simons/neo4j-migrations
+:slug: neo4j-migrations
+:author: Michael Simons
+:category: labs
+:tags: migrations, refactoring, modeling, schema
+:neo4j-versions: 3.5, 4.0, 4.1, 4.2, 4.3, 4.4, Aura
+
+Neo4j-Migrations is a set of tools to make your schema migrations as easy as possible. 
+It provides a uniform way for applications, the command line and build tools alike to track, manage and apply changes to your database. It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts. Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j from 3.5 up to 4.4, including enterprise features such as multidatabase support and impersonation.
+
+All provided modules have feature parity: Commands in the API reflect in the CLI, in the Maven as well as in the Spring Boot integration
+
+== Features
+
+* Directly based on the official link:https://github.com/neo4j/neo4j-java-driver[Neo4j-Java-Driver (Bolt)], no JDBC required
+* Works well with dynamic environments such as link:https://neo4j.com/cloud/aura/[Neo4j Aura] by using transactional functions throughout the whole stack
+* Can use different database for storing migration information and for applying actual migrations (Separation of the database being managed and the database containing the management information)
+* Supports Impersonation
+* Core Java API with guaranteed semantic versioning to be used in any way you prefer
+* Provides a Spring Boot Starter that hooks into the official Spring Boot support for Neo4j so that only migrations scripts need to be provided
+* Provides a Maven-plugin for running migrations during build-time
+* Native CLI tools for Linux, macOS and Windows, no Java required to run migrations via the CLI
+* Native CLI for macOS can be installed via the link:https://github.com/michael-simons/homebrew-neo4j-migrations[homebrew] package-manager
+* The Java API allows for very custom migrations written in Java, using the official driver for special cases in which Cypher might not be sufficient
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://twitter.com/rotnroll666[Michael Simons]
+| icon:gift[] Releases | https://github.com/michael-simons/neo4j-migrations/releases
+| icon:github[] Source | https://github.com/michael-simons/neo4j-migrations
+| icon:book[] Docs | https://github.com/michael-simons/neo4j-migrations/blob/main/README.adoc
+|===
