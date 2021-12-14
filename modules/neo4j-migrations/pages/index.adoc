@@ -1,5 +1,5 @@
 = Neo4j-Migrations: Manage schema changes with ease
-:docs: https://github.com/michael-simons/neo4j-migrations
+:docs: https://michael-simons.github.io/neo4j-migrations
 :slug: neo4j-migrations
 :author: Michael Simons
 :category: labs
@@ -33,5 +33,5 @@ All provided modules have feature parity: Commands in the API reflect in the CLI
 | icon:user[] Authors | https://twitter.com/rotnroll666[Michael Simons]
 | icon:gift[] Releases | https://github.com/michael-simons/neo4j-migrations/releases
 | icon:github[] Source | https://github.com/michael-simons/neo4j-migrations
-| icon:book[] Docs | https://github.com/michael-simons/neo4j-migrations/blob/main/README.adoc
+| icon:book[] Docs | https://michael-simons.github.io/neo4j-migrations
 |===

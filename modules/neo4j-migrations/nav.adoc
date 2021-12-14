@@ -1,2 +1,2 @@
 ** xref:index.adoc[Neo4j-Migrations]
-*** link:https://github.com/michael-simons/neo4j-migrations/blob/main/README.adoc[Start using Neo4j-Migrations]
+*** link:https://github.com/michael-simons/neo4j-migrations[Start using Neo4j-Migrations]
