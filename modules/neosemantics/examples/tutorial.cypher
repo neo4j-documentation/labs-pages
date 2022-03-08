@@ -21,7 +21,7 @@ CALL n10s.rdf.preview.fetch(
 // end::preview.fetch[]
 
 // tag::preview.inline[]
-CALL n10s.rdf.preview.fetch(
+CALL n10s.rdf.preview.inline(
   '
 @prefix neo4voc: <http://neo4j.org/vocab/sw#> .
 @prefix neo4ind: <http://neo4j.org/ind#> .
