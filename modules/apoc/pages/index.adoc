@@ -1,5 +1,5 @@
 = Awesome Procedures On Cypher (APOC)
-:docs: https://neo4j.com/labs/apoc/4.1
+:docs: https://neo4j.com/labs/apoc/4.4
 :slug: apoc
 :author: Michael Hunger
 :category: labs
@@ -24,7 +24,7 @@ You can learn more in the https://neo4j.com/developer/neo4j-apoc/[APOC Developer
 
 [cols="1,4"]
 |===
-| icon:user[] Authors | Michael Hunger, lots of internal and external contributors, especially the team from http://larus-ba.it/neo4j/[Larus BA, Italy^] lead by Andrea Santurbano
+| icon:user[] Authors | Michael Hunger, lots of internal and external contributors, especially the team from http://larus-ba.it/[Larus BA, Italy^] lead by Andrea Santurbano
 | icon:gift[] Releases | https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases
 | icon:github[] Source | https://github.com/neo4j-contrib/neo4j-apoc-procedures
 | icon:book[] Developer Guide | https://neo4j.com/developer/neo4j-apoc/
