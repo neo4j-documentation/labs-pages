@@ -79,6 +79,10 @@ xref:neosemantics:index.adoc[Neosemantics] integrates RDF and Linked Data with N
 It allows to import a wide variety of RDF formats and to expose Neo4j property graphs as Linked Data.
 Ontology and Inference are also partially supported.
 
+=== xref:neodash:index.adoc[NeoDash]
+
+xref:neodash:index.adoc[NeoDash] is an open-source, low-code Dashboard Builder for Neo4j. It lets you build an interactive dashboard with tables, graphs, bar charts, line charts, maps and more.
+
 === Other Active Projects
 
 * link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web
