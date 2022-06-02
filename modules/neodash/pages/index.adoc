@@ -1,4 +1,4 @@
-= NeoDash - Neo4j Dashboard Builder
+= NeoDash - Dashboard Builder for Neo4j
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: neodash
 :author: Niels de Jong
@@ -9,7 +9,6 @@
 :page-product: NeoDash
 
 image::neodash.png[width=800]
-
 
 
 NeoDash is an open-source, low-code Dashboard Builder for Neo4j. It lets you build an interactive dashboard with tables, graphs, bar charts, line charts, maps and more.
@@ -35,24 +34,28 @@ link:https://github.com/neo4j-labs/neodash/wiki/Developer-Guide[Developer Guide]
 
 [cols="1,4"]
 |===
-| icon:comments[] Support | https://community.neo4j.com/c/neo4j-graph-platform/visualization/17[Neo4j Online Community]
-| icon:user[] Authors | https://github.com/nielsdejong[Niels de Jong], https://github.com/mariusconjeaud[Marius Conjeaud], https://github.com/BennuFire[Harold Agudelo Ramirez], https://github.com/AleSim94[Aleksandar Simeunovic]
+| icon:comments[] Community Support | https://community.neo4j.com/t5/forums/filteredbylabelpage/board-id/graph_platform/label-name/visualization[Neo4j Online Community^]
+| icon:user[] Authors | https://github.com/nielsdejong[Niels de Jong^], https://github.com/mariusconjeaud[Marius Conjeaud^], https://github.com/BennuFire[Harold Agudelo Ramirez^], https://github.com/AleSim94[Aleksandar Simeunovic^]
 | icon:gift[] Releases | https://github.com/neo4j-labs/neodash/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neodash
-| icon:book[] Docs | https://github.com/neo4j-labs/neodash/wiki
+| icon:github[] Issues | https://github.com/neo4j-labs/neodash/issues
+| icon:book[] Documentation | https://github.com/neo4j-labs/neodash/wiki
 | icon:gift[] Graph App | Install from your Neo4j Desktop via https://install.graphapp.io
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
 |===
 
 
+== Videos & Tutorials
+
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/Ygzj0Y4cYm4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/vjZ9M7JpExA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
 
 == Recent Articles
 
-
-- https://www.youtube.com/watch?v=Ygzj0Y4cYm4[NeoDash 2.0 in
-Five Minutes] 
-- https://www.youtube.com/watch?v=vjZ9M7JpExA[NeoDash 2.0 Hands On at Neo4j Live] 
 - https://medium.com/p/ddc938ff82fa[Investigating Supply Chains with
 NeoDash] 
 - https://thatdavestevens.medium.com/social-recommendations-slack-neo4j-and-neodash-fe916588e65b[Social
