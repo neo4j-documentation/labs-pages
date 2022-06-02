@@ -1,4 +1,4 @@
-= NeoDash - Neo4j Dashboard Builder
+= NeoDash - Dashboard Builder for Neo4j
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: neodash
 :author: Niels de Jong
