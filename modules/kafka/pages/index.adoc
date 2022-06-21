@@ -1,5 +1,5 @@
 = Neo4j Streams Kafka Integration
-:docs: https://neo4j.com/docs/labs/neo4j-streams/current
+:docs: https://neo4j.com/labs/kafka/4.1
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: kafka
 :author: Michael Hunger, David Allen, Andrea Santurbano, Mauro Roiter
@@ -35,11 +35,11 @@ image::connect-hub-neo4j-sink.png[link="https://www.confluent.io/connector/kafka
 
 == Functionality Includes
 
-* {docs}/#_kafka_connect[Kafka Connect: Neo4j Source Plugin^] (https://www.confluent.io/connector/kafka-connect-neo4j-sink/[Confluent Hub^])
-* {docs}/#_neo4j_streams_producer[Neo4j Plugin: Change Data Source^]
-* {docs}/#_neo4j_streams_consumer[Neo4j Plugin: Sink^]
-* {docs}/#_procedures[Neo4j Plugin: Procedures^]
-* {docs}/#docker[Docker Compose setups^]
+* {docs}/kafka-connect/[Kafka Connect: Neo4j Source Plugin^] (https://www.confluent.io/connector/kafka-connect-neo4j-sink/[Confluent Hub^])
+* {docs}/producer/[Neo4j Plugin: Change Data Source^]
+* {docs}/consumer[Neo4j Plugin: Sink^]
+* {docs}/procedures[Neo4j Plugin: Procedures^]
+* {docs}/docker[Docker Compose setups^]
 
 image::kafka-source-flow.png[link={docs}/#_neo4j_streams_producer, width=800]
 
@@ -48,7 +48,7 @@ image::kafka-source-flow.png[link={docs}/#_neo4j_streams_producer, width=800]
 [cols="1,4"]
 |===
 | icon:gift[] Releases | https://neo4j.com/download-center/#integrations
-| icon:book[] Documentation | https://neo4j.com/labs/kafka/4.1/
+| icon:book[] Documentation | {docs}
 | icon:comments[] Enterprise Customer Support | https://support.neo4j.com/hc/en-us[Customer Support]
 | icon:comments[] Community Support | https://community.neo4j.com/c/integrations/stream-processing[Neo4j Online Community]
 | icon:user[] Authors | Michael Hunger, David Allen and Andrea Santurbano, Mauro Roiter from our partners http://larus-ba.it/neo4j/[Larus BA, Italy^]
