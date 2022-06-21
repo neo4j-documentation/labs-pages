@@ -549,4 +549,4 @@ If you have experienced any issues during this tutorial you may find the solutio
 
 [glossary]
 [[NEO4J_BROWSER]]Neo4j Browser:: link:https://neo4j.com/developer/neo4j-browser/[Neo4j Browser^] is a User Interface for  querying, visualization, and data interaction.  If your database is running, it can usually be accessed over HTTP on port `:7474` or `:7473` over HTTPS, eg. http://localhost:7474.
-[[APOC]]APOC:: xref:apoc[APOC] is a library of procedures and functions that make your life as a Neo4j user easier.
+[[APOC]]APOC:: xref:apoc:index.adoc[APOC] is a library of procedures and functions that make your life as a Neo4j user easier.

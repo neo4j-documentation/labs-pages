@@ -103,5 +103,5 @@ The previous command assumes you're running neo4j on your local machine, replace
 [[NEO4J_HOME]]$NEO4J_HOME:: The directory in which you have installed Neo4j.  This will contain a `bin/` folder which holds the `neo4j` executable, plus conf, data and plugins.
 +
 For more information, see the link:/ops-manual[Operations Manual^]
-[[APOC]]APOC:: xref:apoc[APOC] is a library of procedures and functions that make your life as a Neo4j user easier.
+[[APOC]]APOC:: xref:apoc:index.adoc[APOC] is a library of procedures and functions that make your life as a Neo4j user easier.
 [[CausalCluster]]Causal Cluster:: A highly available cluster of Neo4j servers
