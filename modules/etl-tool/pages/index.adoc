@@ -51,7 +51,7 @@ image::etl10_mapping_rule3.jpg[]
 | icon:gift[] Releases | https://github.com/neo4j-contrib/neo4j-etl/releases
 // | icon:github[] Source | https://github.com/neo4j-contrib/neo4j-etl
 | icon:book[] User Guide | https://neo4j.com/developer/neo4j-etl
-| icon:book[] Docs | link:/labs/etl-tool/1.5.0/[https://neo4j.com/labs/etl-tool/1.5.0^]
+| icon:book[] Docs | link:/labs/etl-tool/1.5.0/[https://neo4j.com/labs/etl-tool/1.5.0]
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
 |===
