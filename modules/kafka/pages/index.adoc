@@ -10,7 +10,7 @@
 :featured-media: labs_beaker
 :page-product: Neo4j Streams
 
-image::neo4j-loves-confluent.png[width=500]
+image::neo4j-loves-confluent.svg[width=500]
 
 Neo4j Streams integrates Neo4j with Apache Kafka event streams, to serve as a source of data, for instance change data (CDC) or a sink to ingest any kind of Kafka event into your graph.
 
@@ -31,7 +31,7 @@ Just download the matching release version into the plugins folder and configuri
 Enterprise users may use Neo4j Streams under their existing support agremeents.  Neo4j Community users may also use Neo4j Streams, with
 community support.
 
-image::connect-hub-neo4j-sink.png[link="https://www.confluent.io/connector/kafka-connect-neo4j-sink/"]
+image::connect-hub-neo4j-sink.svg[link="https://www.confluent.io/connector/kafka-connect-neo4j-sink/"]
 
 == Functionality Includes
 
@@ -41,7 +41,7 @@ image::connect-hub-neo4j-sink.png[link="https://www.confluent.io/connector/kafka
 * {docs}/procedures[Neo4j Plugin: Procedures^]
 * {docs}/docker[Docker Compose setups^]
 
-image::kafka-source-flow.png[link={docs}/#_neo4j_streams_producer, width=800]
+image::kafka-source-flow.svg[link={docs}/#_neo4j_streams_producer, width=800]
 
 == Relevant Links
 
@@ -60,7 +60,7 @@ image::kafka-source-flow.png[link={docs}/#_neo4j_streams_producer, width=800]
 // | icon:play-circle[] Example | A `:play apoc` browser guide shows some of the functionality.
 |===
 
-image::kafka-sink-flow.png[link={docs}/#_neo4j_streams_consumer]
+image::kafka-sink-flow.svg[link={docs}/#_neo4j_streams_consumer]
 
 == Videos & Tutorials
 
