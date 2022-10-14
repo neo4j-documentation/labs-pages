@@ -38,7 +38,7 @@ The n10s GraphApp will help you get started with neosemantics
 | icon:user[] Authors | https://twitter.com/BarrasaDV[Jesús Barrasa], https://twitter.com/adamcowley[Adam Cowley] (GraphApp)
 | icon:gift[] Releases | https://github.com/neo4j-labs/neosemantics/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neosemantics
-| icon:book[] Docs | https://neo4j.com/docs/labs/nsmntx/current/
+| icon:book[] Docs | https://neo4j.com/docs/labs/neosemantics/4.3/
 | icon:gift[] GraphApp | Install from your Neo4j Desktop via https://install.graphapp.io
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
