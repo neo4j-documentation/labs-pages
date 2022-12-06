@@ -13,7 +13,6 @@ nav:
 - modules/liquibase/nav.adoc
 - modules/neo4j-helm/nav.adoc
 - modules/neosemantics/nav.adoc
-- modules/kafka/nav.adoc
 - modules/neodash/nav.adoc
 
 asciidoc:
