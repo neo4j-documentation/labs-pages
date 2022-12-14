@@ -39,6 +39,7 @@ More detail in the {docs}/installation/[installation docs^].
 // | icon:book[] Developer Guide | https://neo4j.com/developer/neo4j-apoc/
 | icon:book[] Docs | {docs}
 | icon:book[] Aura Docs | https://neo4j.com/docs/aura/platform/apoc/
+|===
 
 === Documentation
 
