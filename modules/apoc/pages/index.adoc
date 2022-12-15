@@ -67,7 +67,7 @@ For APOC Extended download the link:{repo-ext}/releases[appropriate release^] (s
 You might need to enable restricted procedures or add an extra `$NEO4J_HOME/conf/apoc.conf` for configuration settings.
 
 [NOTE]
-APOC-Extended depends on the availability of APOC-Core, so you will need to ensure that the core-library is installed too.
+APOC-Extended does not include the functionality of APOC-Core anymore, so you will need to ensure that the core-library is installed too if you need those.
 Also, several of the procedures need additional libraries which can be also found in the releases pages.
 
 // You can learn more in the https://neo4j.com/developer/neo4j-apoc/[APOC Developer Guide^].
