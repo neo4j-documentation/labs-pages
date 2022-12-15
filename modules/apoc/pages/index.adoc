@@ -12,7 +12,7 @@
 
 APOC (Awesome Procedures on Cypher) is an add-on library for Neo4j that provides hundreds of procedures and functions adding a lot of useful functionality.
 
-[WARN]
+[IMPORTANT]
 Starting in *Neo4j 5 APOC core is now fully supported* by Neo4j product and engineering, with it's own link:{docs}[documentation^] and link:{repo}[GitHub repository^]. APOC extended lives in the existing place as a pure open-source project with best effort releases and community support.
 
 == APOC-Core
