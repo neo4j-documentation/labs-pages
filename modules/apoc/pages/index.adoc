@@ -13,7 +13,7 @@
 APOC (Awesome Procedures on Cypher) is an add-on library for Neo4j that provides hundreds of procedures and functions adding a lot of useful functionality.
 
 [IMPORTANT]
-Starting in *Neo4j 5 APOC core is now fully supported* by Neo4j product and engineering, with it's own link:{docs}[documentation^] and link:{repo}[GitHub repository^]. APOC extended lives in the existing place as a pure open-source project with best effort releases and community support.
+Starting in *Neo4j 5 APOC core is now fully supported* by Neo4j product and engineering, with its own link:{docs}[documentation^] and link:{repo}[GitHub repository^]. APOC extended lives in the existing place as a pure open-source project with best effort releases and community support.
 
 == APOC-Core
 
@@ -25,7 +25,7 @@ NOTE: Since Neo4j 5 *only the APOC-Core library* is officially supported by Neo4
 === Installation
 
 The APOC-Core library can be installed with a single click in Neo4j Desktop, can be enabled with the Docker Image, is available in all Neo4j Sandboxes and in Neo4j AuraDB and AuraDS.
-In a Neo4j binary download, you can find the libary in the `labs` folder, just copy it over to the `plugins` folder to make all non-restricted functionality available.
+In a Neo4j binary download, you can find the library in the `labs` folder, just copy it over to the `plugins` folder to make all non-restricted functionality available.
 
 More detail in the {docs}/installation/[installation docs^].
 
@@ -115,7 +115,7 @@ Here are the latest videos.
 == Available Content
 
 * https://medium.com/neo4j/search?q=apoc[Medium Articles^]
-* https://www.youtube.com/@neo4j/search?query=apoc[Youtube Livestreams & Videos^]
+* https://www.youtube.com/@neo4j/search?query=apoc[YouTube Livestreams & Videos^]
 * https://medium.com/neo4j/efficient-neo4j-data-import-using-cypher-scripts-7d1268b0747[Efficient Neo4j Data Import Using Cypher-Scripts by Andrea Santurbano^]
 * https://medium.com/neo4j/streaming-graph-loading-with-neo4j-and-apoc-triggers-188ed4dd40d5[Streaming Graph Loading with Neo4j and APOC Triggers by David Allen^]
 * https://markhneedham.com/blog/tag/apoc/[APOC Articles by Mark Needham^]
