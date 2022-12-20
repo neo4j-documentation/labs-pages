@@ -4,6 +4,7 @@
 // *** xref:tutorial.adoc[Getting Started]
 // *** xref:how-to-guide.adoc[How To Guide]
 *** Documentation
+**** link:/docs/apoc/current[5 - Core]
 **** link:/labs/apoc/5[5 - Extended]
 **** link:/labs/apoc/4.4[4.4]
 **** link:/labs/apoc/4.3[4.3]
