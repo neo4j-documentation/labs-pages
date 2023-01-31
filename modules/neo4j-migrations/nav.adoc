@@ -1,2 +1,3 @@
 ** xref:index.adoc[Neo4j-Migrations]
-*** link:https://github.com/michael-simons/neo4j-migrations[Start using Neo4j-Migrations]
+*** Documentation
+**** link:/labs/neo4j-migrations/2.0[2.0 (snapshot)]
