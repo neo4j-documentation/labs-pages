@@ -4,7 +4,7 @@
 :author: Niels de Jong
 :category: labs
 :tags: visualization, dashboard
-:neo4j-versions: 3.5, 4.0, 4.1, 4.2, 4.3, 4.4
+:neo4j-versions: 3.5, 4.0, 4.1, 4.2, 4.3, 4.4, 5.0, 5.1, 5.2, 5.3
 :page-pagination:
 :page-product: NeoDash
 
@@ -17,7 +17,7 @@ NeoDash is an open-source, low-code Dashboard Builder for Neo4j. It lets you bui
 
 - Web Browser: https://neodash.graphapp.io
 - Neo4j Desktop: Install it from the https://install.graphapp.io[Graph App Gallery].
-- Docker: https://hub.docker.com/r/nielsdejong/neodash 
+- Docker: https://hub.docker.com/r/neo4jlabs/neodash 
 
 == Functionality Includes
 - A low-code dashboard builder with a drag-and-drop interface
@@ -26,9 +26,9 @@ NeoDash is an open-source, low-code Dashboard Builder for Neo4j. It lets you bui
 - Build and publish dashboards for read-only access
 
 == Documentation
-* To start building dashboards, see the link:https://neo4j.com/labs/neodash/2.1/user-guide[User Guide].
+* To start building dashboards, see the link:https://neo4j.com/labs/neodash/2.2/user-guide[User Guide].
 * For deploying, configuring and extending NeoDash, check out the
-link:https://neo4j.com/labs/neodash/2.1/developer-guide[Developer Guide].
+link:https://neo4j.com/labs/neodash/2.2/developer-guide[Developer Guide].
 
 == Relevant Links
 
@@ -39,7 +39,7 @@ link:https://neo4j.com/labs/neodash/2.1/developer-guide[Developer Guide].
 | icon:gift[] Releases | https://github.com/neo4j-labs/neodash/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neodash
 | icon:github[] Issues | https://github.com/neo4j-labs/neodash/issues
-| icon:book[] Documentation | https://neo4j.com/labs/neodash/2.1/
+| icon:book[] Documentation | https://neo4j.com/labs/neodash/2.2/
 | icon:gift[] Graph App | Install from your Neo4j Desktop via https://install.graphapp.io
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
@@ -49,12 +49,13 @@ link:https://neo4j.com/labs/neodash/2.1/developer-guide[Developer Guide].
 == Videos & Tutorials
 
 ++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/Qxx_AwqyJwg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/embed/Ygzj0Y4cYm4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/embed/vjZ9M7JpExA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
 
 
-== Recent Articles
+== Highlighted Articles
 
 - https://medium.com/p/ddc938ff82fa[Investigating Supply Chains with
 NeoDash] 
