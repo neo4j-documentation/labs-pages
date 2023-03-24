@@ -41,18 +41,14 @@ A web-based tool for drawing good looking pictures of graphs and graph models. T
 As the most comprehensive developer toolkit for Neo4j, the xref:apoc:index.adoc[APOC library] provides a wide range of procedures and functions that make your life as a Neo4j user easier.
 APOC includes data integration, graph refactoring, data conversion, operational functionality and more.
 
+NOTE: As of Neo4j 5 https://neo4j.com/docs/apoc[APOC core^] migrated into the product, while apoc-extended with less commonly used/more involved functionality stayed on as an labs probject, please note that the plugin-jar files and the docs have also been split into two additive sets.
+
 === xref:etl-tool:index.adoc[ETL Tool]
 
 Having an easy way of loading data from relational databases into Neo4j is one of the first steps many users take.
 The xref:etl-tool:index.adoc[Neo4j-ETL Tool] makes this easy by inferring a graph model from the relational meta model that you can then adapt to fit your needs.
 Given that transformation, this tool also handles the actual import for you.
 For interactively modeling and importing CSV files, check out the https://data-importer.neo4j.io[Neo4j Data Importer^].
-
-// todo move to graduated, when NOM comes out
-=== xref:halin:index.adoc[Halin Monitoring App]
-
-The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
-The app also provides access to metrics and logs.
 
 === xref:liquibase:index.adoc[Neo4j plugin for Liquibase]
 
@@ -77,7 +73,7 @@ xref:neodash:index.adoc[NeoDash] is an open-source, low-code Dashboard Builder f
 
 === Other Active Projects
 
-* link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web
+* link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web, started out as a labs project but now moved to a community maintained project.
 
 == Graduated Projects
 
@@ -117,6 +113,13 @@ Built on the new DataSource API it supports usage from Python, R and Scala. It i
 
 The link:https://hub.docker.com/_/neo4j[Neo4j Docker containers] started off as a Labs project to explore how well Neo4j would run in a containerized environment.
 They quickly gained popularity and are heavily used by both Neo4j and customers, so we've graduated them to be officially part of the https://neo4j.com/docs/operations-manual/current/docker/[Neo4j release distribution].
+
+// todo move to graduated, when NOM comes out
+=== xref:halin:index.adoc[Halin Monitoring App]
+
+The link:https://neo4j.com/labs/halin[Halin Monitoring App] allowed you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
+The app also provided access to metrics and logs.
+As of 2022, some of its functionality was integrated into https://neo4j.com/neo4j-ops-manager/[Neo4j Operations Manager^] and so Halin is no longer maintained.
 
 [.secondary]
 == Frequently Asked Questions
