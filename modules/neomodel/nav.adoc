@@ -1,0 +1,3 @@
+** xref:index.adoc[neomodel]
+*** Documentation
+**** link:https://neomodel.readthedocs.io/en/latest/[4.0.10]

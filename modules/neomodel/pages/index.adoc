@@ -1,0 +1,52 @@
+= neomodel - Python OGM for Neo4j
+:slug: neomodel
+:author: Robin Edwards / Marius Conjeaud
+:category: labs
+:tags: visualization, dashboard
+:neo4j-versions: 4.0, 4.1, 4.2, 4.3, 4.4
+:page-pagination:
+:page-product: neomodel
+
+
+neomodel is an Object Graph Mapper (OGM) for Python and Neo4j. It allows you to define your graph database model in a Pythonic way and then access and edit your data without needing to write Cypher queries.
+
+== Installation
+
+- Available in PyPI: https://pypi.org/project/neomodel/
+
+[source,sh]
+pip install neomodel
+
+== Functionality Includes
+- Familiar Django model style definitions.
+- Powerful query API.
+- Enforce your schema through cardinality restrictions.
+- Full transaction support.
+- Plugin for Django : https://pypi.org/project/django-neomodel/
+
+== Documentation
+* To start using neomodel in your Python application, see the link:https://neomodel.readthedocs.io/en/latest/getting_started.html[Getting Started Guide].
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/robinedwards[Robin Edwards^], https://github.com/aanastasiou[Athanasios Anastasiou^], https://github.com/mariusconjeaud[Marius Conjeaud^]
+| icon:gift[] Releases | https://github.com/neo4j-contrib/neomodel/releases
+| icon:github[] Source | https://github.com/neo4j-contrib/neomodel
+| icon:github[] Issues | https://github.com/neo4j-contrib/neomodel/issues
+| icon:github[] Django neomodel plugin | https://github.com/neo4j-contrib/django-neomodel
+| icon:book[] Documentation | https://neomodel.readthedocs.io/en/latest/
+|===
+
+
+== Videos & Tutorials
+
+_Coming soon_
+
+
+== Highlighted Articles
+
+- https://medium.com/neo4j/neo4j-for-django-developers-efd0e39e5f2e[Neo4j for Django Developers] 
+
+_More coming soon_
