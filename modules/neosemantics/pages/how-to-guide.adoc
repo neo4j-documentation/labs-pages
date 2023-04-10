@@ -34,6 +34,12 @@ CALL n10s.graphconfig.init({
 <4> This setting ensures that any custom (user defined non- XML Schema) data types are also saved in Neo4j as a string, followed by their data type URI.
 <5> Apply Neo4j recommended naming to Graph Elements - All capital letters for relationship types, Upper Camel Case for labels, etc.
 
+== Creating a Constraint
+As we did in the tutorial, we need to ensure that there is a unique constraint on the URI property for nodes with a label of `:Resource`
+
+[source,cypher]
+CREATE CONSTRAINT n10s_unique_uri FOR (r:Resource)
+REQUIRE r.uri IS UNIQUE
 
 == Buiding a SPARQL query
 
@@ -195,6 +201,7 @@ https://query.wikidata.org/sparql?query=<RDF>
 As the URL requires an encoded version of the query, we can use the <<APOC>> `apoc.text.urlencode` function to encode the SPARQL query above.
 The endpoint also requires that we send an `Accept` header with the content type that we wish to consume, in this case `Turtle`.
 
+Be sure to install the APOC plugin and restart Neo4j before proceeding any further.
 
 If we run the query using the `n10s.rdf.stream.fetch` procedure, we can see the list of triples along with some additional metadata like the datatype and the language tag.
 
@@ -382,7 +389,7 @@ To update a Graph Config you can run the `n10s.graphconfig.set`, providing a map
 
 [source,cypher]
 CALL n10s.graphconfig.set({
-  multivalPropList: ["countryName", "continentName"]
+  multivalPropList: ["neo4j://voc#countryName", "neo4j://voc#continentName"]
 })
 
 Re-running the preview should now show that the `population` and `onDate` properties are now treated as single values:
@@ -441,17 +448,26 @@ CALL n10s.rdf.import.fetch(
   'Turtle' ,
   { headerParams: { Accept: "application/x-turtle" } }
 )
-YIELD terminationStatus, triplesLoaded, triplesParsed
-RETURN terminationStatus, triplesLoaded, triplesParsed
+YIELD terminationStatus, triplesLoaded, triplesParsed, namespaces, extraInfo
+RETURN terminationStatus, triplesLoaded, triplesParsed, namespaces, extraInfo
 ----
 
 Removing the limit should load and parse over 32,000 triples.
 
 [%header]
 |===
-| terminationStatus	| triplesLoaded | triplesParsed
-| "OK" | 32210 | 32210
+| terminationStatus	| triplesLoaded | triplesParsed | namespaces | extraInfo
+| "OK" | 32210 | 32210 | _null_ | ""
 |===
+
+=== Reviewing graph contents
+
+Congratulations, you've persisted data from Wikidata into your graph. You can now use a Cypher query like the one below to view the content you've loaded.
+
+[source,cypher]
+MATCH (r:Resource)-[rel]-(x)
+WHERE r.uri = 'http://www.wikidata.org/entity/Q46'
+RETURN r,rel,x
 
 == Handling Multilingual Properties
 
