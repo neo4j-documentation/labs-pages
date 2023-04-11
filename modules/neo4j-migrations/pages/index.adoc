@@ -4,12 +4,12 @@
 :author: Michael Simons
 :category: labs
 :tags: migrations, refactoring, modeling, schema
-:neo4j-versions: 3.5, 4.0, 4.1, 4.2, 4.3, 4.4, Aura
+:neo4j-versions: 3.5, 4.0, 4.1, 4.2, 4.3, 4.4, Aura, 5.x
 
 Neo4j-Migrations is a set of tools to make your schema migrations as easy as possible. 
 It provides a uniform way for applications, the command line and build tools alike to track, manage and apply changes to your database. 
 It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts. 
-Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j from 3.5 up to 4.4, including enterprise features such as multidatabase support and impersonation.
+Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j 3.5, Neo4j 4.1 to 4.4 and Neo4j 5, including enterprise features such as multidatabase support and impersonation.
 
 All provided modules have feature parity: Commands in the API reflect in the CLI, in the Maven as well as in the Spring Boot integration
 
