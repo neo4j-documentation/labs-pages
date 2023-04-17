@@ -41,6 +41,7 @@ To submit feedback, please link:https://github.com/liquibase/liquibase-neo4j/iss
 | icon:user[] Authors | Florent Biville
 | icon:gift[] Availability | link:https://github.com/liquibase/liquibase-neo4j/[Liquibase Neo4j plugin^]
 | icon:github[] Issues | link:https://github.com/liquibase/liquibase-neo4j/issues[github.com/liquibase/liquibase-neo4j^]
+| icon:documentation[] Liquibase Neo4j Documentation | https://neo4j.com/labs/liquibase/docs
 | icon:documentation[] Liquibase Documentation | https://docs.liquibase.com
 | icon:support[] Community Support | https://www.liquibase.org
 | icon:start[] Get Started with Liquibase | https://www.liquibase.org/get-started/quickstart
