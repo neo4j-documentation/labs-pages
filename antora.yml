@@ -15,6 +15,7 @@ nav:
 - modules/neo4j-helm/nav.adoc
 - modules/neosemantics/nav.adoc
 - modules/neodash/nav.adoc
+- modules/neomodel/nav.adoc
 
 asciidoc:
   attributes:
