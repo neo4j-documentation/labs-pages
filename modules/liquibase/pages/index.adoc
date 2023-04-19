@@ -26,7 +26,8 @@ Learn more about Liquibase at link:https://www.liquibase.com[Liquibase.com.]
 
 == Documentation & Articles
 
-View Documentation at link:https://docs.liquibase.com[Liquibase Docs.]
+View the plugin documentation at link:https://neo4j.com/labs/liquibase/docs[Liquibase Neo4j Docs.]
+View the general documentation at link:https://docs.liquibase.com[Liquibase Docs.]
 
 
 == Feedback
