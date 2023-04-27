@@ -7,7 +7,7 @@ nav:
 - modules/apoc/nav.adoc
 - modules/arrows/nav.adoc
 - modules/etl-tool/nav.adoc
-- modules/grandstack-graphql/nav.adoc
+#- modules/grandstack-graphql/nav.adoc
 # - modules/graph-algorithms/nav.adoc
 - modules/neo4j-migrations/nav.adoc
 - modules/halin/nav.adoc
