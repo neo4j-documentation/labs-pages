@@ -76,7 +76,12 @@ xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python an
 
 === Other Active Projects
 
-* link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web, started out as a labs project but now moved to a community maintained project.
+* link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web, started out as a Labs project but now moved to a community maintained project.
+
+* xref:community-drivers:index.adoc[Neo4j Community drivers]
+In addition to the link:https://neo4j.com/docs/drivers-apis/[officially supported drivers], you can find their community alternatives.
+Besides Java, .NET, JavaScript, Python, and Go, Neo4j Community provides support for xref:neo4j-erlang-elixir.adoc[Erlang/Elixir], xref:neo4j-php.adoc[PHP], and xref:neo4j-ruby.adoc[Ruby]. 
+Members of each programming language community have invested a lot of time and love to develop each one of the community drivers for Neo4j, so if you use any of them, provide feedback to the authors.
 
 == Graduated Projects
 
