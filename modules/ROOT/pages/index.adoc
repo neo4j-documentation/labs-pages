@@ -130,6 +130,11 @@ As of 2022, some of its functionality was integrated into https://neo4j.com/neo4
 === Are these safe to use in production?
 Current Neo4j Labs projects are being actively worked on by our engineers, and may be rough around the edges, with changing APIs, as they push the edge of the envelope. Therefore, we cannot provide official commercial support for these projects or guarantee longevity. However, some Neo4j customers and users still love the functionality of these projects and choose to continue using them in production environments.
 
+=== Can I get assistance?
+
+Whilst Neo4j does NOT offer support for Labs projects, you can get assistance from the Neo4j Professional Services team, who are  contributors to many of the Labs projects. 
+Whilst the PS team cannot provide product support with an SLA, they can help you with extending the code of Labs Projects, improve code stability/consistency and help with installation, configuration and scale out of Labs technology.
+
 === How do I contribute?
 We welcome contributions for those labs which are open source projects. You'll find links to GitHub repositories - feel free to submit PRs. We've also created a discussion category for Labs on link:https://community.neo4j.com[community.neo4j.com^]
 
