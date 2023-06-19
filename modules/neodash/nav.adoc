@@ -1,3 +1,5 @@
 ** xref:index.adoc[NeoDash]
 *** Documentation
-**** link:/labs/neodash/2.1[2.1 (Current)]
+**** link:/labs/neodash/2.1[2.1]
+**** link:/labs/neodash/2.2[2.2]
+**** link:/labs/neodash/2.3[2.3]
