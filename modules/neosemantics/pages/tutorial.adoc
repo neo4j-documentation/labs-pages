@@ -55,7 +55,7 @@ Before running any import operations with Neosemantics, we should create a Graph
 A Graph Config defines the way that our RDF data is persisted in Neo4j.
 
 For this example, we will use the default values except for `handleVocabUri` option.
-For more information on the configuration options, you can read the link:/labs/neosemantics/current/graph-config[Graph Config section of the Neosemantics Reference Manual^].
+For more information on the configuration options, see the link:https://neo4j.com/labs/neosemantics/4.0/reference/[Neosemantics Reference Guide^].
 
 [source,cypher]
 CALL n10s.graphconfig.init({

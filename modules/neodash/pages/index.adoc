@@ -47,10 +47,8 @@ link:https://neo4j.com/labs/neodash/2.3/developer-guide[Developer Guide].
 
 
 == Videos & Tutorials
-A five minute intro to NeoDash, by https://www.e-tissage.net/[Veronique Gerdner]:
+A five minute intro to NeoDash, by https://www.e-tissage.net/[Véronique Gendner]:
 ++++
-<iframe width="320" height="180" src="https://www.youtube.com/watch?v=LGKew-i5KgI&list=PL3Q67pDB6eXQXiQIWQ5qHJSWuRifPPMkQ&index=3&ab_channel=Etissage" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="320" height="180" src="https://www.youtube.com/watch?v=LGKew-i5KgI&list=PL3Q67pDB6eXQXiQIWQ5qHJSWuRifPPMkQ&index=3&ab_channel=Etissage" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <iframe width="320" height="180" src="https://www.youtube.com/watch?v=LGKew-i5KgI&list=PL3Q67pDB6eXQXiQIWQ5qHJSWuRifPPMkQ&index=3&ab_channel=Etissage" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
 

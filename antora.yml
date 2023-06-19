@@ -7,14 +7,15 @@ nav:
 - modules/apoc/nav.adoc
 - modules/arrows/nav.adoc
 - modules/etl-tool/nav.adoc
-- modules/grandstack-graphql/nav.adoc
+#- modules/grandstack-graphql/nav.adoc
 # - modules/graph-algorithms/nav.adoc
+- modules/neo4j-migrations/nav.adoc
 - modules/halin/nav.adoc
 - modules/liquibase/nav.adoc
 - modules/neo4j-helm/nav.adoc
 - modules/neosemantics/nav.adoc
-- modules/kafka/nav.adoc
 - modules/neodash/nav.adoc
+- modules/neomodel/nav.adoc
 
 asciidoc:
   attributes:

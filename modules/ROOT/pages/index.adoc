@@ -41,18 +41,14 @@ A web-based tool for drawing good looking pictures of graphs and graph models. T
 As the most comprehensive developer toolkit for Neo4j, the xref:apoc:index.adoc[APOC library] provides a wide range of procedures and functions that make your life as a Neo4j user easier.
 APOC includes data integration, graph refactoring, data conversion, operational functionality and more.
 
+NOTE: As of Neo4j 5 https://neo4j.com/docs/apoc[APOC core^] migrated into the product, while apoc-extended with less commonly used/more involved functionality stayed on as an labs probject, please note that the plugin-jar files and the docs have also been split into two additive sets.
+
 === xref:etl-tool:index.adoc[ETL Tool]
 
 Having an easy way of loading data from relational databases into Neo4j is one of the first steps many users take.
 The xref:etl-tool:index.adoc[Neo4j-ETL Tool] makes this easy by inferring a graph model from the relational meta model that you can then adapt to fit your needs.
 Given that transformation, this tool also handles the actual import for you.
 For interactively modeling and importing CSV files, check out the https://data-importer.neo4j.io[Neo4j Data Importer^].
-
-// todo move to graduated, when NOM comes out
-=== xref:halin:index.adoc[Halin Monitoring App]
-
-The link:https://neo4j.com/labs/halin[Halin Monitoring App] allows you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
-The app also provides access to metrics and logs.
 
 === xref:liquibase:index.adoc[Neo4j plugin for Liquibase]
 
@@ -75,9 +71,12 @@ Ontology and Inference are also partially supported.
 
 xref:neodash:index.adoc[NeoDash] is an open-source, low-code Dashboard Builder for Neo4j. It lets you build an interactive dashboard with tables, graphs, bar charts, line charts, maps and more.
 
+=== xref:neomodel:index.adoc[neomodel]
+xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python and Neo4j. It allows you to define your graph database model in a Pythonic way and then access and edit your data without needing to write Cypher queries.
+
 === Other Active Projects
 
-* link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web
+* link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web, started out as a labs project but now moved to a community maintained project.
 
 == Graduated Projects
 
@@ -118,11 +117,23 @@ Built on the new DataSource API it supports usage from Python, R and Scala. It i
 The link:https://hub.docker.com/_/neo4j[Neo4j Docker containers] started off as a Labs project to explore how well Neo4j would run in a containerized environment.
 They quickly gained popularity and are heavily used by both Neo4j and customers, so we've graduated them to be officially part of the https://neo4j.com/docs/operations-manual/current/docker/[Neo4j release distribution].
 
+// todo move to graduated, when NOM comes out
+=== xref:halin:index.adoc[Halin Monitoring App]
+
+The link:https://neo4j.com/labs/halin[Halin Monitoring App] allowed you to monitor your Neo4j deployment and identify bottlenecks or incorrect configurations, with insights into currently running queries and workloads.
+The app also provided access to metrics and logs.
+As of 2022, some of its functionality was integrated into https://neo4j.com/neo4j-ops-manager/[Neo4j Operations Manager^] and so Halin is no longer maintained.
+
 [.secondary]
 == Frequently Asked Questions
 
 === Are these safe to use in production?
 Current Neo4j Labs projects are being actively worked on by our engineers, and may be rough around the edges, with changing APIs, as they push the edge of the envelope. Therefore, we cannot provide official commercial support for these projects or guarantee longevity. However, some Neo4j customers and users still love the functionality of these projects and choose to continue using them in production environments.
+
+=== Can I get assistance?
+
+Whilst Neo4j does NOT offer support for Labs projects, you can get assistance from the Neo4j Professional Services team, who are  contributors to many of the Labs projects. 
+Whilst the PS team cannot provide product support with an SLA, they can help you with extending the code of Labs Projects, improve code stability/consistency and help with installation, configuration and scale out of Labs technology.
 
 === How do I contribute?
 We welcome contributions for those labs which are open source projects. You'll find links to GitHub repositories - feel free to submit PRs. We've also created a discussion category for Labs on link:https://community.neo4j.com[community.neo4j.com^]
