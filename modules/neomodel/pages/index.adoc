@@ -2,8 +2,8 @@
 :slug: neomodel
 :author: Robin Edwards / Marius Conjeaud
 :category: labs
-:tags: visualization, dashboard
-:neo4j-versions: 4.0, 4.1, 4.2, 4.3, 4.4
+:tags: driver, ogm, python
+:neo4j-versions: 4.4, 5.x
 :page-pagination:
 :page-product: neomodel
 
