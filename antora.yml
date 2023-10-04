@@ -16,6 +16,7 @@ nav:
 - modules/neosemantics/nav.adoc
 - modules/neodash/nav.adoc
 - modules/neomodel/nav.adoc
+- modules/aura-cli/nav.adoc
 
 asciidoc:
   attributes:
