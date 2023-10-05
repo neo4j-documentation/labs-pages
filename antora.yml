@@ -14,6 +14,7 @@ nav:
 - modules/liquibase/nav.adoc
 - modules/neo4j-helm/nav.adoc
 - modules/neosemantics/nav.adoc
+- modules/rdflib-neo4j/nav.adoc
 - modules/neodash/nav.adoc
 - modules/neomodel/nav.adoc
 - modules/aura-cli/nav.adoc

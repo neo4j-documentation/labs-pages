@@ -1,0 +1,43 @@
+= rdflib-neo4j - RDFLib Store backed by neo4j
+:slug: rdflib-neo4j
+:author: Aleksandar Simeunovic / Alfredo Rubin / Jesus Barrasa
+:category: labs
+:tags: rdf, integrations, extensions, data-import
+:neo4j-versions: 4.4, 5.x
+:page-pagination:
+:page-product: rdflib-neo4j
+
+image::rdflib-neo4j.png[width=800]
+
+Integrate Neo4j with RDF and Linked Data by using the famous RDFLib library backed by an implementation of the Neo4j store. It provides a client-side alternative to Neosemantics for cloud-native Neo4j deployments.
+
+== Installation
+
+- Available in PyPI: https://pypi.org/project/rdflib-neo4j/
+
+[source,sh]
+pip install rdflib-neo4j
+
+== Functionality Includes
+* Import of RDF and RDF* in multiple formats (Turtle, N-Triples, JSON-LD, RDF/XML, TriG and N-Quads, Turtle*, TriG*)
+* Model mapping on import(custom mappings, multivalues)
+
+== Documentation
+* To start building dashboards, see the link:https://neo4j.com/labs/rdflib-neo4j/1.0/user-guide[User Guide].
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/AleSim94[Aleksandar Simeunovic^], https://github.com/alfredorubin96[Alfredo Rubin^], https://github.com/jbarrasa[Jesus Barrasa^]
+| icon:github[] Source | https://github.com/neo4j-labs/rdflib-neo4j[GitHub]
+|===
+
+
+== Videos & Tutorials
+
+_Coming soon_
+
+
+== Highlighted Articles
+
+_More coming soon_
