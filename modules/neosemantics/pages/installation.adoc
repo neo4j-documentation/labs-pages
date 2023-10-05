@@ -75,8 +75,9 @@ To verify that the plugin has been installed, you can run the following Cypher q
 This query should return a number of procedures where the name begins with `n10s`.
 
 [source,cypher]
-call dbms.procedures()
-
+----
+SHOW PROCEDURES yield name, description, signature
+----
 
 
 You can check that the HTTP endpoints have been mounted by running a GET request to the `/rdf/ping` endpoint.
