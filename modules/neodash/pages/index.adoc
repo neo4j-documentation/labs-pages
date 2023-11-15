@@ -26,9 +26,9 @@ NeoDash is an open-source, low-code Dashboard Builder for Neo4j. It lets you bui
 - Build and publish dashboards for read-only access
 
 == Documentation
-* To start building dashboards, see the link:https://neo4j.com/labs/neodash/2.3/user-guide[User Guide].
+* To start building dashboards, see the link:https://neo4j.com/labs/neodash/2.4/user-guide[User Guide].
 * For deploying, configuring and extending NeoDash, check out the
-link:https://neo4j.com/labs/neodash/2.3/developer-guide[Developer Guide].
+link:https://neo4j.com/labs/neodash/2.4/developer-guide[Developer Guide].
 
 == Relevant Links
 
@@ -39,7 +39,7 @@ link:https://neo4j.com/labs/neodash/2.3/developer-guide[Developer Guide].
 | icon:gift[] Releases | https://github.com/neo4j-labs/neodash/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neodash
 | icon:github[] Issues | https://github.com/neo4j-labs/neodash/issues
-| icon:book[] Documentation | https://neo4j.com/labs/neodash/2.3/
+| icon:book[] Documentation | https://neo4j.com/labs/neodash/2.4/
 | icon:gift[] Graph App | Install from your Neo4j Desktop via https://install.graphapp.io
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
