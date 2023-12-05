@@ -34,7 +34,7 @@ link:https://neo4j.com/labs/neodash/2.4/developer-guide[Developer Guide].
 
 [cols="1,4"]
 |===
-| icon:comments[] Community Support | https://community.neo4j.com/t5/forums/filteredbylabelpage/board-id/graph_platform/label-name/visualization[Neo4j Online Community^]
+| icon:comments[] Community Support | https://community.neo4j.com/tags/c/neo4j-graph-platform/visualization/17/neodash[Neo4j Online Community^]
 | icon:user[] Authors | https://github.com/nielsdejong[Niels de Jong^], https://github.com/mariusconjeaud[Marius Conjeaud^], https://github.com/BennuFire[Harold Agudelo Ramirez^], https://github.com/AleSim94[Aleksandar Simeunovic^]
 | icon:gift[] Releases | https://github.com/neo4j-labs/neodash/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neodash
