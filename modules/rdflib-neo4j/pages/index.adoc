@@ -39,5 +39,4 @@ _Coming soon_
 
 
 == Highlighted Articles
-
-_More coming soon_
+link:https://neo4j.com/developer-blog/rdflib-neo4j-rdf-integration-neo4j/[Rdflib-Neo4j: A New Era in RDF Integration for Neo4j]
