@@ -23,7 +23,9 @@ pip install rdflib-neo4j
 * Model mapping on import(custom mappings, multivalues)
 
 == Documentation
-* To start building dashboards, see the link:https://neo4j.com/labs/rdflib-neo4j/1.0/user-guide[User Guide].
+Documentation for this library is available link:https://neo4j.com/labs/rdflib-neo4j/1.0/[here].
+
+See also the https://github.com/neo4j-labs/rdflib-neo4j[GitHub Repository].
 
 == Relevant Links
 [cols="1,4"]
@@ -34,10 +36,11 @@ pip install rdflib-neo4j
 
 
 == Videos & Tutorials
+**rdflib-neo4j** at the 2023 NODES Conference:
 
-_Coming soon_
-
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/orkWLQ4iALQ" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 == Highlighted Articles
-
-_More coming soon_
+link:https://neo4j.com/developer-blog/rdflib-neo4j-rdf-integration-neo4j/[Rdflib-Neo4j: A New Era in RDF Integration for Neo4j]
