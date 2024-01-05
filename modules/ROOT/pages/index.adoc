@@ -74,6 +74,9 @@ xref:neodash:index.adoc[NeoDash] is an open-source, low-code Dashboard Builder f
 === xref:neomodel:index.adoc[neomodel]
 xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python and Neo4j. It allows you to define your graph database model in a Pythonic way and then access and edit your data without needing to write Cypher queries.
 
+=== xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit]
+The xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit] is a React framework for quickly building an app using the Neo4j Needle design language.
+
 === Other Active Projects
 
 * link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web, started out as a labs project but now moved to a community maintained project.

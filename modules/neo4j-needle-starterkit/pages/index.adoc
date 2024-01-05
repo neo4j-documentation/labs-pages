@@ -1,0 +1,58 @@
+= Needle Starter Kit
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:slug: neo4j-needle-starterkit
+:author: Morgan Senechal
+:category: labs
+:tags: react
+:neo4j-versions: 4.0, 4.1, 4.2, 4.3, 4.4, 5.X
+:page-pagination:
+:page-product: Needle Starter Kit
+
+image::starterkit.jpg[width=800]
+
+
+The **Needle Starter Kit** is a responsive Starter Kit for building an app using [Neo4j Needle](https://www.neo4j.design/) for accelerating your Neo4j-powered front-end tools.
+
+== Availability & Installation
+TODO
+
+== Functionality Includes
+
+- Responsive: Adapts to different screen sizes for optimal user experience.
+- Dark/Light Mode Theme 🌞: Includes a theme wrapper to switch between light and dark modes without having to reinvent the wheel!
+- Neo4j Integration: A simple example for connecting to a Neo4j database.
+- Neo4j Auto-connect: Automatically connects to the Neo4j database if the user has a session saved (using localStorage).
+- Side Navigation: Offers a navigational sidebar for easy access to different parts of the application.
+- Modular approach: Facilitates easy customization.
+
+== Documentation
+For installing, configuring and extending the starter kit, check out the link:https://neo4j.com/labs/neo4j-needle-starterkit/1.0/[Documentation].
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:comments[] Community Support | https://github.com/neo4j-labs/neo4j-needle-starterkit/issues[Github Issues^]
+| icon:user[] Authors | https://github.com/msenechal[Morgan Senechal^]
+| icon:gift[] Releases | https://github.com/neo4j-labs/neo4j-needle-starterkit/releases
+| icon:github[] Source | https://github.com/neo4j-labs/neo4j-needle-starterkit
+| icon:github[] Issues | https://github.com/neo4j-labs/neo4j-needle-starterkit/issues
+| icon:book[] Documentation | https://neo4j.com/labs/neo4j-needle-starterkit/1.0/
+// | icon:book[] Article |
+// | icon:play-circle[] Example |
+|===
+
+
+== Videos & Tutorials
+TODO
+
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/watch?v=LGKew-i5KgI&list=PL3Q67pDB6eXQXiQIWQ5qHJSWuRifPPMkQ&index=3&ab_channel=Etissage" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+
+
+== Highlighted Articles
+
+- https://neo4j.com/developer-blog/needle-starterkit-tool-accelerate-graph-app/[Needle StarterKit: The Ultimate Tool for Accelerating Your Graph App Projects] 
+
