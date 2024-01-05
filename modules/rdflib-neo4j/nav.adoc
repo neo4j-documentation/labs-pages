@@ -1,0 +1,3 @@
+** xref:index.adoc[RDFlib-Neo4j]
+*** Documentation
+**** link:/labs/rdflib-neo4j/1.0[1.0]
