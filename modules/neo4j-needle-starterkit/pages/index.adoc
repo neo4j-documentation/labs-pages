@@ -14,7 +14,19 @@ image::starterkit.jpg[width=800]
 The **Needle Starter Kit** is a responsive Starter Kit for building an app using [Neo4j Needle](https://www.neo4j.design/) for accelerating your Neo4j-powered front-end tools.
 
 == Availability & Installation
-TODO
+The Needle Starter Kit requires you to have Node v16 (or higher) installed, and is meant to be used with Neo4j v5.X or higher.
+
+Quick Installation (copy and paste):
+
+```
+git clone git@github.com:neo4j-labs/neo4j-needle-starterkit.git`
+cd neo4j-needle-starterkit
+yarn install
+yarn run dev
+```
+
+See the documentation for more information.
+
 
 == Functionality Includes
 
@@ -47,9 +59,8 @@ For installing, configuring and extending the starter kit, check out the link:ht
 TODO
 
 ++++
-<iframe width="320" height="180" src="https://www.youtube.com/watch?v=LGKew-i5KgI&list=PL3Q67pDB6eXQXiQIWQ5qHJSWuRifPPMkQ&index=3&ab_channel=Etissage" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/oAbse5L2VjM?si=w0-JdOp5PBB789kx" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
-
 
 
 == Highlighted Articles
