@@ -77,8 +77,12 @@ xref:neodash:index.adoc[NeoDash] is an open-source, low-code Dashboard Builder f
 === xref:neomodel:index.adoc[neomodel]
 xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python and Neo4j. It allows you to define your graph database model in a Pythonic way and then access and edit your data without needing to write Cypher queries.
 
+=== xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit]
+The xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit] is a React framework for quickly building an app using the Neo4j Needle design language.
+
 === xref:aura-cli:index.adoc[Aura CLI]
 The xref:aura-cli:index.adoc[Aura CLI] is a command line interface for interacting with the Aura cloud platform through the public Aura API. It allows you to create and manage instances from your command line.
+
 
 === Other Active Projects
 
