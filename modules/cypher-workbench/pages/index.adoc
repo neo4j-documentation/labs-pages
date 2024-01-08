@@ -1,0 +1,59 @@
+= Cypher Workbench - Data Modeling and Cypher Tool Suite
+:slug: cypher-workbench
+:author: Eric Monk
+:category: labs
+:tags: data-modeling, cypher, cypher-debugging, validation, graph-development-workflow
+:neo4j-versions: 4.4, 5.x
+:page-pagination:
+:page-product: cypher-workbench
+
+image::cypher_workbench_blog_modeling_screenshot.png[width=800]
+
+Cypher Workbench (also known as Solutions Workbench) is a cloud based tool that assists Neo4j developers in creating and maintaining solutions built on top of Neo4j. Cypher Workbench provides support throughout the entire solution development lifecycle from project inception through testing. Additionally, with its reverse engineering, validation, and debugging capabilities, it can be used to introspect existing Neo4j deployments to assist with maintenance, documentation, or troubleshooting.
+
+== Installation
+
+* Check out the code from the https://github.com/neo4j-labs/cypher-workbench[GitHub Repository]
+* Ensure that you have https://nodejs.org/[Node.js] on your machine
+* Follow the instructions in the Cypher Workbench project README
+
+== Functionality Includes
+
+* *Business Scenarios*. Used to capture questions and business problems. Provides the ability to start modeling based on your scenarios, and later link completed Cypher queries to the scenarios.
+* *Model*. Used to create and edit graph models. Includes the ability to reverse engineer models from existing Neo4j databases and Cypher statements. Provides the ability for limited collaboration. 
+* *Cypher Suite*. Used to capture sets of related Cypher Statements. Statements can be validated against models. A rudimentary execution and debugging feature is also provided.
+* *Cypher Builder*. Used to build Cypher statements graphically. MATCH statements can be built by clicking on nodes and relationships in the graph model. A rudimentary execution and debugging feature is also provided.
+* *Databases*. Provides the ability to configure connections to Neo4j databases.
+
+== Documentation
+Documentation for this library is available link:https://help.neo4j.solutions/neo4j-solutions/cypher-workbench/[here].
+
+See also the https://github.com/neo4j-labs/cypher-workbench[GitHub Repository].
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/ericmonk[Eric Monk^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Source | https://github.com/neo4j-labs/cypher-workbench[GitHub]
+| icon:github[] Issues | https://github.com/neo4j-labs/cypher-workbench/issues
+| icon:book[] Documentation | https://help.neo4j.solutions/neo4j-solutions/cypher-workbench/
+|===
+
+
+== Videos & Tutorials
+
+Installation:
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/WcLFHFfLczU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+Video quick start on modeling:
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/NVsoIS_G-kg" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+https://www.youtube.com/playlist?list=PLuMmvwlIHAzJxBrqWKQj6GcfF6a6DqvYq[Cypher Workbench Graph Workflow video playlist]
+
+== Highlighted Articles
+link:https://medium.com/@d.eric.monk/cypher-workbench-b9080ea2c0ea/[Cypher Workbench]
