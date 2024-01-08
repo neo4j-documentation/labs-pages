@@ -1,0 +1,3 @@
+** xref:index.adoc[Aura CLI]
+*** Documentation
+**** link:/labs/aura-cli/1.0[1.0]

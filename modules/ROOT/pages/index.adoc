@@ -67,6 +67,9 @@ xref:neosemantics:index.adoc[Neosemantics] integrates RDF and Linked Data with N
 It allows to import a wide variety of RDF formats and to expose Neo4j property graphs as Linked Data.
 Ontology and Inference are also partially supported.
 
+=== xref:rdflib-neo4j:index.adoc[Rdflib-Neo4j] 
+Integrate Neo4j with RDF and Linked Data by using the famous RDFLib library backed by an implementation of the Neo4j store. It provides a client-side alternative to Neosemantics for cloud-native Neo4j deployments.
+
 === xref:neodash:index.adoc[NeoDash]
 
 xref:neodash:index.adoc[NeoDash] is an open-source, low-code Dashboard Builder for Neo4j. It lets you build an interactive dashboard with tables, graphs, bar charts, line charts, maps and more.
@@ -76,6 +79,10 @@ xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python an
 
 === xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit]
 The xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit] is a React framework for quickly building an app using the Neo4j Needle design language.
+
+=== xref:aura-cli:index.adoc[Aura CLI]
+The xref:aura-cli:index.adoc[Aura CLI] is a command line interface for interacting with the Aura cloud platform through the public Aura API. It allows you to create and manage instances from your command line.
+
 
 === Other Active Projects
 

@@ -45,8 +45,8 @@ In order to make our queries efficient, a unique constraint is required on the U
 Creating a constraint will ensure that a URI will be unique across the database, and also that lookups on a `:Resource` node by it's `uri` property will use an index rather than scanning through all nodes to find the relevent record.
 
 [source,cypher]
-CREATE CONSTRAINT n10s_unique_uri ON (r:Resource)
-ASSERT r.uri IS UNIQUE
+CREATE CONSTRAINT n10s_unique_uri FOR (r:Resource)
+REQUIRE r.uri IS UNIQUE
 
 link:https://neo4j.com/docs/cypher-manual/current/administration/constraints/[More information on Indexes and Constraints,role=more information]
 
@@ -344,4 +344,3 @@ In this tutorial we have learned how to:
 * Deleted RDF data from the graph using `n10s.rdf.delete.fetch`
 
 Now that you are familiar with the procedures available in Neosemantics, we can now move on to a more concrete example, xref:how-to-guide.adoc[Importing Wikidata into Neo4j,role=more information]
-
