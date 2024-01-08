@@ -19,6 +19,7 @@ nav:
 - modules/neo4j-needle-starterkit/nav.adoc
 - modules/neomodel/nav.adoc
 - modules/aura-cli/nav.adoc
+- modules/cypher-workbench/nav.adoc
 
 asciidoc:
   attributes:
