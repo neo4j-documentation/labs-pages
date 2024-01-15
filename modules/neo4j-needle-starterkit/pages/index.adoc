@@ -19,7 +19,7 @@ The Needle Starter Kit requires you to have Node v16 (or higher) installed, and 
 Quick Installation (copy and paste):
 
 ```
-git clone git@github.com:neo4j-labs/neo4j-needle-starterkit.git`
+git clone git@github.com:neo4j-labs/neo4j-needle-starterkit.git
 cd neo4j-needle-starterkit
 yarn install
 yarn run dev
@@ -30,12 +30,12 @@ See the documentation for more information.
 
 == Functionality Includes
 
-- Responsive: Adapts to different screen sizes for optimal user experience.
-- Dark/Light Mode Theme 🌞: Includes a theme wrapper to switch between light and dark modes without having to reinvent the wheel!
-- Neo4j Integration: A simple example for connecting to a Neo4j database.
-- Neo4j Auto-connect: Automatically connects to the Neo4j database if the user has a session saved (using localStorage).
-- Side Navigation: Offers a navigational sidebar for easy access to different parts of the application.
-- Modular approach: Facilitates easy customization.
+- 🚀 Responsive: Adapts to different screen sizes for optimal user experience.
+- 🌚 Dark/Light Mode Theme 🌞: Includes a theme wrapper to switch between light and dark modes without having to reinvent the wheel!
+- ⚙️ Neo4j Integration: A simple example for connecting to a Neo4j database.
+- 🔐 Neo4j Auto-connect: Automatically connects to the Neo4j database if the user has a session saved (using localStorage).
+- 💻 Side Navigation: Offers a navigational sidebar for easy access to different parts of the application.
+- 🛠️️ Modular approach: Facilitates easy customization.
 
 == Documentation
 For installing, configuring and extending the starter kit, check out the link:https://neo4j.com/labs/neo4j-needle-starterkit/1.0/[Documentation].
@@ -56,7 +56,6 @@ For installing, configuring and extending the starter kit, check out the link:ht
 
 
 == Videos & Tutorials
-TODO
 
 ++++
 <iframe width="320" height="180" src="https://www.youtube.com/embed/oAbse5L2VjM?si=w0-JdOp5PBB789kx" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
