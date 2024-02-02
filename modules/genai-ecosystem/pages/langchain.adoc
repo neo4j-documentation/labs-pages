@@ -66,7 +66,6 @@ docs_with_score = db.similarity_search_with_score(query, k=2)
 ----
 
 * link:https://neo4j.com/developer-blog/langchain-library-full-support-neo4j-vector-index/[LangChain Library Adds Full Support for Neo4j Vector Index^][]
-* https://neo4j.com/developer-blog/langchain-library-full-support-neo4j-vector-index/[]
 * https://neo4j.com/developer-blog/neo4j-langchain-vector-index-implementation/[Neo4j LangChain Vector Index Implementation^]
 * https://blog.langchain.dev/neo4j-x-langchain-new-vector-index/[Neo4j x LangChain: New Vector Index^]
 
