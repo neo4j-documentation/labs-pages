@@ -1,0 +1,61 @@
+= GenAI Ecosystem
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:slug: genai-ecosystem
+:author: Michael Hunger, Tomaz Bratanic, Oskar Hane
+:category: labs
+:tags: llm, genai, generative ai, large language models, integrations, rag, vector search, retrieval augmented generation, 
+:neo4j-versions: 5.X
+:page-pagination:
+:page-product: GenAI Ecosystem
+
+image::https://dist.neo4j.com/wp-content/uploads/20231030151119/genai-art-diagram-1.svg[width=800]
+
+
+Knowledge Graphs can provide rich context to ground LLMs for enabling GenAI applications.
+The real world information captured in the graph avoids hallucination and provides a rich source of information for the LLMs to generate answers, summaries and suggestions from.
+
+LLMs can be used to extract entities and their relationships from unstructured text to build up and enrich knowledge graphs.
+
+Learn more at: https://neo4j.com/generativeai/
+
+The Neo4j GenAI Ecosystem is a collection of tools and integrations that make it easy to use LLMs with Neo4j.
+
+== GraphAcademy Courses
+
+If you want to learn how LLMs and Knowledge Graphs combine to improve GenAI applications, check out the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[Neo4j & LLM courses on GraphAcademy^].
+
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundamentals.png[link=https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs]
+
+== GenAI Ecosystem
+
+=== Example Projects
+
+* xref:rag-demo.adoc[RAG (Retrieval Augmented Generation) Demo]
+* xref:genai-stack.adoc[GenAI Stack (with Docker, Ollama, Neo4j, and LangChain)]
+
+=== Neo4j GenAI Features
+
+* xref:vector-search.adoc[Vector Index & Search]
+* xref:apoc-genai.adoc[APOC GenAI Procedures]
+
+=== Orchestration Libraries
+
+* xref:langchain.adoc[LangChain (Python)]
+* xref:langchain-js.adoc[LangChainJS]
+* xref:llamaindex.adoc[LLamaIndex]
+* xref:spring-ai.adoc[Spring AI]
+* xref:langchain4j.adoc[LangChain4j]
+* xref:haystack.adoc[Haystack]
+
+== Highlighted Articles
+
+* https://neo4j.com/developer-blog/tagged/llm/[Neo4j Developer Blog: Large Language Models^]
+* https://bratanic-tomaz.medium.com/[Tomaz Bratanic's Medium Blog^]
+* https://medium.com/@yu-joshua[Joshua Yu's Medium Blog^]
+
+== Videos & Tutorials
+
+- https://neo4j.com/blog/unifying-llm-knowledge-graph/[Unifying Large Language Models and Knowledge Graphs Use-Case and Integrations]
+
+++++
+++++

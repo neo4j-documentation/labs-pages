@@ -32,6 +32,12 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 == Current Projects
 
 [#goals.incremental]
+=== xref:genai-ecosystem:index.adoc[GenAI Ecosystem]
+
+Neo4j integrates with many libraries (LangChain, LlamaIndex, Haystack, Spring-AI) in the xref:genai-ecosystem:index.adoc[GenAI Ecosystem] to make building and deploying knowledge graph-powered GenAI applications easier.
+Most integrations use a combination of vector and graph search to improve quality and accuracy of typical generative AI tasks and can also be used to construct knowledge graphs from unstructured data.
+
+
 === xref:arrows:index.adoc[arrows.app]
 
 A web-based tool for drawing good looking pictures of graphs and graph models. Try it at link:https://arrows.app[arrows.app^]

@@ -1,0 +1,18 @@
+** xref:index.adoc[GenAI Ecosystem]
+*** Example Projects
+**** xref:rag-demo.adoc[GraphRAG Demo]
+**** xref:genai-stack.adoc[GenAI Stack]
+*** Neo4j GenAI Features
+**** xref:vector-search.adoc[Vector Index and Search]
+**** xref:apoc-genai.adoc[APOC GenAI]
+*** Orchestration Libraries
+**** xref:langchain.adoc[LangChain]
+**** xref:langchain-js.adoc[LangChainJS]
+**** xref:llamaindex.adoc[LlamaIndex]
+// **** link:xxx[Documentation]
+**** xref:spring-ai.adoc[SpringAI]
+// **** link:xxx[Documentation]
+**** xref:langchain4j.adoc[LangChain4j]
+// **** link:xxx[Documentation]
+**** xref:haystack.adoc[Haystack]
+// **** link:xxx[Documentation]

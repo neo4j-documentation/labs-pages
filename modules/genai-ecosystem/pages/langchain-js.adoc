@@ -1,0 +1,83 @@
+= LangchainJS
+:slug: langchain-js
+:author: 
+:category: genai-ecosystem
+:tags: langchain, langchain js, javascript, typescript, neo4j, vector, index
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: langchain-js
+
+image::https://dist.neo4j.com/wp-content/uploads/20230615211357/1AH05dvGA_7db_EMySc9AAw.png[width=800]
+
+https://js.langchain.com/docs/get_started/introduction[Langchain.js^] is a JavaScript/TypeScript implementation of the LangChain library.
+It uses similar concepts, with Prompts, Chains, Transformers, Document Loaders, Agents, and more.
+
+The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index as well as Cypher generation and execution available in the LangChain.js library.
+
+== Installation
+
+[soure,shell]
+----
+npm install @langchain/openai neo4j-driver @langchain/community
+----
+
+[source,javascript]
+----
+import { Neo4jGraph } from "@langchain/community/graphs/neo4j_graph";
+import { OpenAI } from "@langchain/openai";
+import { GraphCypherQAChain } from "langchain/chains/graph_qa/cypher";
+
+const graph = await Neo4jGraph.initialize({ NEO4J_URL, NEO4J_USERNAME, NEO4J_PASSWORD });
+const model = new OpenAI({ temperature: 0 });
+
+// Populate the database with two nodes and a relationship
+await graph.query(`
+  CREATE (a:Actor {name:'Bruce Willis'})
+  -[:ACTED_IN]->(:Movie {title: 'Pulp Fiction'})
+`);
+
+await graph.refreshSchema();
+
+const chain = GraphCypherQAChain.fromLLM({ llm: model, graph });
+
+const res = await chain.run("Who acted in Pulp Fiction?");
+// Bruce Willis acted in Pulp Fiction.
+----
+
+== Functionality Includes
+
+* Create vector index
+* Populate nodes and vector index from documents
+* Query vector index
+* Generate and execute Cypher Queries and pass results to LLM for answer generation
+* Neo4j Graph utility
+
+== Documentation
+
+* https://js.langchain.com/docs/modules/data_connection/experimental/graph_databases/neo4j[Neo4jGraph^]
+* https://js.langchain.com/docs/modules/chains/additional/cypher_chain[GraphCypherQAChain^]
+* https://js.langchain.com/docs/integrations/vectorstores/neo4jvector[Neo4j Vector^]
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/easwee[Anej Gorkič^], https://github.com/tomasonjo[Tomaz Bratanic^] and https://github.com/oskarhane[Oskar Hane^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Data Repository | https://github.com/langchain-ai/langchainjs[GitHub]
+| icon:github[] Issues | https://github.com/langchain-ai/langchainjs/issues
+| icon:book[] Documentation | https://js.langchain.com/docs/modules/data_connection/experimental/graph_databases/neo4j
+|===
+
+////
+
+== Videos & Tutorials
+
+Installation:
+++++
+<iframe width="320" height="180" src="" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Highlighted Articles
+
+// link:https://medium.com/neo4j/....[article^]
+////
