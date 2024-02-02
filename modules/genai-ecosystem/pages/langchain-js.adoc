@@ -40,8 +40,8 @@ await graph.refreshSchema();
 
 const chain = GraphCypherQAChain.fromLLM({ llm: model, graph });
 
-const res = await chain.run("Who played in Pulp Fiction?");
-// Bruce Willis played in Pulp Fiction.
+const res = await chain.run("Who acted in Pulp Fiction?");
+// Bruce Willis acted in Pulp Fiction.
 ----
 
 == Functionality Includes

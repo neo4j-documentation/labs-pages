@@ -64,7 +64,7 @@ query = "What did the president say about Ketanji Brown Jackson"
 docs_with_score = db.similarity_search_with_score(query, k=2)
 ----
 
-* https://neo4j.com/developer-blog/langchain-library-full-support-neo4j-vector-index/[]
+* link:https://neo4j.com/developer-blog/langchain-library-full-support-neo4j-vector-index/[LangChain Library Adds Full Support for Neo4j Vector Index^][]
 * https://neo4j.com/developer-blog/neo4j-langchain-vector-index-implementation/[Neo4j LangChain Vector Index Implementation^]
 * https://blog.langchain.dev/neo4j-x-langchain-new-vector-index/[Neo4j x LangChain: New Vector Index^]
 
@@ -134,10 +134,10 @@ chain.run("Who played in Top Gun?")
 Besides the basic RAG strategy, the Neo4j Integration in LangChain supports advanced RAG strategies that allow for more complex retrieval strategies.
 These are also available as LangChain Templates.
 
-* regular rag - direct vector search 
-* parent - child retriever that links embedded chunks representing specific concepts to parent documents
-* hypothetical questions - generate questions from the document chunks and vector index those to have better matching candidates for user questions
-* summary - index summaries of the documents not the whole document
+* *regular rag* - direct vector search 
+* *parent - child retriever* that links embedded chunks representing specific concepts to parent documents
+* *hypothetical questions* - generate questions from the document chunks and vector index those to have better matching candidates for user questions
+* *summary* - index summaries of the documents not the whole document
 
 * https://blog.langchain.dev/implementing-advanced-retrieval-rag-strategies-with-neo4j/[Implementing Advanced Retrieval RAG Strategies with Neo4j^]
 
