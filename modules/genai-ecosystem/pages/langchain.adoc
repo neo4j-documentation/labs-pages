@@ -254,13 +254,8 @@ It will be augmented in the future with an LLM based graph transformer.
 
 == Videos & Tutorials
 
-Installation:
 ++++
-<iframe width="320" height="180" src="https://www.youtube.com/embed/WcLFHFfLczU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-++++
-
-++++
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BmQ8VTM3Izg?si=74p6EekIpaWtChk3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XObtoB_g_CA?si=8P4UiXIAondKRTRj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
 
 ++++
