@@ -4,6 +4,7 @@ title: Neo4j Labs
 start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/nav.adoc
+- modules/genai-ecosystem/nav.adoc
 - modules/apoc/nav.adoc
 - modules/arrows/nav.adoc
 - modules/aura-cli/nav.adoc

@@ -1,0 +1,67 @@
+= LlamaIndex
+:slug: llamaindex
+:author: Michael Hunger, Tomaz Bratanic
+:category: labs
+:tags: llama index, llm, framework, python, vector, cypher generation
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: llamaindex
+
+// image::todo.png[width=800]
+
+The RAG Demo uses a knowledge graph of the SEC filings with additional company information with the Neo4j vector index and LangChain to provide a retrieval augmented generation (RAG) chatbot. 
+
+The chatbot can answer questions about the SEC filings and provide additional information about the companies.
+
+== Installation
+
+The Demo is available online under: https://neo4j-rag-demo.onrender.com/
+
+== Functionality Includes
+
+== Documentation
+
+* https://docs.llamaindex.ai/en/latest/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html
+* https://docs.llamaindex.ai/en/stable/examples/vector_stores/Neo4jVectorDemo.html
+
+* https://llamahub.ai/l/graphdb_cypher
+
+=== Neo4j Query Engine Pack
+
+This https://llamahub.ai/l/llama_packs-neo4j_query_engine[Neo4j Query Engine LlamaPack^] creates a Neo4j query engine, and executes its query function. This pack offers the option of creating multiple types of query engines, namely:
+
+* Knowledge graph vector-based entity retrieval (default if no query engine type option is provided)
+* Knowledge graph keyword-based entity retrieval
+* Knowledge graph hybrid entity retrieval
+* Raw vector index retrieval
+* Custom combo query engine (vector similarity + KG entity retrieval)
+* KnowledgeGraphQueryEngine
+* KnowledgeGraphRAGRetriever
+
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/jmhreif[Jennifer Reif^], https://github.com/akollegger[Andreas Kollegger^] https://github.com/jalakoo/[Jason Koo^], https://github.com/alisoncossette[Alison Cosette^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Data Repository | https://github.com/neo4j-product-examples/data-prep-sec-edgar/[GitHub]
+| icon:github[] Issues | https://github.com/neo4j-product-examples/data-prep-sec-edgar/issues
+// | icon:book[] Documentation |
+|===
+
+== Videos & Tutorials
+
+
+* https://graphstuff.fm/episodes/llamaindex-and-more-building-llm-tech-with-jerry-liu[GraphStuff.fm Podcast: LlamaIndex and More: Building LLM Tech with Jerry Liu^]
+
+++++
+
+++++
+
+== Highlighted Articles
+
+* https://blog.llamaindex.ai/multimodal-rag-pipeline-with-llamaindex-and-neo4j-a2c542eb0206[Multimodal RAG Pipeline with LlamaIndex and Neo4j^]
+
+* https://blog.llamaindex.ai/enriching-llamaindex-models-from-graphql-and-graph-databases-bcaecec262d7[Enriching LlamaIndex Models from GraphQL and Graph Databases^]
+
+* https://levelup.gitconnected.com/a-simpler-way-to-query-neo4j-knowledge-graphs-99c0a8bbf1d7[A Simpler Way to Query Neo4j Knowledge Graphs^]
