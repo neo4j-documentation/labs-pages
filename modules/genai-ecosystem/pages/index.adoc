@@ -22,7 +22,7 @@ The Neo4j GenAI Ecosystem is a collection of tools and integrations that make it
 
 == GraphAcademy Courses
 
-If you want to learn how LLMs and Knowledge Graphs combine to improve GenAI applications, check out the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[Neo4j & LLM courses on GraphAcademy^].
+If you want to learn how LLMs and Knowledge Graphs benefit each other and how to build GenAI applications with LangChain and Neo4j, check out the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[LLM courses on GraphAcademy^].
 
 image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundamentals.png[link=https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs]
 

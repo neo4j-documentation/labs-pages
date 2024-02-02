@@ -66,6 +66,7 @@ docs_with_score = db.similarity_search_with_score(query, k=2)
 ----
 
 * link:https://neo4j.com/developer-blog/langchain-library-full-support-neo4j-vector-index/[LangChain Library Adds Full Support for Neo4j Vector Index^][]
+* https://neo4j.com/developer-blog/langchain-library-full-support-neo4j-vector-index/[]
 * https://neo4j.com/developer-blog/neo4j-langchain-vector-index-implementation/[Neo4j LangChain Vector Index Implementation^]
 * https://blog.langchain.dev/neo4j-x-langchain-new-vector-index/[Neo4j x LangChain: New Vector Index^]
 
@@ -283,7 +284,6 @@ It will be augmented in the future with an LLM based graph transformer.
 
 == Videos & Tutorials
 
-
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XObtoB_g_CA?si=8P4UiXIAondKRTRj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
@@ -295,6 +295,7 @@ It will be augmented in the future with an LLM based graph transformer.
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OV2ZIWFBe0s?si=ayCwIki_lfm1IghR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
+
 * https://docs.google.com/presentation/d/1J4h4oGXORtiz1nhHfSF-UtvtlqkfHByD0v2MOwKXBwY/edit#slide=id.g265aec74fa4_0_353[Slides from the video^]
 
 
