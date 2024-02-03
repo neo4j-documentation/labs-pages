@@ -16,6 +16,7 @@ The broad and deep Neo4j integration allows for vector search, cypher generation
 
 * https://towardsdatascience.com/integrating-neo4j-into-the-langchain-ecosystem-df0e988344d2[Integrating Neo4j into the LangChain Ecosystem^]
 
+NOTE: When upgrading to LangChain 0.1.0+ make sure to read this article: https://medium.com/neo4j/langchain-v0-1-updating-graphacademy-neo4j-llm-courses-689e7c4eff3e[Updating GraphAcademy Neo4j & LLM Courses to Langchain v0.1^].
 
 == Installation
 
@@ -267,3 +268,4 @@ It will be augmented in the future with an LLM based graph transformer.
 * https://blog.langchain.dev/using-a-knowledge-graph-to-implement-a-devops-rag-application/[Using a Knowledge Graph to Implement a DevOps RAG Application^]
 * https://neo4j.com/developer-blog/unstructured-knowledge-graph-neo4j-langchain/[Unstructured Knowledge Graph with Neo4j and LangChain^]
 * https://neo4j.com/developer-blog/langchain-cypher-search-tips-tricks/[LangChain Cypher Search Tips & Tricks^]
+* https://medium.com/neo4j/langchain-v0-1-updating-graphacademy-neo4j-llm-courses-689e7c4eff3e[Updating GraphAcademy Neo4j & LLM Courses to Langchain v0.1^]
