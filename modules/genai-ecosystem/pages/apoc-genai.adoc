@@ -16,8 +16,8 @@ APOC Extended integrates with
 * https://neo4j.com/labs/apoc/5/ml/openai/[(Azure) OpenAI^], 
 * https://neo4j.com/labs/apoc/5/ml/bedrock/[AWS Bedrock^], 
 * https://neo4j.com/labs/apoc/5/ml/vertexai/[Google Vertex AI^], 
-* IBM WatsonX 
-* and other ML platforms that have OpenAI compatible APIs.
+* https://neo4j.com/labs/apoc/5/ml/watsonai/[IBM Watson AI^]
+* and other https://neo4j.com/labs/apoc/5/ml/openai/#openai_compatible_provider[ML platforms that have OpenAI compatible APIs^].
 
 == Installation
 
