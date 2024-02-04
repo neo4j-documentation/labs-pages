@@ -255,6 +255,7 @@ It will be augmented in the future with an LLM based graph transformer.
 
 == Videos & Tutorials
 
+
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XObtoB_g_CA?si=8P4UiXIAondKRTRj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
@@ -263,9 +264,17 @@ It will be augmented in the future with an LLM based graph transformer.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BmQ8VTM3Izg?si=9exWFldOWLJUrvka" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OV2ZIWFBe0s?si=ayCwIki_lfm1IghR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+++++
+* https://docs.google.com/presentation/d/1J4h4oGXORtiz1nhHfSF-UtvtlqkfHByD0v2MOwKXBwY/edit#slide=id.g265aec74fa4_0_353[Slides from the video^]
+
+
 == Highlighted Articles
 
+* https://graphstuff.fm/episodes/genai-solutions-with-langchain-lance-martin-on-llms-agents-evals-and-more[Podcast: GenAI solutions with LangChain: Lance Martin on LLMs, agents, evals, and more!^]
 * https://blog.langchain.dev/using-a-knowledge-graph-to-implement-a-devops-rag-application/[Using a Knowledge Graph to Implement a DevOps RAG Application^]
 * https://neo4j.com/developer-blog/unstructured-knowledge-graph-neo4j-langchain/[Unstructured Knowledge Graph with Neo4j and LangChain^]
 * https://neo4j.com/developer-blog/langchain-cypher-search-tips-tricks/[LangChain Cypher Search Tips & Tricks^]
 * https://medium.com/neo4j/langchain-v0-1-updating-graphacademy-neo4j-llm-courses-689e7c4eff3e[Updating GraphAcademy Neo4j & LLM Courses to Langchain v0.1^]
+* https://neo4j.com/developer-blog/why-vector-search-didnt-work-rag/[Why Vector Search Didn’t Work for Your RAG Solution?^]
