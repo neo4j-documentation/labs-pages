@@ -11,8 +11,8 @@
 image::https://dist.neo4j.com/wp-content/uploads/20231030151119/genai-art-diagram-1.svg[width=800]
 
 
-Knowledge Graphs can provide rich context to ground LLMs for enabling GenAI applications.
-The real world information captured in the graph avoids hallucination and provides a rich source of information for the LLMs to generate answers, summaries and suggestions from.
+Knowledge Graphs can provide rich context to ground Large Language Models (LLMs) for enabling GenAI applications using Graph RAG (Retrieval Augmented Generation)
+The real world data captured in the graph avoids hallucination and provides a rich source of information for the LLMs to generate answers, summaries and suggestions from.
 
 LLMs can be used to extract entities and their relationships from unstructured text to build up and enrich knowledge graphs.
 
