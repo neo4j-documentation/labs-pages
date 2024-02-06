@@ -33,11 +33,15 @@ The Spring AI project is available on Maven Central. To use it in your project, 
 
 The following example is taken from the https://github.com/spring-projects/spring-ai/raw/main/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[integration test^]
 
-[source,java]
+[source,java,indent=0]
 ----
-include::https://github.com/spring-projects/spring-ai/raw/main/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=189..211]
+include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727a53b376fd1e9624221/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=189..211]
 
-include::https://github.com/spring-projects/spring-ai/raw/main/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=66..78]
+----
+
+[source,java,indent=0]
+----
+include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727a53b376fd1e9624221/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=66..78]
 
 ----
 
