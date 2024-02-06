@@ -43,7 +43,7 @@ document_store = Neo4jDocumentStore(
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Repository | https://github.com/prosto/neo4j-haystack[GitHub]
 | icon:github[] Issues | https://github.com/prosto/neo4j-haystack/issues
-// | icon:book[] Documentation |
+| icon:book[] Documentation | https://haystack.deepset.ai/integrations/neo4j-document-store
 |===
 
 ////
