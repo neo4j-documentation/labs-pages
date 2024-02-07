@@ -1,4 +1,5 @@
 = LangChain Neo4j Integration
+include::_graphacademy_llm.adoc[]
 :slug: langchain
 :author: Tomaz Bratanic
 :category: labs

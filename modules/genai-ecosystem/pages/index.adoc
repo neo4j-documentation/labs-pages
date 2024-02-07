@@ -1,4 +1,5 @@
 = GenAI Ecosystem
+include::_graphacademy_llm.adoc[]
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: genai-ecosystem
 :author: Michael Hunger, Tomaz Bratanic, Oskar Hane

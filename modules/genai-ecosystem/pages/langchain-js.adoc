@@ -1,4 +1,5 @@
 = LangchainJS
+include::_graphacademy_llm.adoc[]
 :slug: langchain-js
 :author: 
 :category: genai-ecosystem
@@ -16,7 +17,7 @@ The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index as w
 
 == Installation
 
-[soure,shell]
+[source,shell]
 ----
 npm install @langchain/openai neo4j-driver @langchain/community
 ----

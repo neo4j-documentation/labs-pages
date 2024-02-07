@@ -1,4 +1,5 @@
 = RAG (Retrieval Augmented Generation) Demo
+include::_graphacademy_llm.adoc[]
 :slug: rag-demo
 :author: Andreas Kolleger, Jennifer Reif, Jason Koo, Alison Cosette
 :category: genai-ecosystem

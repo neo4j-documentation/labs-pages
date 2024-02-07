@@ -1,4 +1,5 @@
 = GenAI Stack
+include::_graphacademy_llm.adoc[]
 :slug: genai-stack
 :author: Michael Hunger, Tomaz Bratanic, Oskar Hane, Jim Clar, Harrison Chase, Michael Chiang
 :category: labs
