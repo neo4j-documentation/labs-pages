@@ -1,4 +1,5 @@
 = RAG (Retrieval Augmented Generation) Demo
+include::_graphacademy_llm.adoc[]
 :slug: rag-demo
 :author: Andreas Kolleger, Jennifer Reif, Jason Koo, Alison Cosette
 :category: genai-ecosystem
@@ -27,7 +28,8 @@ The Demo is available online under: https://neo4j-rag-demo.onrender.com/
 |===
 | icon:user[] Authors | https://github.com/jmhreif[Jennifer Reif^], https://github.com/akollegger[Andreas Kollegger^] https://github.com/jalakoo/[Jason Koo^], https://github.com/alisoncossette[Alison Cosette^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
-| icon:github[] Data Repository | https://github.com/neo4j-product-examples/data-prep-sec-edgar/[GitHub]
+| icon:github[] Code Repository | https://github.com/neo4j-examples/rag-demo[GitHub]
+| icon:github[] Data Preparation Repository | https://github.com/neo4j-product-examples/data-prep-sec-edgar/[GitHub]
 | icon:github[] Issues | https://github.com/neo4j-product-examples/data-prep-sec-edgar/issues
 // | icon:book[] Documentation |
 |===

@@ -1,4 +1,5 @@
 = Neo4j Vector Index and Search
+include::_graphacademy_llm.adoc[]
 :slug: vector-search
 :author: 
 :category: genai-ecosystem

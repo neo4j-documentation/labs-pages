@@ -1,4 +1,5 @@
 = Langchain4j
+include::_graphacademy_llm.adoc[]
 :slug: langchain4j
 :author: Giuseppe Villani
 :category: genai-ecosystem

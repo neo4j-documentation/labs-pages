@@ -1,4 +1,5 @@
 = APOC GenAI Procedures
+include::_graphacademy_llm.adoc[]
 :slug: apoc-genai
 :author: 
 :category: genai-ecosystem

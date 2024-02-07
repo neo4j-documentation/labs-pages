@@ -1,4 +1,5 @@
 = LangChain Neo4j Integration
+include::_graphacademy_llm.adoc[]
 :slug: langchain
 :author: Tomaz Bratanic
 :category: labs
@@ -72,6 +73,34 @@ docs_with_score = db.similarity_search_with_score(query, k=2)
 ==== Hybrid Search
 
 Hybrid search combines vector search with fulltext search with re-ranking and de-duplication of the results.
+
+// todo include
+[source,python]
+----
+from langchain.docstore.document import Document
+from langchain.text_splitter import CharacterTextSplitter
+from langchain_community.document_loaders import TextLoader
+from langchain_community.vectorstores import Neo4jVector
+from langchain_openai import OpenAIEmbeddings
+
+loader = TextLoader("../../modules/state_of_the_union.txt")
+
+documents = loader.load()
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+docs = text_splitter.split_documents(documents)
+
+embeddings = OpenAIEmbeddings()
+
+# The Neo4jVector Module will connect to Neo4j and create a vector index if needed.
+
+db = Neo4jVector.from_documents(
+    docs, OpenAIEmbeddings(), url=url, username=username, password=password,
+    search_type: 'hybrid'
+)
+
+query = "What did the president say about Ketanji Brown Jackson"
+docs_with_score = db.similarity_search_with_score(query, k=2)
+----
 
 === Neo4j Graph
 
@@ -255,7 +284,6 @@ It will be augmented in the future with an LLM based graph transformer.
 
 == Videos & Tutorials
 
-
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/XObtoB_g_CA?si=8P4UiXIAondKRTRj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
@@ -267,6 +295,7 @@ It will be augmented in the future with an LLM based graph transformer.
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OV2ZIWFBe0s?si=ayCwIki_lfm1IghR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ++++
+
 * https://docs.google.com/presentation/d/1J4h4oGXORtiz1nhHfSF-UtvtlqkfHByD0v2MOwKXBwY/edit#slide=id.g265aec74fa4_0_353[Slides from the video^]
 
 

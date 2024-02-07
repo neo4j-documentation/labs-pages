@@ -1,4 +1,5 @@
 = LangchainJS
+include::_graphacademy_llm.adoc[]
 :slug: langchain-js
 :author: 
 :category: genai-ecosystem
@@ -16,10 +17,94 @@ The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index as w
 
 == Installation
 
-[soure,shell]
+[source,shell]
 ----
 npm install @langchain/openai neo4j-driver @langchain/community
 ----
+
+== Functionality Includes
+
+=== Neo4jVector
+
+The Neo4j Vector integration supports a number of operations
+
+* create vector from langchain documents
+* query vector
+* query vector with additional graph retrieval Cypher query
+* construct vector instance from existing graph data
+* hybrid search
+
+// todo include
+[source,javascript]
+----
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { Neo4jVectorStore } from "@langchain/community/vectorstores/neo4j_vector";
+
+// Configuration object for Neo4j connection and other related settings
+const config = {
+  url: "bolt://localhost:7687", // URL for the Neo4j instance
+  username: "neo4j", // Username for Neo4j authentication
+  password: "pleaseletmein", // Password for Neo4j authentication
+  indexName: "vector", // Name of the vector index
+  keywordIndexName: "keyword", // Name of the keyword index if using hybrid search
+  searchType: "vector" as const, // Type of search (e.g., vector, hybrid)
+  nodeLabel: "Chunk", // Label for the nodes in the graph
+  textNodeProperty: "text", // Property of the node containing text
+  embeddingNodeProperty: "embedding", // Property of the node containing embedding
+};
+
+const documents = [
+  { pageContent: "what's this", metadata: { a: 2 } },
+  { pageContent: "Cat drinks milk", metadata: { a: 1 } },
+];
+
+const neo4jVectorIndex = await Neo4jVectorStore.fromDocuments(
+  documents,
+  new OpenAIEmbeddings(),
+  config
+);
+
+const results = await neo4jVectorIndex.similaritySearch("water", 1);
+
+console.log(results);
+
+/*
+  [ Document { pageContent: 'Cat drinks milk', metadata: { a: 1 } } ]
+*/
+
+await neo4jVectorIndex.close();
+----
+
+==== Hybrid Search
+
+Hybrid search combines vector search with fulltext search with re-ranking and de-duplication of the results.
+
+=== Neo4j Graph
+
+The Neo4j Graph integration is a wrapper for the Neo4j Python driver. 
+It allows querying and updating the Neo4j databsae in a simplified manner from LangChain.
+Many integrations allow to use the Neo4j Graph as a source of data for LangChain.
+
+
+[source,javascript]
+----
+import { Neo4jGraph } from "@langchain/community/graphs/neo4j_graph";
+
+const graph = await Neo4jGraph.initialize({ NEO4J_URL, NEO4J_USERNAME, NEO4J_PASSWORD });
+
+QUERY = """
+"MATCH (m:Movie)-[:IN_GENRE]->(:Genre {name:$genre}) 
+RETURN m.title, m.plot 
+ORDER BY m.imdbRating DESC LIMIT 5"
+"""
+
+await graph.query(QUERY, genre="action")
+----
+
+=== CypherQAChain
+
+The CypherQAChain is a LangChain component that allows you to interact with a Neo4j graph database in natural language.
+Using an LLM and the graph schema it translates the user question into a Cypher query, executes it against the graph and uses the returned context information and the original question with a second LLM to generate a natural language response.
 
 [source,javascript]
 ----
@@ -43,14 +128,6 @@ const chain = GraphCypherQAChain.fromLLM({ llm: model, graph });
 const res = await chain.run("Who acted in Pulp Fiction?");
 // Bruce Willis acted in Pulp Fiction.
 ----
-
-== Functionality Includes
-
-* Create vector index
-* Populate nodes and vector index from documents
-* Query vector index
-* Generate and execute Cypher Queries and pass results to LLM for answer generation
-* Neo4j Graph utility
 
 == Documentation
 
