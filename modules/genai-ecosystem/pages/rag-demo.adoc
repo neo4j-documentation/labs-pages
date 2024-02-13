@@ -8,20 +8,23 @@ include::_graphacademy_llm.adoc[]
 :page-pagination:
 :page-product: rag-demo
 
-// image::todo.png[width=800]
+image::https://res.cloudinary.com/dk0tizgdn/image/upload/v1707842287/rag-demo-short_vwezew.gif[width=600, align=center]
+
 
 The RAG Demo uses a knowledge graph of the SEC filings with additional company information with the Neo4j vector index and LangChain to provide a retrieval augmented generation (RAG) chatbot. 
 
 The chatbot can answer questions about the SEC filings and provide additional information about the companies.
 
+
 == Installation
 
-The Demo is available online under: https://neo4j-rag-demo.onrender.com/
+The Demo is available online under: https://dev.neo4j.com/rag-demo
 
+////
 == Functionality Includes
 
 == Documentation
-
+////
 
 == Relevant Links
 [cols="1,4"]
