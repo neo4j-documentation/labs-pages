@@ -42,11 +42,11 @@ This https://llamahub.ai/l/llama_packs-neo4j_query_engine[Neo4j Query Engine Lla
 == Relevant Links
 [cols="1,4"]
 |===
-| icon:user[] Authors | https://github.com/jmhreif[Jennifer Reif^], https://github.com/akollegger[Andreas Kollegger^] https://github.com/jalakoo/[Jason Koo^], https://github.com/alisoncossette[Alison Cosette^]
+| icon:user[] Authors | https://github.com/tomasonjo[Tomaz Bratanic^], https://github.com/jexp[Michael Hunger^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
-| icon:github[] Data Repository | https://github.com/neo4j-product-examples/data-prep-sec-edgar/[GitHub]
-| icon:github[] Issues | https://github.com/neo4j-product-examples/data-prep-sec-edgar/issues
-// | icon:book[] Documentation |
+| icon:github[] Repository | https://github.com/run-llama/llama-hub/tree/main/llama_hub/tools/neo4j_db[GitHub Neo4jDB^] https://github.com/run-llama/llama-hub/tree/main/llama_hub/llama_packs/neo4j_query_engine[GitHub Neo4j Llama Pack^]
+| icon:book[] Documentation | https://docs.llamaindex.ai/en/stable/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html
+| icon:book[] Notebook | https://github.com/run-llama/llama-hub/blob/main/llama_hub/llama_packs/neo4j_query_engine/llama_packs_neo4j.ipynb[Llama Pack Notebook^]
 |===
 
 == Videos & Tutorials
