@@ -23,7 +23,7 @@ npm install
 To preview the docs, run:
 
 [source,sh]
-npm run dev
+npm run start
 
 
 This will build a set of HTML files in `build/site` and then serve them through an express server at http://localhost:8000.
