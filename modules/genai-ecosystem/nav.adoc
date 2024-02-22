@@ -1,4 +1,8 @@
 ** xref:index.adoc[GenAI Ecosystem]
+*** Cloud Examples
+**** xref:aws-demo.adoc[AWS Demo]
+**** xref:microsoft-azure-demo.adoc[Microsoft Azure Demo]
+**** xref:google-cloud-demo.adoc[Google Cloud Demo]
 *** Example Projects
 **** xref:rag-demo.adoc[GraphRAG Demo]
 **** xref:genai-stack.adoc[GenAI Stack]
