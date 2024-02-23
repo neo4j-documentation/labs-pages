@@ -78,4 +78,4 @@ Installation:
 
 == Highlighted Articles
 
-* https://meistermeier.com/2024/02/23/spring-ai-neo4j.html[Spring AI with Neo4j Vector Index^ (Gerrit Meier)]
+* https://meistermeier.com/2024/02/23/spring-ai-neo4j.html[Spring AI with Neo4j Vector Index (Gerrit Meier)^]
