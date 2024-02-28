@@ -1,0 +1,62 @@
+= Keymaker - Recommendations Framework and Cypher Query Pipeline
+:slug: keymaker
+:author: Snehal Maid
+:category: labs
+:tags: graphql, api, cypher, webapp-development, cypher-query-pipelines
+:neo4j-versions: 4.4, 5.x
+:page-pagination:
+:page-product: keymaker
+
+image::keymaker_architecture.png[width=800]
+
+Keymaker is an innovative recommendations (next best action) framework designed to accelerate the development of flexible Neo4j based applications. It is a data model agnostic tool, It seamlessly integrates with Neo4j databases (versions 4.5.x and 5.x supported) allowing for the flexible configuration of analytical engines tailored to specific business needs across diverse industries. With Keymaker, you automatically gain access to a GraphQL API endpoint for each engine you develop, simplifying the process of constructing user interfaces with popular frameworks like React or System to System Interfaces.
+
+== Installation
+
+* Check out the code from the https://github.com/neo4j-labs/keymaker[GitHub Repository]
+* Ensure that you have https://nodejs.org/[Node.js] on your machine
+* Follow the instructions in the Keymaker project README
+
+== Functionality Includes
+
+* *Seamless Integration with Neo4j Databases*. Supports integration with existing Neo4j databases, compatible with versions 4.5.x and 5.x.
+* *Score-Based Recommendation Engine*. Delivers personalized recommendations to users, leveraging scores generated based on predefined business logic.
+* *Simplified GraphQL Server Management*. Manages the GraphQL server infrastructure, enabling you to concentrate on defining business logic within engines, free from server management tasks.
+* *Dynamic Business Logic Modification*. Offers the capability for real-time adjustments to business logic, supporting immediate results review and A/B testing for optimized outcomes.
+* *Visualization Path Extraction for Neo4j’s Bloom*. Extracts and aggregates paths correlating with the results, facilitating their visualization through Neo4j’s Bloom product.
+
+
+== Documentation
+Documentation for this library is available link:https://help.neo4j.solutions/neo4j-solutions/keymaker/[here].
+
+See also the https://github.com/neo4j-labs/keymaker[GitHub Repository].
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/snehalmaidneo[Snehal Maid^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Source | https://github.com/neo4j-labs/keymaker[GitHub]
+| icon:github[] Issues | https://github.com/neo4j-labs/keymaker/issues
+| icon:book[] Documentation | https://help.neo4j.solutions/neo4j-solutions/keymaker/
+|===
+
+== Videos & Tutorials
+
+Installation:
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/8TSX_66cvIU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+Verify Installation:
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/gUEHIiFAMrM" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+Video quick start on keymaker:
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/NLaL0BN3SOs" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Highlighted Articles
+link:https://medium.com/@snehal.maid/keymaker-dc496d41b21f/[Keymaker]

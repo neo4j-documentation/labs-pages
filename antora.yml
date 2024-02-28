@@ -9,6 +9,7 @@ nav:
 - modules/arrows/nav.adoc
 - modules/aura-cli/nav.adoc
 - modules/cypher-workbench/nav.adoc
+- modules/keymaker/nav.adoc
 - modules/etl-tool/nav.adoc
 - modules/halin/nav.adoc
 - modules/liquibase/nav.adoc
