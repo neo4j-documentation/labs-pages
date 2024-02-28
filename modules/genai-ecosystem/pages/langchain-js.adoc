@@ -10,10 +10,14 @@ include::_graphacademy_llm.adoc[]
 
 image::https://dist.neo4j.com/wp-content/uploads/20230615211357/1AH05dvGA_7db_EMySc9AAw.png[width=800]
 
-https://js.langchain.com/docs/get_started/introduction[Langchain.js^] is a JavaScript/TypeScript implementation of the LangChain library.
+https://js.langchain.com/docs/get_started/introduction[LangChain.js^] is a JavaScript/TypeScript implementation of the LangChain library.
 It uses similar concepts, with Prompts, Chains, Transformers, Document Loaders, Agents, and more.
 
 The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index as well as Cypher generation and execution available in the LangChain.js library.
+
+Learn how to build a chatbot in TypeScript using LangChain.js with our new https://graphacademy.neo4j.com/courses/llm-chatbot-typescript/[GraphAcademy course^].
+
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-chatbot-typescript.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-chatbot-typescript/"]
 
 == Installation
 
@@ -145,16 +149,16 @@ const res = await chain.run("Who acted in Pulp Fiction?");
 | icon:book[] Documentation | https://js.langchain.com/docs/modules/data_connection/experimental/graph_databases/neo4j
 |===
 
-////
-
 == Videos & Tutorials
 
 Installation:
 ++++
-<iframe width="320" height="180" src="" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="320" height="180" src="https://www.youtube.com/embed/sMTCGFrAo08?si=kzWKZYDJRomAdeCV" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
 
+////
 == Highlighted Articles
 
-// link:https://medium.com/neo4j/....[article^]
+link:https://medium.com/neo4j/....[article^]
+
 ////
