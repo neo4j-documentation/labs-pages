@@ -18,10 +18,10 @@ The Neo4j integration covers both the vector store as well as query generation f
 
 == Documentation
 
-* https://docs.llamaindex.ai/en/latest/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html
-* https://docs.llamaindex.ai/en/stable/examples/vector_stores/Neo4jVectorDemo.html
+* https://docs.llamaindex.ai/en/latest/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html[Neo4jKGIndexDemo^]
+* https://docs.llamaindex.ai/en/stable/examples/vector_stores/Neo4jVectorDemo.html[Neo4jVectorDemo^]
 
-* https://llamahub.ai/l/graphdb_cypher
+* https://llamahub.ai/l/graphdb_cypher[Cypher Loader^]
 
 === Neo4j Query Engine Pack
 
