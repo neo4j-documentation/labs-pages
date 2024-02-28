@@ -9,15 +9,12 @@
 
 // image::todo.png[width=800]
 
-The RAG Demo uses a knowledge graph of the SEC filings with additional company information with the Neo4j vector index and LangChain to provide a retrieval augmented generation (RAG) chatbot. 
+LlamaIndex is a popular LLM orchestration framework with a clean architecture and a focus on data structures and models.
+It integrates many LLMs as well as vector stores and other indexes and contains tooling for document loading (loader hub) and advanced RAG patterns.
 
-The chatbot can answer questions about the SEC filings and provide additional information about the companies.
+LlamaIndex provides a lot of detailed examples for GenAI application development in their https://blog.llamaindex.ai/[blogs^] and https://docs.llamaindex.ai[documentation^].
 
-== Installation
-
-The Demo is available online under: https://neo4j-rag-demo.onrender.com/
-
-== Functionality Includes
+The Neo4j integration covers both the vector store as well as query generation from natural language and knowledge graph construction.
 
 == Documentation
 
