@@ -93,7 +93,7 @@ The xref:aura-cli:index.adoc[Aura CLI] is a command line interface for interacti
 The xref:cypher-workbench:index.adoc[Cypher Workbench] Cypher Workbench provides a set of web-based development graph tools. It includes tools for data modeling, cypher building and debugging, validation, and more. Originally a SaaS offering, the code is now released so you can run it in your local environment.
 
 === xref:keymaker:index.adoc[Keymaker]
-The xref:keymaker:index.adoc[Keymaker] Keymaker is an innovative recommendations framework designed to accelerate the development of flexible Neo4j based applications.
+xref:keymaker:index.adoc[Keymaker] includes an interface which allows users to build analytical pipelines ( or engines ) using Cypher and automatically makes the results of the analytical pipeline available through a GraphQL API endpoint.
 
 === Other Active Projects
 

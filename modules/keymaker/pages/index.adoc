@@ -7,56 +7,80 @@
 :page-pagination:
 :page-product: keymaker
 
+Keymaker serves as an API layer that simplifies the process of connecting to a Neo4j database, currently it supports only versions 4.5 and 5.x of Neo4j. 
+It features a user interface for establishing database connections and for building analytical query pipelines, referred to as engines, 
+using Cypher. These engines are customized for specific business use cases. With Keymaker, each engine or query pipeline you develop is 
+automatically equipped with a GraphQL API endpoint. This streamlines the development of user interfaces using frameworks 
+like React, by eliminating the need for manually defining type definitions, queries, and mutations, allowing developers to concentrate on 
+the business logic.
+
+== Keymaker High Level Architecture
+Keymaker's architecture is built around three core components: the Admin Dashboard, the Admin API, and the Engine API. Together, these elements offer a comprehensive interface for seamless framework interaction:
+
+* *Admin Dashboard*: It is a user-interface for establishing database connections, constructing analytical pipelines referred to as "engines" within Keymaker, and writing Cypher queries.
+* *Admin API*: This API facilitates user interaction with the framework.
+* *Engine API*: This API connects with your Neo4j database and exposes an endpoint which executes the engine
+
+The following diagram demonstrates this architecture
+
 image::keymaker_architecture.png[width=800]
 
-Keymaker is an innovative recommendations (next best action) framework designed to accelerate the development of flexible Neo4j based applications. It is a data model agnostic tool, It seamlessly integrates with Neo4j databases (versions 4.5.x and 5.x supported) allowing for the flexible configuration of analytical engines tailored to specific business needs across diverse industries. With Keymaker, you automatically gain access to a GraphQL API endpoint for each engine you develop, simplifying the process of constructing user interfaces with popular frameworks like React or System to System Interfaces.
+== User Activity Flow Diagram
+
+The following diagram depicts a user's journey within the Keymaker application. 
+This flow diagram encapsulates the sequential actions taken from initial login to the final execution of a query pipeline. 
+Users navigate through a streamlined process starting at the Keymaker Admin UI, moving through database connection setups, defining query pipelines, and culminating in the execution of complex queries facilitated by an API key
+
+image::user_activity_flow_diagram_3.jpg[width=100%, height=1000%]
+
+*Note* : A detailed step by step guide is available from creating database connections to execution of query pipelines in the https://github.com/neo4j-labs/keymaker?tab=readme-ov-file#verifying-installation[Github README^]
 
 == Installation
 
-* Check out the code from the https://github.com/neo4j-labs/keymaker[GitHub Repository]
-* Ensure that you have https://nodejs.org/[Node.js] on your machine
+* Check out the code from the https://github.com/neo4j-labs/keymaker[GitHub Repository^]
+* Ensure that you have https://nodejs.org/[Node.js^] on your machine
 * Follow the instructions in the Keymaker project README
 
 == Functionality Includes
 
-* *Seamless Integration with Neo4j Databases*. Supports integration with existing Neo4j databases, compatible with versions 4.5.x and 5.x.
-* *Score-Based Recommendation Engine*. Delivers personalized recommendations to users, leveraging scores generated based on predefined business logic.
-* *Simplified GraphQL Server Management*. Manages the GraphQL server infrastructure, enabling you to concentrate on defining business logic within engines, free from server management tasks.
-* *Dynamic Business Logic Modification*. Offers the capability for real-time adjustments to business logic, supporting immediate results review and A/B testing for optimized outcomes.
-* *Visualization Path Extraction for Neo4j’s Bloom*. Extracts and aggregates paths correlating with the results, facilitating their visualization through Neo4j’s Bloom product.
-
+* *Neo4j Database Integration*: Connects directly with Neo4j databases, specifically supporting versions 4.5 and 5.x.
+* *Analytical Query Pipeline Creation*: Keymaker interface allows you to create analytical query pipelines (engines) using Cypher, tailored for specific business use cases.
+* *Automatic GraphQL API Endpoint*: Automatically provides a GraphQL API endpoint for each developed engine or query pipeline.
+* *Focus on Business Logic*: Enables developers to concentrate on business logic rather than the technical intricacies of API and database integration.
+* *Customized Engines*: Allows for the customization of engines to fit unique business requirements.
 
 == Documentation
-Documentation for this library is available link:https://help.neo4j.solutions/neo4j-solutions/keymaker/[here].
+Documentation for this library is available link: https://help.neo4j.solutions/neo4j-solutions/keymaker/[here^].
 
-See also the https://github.com/neo4j-labs/keymaker[GitHub Repository].
+See also the https://github.com/neo4j-labs/keymaker[GitHub Repository^].
 
 == Relevant Links
 [cols="1,4"]
 |===
 | icon:user[] Authors | https://github.com/snehalmaidneo[Snehal Maid^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
-| icon:github[] Source | https://github.com/neo4j-labs/keymaker[GitHub]
-| icon:github[] Issues | https://github.com/neo4j-labs/keymaker/issues
-| icon:book[] Documentation | https://help.neo4j.solutions/neo4j-solutions/keymaker/
+| icon:github[] Source | https://github.com/neo4j-labs/keymaker[GitHub^]
+| icon:github[] Issues | https://github.com/neo4j-labs/keymaker/issues[Issues^]
+| icon:book[] Documentation | https://help.neo4j.solutions/neo4j-solutions/keymaker/[Documentation^]
 |===
 
 == Videos & Tutorials
 
-Installation:
+*How to Install Keymaker on Your Local Machine: A Step-by-Step Tutorial*
+
 ++++
 <iframe width="320" height="180" src="https://www.youtube.com/embed/8TSX_66cvIU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
 
-Verify Installation:
+*Quick Start: Verify Your Keymaker Setup and Build Your First Query Pipeline*
 ++++
 <iframe width="320" height="180" src="https://www.youtube.com/embed/gUEHIiFAMrM" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
 
-Video quick start on keymaker:
+*Keymaker Features Overview*
 ++++
 <iframe width="320" height="180" src="https://www.youtube.com/embed/NLaL0BN3SOs" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
 
 == Highlighted Articles
-link:https://medium.com/@snehal.maid/keymaker-dc496d41b21f/[Keymaker]
+link:https://medium.com/@snehal.maid/keymaker-dc496d41b21f/[Accelerate Neo4j App Development with low code framework^]
