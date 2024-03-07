@@ -1,3 +1,3 @@
 ** xref:index.adoc[Needle Starter Kit]
 *** Documentation
-**** link:/labs/neo4j-needle-starterkit/1.0[1.0]
+**** link:/labs/neo4j-needle-starterkit/2.0[2.0]
