@@ -1,0 +1,5 @@
+:page-ad-overline-link: https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs
+:page-ad-overline: Learn
+:page-ad-title: Free Neo4j LLM courses from GraphAcademy
+:page-ad-description: Learn everything you need to know to build GenAI applications with LangChain and Neo4j
+:page-ad-link: https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs

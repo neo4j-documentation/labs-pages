@@ -4,22 +4,21 @@ title: Neo4j Labs
 start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/nav.adoc
+- modules/genai-ecosystem/nav.adoc
 - modules/apoc/nav.adoc
 - modules/arrows/nav.adoc
+- modules/aura-cli/nav.adoc
+- modules/cypher-workbench/nav.adoc
 - modules/etl-tool/nav.adoc
-#- modules/grandstack-graphql/nav.adoc
-# - modules/graph-algorithms/nav.adoc
-- modules/neo4j-migrations/nav.adoc
 - modules/halin/nav.adoc
 - modules/liquibase/nav.adoc
 - modules/neo4j-helm/nav.adoc
+- modules/neo4j-migrations/nav.adoc
+- modules/neo4j-needle-starterkit/nav.adoc
+- modules/neodash/nav.adoc
+- modules/neomodel/nav.adoc
 - modules/neosemantics/nav.adoc
 - modules/rdflib-neo4j/nav.adoc
-- modules/neodash/nav.adoc
-- modules/neo4j-needle-starterkit/nav.adoc
-- modules/neomodel/nav.adoc
-- modules/aura-cli/nav.adoc
-- modules/cypher-workbench/nav.adoc
 
 asciidoc:
   attributes:
@@ -29,3 +28,10 @@ asciidoc:
     community-url: https://community.neo4j.com/
     neosemantics-category-name: Linked Data, RDF, Ontology
     neosemantics-category-url: https://community.neo4j.com/c/integrations/linked-data-rdf-ontology/162
+    page-ad-overline-link: https://graphacademy.neo4j.com/?ref=labs@
+    page-ad-overline: Learn@
+    page-ad-title: Free Neo4j courses from GraphAcademy@
+    page-ad-description: Learn everything you need to know to be successful with Neo4j@
+    page-ad-link: https://graphacademy.neo4j.com/?ref=labs@
+    page-ad-underline-role: button@
+    page-ad-underline: Start learning@

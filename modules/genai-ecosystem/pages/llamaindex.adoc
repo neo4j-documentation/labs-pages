@@ -1,0 +1,116 @@
+= LlamaIndex
+:slug: llamaindex
+:author: Michael Hunger, Tomaz Bratanic
+:category: labs
+:tags: llama index, llm, framework, python, vector, cypher generation
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: llamaindex
+
+// image::todo.png[width=800]
+
+LlamaIndex is a popular LLM orchestration framework with a clean architecture and a focus on data structures and models.
+It integrates many LLMs as well as vector stores and other indexes and contains tooling for document loading (loader hub) and advanced RAG patterns.
+
+LlamaIndex provides a lot of detailed examples for GenAI application development in their https://blog.llamaindex.ai/[blogs^] and https://docs.llamaindex.ai[documentation^].
+
+The Neo4j integration covers both the vector store as well as query generation from natural language and knowledge graph construction.
+
+== Example Usage
+
+[source,python]
+----
+%pip install llama-index-llms-openai
+%pip install llama-index-graph-stores-neo4j
+%pip install llama-index-embeddings-openai
+%pip install neo4j
+
+from llama_index.llms.openai import OpenAI
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.core import (
+    VectorStoreIndex,
+    SimpleDirectoryReader,
+    KnowledgeGraphIndex,
+    Settings
+)
+from llama_index.graph_stores.neo4j import Neo4jGraphStore
+
+llm = OpenAI(temperature=0, model="gpt-3.5-turbo")
+embedding_llm = OpenAIEmbedding(model="text-embedding-ada-002")
+
+Settings.llm = llm
+Settings.embed_model = embedding_llm
+Settings.chunk_size = 512
+
+documents = SimpleDirectoryReader(
+    "../../../../examples/paul_graham_essay/data"
+).load_data()
+
+graph_store = Neo4jGraphStore(username=username,password=password,
+    url=url,database=database)
+
+storage_context = StorageContext.from_defaults(graph_store=graph_store)
+
+index = KnowledgeGraphIndex.from_documents(documents,
+    storage_context=storage_context, max_triplets_per_chunk=2,
+    include_embeddings=True
+)
+
+query_engine = index.as_query_engine(
+    include_text=True,
+    response_mode="tree_summarize",
+    embedding_mode="hybrid",
+    similarity_top_k=5,
+)
+
+response = query_engine.query(
+    "Tell me more about what the author worked on at Interleaf"
+)
+----
+
+== Documentation
+
+* https://docs.llamaindex.ai/en/latest/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html[Neo4jKGIndexDemo^]
+* https://docs.llamaindex.ai/en/stable/examples/vector_stores/Neo4jVectorDemo.html[Neo4jVectorDemo^]
+
+* https://llamahub.ai/l/graphdb_cypher[Cypher Loader^]
+
+=== Neo4j Query Engine Pack
+
+This https://llamahub.ai/l/llama_packs-neo4j_query_engine[Neo4j Query Engine LlamaPack^] creates a Neo4j query engine, and executes its query function. This pack offers the option of creating multiple types of query engines, namely:
+
+* Knowledge graph vector-based entity retrieval (default if no query engine type option is provided)
+* Knowledge graph keyword-based entity retrieval
+* Knowledge graph hybrid entity retrieval
+* Raw vector index retrieval
+* Custom combo query engine (vector similarity + KG entity retrieval)
+* KnowledgeGraphQueryEngine
+* KnowledgeGraphRAGRetriever
+
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/tomasonjo[Tomaz Bratanic^], https://github.com/jexp[Michael Hunger^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Repository | https://github.com/run-llama/llama-hub/tree/main/llama_hub/tools/neo4j_db[GitHub Neo4jDB^] https://github.com/run-llama/llama-hub/tree/main/llama_hub/llama_packs/neo4j_query_engine[GitHub Neo4j Llama Pack^]
+| icon:book[] Documentation | https://docs.llamaindex.ai/en/stable/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html
+| icon:book[] Notebook | https://github.com/run-llama/llama-hub/blob/main/llama_hub/llama_packs/neo4j_query_engine/llama_packs_neo4j.ipynb[Llama Pack Notebook^]
+|===
+
+== Videos & Tutorials
+
+
+* https://graphstuff.fm/episodes/llamaindex-and-more-building-llm-tech-with-jerry-liu[GraphStuff.fm Podcast: LlamaIndex and More: Building LLM Tech with Jerry Liu^]
+
+++++
+
+++++
+
+== Highlighted Articles
+
+* https://blog.llamaindex.ai/multimodal-rag-pipeline-with-llamaindex-and-neo4j-a2c542eb0206[Multimodal RAG Pipeline with LlamaIndex and Neo4j^]
+
+* https://blog.llamaindex.ai/enriching-llamaindex-models-from-graphql-and-graph-databases-bcaecec262d7[Enriching LlamaIndex Models from GraphQL and Graph Databases^]
+
+* https://levelup.gitconnected.com/a-simpler-way-to-query-neo4j-knowledge-graphs-99c0a8bbf1d7[A Simpler Way to Query Neo4j Knowledge Graphs^]

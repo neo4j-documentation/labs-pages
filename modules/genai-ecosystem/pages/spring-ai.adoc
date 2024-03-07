@@ -1,0 +1,81 @@
+= Spring AI
+:slug: spring-ai
+:author: Gerrit Meier, Michael Simons
+:category: labs
+:tags: spring, neo4j, vector index, vector search
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: spring-ai
+
+// image::todo.png[width=800]
+
+The https://docs.spring.io/spring-ai/reference/index.html[Spring AI^] project aims to be something like LangChain for the Java world.
+
+Combining Spring AI with Spring Data Neo4j makes it possible to build on existing domain models, turn them into a graph, and enrich them with vector embeddings.
+
+== Installation
+
+Currently Spring AI is available from the Spring Snapshot Repository:
+
+[source,xml]
+----
+<repository>
+	<id>spring-snapshots</id>
+	<name>Spring Snapshots</name>
+	<url>https://repo.spring.io/snapshot</url>
+	<releases>
+		<enabled>false</enabled>
+	</releases>
+</repository>
+----
+
+The Spring AI project is available on Maven Central. To use it in your project, add the following dependency: `org.springframework.ai:spring-ai-neo4j-store:version`
+
+The following example is taken from the https://github.com/spring-projects/spring-ai/raw/main/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[integration test^]
+
+[source,java,indent=0]
+----
+include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727a53b376fd1e9624221/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=189..211]
+
+----
+
+[source,java,indent=0]
+----
+include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727a53b376fd1e9624221/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=66..78]
+
+----
+
+== Functionality Includes
+
+* Create vector index
+* Populate nodes and vector index from documents
+* Query vector index
+
+== Documentation
+
+The Neo4j Vector integration documentation is avalable at: https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/meistermeier[Gerrit Meier^], https://github.com/rotnroll666[Michael Simons^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Data Repository | https://github.com/spring-projects/spring-ai[GitHub]
+| icon:github[] Issues | https://github.com/spring-projects/spring-ai/issues
+| icon:book[] Documentation | https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html
+|===
+
+////
+
+== Videos & Tutorials
+
+Installation:
+++++
+<iframe width="320" height="180" src="" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+////
+
+== Highlighted Articles
+
+* https://meistermeier.com/2024/02/23/spring-ai-neo4j.html[Spring AI with Neo4j Vector Index (Gerrit Meier)^]

@@ -1,0 +1,34 @@
+= Google Cloud Demo
+include::_graphacademy_llm.adoc[]
+:slug: google-cloud-demo
+:author: Ben Lackey
+:category: genai-ecosystem
+:tags: rag, demo, retrieval augmented generation, chatbot, google, vertexai
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: google-cloud-demo
+
+This example consists of two sample applications that show how to use Neo4j with the generative AI capabilities in Google Cloud Vertex AI. We explore how to leverage Google generative AI to build and consume a knowledge graph in Neo4j.
+
+* assetmanager - Parses data from the SEC containing quarterly filings of asset managers. We build a graph containing assets managers and the securities they hold. A chatbot that queries the knowledge graph is included as well.
+* resume - Extracts entities like jobs and skills from a collection of resumes, then builds a graphs showing what talents individuals share. A chatbot that queries the knowledge graph is included as well.
+
+== Installation
+
+The Demo is available on GitHub: https://github.com/neo4j-partners/neo4j-generative-ai-google-cloud
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:github[] Code Repository | https://github.com/neo4j-partners/neo4j-generative-ai-google-cloud[GitHub]
+| Blog Post | https://cloud.google.com/blog/topics/partners/build-intelligent-apps-with-neo4j-and-google-generative-ai[Link]
+| Demo Video | https://www.youtube.com/watch?v=UGWVMfo5Pew[Link]
+| Slides | https://docs.google.com/presentation/d/1vIXaZCWX5fN5m6y50Z7nM6RlTSJR7vErUrfXlWR0BLY/edit?usp=sharing[Link]
+| Press Release | https://neo4j.com/press-releases/neo4j-google-cloud-vertex-ai[Link]
+|===
+
+== Videos & Tutorials
+
+++++
+<iframe width="640" height="480" src="https://www.youtube.com/embed/UGWVMfo5Pew" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
