@@ -8,10 +8,11 @@
 :page-pagination:
 :page-product: Needle Starter Kit
 
-image::starterkit.jpg[width=800]
+image::FeaturedImg.jpg[width=800]
 
 
-The **Needle Starter Kit** is a responsive Starter Kit for building an app using [Neo4j Needle](https://www.neo4j.design/) for accelerating your Neo4j-powered front-end tools.
+The **Needle Starter Kit** is a responsive Starter Kit for building applications using [Neo4j Needle](https://www.neo4j.design/) for accelerating TTV of your Neo4j-powered front-end applications.
+You can access the https://needle-starterkit.graphapp.io[online version here].
 
 == Availability & Installation
 The Needle Starter Kit requires you to have Node v16 (or higher) installed, and is meant to be used with Neo4j v5.X or higher.
@@ -30,15 +31,15 @@ See the documentation for more information.
 
 == Functionality Includes
 
+- 📈 Various templates and components focused on specific uses-cases and industries
 - 🚀 Responsive: Adapts to different screen sizes for optimal user experience.
 - 🌚 Dark/Light Mode Theme 🌞: Includes a theme wrapper to switch between light and dark modes without having to reinvent the wheel!
 - ⚙️ Neo4j Integration: A simple example for connecting to a Neo4j database.
 - 🔐 Neo4j Auto-connect: Automatically connects to the Neo4j database if the user has a session saved (using localStorage).
-- 💻 Side Navigation: Offers a navigational sidebar for easy access to different parts of the application.
 - 🛠️️ Modular approach: Facilitates easy customization.
 
 == Documentation
-For installing, configuring and extending the starter kit, check out the link:https://neo4j.com/labs/neo4j-needle-starterkit/1.0/[Documentation].
+For installing, configuring and extending the starter kit, check out the link:https://neo4j.com/labs/neo4j-needle-starterkit/2.0/[Documentation].
 
 == Relevant Links
 
@@ -46,10 +47,10 @@ For installing, configuring and extending the starter kit, check out the link:ht
 |===
 | icon:comments[] Community Support | https://github.com/neo4j-labs/neo4j-needle-starterkit/issues[Github Issues^]
 | icon:user[] Authors | https://github.com/msenechal[Morgan Senechal^]
-| icon:gift[] Releases | https://github.com/neo4j-labs/neo4j-needle-starterkit/releases
+// | icon:gift[] Releases | https://github.com/neo4j-labs/neo4j-needle-starterkit/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neo4j-needle-starterkit
 | icon:github[] Issues | https://github.com/neo4j-labs/neo4j-needle-starterkit/issues
-| icon:book[] Documentation | https://neo4j.com/labs/neo4j-needle-starterkit/1.0/
+| icon:book[] Documentation | https://neo4j.com/labs/neo4j-needle-starterkit/2.0/
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
 |===
