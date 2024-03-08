@@ -1,0 +1,3 @@
+** xref:index.adoc[Keymaker]
+*** Documentation
+**** link:https://help.neo4j.solutions/neo4j-solutions/keymaker/[Keymaker Documentation^]
