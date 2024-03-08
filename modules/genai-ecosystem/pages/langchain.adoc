@@ -105,8 +105,8 @@ docs_with_score = db.similarity_search_with_score(query, k=2)
 === Neo4j Graph
 
 The Neo4j Graph integration is a wrapper for the Neo4j Python driver. 
-It allows querying and updating the Neo4j databsae in a simplified manner from LangChain.
-Many integrations allow to use the Neo4j Graph as a source of data for LangChain.
+It allows querying and updating the Neo4j database in a simplified manner from LangChain.
+Many integrations allow you to use the Neo4j Graph as a source of data for LangChain.
 
 
 [source,python]
