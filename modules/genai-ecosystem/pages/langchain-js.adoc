@@ -13,6 +13,8 @@ image::https://dist.neo4j.com/wp-content/uploads/20230615211357/1AH05dvGA_7db_EM
 https://js.langchain.com/docs/get_started/introduction[LangChain.js^] is a JavaScript/TypeScript implementation of the LangChain library.
 It uses similar concepts, with Prompts, Chains, Transformers, Document Loaders, Agents, and more.
 
+Here is an overview of the https://js.langchain.com/docs/use_cases/graph/quickstart[Graph Integrations^].
+
 The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index as well as Cypher generation and execution available in the LangChain.js library.
 
 Learn how to build a chatbot in TypeScript using LangChain.js with our new https://graphacademy.neo4j.com/courses/llm-chatbot-typescript/[GraphAcademy course^].
@@ -146,6 +148,7 @@ const res = await chain.run("Who acted in Pulp Fiction?");
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Data Repository | https://github.com/langchain-ai/langchainjs[GitHub]
 | icon:github[] Issues | https://github.com/langchain-ai/langchainjs/issues
+| icon:book[] Documentation | https://js.langchain.com/docs/use_cases/graph/quickstart
 | icon:book[] Documentation | https://js.langchain.com/docs/modules/data_connection/experimental/graph_databases/neo4j
 |===
 
