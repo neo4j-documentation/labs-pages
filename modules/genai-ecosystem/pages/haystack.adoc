@@ -44,17 +44,27 @@ document_store = Neo4jDocumentStore(
 | icon:github[] Repository | https://github.com/prosto/neo4j-haystack[GitHub]
 | icon:github[] Issues | https://github.com/prosto/neo4j-haystack/issues
 | icon:book[] Documentation | https://haystack.deepset.ai/integrations/neo4j-document-store
+| icon:book[] Example Notebook | https://github.com/prosto/neo4j-haystack-playground
 |===
 
-////
 
 == Videos & Tutorials
 
-Installation:
+Online Meetup / Livestream with Sergey Bondarenco and Andreas Kollegger
+
+Neo4j & Haystack Part 1: Knowledge Graphs for RAG:
+
 ++++
-<iframe width="320" height="180" src="" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kFQJ7GXODxk?si=1kewH4JRiiJSZaap" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
 
+Neo4j & Haystack Part 2: How the Integration Works:
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gR49QZ9Lm0M?si=dcaB5NZJmMUFQSoL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+////
 == Highlighted Articles
 
 // link:https://medium.com/neo4j/....[article^]
