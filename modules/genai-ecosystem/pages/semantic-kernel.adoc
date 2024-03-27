@@ -1,0 +1,97 @@
+= Semantic Kernel Neo4j Integration (preview)
+:slug: semantic-kernel
+:author: 
+:category: genai-ecosystem
+:tags: semantic-kernel, integration, llm, neo4j, vector index
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: semantic-kernel
+
+
+An integration of Neo4j graph database with Microsoft's https://github.com/microsoft/semantic-kernel[Semantic Kernel^], 
+through Microsoft https://microsoft.github.io/kernel-memory/[Kernel Memory^]. Neo4j's vector search index is used for storing document embeddings and dense retrievals.
+
+The library allows using Neo4j as a DocumentStore, and implements the required Protocol methods. You can start working with the implementation by importing it from neo4_haystack package.
+
+== Installation
+
+Hello world example:
+
+[source,csharp]
+----
+# dotnet add package Neo4j.KernelMemory.MemoryStorage
+# dotnet add package Neo4j.Driver
+
+using Microsoft.KernelMemory;
+using Neo4j.KernelMemory.MemoryStorage;
+using Neo4j.Driver;
+
+var env = System.Environment.GetEnvironmentVariables();
+
+var neo4jConfig = new Neo4jConfig
+{
+    Uri = env["NEO4J_URI"],
+    Username = env["NEO4J_USERNAME"],
+    Password = env["NEO4J_PASSWORD"]
+};
+
+var kernelMemory = new KernelMemoryBuilder()
+    .WithOpenAIDefaults(env["OPENAI_API_KEY"])
+    .WithNeo4j(neo4jConfig)
+    .Build<MemoryServerless>();
+
+// First, provide some text to the Kernel Memory, which will be indexed and stored in Neo4j
+await kernelMemory.ImportTextAsync("""
+The "Hello, World!" program, often attributed to Brian Kernighan's work in the 1970s, serves as the quintessential introduction to programming languages, demonstrating basic syntax with a simple output function. Originating as a test phrase in Bell Laboratories for the B programming language, it has evolved into a universal starter program for beginners in coding, symbolizing the initiation into software development. Its simplicity makes it an ideal tool for education and system testing, illustrating the minimal requirements to execute a program across various computing environments. As a cultural staple in the tech community, "Hello, World!" represents both a rite of passage for new programmers and the universal joy of creating with code. This tradition showcases the evolution of programming languages and the shared beginnings of developers worldwide.
+""", 
+    documentId: "HelloWorld");
+
+// Now ask a question
+var question = "What's Kernel Memory?";
+
+var answer = await kernelMemory.AskAsync(question);
+
+Console.WriteLine($"Question: {question}\n\nAnswer: {answer.Result}");
+
+----
+
+== Functionality Includes
+
+* `Neo4jMemory` - implementation of `IMemoryDb`.
+* `WithNeo4j` - extension to the KernelMemoryBuilder.
+* Integation with Semantic Kernel
+* Develop in serverless, deploy as server
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/prosto[Sergey Bondarenco^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Repository | https://github.com/neo4j-labs/Neo4j.KernelMemory.MemoryStorage[GitHub]
+| icon:github[] Issues | https://github.com/neo4j-labs/Neo4j.KernelMemory.MemoryStorage/issues
+| icon:book[] Documentation | https://haystack.deepset.ai/integrations/neo4j-document-store
+| icon:book[] Example Notebook | https://github.com/prosto/neo4j-haystack-playground
+|===
+
+
+== Videos & Tutorials
+
+Online Meetup / Livestream with Sergey Bondarenco and Andreas Kollegger
+
+Neo4j & Haystack Part 1: Knowledge Graphs for RAG:
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kFQJ7GXODxk?si=1kewH4JRiiJSZaap" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+Neo4j & Haystack Part 2: How the Integration Works:
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gR49QZ9Lm0M?si=dcaB5NZJmMUFQSoL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+////
+== Highlighted Articles
+
+// link:https://medium.com/neo4j/....[article^]
+////
