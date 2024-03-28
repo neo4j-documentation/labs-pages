@@ -11,7 +11,7 @@
 An integration of Neo4j graph database with Microsoft's https://github.com/microsoft/semantic-kernel[Semantic Kernel^], 
 through Microsoft https://microsoft.github.io/kernel-memory/[Kernel Memory^]. Neo4j's vector search index is used for storing document embeddings and dense retrievals.
 
-The library allows using Neo4j as a DocumentStore, and implements the required Protocol methods. You can start working with the implementation by importing it from neo4_haystack package.
+The library allows using Neo4j as an IMemoryDb. It provides a simple way to store and retrieve data from Neo4j.
 
 == Installation
 
