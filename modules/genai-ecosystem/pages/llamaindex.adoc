@@ -104,7 +104,7 @@ This https://llamahub.ai/l/llama_packs-neo4j_query_engine[Neo4j Query Engine Lla
 * https://graphstuff.fm/episodes/llamaindex-and-more-building-llm-tech-with-jerry-liu[GraphStuff.fm Podcast: LlamaIndex and More: Building LLM Tech with Jerry Liu^]
 
 ++++
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kSAh4H4YDX8?si=hoK1Vrw0Hs4Et5si" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
 
 == Highlighted Articles
