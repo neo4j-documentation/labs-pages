@@ -273,7 +273,7 @@ The https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transfo
 * https://python.langchain.com/docs/integrations/providers/neo4j/[Neo4j Integrations^]
 * https://python.langchain.com/docs/use_cases/graph/graph_cypher_qa[Graph Cypher QA Chain^]
 * https://python.langchain.com/docs/integrations/vectorstores/neo4jvector[Neo4j Vector^]
-* https://python.langchain.com/docs/use_cases/graph/diffbot_graphtransformer[Diffbot Graph Transformer^]
+* https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transformers^]
 
 == Relevant Links
 [cols="1,4"]
