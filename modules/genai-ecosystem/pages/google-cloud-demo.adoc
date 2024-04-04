@@ -1,4 +1,4 @@
-= Google Cloud Demo
+= Google Cloud Vertex AI
 include::_graphacademy_llm.adoc[]
 :slug: google-cloud-demo
 :author: Ben Lackey, Michael Hunger
@@ -14,7 +14,7 @@ include::_graphacademy_llm.adoc[]
 GenAI developers, familiar with orchestration tools and architectures often face challenges when deploying their work to production. 
 Google's https://cloud.google.com/vertex-ai/generative-ai/docs/reasoning-engine/overview[Vertex AI Reasoning Engine Runtime^](preview) now offers an easy way to deploy, scale, and monitor GenAI applications and APIs without in-depth knowledge of containers or cloud configurations. 
 
-Compatible with various orchestration frameworks, including xref:langchai.adoc[LangChain], this solution allows developers to use the https://cloud.google.com/vertex-ai/docs/python-sdk/use-vertex-ai-python-sdk[Vertex AI Python SDK^] for setup, testing, deployment.
+Compatible with various orchestration frameworks, including xref:langchain.adoc[LangChain], this solution allows developers to use the https://cloud.google.com/vertex-ai/docs/python-sdk/use-vertex-ai-python-sdk[Vertex AI Python SDK^] for setup, testing, deployment.
 
 It works like this:
 
@@ -38,6 +38,8 @@ PDFs can be also be loaded from Google Cloud buckets.
 It uses the underlying llm-graph-transformer library that we contributed to LangChain.
 
 // TODO image
+
+// The Demo is available https://llm-graph-builder-gemini.neo4jlabs.com[online with with Google Gemini on Vertex AI^].
 
 == SEC Filings GenAI Labs 
 
