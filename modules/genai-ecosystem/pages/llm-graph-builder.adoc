@@ -66,14 +66,19 @@ You can also run it locally, by cloning the https://github.com/neo4j-labs/llm-gr
 
 It is using Docker for packaging frontend and backend, and you can run `docker-compose up` to start the whole application.
 
-////
 
 == Videos & Tutorials
 
-Installation:
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
+
+
+////
 ++++
 <iframe width="320" height="180" src="https://www.youtube.com/embed/WcLFHFfLczU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ++++
+////
+
+////
 
 == Highlighted Articles
 
