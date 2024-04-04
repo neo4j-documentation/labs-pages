@@ -21,6 +21,8 @@ Here is an overview of the https://python.langchain.com/docs/use_cases/graph/qui
 
 NOTE: When upgrading to LangChain 0.1.0+ make sure to read this article: https://medium.com/neo4j/langchain-v0-1-updating-graphacademy-neo4j-llm-courses-689e7c4eff3e[Updating GraphAcademy Neo4j & LLM Courses to Langchain v0.1^].
 
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-chatbot-python.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-chatbot-python/"]
+
 == Installation
 
 [source,shell]
