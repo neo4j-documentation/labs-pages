@@ -1,0 +1,81 @@
+= LLM Graph Builder - Construct Knowledge Graphs from Unstructured Text (PDF, YouTube, Webpages)
+include::_graphacademy_llm.adoc[]
+:slug: llm-graph-builder
+:author: Michael Hunger, Tomaz Bratanic, Persistent
+:category: genai-ecosystem
+:tags: 
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: llm-graph-builder
+:imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
+
+image::llm-graph-builder.png[width=600, align=center]
+
+The LLM Graph Builder is a demo application for turning unstructured text into a knowledge graph, it provides a magical text to graph experience.
+
+It uses ML models (LLM, Diffbot) to transform PDFs, web pages, and YouTube videos into a graph of entities and their relationships.
+
+The frontend is a React Application and the backend a Python FastAPI.
+It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that we contributed to LangChain.
+
+
+== Functionality Includes
+
+1. Connect to a Neo4j Aura instance
+2. Provide your PDF files, Youtube URLs, Wikipedia Keywords or S3/GCS buckets
+3. Construct Graph with LLM / Diffbot
+4. Visualize Knowledge Graph in App
+5. Chat with GraphRAG
+6. Open Neo4j Bloom for further Exploration
+7. Use the constructed knowledge graph in your applications
+
+image::llm-graph-builder-viz.png[width=600, align=center]
+
+== How it works
+
+1. Uploaded Sources are stored as `Document` nodes in the graph
+2. Each document (type) is loaded with the LangChain Loaders
+3. The content is split into Chunks 
+4. Chunks are stored in the graph and connected to the Document and to each other for advanced RAG patterns
+5. Highly similar Chunks are connected with a `SIMILAR` relationship to form a kNN Graph
+6. Embeddings are computed and stored in the Chunks and Vector index
+7. Using the llm-graph-transformer or diffbot-graph-transformer entities and relationships are extracted from the text
+8. Entities are stored in the graph and connected to the originating Chunks
+
+
+// TODO architecture diagram
+
+== Relevant Links
+[cols="1,4"]
+|===
+| OpenAI | https://llm-graph-builder-openai.neo4jlabs.com/
+| Gemini | https://llm-graph-builder-gemini.neo4jlabs.com/
+| icon:user[] Authors | Michael Hunger, Tomaz Bratanic, Persistent
+| icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
+| icon:github[] Code Repository | https://github.com/neo4j-labs/llm-graph-builder[GitHub^]
+| icon:github[] Issues | https://github.com/neo4j-labs/llm-graph-builder/issues[GitHub Issues^]
+// | icon:book[] Documentation |
+|===
+
+
+== Installation
+
+The Demo is available online, [configured for OpenAI GPT^]  and for https://llm-graph-builder-gemini.neo4jlabs.com[Google Gemini on Vertex AI^]
+
+You can also run it locally, by cloning the https://github.com/neo4j-labs/llm-graph-builder[repository] and following the instructions in the README.md file.
+
+It is using Docker for packaging frontend and backend, and you can run `docker-compose up` to start the whole application.
+
+////
+
+== Videos & Tutorials
+
+Installation:
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/WcLFHFfLczU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+
+== Highlighted Articles
+
+// link:https://medium.com/neo4j/....[article^]
+////

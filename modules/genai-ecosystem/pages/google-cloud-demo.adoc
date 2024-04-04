@@ -8,16 +8,35 @@ include::_graphacademy_llm.adoc[]
 :page-pagination:
 :page-product: google-cloud-demo
 
+////
+
+== Deploying GenAI Applications and APIs with Vertex AI Reasoning Engine
+
+
+////
+
+== Graph Consumption with Gemini Pro
+
+The xref:llm-graph-builder[LLM Graph Builder] that extracts entities from unstructured text (PDFs, YouTube Transcripts, Wikipedia) can be configured to use VertexAI both as embedding model and Gemnini as LLM for the extraction.
+PDFs can be also be loaded from Google Cloud buckets.
+
+It uses the underlying llm-graph-transformer library that we contributed to LangChain.
+
+// TODO image
+
+== SEC Filings GenAI Labs 
+
 This example consists of two sample applications that show how to use Neo4j with the generative AI capabilities in Google Cloud Vertex AI. We explore how to leverage Google generative AI to build and consume a knowledge graph in Neo4j.
 
 * assetmanager - Parses data from the SEC containing quarterly filings of asset managers. We build a graph containing assets managers and the securities they hold. A chatbot that queries the knowledge graph is included as well.
 * resume - Extracts entities like jobs and skills from a collection of resumes, then builds a graphs showing what talents individuals share. A chatbot that queries the knowledge graph is included as well.
 
-== Installation
+=== Installation
 
 The Demo is available on GitHub: https://github.com/neo4j-partners/neo4j-generative-ai-google-cloud
 
-== Relevant Links
+=== Relevant Links
+
 [cols="1,4"]
 |===
 | icon:github[] Code Repository | https://github.com/neo4j-partners/neo4j-generative-ai-google-cloud[GitHub]
@@ -27,7 +46,7 @@ The Demo is available on GitHub: https://github.com/neo4j-partners/neo4j-generat
 | Press Release | https://neo4j.com/press-releases/neo4j-google-cloud-vertex-ai[Link]
 |===
 
-== Videos & Tutorials
+=== Videos & Tutorials
 
 ++++
 <iframe width="640" height="480" src="https://www.youtube.com/embed/UGWVMfo5Pew" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
