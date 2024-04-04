@@ -290,6 +290,7 @@ image::
 | icon:github[] Issues | https://github.com/langchain-ai/langchain/issues
 | icon:book[] Documentation | https://python.langchain.com/docs/integrations/providers/neo4j/[Neo4j Integrations^]
 | icon:book[] Documentation | https://python.langchain.com/docs/use_cases/graph/quickstart[Graph Overview Docs^]
+| icon:github[] Starter Kit |https://github.com/neo4j-examples/langchain-starter-kit[LangChain Starter Kit^]
 | icon:code[] Juypter | https://github.com/tomasonjo/blogs/tree/master/llm[Jupyter Notebooks^]
 |===
 

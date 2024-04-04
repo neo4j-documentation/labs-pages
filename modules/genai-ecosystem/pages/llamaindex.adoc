@@ -95,6 +95,7 @@ This https://llamahub.ai/l/llama_packs-neo4j_query_engine[Neo4j Query Engine Lla
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Repository | https://github.com/run-llama/llama-hub/tree/main/llama_hub/tools/neo4j_db[GitHub Neo4jDB^] https://github.com/run-llama/llama-hub/tree/main/llama_hub/llama_packs/neo4j_query_engine[GitHub Neo4j Llama Pack^]
 | icon:book[] Documentation | https://docs.llamaindex.ai/en/stable/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html
+| icon:github[] Starter Kit | https://neo4j.com/labs/genai-ecosystem/llamaindex/[LlamaIndex Starter Kit^]
 | icon:book[] Notebook | https://github.com/run-llama/llama-hub/blob/main/llama_hub/llama_packs/neo4j_query_engine/llama_packs_neo4j.ipynb[Llama Pack Notebook^]
 |===
 
