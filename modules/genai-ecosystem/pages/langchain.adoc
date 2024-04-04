@@ -255,11 +255,15 @@ Storing the conversation, i.e. the flow of questions and answers of user session
 
 You can index embeddings for and link questions and answers back to the retrieved chunks and entities in the graph and use user feedback to re-rank those inputs for future similar questions.  
 
-=== Graph Construction DiffbotGraphTransformer and LLMGraphTransformer
+=== Knowledge Graph Construction
 
 Creating a Knowledge Graph from unstructured data like PDF documents used to be a complex and time-consuming task that required training and using dedicated, large NLP models.
 
 The https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transformers^] are tools that allows you to extract structured data from unstructured documents and transform it into a Knowledge Graph.
+
+NOTE: You can see a practical application, code and demo for extracting knowledge graphs from PDFs, YouTube transcripts, wikpedia articles and more with the xref:llm-graph-builder.adoc[LLM Graph Builder].
+
+image::
 
 * https://python.langchain.com/docs/use_cases/graph/integrations/diffbot_graphtransformer[Diffbot Graph Transformer^]
 * https://python.langchain.com/docs/use_cases/graph/constructing#llm-graph-transformer[LLM Graph Transformer^]
@@ -281,10 +285,10 @@ The https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transfo
 | icon:user[] Authors | https://github.com/tomasonjo[Tomaz Bratanic^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Data Repository | https://github.com/langchain-ai/langchain[GitHub]
-| icon:github[] Issues | https://github.com/neo4j-product-examples/data-prep-sec-edgar/issues
-| icon:book[] Documentation | https://python.langchain.com/docs/integrations/providers/neo4j/
+| icon:github[] Issues | https://github.com/langchain-ai/langchain/issues
+| icon:book[] Documentation | https://python.langchain.com/docs/integrations/providers/neo4j/[Neo4j Integrations^]
 | icon:book[] Documentation | https://python.langchain.com/docs/use_cases/graph/quickstart[Graph Overview Docs^]
-| icon:python[] Juypter | https://github.com/tomasonjo/blogs/tree/master/llm[Jupyter Notebooks^]
+| icon:code[] Juypter | https://github.com/tomasonjo/blogs/tree/master/llm[Jupyter Notebooks^]
 |===
 
 == Videos & Tutorials
