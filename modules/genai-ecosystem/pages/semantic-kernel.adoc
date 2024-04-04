@@ -70,7 +70,7 @@ Console.WriteLine($"Question: {question}\n\nAnswer: {answer.Result}");
 | icon:github[] Integration | https://github.com/neo4j-labs/Neo4j.KernelMemory.MemoryStorage[GitHub]
 | icon:github[] Issues | https://github.com/neo4j-labs/Neo4j.KernelMemory.MemoryStorage/issues
 | icon:book[] Documentation | https://github.com/neo4j-labs/Neo4j.KernelMemory.MemoryStorage
-| icon:github[] Starter Kit | https://github.com/neo4j-examples/semantic-kernel-starter-kit[GithHub]
+| icon:github[] Starter Kit | https://github.com/neo4j-examples/semantic-kernel-starter-kit[Sematic Kernel Starter Kit]
 | icon:github[] Examples | https://github.com/neo4j-labs/Neo4j.KernelMemory.MemoryStorage/tree/main/examples[GithHub]
 |===
 

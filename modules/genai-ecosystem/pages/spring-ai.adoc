@@ -63,6 +63,7 @@ The Neo4j Vector integration documentation is avalable at: https://docs.spring.i
 | icon:github[] Data Repository | https://github.com/spring-projects/spring-ai[GitHub]
 | icon:github[] Issues | https://github.com/spring-projects/spring-ai/issues
 | icon:book[] Documentation | https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html
+| icon:github[] Starter Kit | https://github.com/neo4j-examples/spring-ai-starter-kit/[Spring AI Starter Kit^]
 |===
 
 ////
