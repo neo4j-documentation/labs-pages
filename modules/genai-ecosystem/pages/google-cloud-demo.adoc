@@ -7,7 +7,7 @@ include::_graphacademy_llm.adoc[]
 :neo4j-versions: 5.x
 :page-pagination:
 :page-product: google-cloud-demo
-:imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
+//:imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
 == Deploying GenAI Applications and APIs with Vertex AI Reasoning Engine
 
@@ -28,7 +28,7 @@ You can use LangChain and other orchestration tools to deploy RAG architectures,
 
 You can see below an example of GraphRAG on a Company News Knowledge Graph using LangChain, Neo4j and Gemini.
 
-image::reasoning-engine-graphrag.png[]
+image::https://dev.assets.neo4j.com/wp-content/uploads/2024/reasoning-engine-graphrag.png[]
 
 == Knowledge Graph Generation with Gemini Pro
 
