@@ -54,6 +54,8 @@ image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundame
 * xref:langchain4j.adoc[LangChain4j]
 * xref:haystack.adoc[Haystack]
 * xref:semantic-kernel.adoc[Semantic Kernel]
+* xref:dspy.adoc[DSPy]
+
 
 == Highlighted Articles
 
