@@ -2,7 +2,7 @@
 :slug: dspy
 :author: Tomaz Bratanic
 :category: labs
-:tags: dspy, rag, vector search, , neo4j
+:tags: dspy, rag, vector search, neo4j
 :neo4j-versions: 5.x
 :page-pagination:
 :page-product: dspy
