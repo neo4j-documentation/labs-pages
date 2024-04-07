@@ -23,3 +23,5 @@
 // **** link:xxx[Documentation]
 **** xref:semantic-kernel.adoc[Sematic Kernel]
 // **** link:xxx[Documentation]
+**** xref:dspy.adoc[DSPy]
+// **** link:xxx[Documentation]
