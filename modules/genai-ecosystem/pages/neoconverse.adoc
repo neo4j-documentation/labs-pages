@@ -1,4 +1,4 @@
-= Neo Converse - Graph Database Construction and Search with Natural Language
+= Neo Converse - Graph Database Search with Natural Language
 include::_graphacademy_llm.adoc[]
 :slug: neoconverse
 :author: Kumar SS, Eric Monk
@@ -9,7 +9,7 @@ include::_graphacademy_llm.adoc[]
 :page-product: neoconverse
 :imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
-image::neoconverse.png[width=600, align=center]
+image::neoconverse-latest.gif[width=600, align=center]
 
 Neoconverse is an application to demonstrate natural language database search with GenAI.
 It makes existing graph databases available to non-technical users, allowing them to issue natural language questions.
@@ -17,46 +17,32 @@ Using the graph database schema, question-statement examples, and fine-tuning, t
 Which is then validated and executed against the database.
 
 The query results are sent with the user question to the LLM to generate a natural language answer.
-Alterantively the LLM can e configured to generate the data an configuration to render the results of the query as a chart for visual representation.
+Alterantively the LLM can be configured to generate the data an configuration to render the results of the query as a chart for visual representation.
 
-TODO image
-
-Neoconverse also contains infrastructure to construct knowledge graphs from unstructured data.
-
-TODO
-The front-end is a React/Streamlit Application?? and the Backend 
-The frontend is a React Application and the backend a Python FastAPI.
-It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that we contributed to LangChain.
-
+image::neoconverse-chart.png[width=600, align=center]
 
 == Functionality Includes
 
-* import source documents into the 
-* chunk text documents
-* generate text enbeddings and vector index them
+* Interact with neo4j knowledge graph in natural language
+* Ability to add your own neo4j databases as agents and interact in plain english 
+* Ability to add your own LLM model from cloud providers (GCP and Open AI currently supported, AWS Bedrock coming soon)
+* Generate chart visualizations
 // * extract entities?
-* connect similar chunks via scored similarity relationships
-
-image::agent-neo-structure.png[width=600, align=center]
 
 == How it works
 
-1. Uploaded Sources are stored as `Document` nodes in the graph
-2. Each document (type) is loaded with the LangChain Loaders
-3. The content is split into Chunks 
-4. Chunks are stored in the graph and connected to the Document and to each other for advanced RAG patterns
-5. Highly similar Chunks are connected with a `SIMILAR` relationship to form a kNN Graph
-6. Embeddings are computed and stored in the Chunks and Vector index
-7. Using the llm-graph-transformer or diffbot-graph-transformer entities and relationships are extracted from the text
-8. Entities are stored in the graph and connected to the originating Chunks
+1. First, the user enters a question in natural language format.
+2. This question is then converted into cypher queries using an LLM (Large Language Model).
+3. The cypher queries are executed in a configured Neo4j database.
+4. The results are returned in JSON format.
+5. The JSON results from the grounded Neo4j database are then converted into a more readable format using the configured LLM.
 
-
-// TODO architecture diagram
+image::neoconverse-arch.png[width=600, align=center]
 
 == Relevant Links
 [cols="1,4"]
 |===
-| Online | https://neoconverse.neo4jlabs.com/
+| Online | https://neoconverse.graphapp.io/
 | icon:user[] Authors | Kumar SS, Eric Monk
 | icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
 | icon:github[] Code Repository | https://github.com/neo4j-labs/neoconverse[GitHub^]
@@ -67,18 +53,22 @@ image::agent-neo-structure.png[width=600, align=center]
 
 == Installation
 
-The Demo is available online, https://neoconverse.neo4jlabs.com
+The Demo is available online, https://neoconverse.graphapp.io
 
 You can also run it locally, by cloning the https://github.com/neo4j-labs/neoconverse[repository] and following the instructions in the README.md file.
 
-It is using Docker for packaging frontend and backend, and you can run `docker-compose up` to start the whole application.
+
+== Highlighted Articles
+
+link:https://medium.com/@kumarss20/from-code-to-conversation-unleashing-the-potential-of-neo4j-with-llm-powered-conversational-0fd243337e9d[From code to conversation^]
+link:https://medium.com/@kumarss20/text-to-chart-generation-e654720b15a0[Text to chart generation^]
 
 
-== Videos & Tutorials
+// == Videos & Tutorials
 
-TODO Dan Bukowski workshops and articles
+// TODO Dan Bukowski workshops and articles
 
-image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
+// image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
 
 
 ////
