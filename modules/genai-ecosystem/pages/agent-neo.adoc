@@ -1,35 +1,38 @@
-= LLM Graph Builder - Construct Knowledge Graphs from Unstructured Text (PDF, YouTube, Webpages)
+= Agent Neo - Knowledge Graph Enhanced GenAI Document Search
 include::_graphacademy_llm.adoc[]
-:slug: llm-graph-builder
-:author: Michael Hunger, Tomaz Bratanic, Persistent
+:slug: agent-neo
+:author: Dan Bukowski, Alex Fournier
 :category: genai-ecosystem
 :tags: 
 :neo4j-versions: 5.x
 :page-pagination:
-:page-product: llm-graph-builder
+:page-product: agent-neo
 :imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
-image::llm-graph-builder.png[width=600, align=center]
+image::agent-neo.png[width=600, align=center]
 
-The LLM Graph Builder is a demo application for turning unstructured text into a knowledge graph, it provides a magical text to graph experience.
+Agent Neo is a example architecture to demonstrate how to build and deploy a GenAI Document search application.
+To enable advanced RAG patterns it utilizes a graph database to represent the underly document structures with entities for documents, chunks and entities and the relationships between them.
 
-It uses ML models (LLM, Diffbot) to transform PDFs, web pages, and YouTube videos into a graph of entities and their relationships.
+It uses developer documentation as example input data but can be equally applied to other types of unstructured documents like research documentation, patents, legal documents, contracts or transcripts and proceedings.
 
-The frontend is a React Application and the backend a Python FastAPI application.
+TODO
+The front-end is a React/Streamlit Application?? and the Backend 
+The frontend is a React Application and the backend a Python FastAPI.
 It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that we contributed to LangChain.
 
 
 == Functionality Includes
 
-1. Connect to a Neo4j Aura instance
-2. Provide your PDF files, Youtube URLs, Wikipedia Keywords or S3/GCS buckets
-3. Construct Graph with LLM / Diffbot
-4. Visualize Knowledge Graph in App
-5. Chat with GraphRAG
-6. Open Neo4j Bloom for further Exploration
-7. Use the constructed knowledge graph in your applications
+* import source documents into the graph database
+* chunk text documents
+* generate text enbeddings and vector index them
+// * extract entities?
+* connect similar chunks via scored similarity relationships
+* employ GraphRAG to retrieve relevant chunks, their documents and related content for answering questions
+* store conversations (questions and answers) in the graph and connect them back to the originating context
 
-image::llm-graph-builder-viz.png[width=600, align=center]
+image::agent-neo-structure.png[width=600, align=center]
 
 == How it works
 
@@ -48,26 +51,27 @@ image::llm-graph-builder-viz.png[width=600, align=center]
 == Relevant Links
 [cols="1,4"]
 |===
-| OpenAI | https://llm-graph-builder-openai.neo4jlabs.com/
-| Gemini | https://llm-graph-builder-gemini.neo4jlabs.com/
-| icon:user[] Authors | Michael Hunger, Tomaz Bratanic, Persistent
+| Online | https://agent-neo.neo4jlabs.com/
+| icon:user[] Authors | Dan Bukowski, ...
 | icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
-| icon:github[] Code Repository | https://github.com/neo4j-labs/llm-graph-builder[GitHub^]
-| icon:github[] Issues | https://github.com/neo4j-labs/llm-graph-builder/issues[GitHub Issues^]
+| icon:github[] Code Repository | https://github.com/neo4j-labs/agent-neo[GitHub^]
+| icon:github[] Issues | https://github.com/neo4j-labs/agent-neo/issues[GitHub Issues^]
 // | icon:book[] Documentation |
 |===
 
 
 == Installation
 
-The Demo is available online, https://llm-graph-builder-openai.neo4jlabs.com[configured for OpenAI GPT^]  and for https://llm-graph-builder-gemini.neo4jlabs.com[Google Gemini on Vertex AI^]
+The Demo is available online, https://agent-neo.neo4jlabs.com
 
-You can also run it locally, by cloning the https://github.com/neo4j-labs/llm-graph-builder[repository] and following the instructions in the README.md file.
+You can also run it locally, by cloning the https://github.cosm/neo4j-labs/agent-neo[repository] and following the instructions in the README.md file.
 
 It is using Docker for packaging frontend and backend, and you can run `docker-compose up` to start the whole application.
 
 
 == Videos & Tutorials
+
+TODO Dan Bukowski workshops and articles
 
 image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
 

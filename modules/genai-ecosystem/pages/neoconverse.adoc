@@ -1,0 +1,95 @@
+= Neo Converse - Graph Database Construction and Search with Natural Language
+include::_graphacademy_llm.adoc[]
+:slug: neoconverse
+:author: Kumar SS, Eric Monk
+:category: genai-ecosystem
+:tags: 
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: neoconverse
+:imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
+
+image::neoconverse.png[width=600, align=center]
+
+Neoconverse is an application to demonstrate natural language database search with GenAI.
+It makes existing graph databases available to non-technical users, allowing them to issue natural language questions.
+Using the graph database schema, question-statement examples, and fine-tuning, the natural language question is translated by an LLM to a graph query (Cypher). 
+Which is then validated and executed against the database.
+
+The query results are sent with the user question to the LLM to generate a natural language answer.
+Alterantively the LLM can e configured to generate the data an configuration to render the results of the query as a chart for visual representation.
+
+TODO image
+
+Neoconverse also contains infrastructure to construct knowledge graphs from unstructured data.
+
+TODO
+The front-end is a React/Streamlit Application?? and the Backend 
+The frontend is a React Application and the backend a Python FastAPI.
+It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that we contributed to LangChain.
+
+
+== Functionality Includes
+
+* import source documents into the 
+* chunk text documents
+* generate text enbeddings and vector index them
+// * extract entities?
+* connect similar chunks via scored similarity relationships
+
+image::agent-neo-structure.png[width=600, align=center]
+
+== How it works
+
+1. Uploaded Sources are stored as `Document` nodes in the graph
+2. Each document (type) is loaded with the LangChain Loaders
+3. The content is split into Chunks 
+4. Chunks are stored in the graph and connected to the Document and to each other for advanced RAG patterns
+5. Highly similar Chunks are connected with a `SIMILAR` relationship to form a kNN Graph
+6. Embeddings are computed and stored in the Chunks and Vector index
+7. Using the llm-graph-transformer or diffbot-graph-transformer entities and relationships are extracted from the text
+8. Entities are stored in the graph and connected to the originating Chunks
+
+
+// TODO architecture diagram
+
+== Relevant Links
+[cols="1,4"]
+|===
+| Online | https://neoconverse.neo4jlabs.com/
+| icon:user[] Authors | Kumar SS, Eric Monk
+| icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
+| icon:github[] Code Repository | https://github.com/neo4j-labs/neoconverse[GitHub^]
+| icon:github[] Issues | https://github.com/neo4j-labs/neoconverse/issues[GitHub Issues^]
+// | icon:book[] Documentation |
+|===
+
+
+== Installation
+
+The Demo is available online, https://neoconverse.neo4jlabs.com
+
+You can also run it locally, by cloning the https://github.com/neo4j-labs/neoconverse[repository] and following the instructions in the README.md file.
+
+It is using Docker for packaging frontend and backend, and you can run `docker-compose up` to start the whole application.
+
+
+== Videos & Tutorials
+
+TODO Dan Bukowski workshops and articles
+
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
+
+
+////
+++++
+<iframe width="320" height="180" src="https://www.youtube.com/embed/WcLFHFfLczU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
+////
+
+////
+
+== Highlighted Articles
+
+// link:https://medium.com/neo4j/....[article^]
+////
