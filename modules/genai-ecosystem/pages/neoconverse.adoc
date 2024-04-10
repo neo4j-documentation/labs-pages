@@ -9,8 +9,8 @@ include::_graphacademy_llm.adoc[]
 :page-product: neoconverse
 :imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
-// image::neoconverse-latest.gif[width=800, align=center]
-image::https://kumarss.blob.core.windows.net/neoconverse-resources/neoconverse_latest.gif?sp=r&st=2024-04-10T19:25:11Z&se=2026-04-11T03:25:11Z&spr=https&sv=2022-11-02&sr=b&sig=Y4vgorMYcrcf%2BYpC5LzjG4XexEgPZq9UU6lm2eWxd44%3D[]
+image::neoconverse-latest.gif[width=800, align=center]
+
 Neoconverse is an application to demonstrate natural language database search with GenAI.
 It makes existing graph databases available to non-technical users, allowing them to issue natural language questions.
 Using the graph database schema, question-statement examples, and fine-tuning, the natural language question is translated by an LLM to a graph query (Cypher). 
@@ -19,8 +19,8 @@ Which is then validated and executed against the database.
 The query results are sent with the user question to the LLM to generate a natural language answer.
 Alterantively the LLM can be configured to generate the data an configuration to render the results of the query as a chart for visual representation.
 
-// image::./modules/genai-ecosystem/images/neoconverse-chart.png[width=800, align=center]
-image::https://kumarss.blob.core.windows.net/neoconverse-resources/neoconverse_chart.png?sp=r&st=2024-04-10T19:35:45Z&se=2026-04-11T03:35:45Z&spr=https&sv=2022-11-02&sr=b&sig=JhtWOckinclYNcgVnviqH5aR4kGfcCFqZy3nsI7fobg%3D[]
+image::./modules/genai-ecosystem/images/neoconverse-chart.png[width=800, align=center]
+
 == Functionality Includes
 
 * Experiment with different cloud providers' GenAl models: Currently supported are GCP and OpenAI, with AWS Bedrock coming soon.
