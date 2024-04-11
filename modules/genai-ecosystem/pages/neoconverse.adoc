@@ -46,16 +46,22 @@ This enables users to interact directly with the database graoh, faciltating an 
 
 Users have the flexibility to `*add your own local agents*` that are backed by your organizations neo4j database, and start interacting with your database knowledge graphs. 
 
-Below is the visual guide to `ADD`, `DELETE`, `EDIT` agents, and interact with your won database
+Below is the quick visual guide to `ADD`, `DELETE`, `EDIT` agents, and interact with your own database
 
 // image::add-agent[width=800, align=center]
-image::https://kumarss.blob.core.windows.net/neoconverse-resources/add-agent.gif?sp=r&st=2024-04-10T19:12:09Z&se=2026-04-11T03:12:09Z&spr=https&sv=2022-11-02&sr=b&sig=EYn4U%2B1AVCteCs1Va%2FxSAfDLPl%2FytHBjRZd%2Bji%2Bc058%3D[]
+// image::https://kumarss.blob.core.windows.net/neoconverse-resources/add-agent.gif?sp=r&st=2024-04-10T19:12:09Z&se=2026-04-11T03:12:09Z&spr=https&sv=2022-11-02&sr=b&sig=EYn4U%2B1AVCteCs1Va%2FxSAfDLPl%2FytHBjRZd%2Bji%2Bc058%3D[]
+++++
+<iframe width="600" height="400" src="https://www.youtube.com/embed/BSOWZPTR590" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+++++
 
 [WARNING]
 ====
-When creating your own agents, it's important to note that these agents are stored locally in the client's browser storage and not persisted on a server. Consequently, if the browser's local storage is cleared, all custom agents will be lost. This can occur under several conditions, such as clearing browsing data, selecting "cookies and other site data", or when the local storage reaches its capacity limit.
+When integrating your own agents, be aware that these agents are stored in the client's browser storage and not on a server. This means that all interactions, including API calls and result processing, happen on the client side and do not reach our servers. Consequently, if the browser’s local storage is cleared for reasons such as browsing data cleanup, selection of "cookies and other site data", or when local storage capacity is exceeded, all custom agents will be permanently lost.
+====
 
-Future updates may include features allowing export/import of agents and persistence of user-defined agent configurations directly within the user's database, enhancing unified and simplied experience across users
+[IMPORTANT]
+====
+We are considering future updates to enhance user experience. These updates may include capabilities for the export/import of agents and the persistence of user-defined agent configurations within the user’s own database. Such features aim to provide a more unified and simplified experience across different users and sessions.
 ====
 
 === Generating Chart Visualizations
@@ -98,6 +104,19 @@ image::https://kumarss.blob.core.windows.net/neoconverse-resources/neoconverse-a
 * **Business Intelligence**: Its a Knowledge graph of Software Applications with supported business processes, deployed instances, software vulnerability reports,
 and data concepts that provides impact analysis for vulnerabilities as well as impact analysis for application changes and data traceability
 // TODO Add details on Business resilience and retail dataset
+
+### Enhancing NeoConverse
+
+NeoConverse relies on Large Language Models (LLMs) cypher generation capabilities, while LLMs have shown improvements in generating Cypher queries, yet inconsistencies persist. NeoConverse is designed to identify these inconsistencies, providing users with effective ways to navigate or bypass them, rather than confronting them with raw errors. This approach ensures a smoother user experience.
+
+In future NeoConverse can be enhanced to mitigate these inconsistencies by:
+
+- *Fine-Tuning LLMs*: Finetune LLMs for cypher generation for more accurate and consistent Cypher queries.
+- *Developing a Semantic Layer*: To deepen LLMs' contextual understanding, improving result accuracy.
+- *Incorporating Domain-Specific Nomenclature*: To increase the relevance and precision of queries.
+- *Leveraging Historical Conversations*: Using past interactions to provide richer context and more relevant examples to LLMs.
+
+These initiatives aim to address current challenges and improve the reliability of LLM-generated Cypher queries in NeoConverse.
 
 
 == Relevant Links
