@@ -1,6 +1,6 @@
 = Spring AI
 :slug: spring-ai
-:author: Gerrit Meier, Michael Simons
+:author: Gerrit Meier, Michael Simons, Jennifer Reif
 :category: labs
 :tags: spring, neo4j, vector index, vector search
 :neo4j-versions: 5.x
@@ -15,34 +15,28 @@ Combining Spring AI with Spring Data Neo4j makes it possible to build on existin
 
 == Installation
 
-Currently Spring AI is available from the Spring Snapshot Repository:
+If you are using the https://start.spring.io/[Spring Initializr^], you can add the Spring AI model of your choosing and `Neo4j Vector Database` as dependencies to your project, and it will pull in all the related pieces.
 
-[source,xml]
-----
-<repository>
-	<id>spring-snapshots</id>
-	<name>Spring Snapshots</name>
-	<url>https://repo.spring.io/snapshot</url>
-	<releases>
-		<enabled>false</enabled>
-	</releases>
-</repository>
-----
+If you add the dependencies manually, Spring AI is not yet a general release library, so you will need to add the dependencies, as well as the snapshot and milestone repositories to your `pom.xml` file, as outlined in the https://docs.spring.io/spring-ai/reference/getting-started.html#repositories[Getting Started documentation^].
 
-The Spring AI project is available on Maven Central. To use it in your project, add the following dependency: `org.springframework.ai:spring-ai-neo4j-store:version`
-
-The following example is taken from the https://github.com/spring-projects/spring-ai/raw/main/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[integration test^]
+The next piece you will need to add is the configuration for the Neo4j Vector Database, which also needs to be accompanied by custom driver and embedding client configuration. Probably the simplest approach is to create Spring Beans for each of these components in the main application class. This is mentioned in the https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html#_auto_configuration[documentation^], but the full code is not provided. An example of how to configure the Neo4j Vector Database is shown below (note that you will need to alter the `vectorStore` bean to match your specific configuration):
 
 [source,java,indent=0]
 ----
-include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727a53b376fd1e9624221/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=189..211]
-
+include::https://github.com/neo4j-examples/spring-ai-starter-kit/blob/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=21..42]
 ----
+
+Now that we have the vector store configured, we can use Spring AI for retrieval augmented generation (RAG) via a three-step process.
+
+1. Call the vector similarity search method to retrieve the most similar documents.
+2. Use the similar documents as input to a retrieval query that pulls related entities from the graph.
+3. Provide the similar documents (with their related graph entities) as input to a prompt that the LLM will use to generate a response.
+
+The code snippet below demonstrates how to use Spring AI for RAG with Neo4j Vector Store:
 
 [source,java,indent=0]
 ----
-include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727a53b376fd1e9624221/vector-stores/spring-ai-neo4j-store/src/test/java/org/springframework/ai/vectorstore/Neo4jVectorStoreIT.java[lines=66..78]
-
+include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/DocumentController.java[lines=30..57]
 ----
 
 == Functionality Includes
@@ -53,12 +47,12 @@ include::https://github.com/spring-projects/spring-ai/raw/2704d539092c1db9738727
 
 == Documentation
 
-The Neo4j Vector integration documentation is avalable at: https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html
+The Neo4j Vector integration documentation is avalable in the https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html[Spring AI Reference Guide^].
 
 == Relevant Links
 [cols="1,4"]
 |===
-| icon:user[] Authors | https://github.com/meistermeier[Gerrit Meier^], https://github.com/rotnroll666[Michael Simons^]
+| icon:user[] Authors | https://github.com/meistermeier[Gerrit Meier^], https://github.com/rotnroll666[Michael Simons^], https://github.com/JMHReif[Jennifer Reif^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Data Repository | https://github.com/spring-projects/spring-ai[GitHub]
 | icon:github[] Issues | https://github.com/spring-projects/spring-ai/issues
