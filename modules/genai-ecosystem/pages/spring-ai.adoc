@@ -21,9 +21,9 @@ If you add the dependencies manually, Spring AI is not yet a general release lib
 
 The next piece you will need to add is the configuration for the Neo4j Vector Database, which also needs to be accompanied by custom driver and embedding client configuration. Probably the simplest approach is to create Spring Beans for each of these components in the main application class. This is mentioned in the https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html#_auto_configuration[documentation^], but the full code is not provided. An example of how to configure the Neo4j Vector Database is shown below (note that you will need to alter the `vectorStore` bean to match your specific configuration):
 
-[source,java,indent=0]
+[source,java]
 ----
-include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=21..42]
+include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=21..42,tabsize=2,indent=0]
 ----
 
 Now that we have the vector store configured, we can use Spring AI for retrieval augmented generation (RAG) via a three-step process.
@@ -34,9 +34,9 @@ Now that we have the vector store configured, we can use Spring AI for retrieval
 
 The code snippet below demonstrates how to use Spring AI for RAG with Neo4j Vector Store:
 
-[source,java,indent=0]
+[source,java]
 ----
-include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/DocumentController.java[lines=30..57]
+include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/DocumentController.java[lines=30..57,tabsize=2,indent=0]
 ----
 
 == Functionality Includes
