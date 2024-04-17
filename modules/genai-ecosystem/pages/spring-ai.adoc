@@ -23,7 +23,7 @@ The next piece you will need to add is the configuration for the Neo4j Vector Da
 
 [source,java,indent=0]
 ----
-include::https://github.com/neo4j-examples/spring-ai-starter-kit/blob/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=21..42]
+include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=21..42]
 ----
 
 Now that we have the vector store configured, we can use Spring AI for retrieval augmented generation (RAG) via a three-step process.
