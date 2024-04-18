@@ -273,6 +273,7 @@ image::
 * https://neo4j.com/developer-blog/knowledge-graph-based-chatbot-with-gpt-3-and-neo4j/[Knowledge Graph-based Chatbot with GPT-3 and Neo4j^]
 * https://blog.langchain.dev/constructing-knowledge-graphs-from-text-using-openai-functions/[Constructing Knowledge Graphs from Text using OpenAI Functions^]
 * https://neo4j.com/developer-blog/enhance-rag-knowledge-graph/[Enhancing the Accuracy of RAG Applications With Knowledge Graphs^]
+* https://www.youtube.com/watch?v=ViHV16ly-qs[Video: Going Meta Ep 25 - LLMs for Automated KG Construction^]
 
 == Documentation
 
