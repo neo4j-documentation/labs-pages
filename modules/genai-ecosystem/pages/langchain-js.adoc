@@ -135,6 +135,12 @@ const res = await chain.run("Who acted in Pulp Fiction?");
 // Bruce Willis acted in Pulp Fiction.
 ----
 
+=== Knowledge Graph Construction
+
+Creating a Knowledge Graph from unstructured data like PDF documents used to be a complex and time-consuming task that required training and using dedicated, large NLP models.
+
+The https://js.langchain.com/docs/use_cases/graph/construction[Graph Transformers^] are tools that allows you to extract structured data from unstructured documents and transform it into a Knowledge Graph.
+
 == Documentation
 
 * https://js.langchain.com/docs/modules/data_connection/experimental/graph_databases/neo4j[Neo4jGraph^]

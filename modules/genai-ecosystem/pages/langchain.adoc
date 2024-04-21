@@ -42,6 +42,7 @@ The Neo4j Vector integration supports a number of operations
 * query vector with additional graph retrieval Cypher query
 * construct vector instance from existing graph data
 * hybrid search
+* metadata filtering
 
 // todo include
 [source,python]
@@ -104,6 +105,25 @@ db = Neo4jVector.from_documents(
 
 query = "What did the president say about Ketanji Brown Jackson"
 docs_with_score = db.similarity_search_with_score(query, k=2)
+----
+
+==== Metadata filtering
+
+Metadata filtering enhances vector search by allowing searches to be refined based on specific node properties.
+This integrated approach ensures more precise and relevant search results by leveraging both the vector similarities and the contextual attributes of the nodes.
+
+[source,python]
+----
+db = Neo4jVector.from_documents(
+    docs, 
+    OpenAIEmbeddings(), 
+    url=url, username=username, password=password
+)
+
+query = "What did the president say about Ketanji Brown Jackson"
+filter = {"name": {"$eq": "adam"}}
+
+docs = db.similarity_search(query, filter=filter)
 ----
 
 === Neo4j Graph
