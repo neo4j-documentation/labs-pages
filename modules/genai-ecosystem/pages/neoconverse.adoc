@@ -19,7 +19,7 @@ Which is then validated and executed against the database.
 The query results are sent with the user question to the LLM to generate a natural language answer.
 Alterantively the LLM can be configured to generate the data an configuration to render the results of the query as a chart for visual representation.
 
-image::./modules/genai-ecosystem/images/neoconverse-chart.png[width=800, align=center]
+image::neoconverse-chart.png[width=800, align=center]
 
 == Functionality Includes
 
@@ -79,33 +79,33 @@ Large Language Models (LLMs) are trained on massive public datasets, making them
 * Updating their knowledge with internal data can be challenging.
 * Information may be outdated.
 
-**NeoConverse leverages Retrieval-Augmented Generation (RAG) to address these issues.** RAG provides LLMs with additional context retrieved from internal data sources hosted in Neo4j graph databases.
+*NeoConverse leverages Retrieval-Augmented Generation (RAG) to address these issues.* RAG provides LLMs with additional context retrieved from internal data sources hosted in Neo4j graph databases.
 
 Here's the step-by-step process of how NeoConverse works:
 
-1. **User Asks a Question:** The user asks a natural language question about their enterprise data stored in Neo4j.
-2. **Context for LLM:** NeoConverse provides the LLM with context relevant to the question:
+1. *User Asks a Question:* The user asks a natural language question about their enterprise data stored in Neo4j.
+2. *Context for LLM:* NeoConverse provides the LLM with context relevant to the question:
     * Schema information about the data stored in the Neo4j database. 
     * A few relevant examples from the data to guide the LLM.
-3. **LLM Generates Cypher Query:** Based on the question and context, the LLM generates a Cypher query, the query language for Neo4j.
-4. **Query Refinement and Execution:** NeoConverse cleans, formats, and executes the Cypher query on the Neo4j database.
-5. **Data Retrieval:** Relevant data is retrieved from the Neo4j database based on the executed query.
-6. **LLM Answer Generation:** Finally, the LLM uses the retrieved data and the original question to generate an accurate and relevant answer that's grounded in the user's specific data.
+3. *LLM Generates Cypher Query:* Based on the question and context, the LLM generates a Cypher query, the query language for Neo4j.
+4. *Query Refinement and Execution:* NeoConverse cleans, formats, and executes the Cypher query on the Neo4j database.
+5. *Data Retrieval:* Relevant data is retrieved from the Neo4j database based on the executed query.
+6. *LLM Answer Generation:* Finally, the LLM uses the retrieved data and the original question to generate an accurate and relevant answer that's grounded in the user's specific data.
 
 By leveraging internal data, NeoConverse empowers LLMs to provide more accurate and relevant answers to user queries within an enterprise setting.
 
-// image::neoconverse-arch.png[width=600, align=center]
-image::https://kumarss.blob.core.windows.net/neoconverse-resources/neoconverse-arch.png?sp=r&st=2024-04-10T19:08:45Z&se=2026-04-09T03:08:45Z&spr=https&sv=2022-11-02&sr=b&sig=vE8JahnRHRgNO8xEZzQejX0ACMQdQ9kr6FzeIKs0ILw%3D[]
+image::neoconverse-arch.png[width=600, align=center]
+// image::https://kumarss.blob.core.windows.net/neoconverse-resources/neoconverse-arch.png?sp=r&st=2024-04-10T19:08:45Z&se=2026-04-09T03:08:45Z&spr=https&sv=2022-11-02&sr=b&sig=vE8JahnRHRgNO8xEZzQejX0ACMQdQ9kr6FzeIKs0ILw%3D[]
 
 == Available predefined datasets
-* **Enron Email Corpus Dataset** :  The subset of publicly available enron email corpus data has been anonymized and ingested in neo4j database, the ingested dataset contains about 500K email messages, The dataset facilitates an in-depth exploration of email communication both within enron leadership internally and with external parties, providing means to analyse anomolies and email leakages.  In addition to email communcation metadata, this dataset also enriched with entities and watch terms extracted from email subject & body.
-* **Patient Journey Dataset** :  The patient journey dataset encapsulates the healthcare experiences of 1 million patients, detailing 41 million encounters that span doctor visits, diagnoses, treatments, and allergies, among other medical events. With 11 million prescriptions, 26 million observations, 9 million condition-specific observations, 200 unique conditions, and 500K allergy encounters, this rich dataset offers a comprehensive view of individual health narratives. It's a crucial resource for analyzing treatment patterns, patient outcomes, and drug efficacy, providing insights that can enhance healthcare delivery and personalize patient care strategies.
-* **Retail Dataset** : This retail dataset leverages a knowledge graph built from a public Amazon electronics dataset containing product information, reviews, and user purchase and review history. To extract deeper insights, Neo4j GDS graph algorithms have been applied to calculate similarity scores between users and products, considering not only product features and user demographics but also how users interact with the products.
-* **Business Intelligence**: Its a Knowledge graph of Software Applications with supported business processes, deployed instances, software vulnerability reports,
+* *Enron Email Corpus Dataset*:  The subset of publicly available enron email corpus data has been anonymized and ingested in neo4j database, the ingested dataset contains about 500K email messages, The dataset facilitates an in-depth exploration of email communication both within enron leadership internally and with external parties, providing means to analyse anomolies and email leakages.  In addition to email communcation metadata, this dataset also enriched with entities and watch terms extracted from email subject & body.
+* *Patient Journey Dataset* :  The patient journey dataset encapsulates the healthcare experiences of 1 million patients, detailing 41 million encounters that span doctor visits, diagnoses, treatments, and allergies, among other medical events. With 11 million prescriptions, 26 million observations, 9 million condition-specific observations, 200 unique conditions, and 500K allergy encounters, this rich dataset offers a comprehensive view of individual health narratives. It's a crucial resource for analyzing treatment patterns, patient outcomes, and drug efficacy, providing insights that can enhance healthcare delivery and personalize patient care strategies.
+* *Retail Dataset* : This retail dataset leverages a knowledge graph built from a public Amazon electronics dataset containing product information, reviews, and user purchase and review history. To extract deeper insights, Neo4j GDS graph algorithms have been applied to calculate similarity scores between users and products, considering not only product features and user demographics but also how users interact with the products.
+* *Business Intelligence*: Its a Knowledge graph of Software Applications with supported business processes, deployed instances, software vulnerability reports,
 and data concepts that provides impact analysis for vulnerabilities as well as impact analysis for application changes and data traceability
 // TODO Add details on Business resilience and retail dataset
 
-### Enhancing NeoConverse
+== Enhancing NeoConverse
 
 NeoConverse relies on Large Language Models (LLMs) cypher generation capabilities, while LLMs have shown improvements in generating Cypher queries, yet inconsistencies persist. NeoConverse is designed to identify these inconsistencies, providing users with effective ways to navigate or bypass them, rather than confronting them with raw errors. This approach ensures a smoother user experience.
 
@@ -136,7 +136,6 @@ These initiatives aim to address current challenges and improve the reliability 
 The Demo is available online, https://neoconverse.graphapp.io
 
 You can also run it locally, by cloning the https://github.com/neo4j-labs/neoconverse[repository] and following the instructions in the README.md file.
-
 
 == Highlighted Articles
 
