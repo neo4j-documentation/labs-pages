@@ -208,11 +208,13 @@ response = query_engine.query(
 * https://docs.llamaindex.ai/en/latest/examples/index_structs/knowledge_graph/Neo4jKGIndexDemo.html[Neo4jKGIndexDemo^]
 * https://docs.llamaindex.ai/en/stable/examples/vector_stores/Neo4jVectorDemo.html[Neo4jVectorDemo^]
 
-* https://llamahub.ai/l/graphdb_cypher[Cypher Loader^]
+* https://llamahub.ai/l/readers/llama-index-readers-graphdb-cypher[Cypher Loader^]
+* https://llamahub.ai/l/graph_stores/llama-index-graph-stores-neo4j[Neo4j Graph Store^]
+* https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Schema Query Builder^]
 
 === Neo4j Query Engine Pack
 
-This https://llamahub.ai/l/llama_packs-neo4j_query_engine[Neo4j Query Engine LlamaPack^] creates a Neo4j query engine, and executes its query function. This pack offers the option of creating multiple types of query engines, namely:
+This https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Query Engine LlamaPack^] creates a Neo4j query engine, and executes its query function. This pack offers the option of creating multiple types of query engines, namely:
 
 * Knowledge graph vector-based entity retrieval (default if no query engine type option is provided)
 * Knowledge graph keyword-based entity retrieval
