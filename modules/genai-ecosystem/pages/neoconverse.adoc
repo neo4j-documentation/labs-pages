@@ -1,4 +1,4 @@
-= Neo Converse - Graph Database Search with Natural Language
+= NeoConverse - Graph Database Search with Natural Language
 include::_graphacademy_llm.adoc[]
 :slug: neoconverse
 :author: Kumar SS, Eric Monk
@@ -11,7 +11,7 @@ include::_graphacademy_llm.adoc[]
 
 image::neoconverse-latest.gif[width=800, align=center]
 
-Neoconverse is an application to demonstrate natural language database search with GenAI.
+NeoConverse is an application to demonstrate natural language database search with GenAI.
 It makes existing graph databases available to non-technical users, allowing them to issue natural language questions.
 Using the graph database schema, question-statement examples, and fine-tuning, the natural language question is translated by an LLM to a graph query (Cypher). 
 Which is then validated and executed against the database.

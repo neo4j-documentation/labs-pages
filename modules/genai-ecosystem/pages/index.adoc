@@ -39,7 +39,7 @@ image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundame
 
 * xref:llm-graph-builder.adoc[Knowledge Graph Builder from PDF, Video, Wikipedia]
 * xref:rag-demo.adoc[RAG (Retrieval Augmented Generation) Demo]
-* xref:neoconverse.adoc[Neoconverse multi-dataset query, chat, visualization]
+* xref:neoconverse.adoc[NeoConverse multi-dataset query, chat, visualization]
 * xref:genai-stack.adoc[GenAI Stack (with Docker, Ollama, Neo4j, and LangChain)]
 
 === Neo4j GenAI Features

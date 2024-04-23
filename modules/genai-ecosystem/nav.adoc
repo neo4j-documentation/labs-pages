@@ -6,7 +6,7 @@
 *** Example Projects
 **** xref:llm-graph-builder.adoc[LLM Graph Builder]
 **** xref:rag-demo.adoc[GraphRAG Demo]
-**** xref:neoconverse.adoc[Neoconverse]
+**** xref:neoconverse.adoc[NeoConverse]
 **** xref:genai-stack.adoc[GenAI Stack]
 *** Neo4j GenAI Features
 **** xref:vector-search.adoc[Vector Index and Search]
