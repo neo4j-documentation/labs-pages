@@ -4,9 +4,10 @@
 **** xref:microsoft-azure-demo.adoc[Microsoft Azure OpenAI]
 **** xref:google-cloud-demo.adoc[Google Cloud Vertex AI]
 *** Example Projects
-**** xref:rag-demo.adoc[GraphRAG Demo]
-**** xref:genai-stack.adoc[GenAI Stack]
 **** xref:llm-graph-builder.adoc[LLM Graph Builder]
+**** xref:rag-demo.adoc[GraphRAG Demo]
+**** xref:neoconverse.adoc[Neoconverse]
+**** xref:genai-stack.adoc[GenAI Stack]
 *** Neo4j GenAI Features
 **** xref:vector-search.adoc[Vector Index and Search]
 **** xref:apoc-genai.adoc[APOC GenAI]
