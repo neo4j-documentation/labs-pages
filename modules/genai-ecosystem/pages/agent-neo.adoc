@@ -110,6 +110,7 @@ To report bugs or suggest features:
 - Implemented rating feedback and semantic topic clustering.
 - Expanded testing protocols.
 - Enhanced GraphReader functionality for combined traversal and vector search.
+- Implementing frontend feature using bloom vis sdk to enhance observability
 
 === Version 1.0 - *2024-01-01*
 - Initial release: basic document upload, chunk processing, and initial graph structure setup.
