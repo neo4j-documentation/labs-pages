@@ -34,6 +34,17 @@ It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-g
 
 image::llm-graph-builder-viz.png[width=600, align=center]
 
+[NOTE]
+====
+[Creating a new Neo4j Aura Instance^]
+
+* Login or create an account at https://console.neo4j.io
+* Under Instances, create a new AuraDB Free Database
+* Which downloads the credentials file
+* Wait until the instance is running
+* Drop the credentials file on the connect dialog
+====
+
 == How it works
 
 1. Uploaded Sources are stored as `Document` nodes in the graph
