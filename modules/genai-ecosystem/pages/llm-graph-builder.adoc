@@ -1,4 +1,4 @@
-= LLM Graph Builder - Construct Knowledge Graphs from Unstructured Text (PDF, YouTube, Webpages)
+= Neo4j LLM Knowledge Graph Builder - Extract Nodes and Relationships from Unstructured Text (PDF, YouTube, Webpages)
 include::_graphacademy_llm.adoc[]
 :slug: llm-graph-builder
 :author: Michael Hunger, Tomaz Bratanic, Persistent
@@ -11,12 +11,14 @@ include::_graphacademy_llm.adoc[]
 
 image::llm-graph-builder.png[width=600, align=center]
 
-The LLM Graph Builder is a https://llm-graph-builder.neo4jlabs.com/[demo application^] for turning unstructured text into a knowledge graph, it provides a magical text to graph experience.
+The Neo4j LLM Knowledge Graph Builder is an https://llm-graph-builder.neo4jlabs.com/[online application^] for turning unstructured text into a knowledge graph, it provides a magical text to graph experience.
 
-It uses ML models (LLM, Diffbot) to transform PDFs, web pages, and YouTube videos into a graph of entities and their relationships.
+It uses ML models (LLM - OpenAI, Gemini, Llama3, Diffbot) to transform PDFs, web pages, and YouTube videos into a graph of entities and their relationships, which it stores in your Neo4j database.
 
-The frontend is a React Application and the backend a Python FastAPI application.
-It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that we contributed to LangChain.
+The front-end is a React Application and the back-end a Python FastAPI application.
+It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that Neo4j contributed to LangChain.
+
+Here is a quick demo:
 
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PeYwFoYY3jI?si=KQQf2VZb6lB2ebjd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -36,13 +38,11 @@ image::llm-graph-builder-viz.png[width=600, align=center]
 
 [NOTE]
 ====
-[Creating a new Neo4j Aura Instance^]
-
-* Login or create an account at https://console.neo4j.io
+* Login, or create an account at https://console.neo4j.io
 * Under Instances, create a new AuraDB Free Database
-* Which downloads the credentials file
+* Downloads the credentials file
 * Wait until the instance is running
-* Drop the credentials file on the connect dialog
+* Drop the credentials file on the connect dialog for the LLM Graph Builder
 ====
 
 == How it works
@@ -62,7 +62,7 @@ image::llm-graph-builder-viz.png[width=600, align=center]
 == Relevant Links
 [cols="1,4"]
 |===
-| Public Demo | https://llm-graph-builder.neo4jlabs.com/
+| Online Application | https://llm-graph-builder.neo4jlabs.com/
 | icon:user[] Authors | Michael Hunger, Tomaz Bratanic, Niels De Jong, Morgan Senechal, Persistent Team
 | icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
 | icon:github[] Code Repository | https://github.com/neo4j-labs/llm-graph-builder[GitHub^]
@@ -73,11 +73,11 @@ image::llm-graph-builder-viz.png[width=600, align=center]
 
 == Installation
 
-The Demo is available online, https://llm-graph-builder-openai.neo4jlabs.com[configured for OpenAI GPT^]  and for https://llm-graph-builder-gemini.neo4jlabs.com[Google Gemini on Vertex AI^]
+The https://llm-graph-builder.neo4jlabs.com[LLM Knowledge Graph Builder Application^] is available online.
 
-You can also run it locally, by cloning the https://github.com/neo4j-labs/llm-graph-builder[repository] and following the instructions in the README.md file.
+You can also run it locally, by cloning the https://github.com/neo4j-labs/llm-graph-builder[GitHub repository] and following the instructions in the README.md file.
 
-It is using Docker for packaging frontend and backend, and you can run `docker-compose up` to start the whole application.
+It is using Docker for packaging front-end and back-end, and you can run `docker-compose up` to start the whole application.
 
 
 == Videos & Tutorials
@@ -85,11 +85,11 @@ It is using Docker for packaging frontend and backend, and you can run `docker-c
 image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
 
 
-////
+=== Livestream LLM-Knowledge Graph Builder
+
 ++++
-<iframe width="320" height="180" src="https://www.youtube.com/embed/WcLFHFfLczU" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Z42VVH9qngo?si=CuDkaSHNyO1wdjDX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
-////
 
 ////
 
