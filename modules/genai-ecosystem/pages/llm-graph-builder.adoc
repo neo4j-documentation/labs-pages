@@ -26,13 +26,14 @@ Here is a quick demo:
 
 == Functionality Includes
 
-1. Connect to a https://console.neo4j.io[Neo4j (Aura)] instance
-2. Provide your PDF files, Youtube URLs, Wikipedia Keywords or S3/GCS buckets
-3. Construct Graph with LLM / Diffbot
-4. Visualize Knowledge Graph in App
-5. Chat with your data with GraphRAG
-6. Open Neo4j Bloom for further visual exploration
-7. Use the constructed knowledge graph in your applications
+1. Open the https://llm-graph-builder.neo4jlabs.com/[LLM-Knowledge Graph Builder^]
+2. Connect to a https://console.neo4j.io[Neo4j (Aura)^] instance
+3. Provide your PDF files, Youtube URLs, Wikipedia Keywords or S3/GCS buckets
+4. Construct Graph with LLM / Diffbot
+5. Visualize Knowledge Graph in App
+6. Chat with your data with GraphRAG
+7. Open Neo4j Bloom for further visual exploration
+8. Use the constructed knowledge graph in your applications
 
 image::llm-graph-builder-viz.png[width=600, align=center]
 
