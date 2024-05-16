@@ -302,6 +302,12 @@ image::
 * https://python.langchain.com/docs/integrations/vectorstores/neo4jvector[Neo4j Vector^]
 * https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transformers^]
 
+== Starter Kit
+
+This https://github.com/neo4j-examples/langchain-starter-kit/blob/main/app/vector_chain.py[starter-kit] demonstrates how to run a FastAPI server using LangChain to answer queries on data stored in a Neo4j instance. The single endpoint can be used to retrieve answers using either a https://python.langchain.com/v0.1/docs/integrations/vectorstores/neo4jvector/[Vector index chain],  https://python.langchain.com/v0.1/docs/integrations/graphs/neo4j_cypher/[GraphCypherQA Chain], or a composite answer of both.
+
+The https://github.com/neo4j-examples/langchain-starter-kit/tree/langserve[langserve] branch contains an example of the same service, using https://python.langchain.com/v0.1/docs/langserve/[LangServe]
+
 == Relevant Links
 [cols="1,4"]
 |===
