@@ -85,6 +85,11 @@ It is using Docker for packaging front-end and back-end, and you can run `docker
 
 image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-knowledge-graph-construction.png[width=800,link="https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction/"]
 
+=== Detailed Walk-Through
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2z75-JIgbTA?si=FSVL1tDtiah_Hwns" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
 
 === Livestream LLM-Knowledge Graph Builder
 
