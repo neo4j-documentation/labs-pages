@@ -66,9 +66,9 @@ image::llm-graph-builder-viz.png[width=600, align=center]
 | Online Application | https://llm-graph-builder.neo4jlabs.com/
 | icon:user[] Authors | Michael Hunger, Tomaz Bratanic, Niels De Jong, Morgan Senechal, Persistent Team
 | icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
-| icon:github[] Code Repository | https://github.com/neo4j-labs/llm-graph-builder[GitHub^]
+| icon:github[] Repository | https://github.com/neo4j-labs/llm-graph-builder[GitHub^]
 | icon:github[] Issues | https://github.com/neo4j-labs/llm-graph-builder/issues[GitHub Issues^]
-// | icon:book[] Documentation |
+| icon:book[] LangChain | https://python.langchain.com/v0.1/docs/use_cases/graph/constructing/[LangChain KG Construction Module^]
 |===
 
 
