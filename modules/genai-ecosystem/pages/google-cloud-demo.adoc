@@ -9,7 +9,7 @@ include::_graphacademy_llm.adoc[]
 :page-product: google-cloud-demo
 //:imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
-== SEC Filings GenAI Labs 
+== Google Cloud Generative AI Demos
 
 This example consists of two sample applications that show how to use Neo4j with the generative AI capabilities in Google Cloud Vertex AI. We explore how to leverage Google generative AI to build and consume a knowledge graph in Neo4j.
 
