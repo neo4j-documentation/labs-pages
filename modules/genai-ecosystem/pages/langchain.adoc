@@ -304,9 +304,9 @@ image::
 
 == Starter Kit
 
-This https://github.com/neo4j-examples/langchain-starter-kit/blob/main/app/vector_chain.py[starter-kit] demonstrates how to run a FastAPI server using LangChain to answer queries on data stored in a Neo4j instance. The single endpoint can be used to retrieve answers using either a https://python.langchain.com/v0.1/docs/integrations/vectorstores/neo4jvector/[Vector index chain],  https://python.langchain.com/v0.1/docs/integrations/graphs/neo4j_cypher/[GraphCypherQA Chain], or a composite answer of both.
+This https://github.com/neo4j-examples/langchain-starter-kit/blob/main/app/vector_chain.py[starter-kit] demonstrates how to run a FastAPI server using LangChain to answer queries on data stored in a Neo4j instance. The single endpoint can be used to retrieve answers using either a https://python.langchain.com/v0.1/docs/integrations/vectorstores/neo4jvector/[Vector index chain],  https://python.langchain.com/v0.1/docs/integrations/graphs/neo4j_cypher/[GraphCypherQA Chain], or a composite answer of both. The https://github.com/neo4j-examples/langchain-starter-kit/tree/langserve[langserve] branch contains an example of the same service, using https://python.langchain.com/v0.1/docs/langserve/[LangServe]
 
-The https://github.com/neo4j-examples/langchain-starter-kit/tree/langserve[langserve] branch contains an example of the same service, using https://python.langchain.com/v0.1/docs/langserve/[LangServe]
+See this https://medium.com/neo4j/langchain-neo4j-starter-kit-02054212d8ef[Medium Blog Article] for additional details and instructions on working with the Starter Kit.
 
 == Relevant Links
 [cols="1,4"]
@@ -356,6 +356,7 @@ The https://github.com/neo4j-examples/langchain-starter-kit/tree/langserve[langs
 * https://blog.langchain.dev/using-a-knowledge-graph-to-implement-a-devops-rag-application/[Using a Knowledge Graph to Implement a DevOps RAG Application^]
 * https://neo4j.com/developer-blog/unstructured-knowledge-graph-neo4j-langchain/[Unstructured Knowledge Graph with Neo4j and LangChain^]
 * https://neo4j.com/developer-blog/langchain-cypher-search-tips-tricks/[LangChain Cypher Search Tips & Tricks^]
+* https://medium.com/neo4j/langchain-neo4j-starter-kit-02054212d8ef[LangChain Neo4j Starter Kit]
 * https://medium.com/neo4j/langchain-v0-1-updating-graphacademy-neo4j-llm-courses-689e7c4eff3e[Updating GraphAcademy Neo4j & LLM Courses to Langchain v0.1^]
 * https://neo4j.com/developer-blog/why-vector-search-didnt-work-rag/[Why Vector Search Didn’t Work for Your RAG Solution?^]
 * https://blog.langchain.dev/constructing-knowledge-graphs-from-text-using-openai-functions/[Constructing Knowledge Graphs from Text using OpenAI Functions^]
