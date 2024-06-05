@@ -15,6 +15,13 @@ The Neo4j LLM Knowledge Graph Builder is an https://llm-graph-builder.neo4jlabs.
 
 It uses ML models (LLM - OpenAI, Gemini, Llama3, Diffbot) to transform PDFs, web pages, and YouTube videos into a graph of entities and their relationships, which it stores in your Neo4j database.
 
+[NOTE]
+====
+* best results for files with long-form text in English
+* not suited for tabular data like Excel or CSV or images/diagrams/slides
+* higher quality data extraction if you configure types for nodes and relationships in the settings (icon:gear[])
+====
+
 The front-end is a React Application and the back-end a Python FastAPI application.
 It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that Neo4j contributed to LangChain.
 
