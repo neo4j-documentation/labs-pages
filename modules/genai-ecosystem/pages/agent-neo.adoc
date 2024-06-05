@@ -1,21 +1,37 @@
-= Agent Neo Documentation
-:toc:
-:toc-placement: auto
+= Agent Neo a Graph Powered Technical Document Chatbot
+// :toc:
+// :toc-placement: auto
 :imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
-:sectnums:
+// :sectnums:
 :page-pagination:
 :page-product: agent-neo
 
 == Introduction
 
-Agent Neo is a Graph Retrieval-Augmentation Generation (Graph-RAG) chat application that leverages the Neo4j Label Property Graph to manage and query data. Developed initially using a high-quality dataset of Neo4j documentation, the application utilizes metadata enrichment and post-processing to enhance RAG response quality. Key enhancements include:
+Agent Neo is a Graph Retrieval-Augmentation Generation (Graph-RAG) chat application that leverages the Neo4j Label Property Graph to manage and query data. 
+Developed initially using a high-quality dataset of Neo4j documentation, the application utilizes metadata enrichment and post-processing to enhance RAG response quality. 
 
-* Capturing session and conversation metadata along with their associated questions and responses, linking them back to relevant entries^[1]^.
-* Extracting topics using NLP techniques, encoding these into the graph, and associating them with corresponding text blocks to create a semantic hierarchy (Pending)^[2]^.
-* Clustering topics and encoding similarity features within the graph, involving generating text embeddings for topics, conducting k-nearest neighbors analyses, and creating "SIMILAR_TO" relationships (Pending)^[3]^.
-* Setting "SIMILAR_TO" relationships as undirected and aggregating similarity scores to apply the Leiden algorithm, subsequently forming Topic Groups that expand the semantic topic hierarchy (Pending)^[4]^.
-* Injecting session UUIDs generated on the frontend, integrating these with LangSmith LLM logging, and writing back LangSmith metadata statistics into the graph (Pending)^[5]^.
-* Capturing user response feedback through the UI and incorporating this into the graph to potentially inform response ranking and analyze application satisfaction (Pending)^[6]^.
+
+== How It Works
+
+The workflow for Agent Neo is outlined as follows:
+
+. **Document Upload and Storage**: Documents are uploaded and stored as `Document` nodes within the graph.
+. **Chunk Processing**: Documents are segmented into smaller chunks, then processed and stored as nodes, linked to their respective documents.
+. **Topic Extraction and Clustering**: Topics are extracted using NLP post-processing, encoded, and linked to text chunks to form clusters.
+. **Similarity and Graph Structuring**: Text embeddings are utilized to identify similar text chunks, which are interconnected using "SIMILAR_TO" relationships to further structure the graph via the Leiden algorithm.
+. **Metadata Integration and Feedback Loop**: Session metadata and user feedback are integrated into the graph, enhancing data richness for future queries and analyses.
+
+image::agent-neo-structure.png[Graph Structure Example, width=600, align="center"]
+
+== Key enhancements
+
+* Capturing session and conversation metadata along with their associated questions and responses, linking them back to relevant entries.
+* Extracting topics using NLP techniques, encoding these into the graph, and associating them with corresponding text blocks to create a semantic hierarchy.
+* Clustering topics and encoding similarity features within the graph, involving generating text embeddings for topics, conducting k-nearest neighbors analyses, and creating "SIMILAR_TO" relationships.
+* Setting "SIMILAR_TO" relationships as undirected and aggregating similarity scores to apply the Leiden algorithm, subsequently forming Topic Groups that expand the semantic topic hierarchy.
+* Injecting session UUIDs generated on the frontend, integrating these with LangSmith LLM logging, and writing back LangSmith metadata statistics into the graph.
+* Capturing user response feedback through the UI and incorporating this into the graph to potentially inform response ranking and analyze application satisfaction.
 
 == Why Graph RAG?
 
@@ -39,51 +55,38 @@ image::agent-neo.png[Agent Neo Architecture, width=600, align="center"]
 
 To set up Agent Neo, execute the following steps:
 
-. Clone the Agent Neo repository:
-+
 [source,bash]
 ----
+# Clone the Agent Neo repository:
 git clone https://github.com/neo4j-labs/agent-neo.git
-----
-
-. Navigate to the cloned directory:
-+
-[source,bash]
-----
 cd agent-neo
-----
 
-. Launch the application using Docker Compose:
-+
-[source,bash]
-----
+# Launch the application using Docker Compose
 docker-compose up
 ----
 
 Visit `http://localhost:8000` in your web browser to start using Agent Neo. Review the Dockerfile and associated services for production deployment details.
 
-== How It Works
+== Relevant Links
 
-The workflow for Agent Neo is outlined as follows:
-
-. **Document Upload and Storage**: Documents are uploaded and stored as `Document` nodes within the graph.
-. **Chunk Processing**: Documents are segmented into smaller chunks, then processed and stored as nodes, linked to their respective documents.
-. **Topic Extraction and Clustering**: Topics are extracted using NLP post-processing, encoded, and linked to text chunks to form clusters.
-. **Similarity and Graph Structuring**: Text embeddings are utilized to identify similar text chunks, which are interconnected using "SIMILAR_TO" relationships to further structure the graph via the Leiden algorithm.
-. **Metadata Integration and Feedback Loop**: Session metadata and user feedback are integrated into the graph, enhancing data richness for future queries and analyses.
-
-image::agent-neo-structure.png[Graph Structure Example, width=600, align="center"]
+[cols="1,4"]
+|===
+| Online | https://chatbot.agent-neo-chat.com/[React Front End^] https://agent-neo.streamlit.app/[Streamlit Front End^]
+| icon:user[] Authors | Dan Bukowski, Alex Gilmore, Alex Fournier, Nathan Smith, Morgan Senechal, Roni Das, Eric Monk, Kumar Subbiah Shunmugathai, Michael Hunger
+| icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
+| icon:github[] Code Repository | https://github.com/neo4j-labs/agent-neo[GitHub^]
+| icon:github[] Issues | https://github.com/neo4j-labs/agent-neo/issues[GitHub Issues^]
+// | icon:book[] Documentation |
+|===
 
 == Further Resources
 
 * *Graph Data Models for RAG Applications*: https://medium.com/neo4j/graph-data-models-for-rag-applications-d59c29bb55cc
 * *Topic Extraction with Neo4j Graph Data Science for Better Semantic Search*: https://medium.com/@nsmith_piano/topic-extraction-with-neo4j-graph-data-science-for-better-semantic-search-c5b7f56c7715
-* *Agent Neo Online*: https://agent-neo.neo4jlabs.com
-* *GitHub Repository*: https://github.com/neo4j-labs/agent-neo
-* *Neo4j Community Support*: https://community.neo4j.com/c/neo4j-graph-platform/genai/214
+
+////
 
 == Contributors and Contact
-
 Agent Neo is a collaborative effort. If you are interested in contributing or have questions, please contact the core team:
 
 * **Dan Bukowski** (Architect/PM) - `dan.bukowski@neo4j.com`
@@ -95,6 +98,7 @@ Agent Neo is a collaborative effort. If you are interested in contributing or ha
 * **Eric Monk** (Technical Guidance) - `eric.monk@neo4j.com`
 * **Kumar Subbiah Shunmugathai** (Technical Guidance) - `kumar.subbiah@neo4j.com`
 * **Michael Hunger** (PM) - `michael.hunger@neo4j.com`
+////
 
 == Raising Issues and Feature Requests
 
@@ -106,6 +110,7 @@ To report bugs or suggest features:
 == Change Log / Feature Development
 
 === Version 1.1 - *2024-06-01*
+
 - Integrated Langchain metadata statistics and exposed via Neodash.
 - Implemented rating feedback and semantic topic clustering.
 - Expanded testing protocols.
