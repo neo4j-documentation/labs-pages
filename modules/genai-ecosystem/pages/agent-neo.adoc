@@ -71,7 +71,7 @@ Visit `http://localhost:8000` in your web browser to start using Agent Neo. Revi
 
 [cols="1,4"]
 |===
-| Online | https://chatbot.agent-neo-chat.com/[React Front End^] https://agent-neo.streamlit.app/[Streamlit Front End^]
+| Online | https://chatbot.agent-neo-chat.com/[React Front End^] https://agent-neo.streamlit.app/[Older Streamlit Front End^]
 | icon:user[] Authors | Dan Bukowski, Alex Gilmore, Alex Fournier, Nathan Smith, Morgan Senechal, Roni Das, Eric Monk, Kumar Subbiah Shunmugathai, Michael Hunger
 | icon:comments[] Community Support | https://community.neo4j.com/c/neo4j-graph-platform/genai/214[Neo4j Online Community^]
 | icon:github[] Code Repository | https://github.com/neo4j-labs/agent-neo[GitHub^]
