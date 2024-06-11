@@ -5,6 +5,8 @@
 **** xref:google-cloud-demo.adoc[Google Cloud Vertex AI]
 *** Example Projects
 **** xref:llm-graph-builder.adoc[LLM Graph Builder]
+***** xref:llm-graph-builder-deployment.adoc[Deployment]
+***** xref:llm-graph-builder-features.adoc[Features]
 **** xref:rag-demo.adoc[GraphRAG Demo]
 **** xref:neoconverse.adoc[NeoConverse]
 **** xref:genai-stack.adoc[GenAI Stack]

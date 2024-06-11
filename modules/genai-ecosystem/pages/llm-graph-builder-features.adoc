@@ -1,0 +1,51 @@
+= Features documentation
+include::_graphacademy_llm.adoc[]
+:slug: llm-graph-builder
+:author: Michael Hunger, Tomaz Bratanic, Persistent
+:category: genai-ecosystem
+:tags: 
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: llm-graph-builder
+:imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
+
+== Sources
+Explanation + which ENV variables to set to enable/disable them
+
+=== Local file upload
+WIP
+
+=== Youtube 
+WIP
+
+=== Wikipedia
+WIP
+
+=== AWS S3
+WIP
+
+=== Google Cloud Storage
+WIP
+
+== LLM Models
+what the selected model is used for + which ENV variables to set to enable/disable them
+WIP
+
+== Taxonomy
+WIP
+
+== KG Creation
+Explanation on the checkbox/selection of documents
+Generate Graph
+Show Graph
+Bloom
+Delete files
+
+== Chatbot
+WIP
+
+=== How it works
+
+=== Features
+clear chat, expand view, retrieval info, etc.
+
