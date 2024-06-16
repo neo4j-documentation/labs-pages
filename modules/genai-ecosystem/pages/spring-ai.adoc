@@ -51,7 +51,7 @@ The Neo4j Vector integration documentation is avalable in the https://docs.sprin
 
 == Starter Kit
 
-Getting started in any new technology space can feel intimidating. Neo4j has been working on some pre-packaged solutions for GenAI and Neo4j to hopefully make the process easier by providing starter kit projects with a few key technologies, including Spring AI. You can find the https://github.com/neo4j-examples/spring-ai-starter-kit/[Spring AI starter kit code^] on Github, as well as a blog post (_coming soon!_) with more information.
+Getting started in any new technology space can feel intimidating. Neo4j has been working on some pre-packaged solutions for GenAI and Neo4j to hopefully make the process easier by providing starter kit projects with a few key technologies, including Spring AI. You can find the https://github.com/neo4j-examples/spring-ai-starter-kit/[Spring AI starter kit code^] on Github, as well as a [https://neo4j.com/developer-blog/genai-starter-kit-spring-java/[blog post with more information^].
 
 == Relevant Links
 [cols="1,4"]
