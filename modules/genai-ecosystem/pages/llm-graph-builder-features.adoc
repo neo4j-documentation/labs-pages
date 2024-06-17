@@ -10,42 +10,47 @@ include::_graphacademy_llm.adoc[]
 :imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
 == Sources
-Explanation + which ENV variables to set to enable/disable them
 
 === Local file upload
-WIP
+You can drag & drop files into the first input zone on the left. The application will store the uploaded sources as Document nodes in the graph using LangChain Loaders.
+|===
+| File Type | Supported Extensions
+
+| Microsoft Office | .docx, .pptx, .xls
+| PDF | .pdf
+| Images | .jpeg, .jpg, .png, .svg
+| Text | .html, .txt, .md
+|===
 
 === Youtube 
-WIP
+The second input will let you copy/paste the link of a YouTube video you want to use. The application will parse and store the uploaded YouTube videos (transcript) as a Document nodes in the graph using YouTube parsers.
 
 === Wikipedia
-WIP
+The third input takes a Wikipedia page URL as input. For example, you can provide `https://en.wikipedia.org/wiki/Neo4j` and it will load the Neo4j Wikipedia page.
 
 === AWS S3
-WIP
+This AWS S3 integration allows you to connect to an S3 bucket and load the files from there. You will need to provide your AWS credentials and the bucket name.
 
 === Google Cloud Storage
-WIP
+This Google Cloud Storage integration allows you to connect to a GCS bucket and load the files from there. You will need to provide your Google Cloud Project ID and the bucket name.
 
 == LLM Models
-what the selected model is used for + which ENV variables to set to enable/disable them
-WIP
+The application uses ML models (LLMs: OpenAI, Gemini, Diffbot) to transform PDFs, web pages, and YouTube videos into a knowledge graph of entities and their relationships. ENV variables can be set to enable/disable specific models.
 
 == Taxonomy
-WIP
-
-== KG Creation
-Explanation on the checkbox/selection of documents
-Generate Graph
-Show Graph
-Bloom
-Delete files
+image::llm-graph-builder-taxonomy.png[width=600, align=center]
+If you want to use a pre-defined or your own taxonomy, you can click on the setting icon in the top right corner and either select a pre-defined schema from the dropdown, use your own by writing down the node labels and relationships, pull the existing schema from an existing Neo4j database (`Use Existing Schema`), or copy/paste a text and ask the LLM to analyze it and come up with a suggested taxonomy (`Get Schema From Text`).
 
 == Chatbot
-WIP
 
 === How it works
+When the user asks a question, we use the Neo4j Vector Index with a Retrieval Query to find the related chunks and entities connected together, up to a depth of 2 hops. We also summarize the chat history and use it as an element to enrich the context.
+
+The various inputs and sources (the question, vector results, chat history) are all sent to the selected LLM model in a custom prompt, asking to provide and format a response to the question asked based on the elements and context provided. Of course, there is more magic to the prompt such as formatting, asking to cite sources, not speculating if the answer is not known, etc. The full prompt and instructions can be found as FINAL_PROMPT in QA_integration.py.
 
 === Features
-clear chat, expand view, retrieval info, etc.
-
+- *Clear chat:* Will delete the current session's chat history.
+- *Expand view:* Will open the chatbot interface in a fullscreen mode.
+- *Details:* Will open a Retrieval information pop-up showing details on how the RAG agent collected and used sources (documents), chunks, and entities. Also provides information on the model used and the token consumption.
+- *Copy:* Will copy the content of the response to the clipboard.
+- *Text-To-Speech:* Will read out loud the content of the response.
