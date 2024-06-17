@@ -37,9 +37,9 @@ This Google Cloud Storage integration allows you to connect to a GCS bucket and 
 == LLM Models
 The application uses ML models (LLMs: OpenAI, Gemini, Diffbot) to transform PDFs, web pages, and YouTube videos into a knowledge graph of entities and their relationships. ENV variables can be set to enable/disable specific models.
 
-== Taxonomy
+== Graph Schema
 image::llm-graph-builder-taxonomy.png[width=600, align=center]
-If you want to use a pre-defined or your own taxonomy, you can click on the setting icon in the top right corner and either select a pre-defined schema from the dropdown, use your own by writing down the node labels and relationships, pull the existing schema from an existing Neo4j database (`Use Existing Schema`), or copy/paste a text and ask the LLM to analyze it and come up with a suggested taxonomy (`Get Schema From Text`).
+If you want to use a pre-defined or your own graph schema, you can click on the setting icon in the top right corner and either select a pre-defined schema from the dropdown, use your own by writing down the node labels and relationships, pull the existing schema from an existing Neo4j database (`Use Existing Schema`), or copy/paste a text and ask the LLM to analyze it and come up with a suggested schema (`Get Schema From Text`).
 
 == Chatbot
 
