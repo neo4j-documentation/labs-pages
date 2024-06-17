@@ -20,7 +20,10 @@ You can use n10s to build integrations with RDF-generating / RDF-consuming compo
 
 neosemantics runs as an extension to your Neo4j database. Downloading the appropriate release for your Neo4j database into the plugins folder adds n10s to any Neo4j installation.
 
-The n10s GraphApp will help you get started with neosemantics
+The n10s GraphApp will help you get started with neosemantics.
+
+Note that neosemantics is only available for Neo4j Enterprise and **not** available in Aura.
+An alternative to this plugin is the rdflib-neo4j driver, see link:https://neo4j.com/labs/rdflib-neo4j/[] for more information.
 
 == Functionality Includes
 
