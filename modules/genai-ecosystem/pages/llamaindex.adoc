@@ -364,6 +364,10 @@ This https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Query Engine Llam
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kSAh4H4YDX8?si=hoK1Vrw0Hs4Et5si" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LDh5MdR-CPQ?si=uPDJHOgsO2yfGQHU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
 == Highlighted Articles
 
 * https://www.llamaindex.ai/blog/introducing-the-property-graph-index-a-powerful-new-way-to-build-knowledge-graphs-with-llms[Property graph index introduction^]
