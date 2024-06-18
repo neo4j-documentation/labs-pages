@@ -12,7 +12,7 @@ include::_graphacademy_llm.adoc[]
 == Prerequisites
 
 You will need to have a Neo4j Database V5.15 or later with https://neo4j.com/docs/apoc/current/installation/[APOC installed^] to use this Knowledge Graph Builder.
-You can use any https://neo4j.com/aura/[Neo4j Aura database^] (including the free tier database). Neo4j Aura automatically includes APOC and run on the latest Neo4j version, making it a great choice to get started quickly.
+You can use any https://neo4j.com/aura/[Neo4j Aura database^] (including the free tier database). Neo4j Aura automatically includes APOC and run on the latest Neo4j version, making it a great choice to get started quickly. You can also use the free trial in https://sandbox.neo4j.com[Neo4j Sandbox^], which also includes Graph Data Science.
 
 [CAUTION]
 ====
@@ -92,31 +92,31 @@ uvicorn score:app --reload
 
 == ENV
 
-[options="header"]
+[options="header",cols="m,a,m,a"]
 |===
 | Env Variable Name | Mandatory/Optional | Default Value | Description
-| OPENAI_API_KEY | Mandatory | | API key for OpenAI
-| DIFFBOT_API_KEY | Mandatory | | API key for Diffbot
+| OPENAI_API_KEY | Optional | sk-... | API key for OpenAI (if enabled)
+| DIFFBOT_API_KEY | Optional | | API key for Diffbot (if enabled)
 | EMBEDDING_MODEL | Optional | all-MiniLM-L6-v2 | Model for generating the text embedding (all-MiniLM-L6-v2 , openai , vertexai)
 | IS_EMBEDDING | Optional | true | Flag to enable text embedding
-| KNN_MIN_SCORE | Optional | 0.94 | Minimum score for KNN algorithm
+| KNN_MIN_SCORE | Optional | 0.94 | Minimum score for KNN algorithm for connecting similar Chunks
 | GEMINI_ENABLED | Optional | False | Flag to enable Gemini
 | GCP_LOG_METRICS_ENABLED | Optional | False | Flag to enable Google Cloud logs
-| NUMBER_OF_CHUNKS_TO_COMBINE | Optional | 6 | Number of chunks to combine when processing embeddings
-| UPDATE_GRAPH_CHUNKS_PROCESSED | Optional | 20 | Number of chunks processed before updating progress
+| NUMBER_OF_CHUNKS_TO_COMBINE | Optional | 6 | Number of chunks to combine when extracting entities
+| UPDATE_GRAPH_CHUNKS_PROCESSED | Optional | 20 | Number of chunks processed before writing to the database and updating progress
 | NEO4J_URI | Optional | neo4j://database:7687 | URI for Neo4j database
 | NEO4J_USERNAME | Optional | neo4j | Username for Neo4j database
 | NEO4J_PASSWORD | Optional | password | Password for Neo4j database
-| LANGCHAIN_API_KEY | Optional | | API key for Langchain
-| LANGCHAIN_PROJECT | Optional | | Project for Langchain
-| LANGCHAIN_TRACING_V2 | Optional | true | Flag to enable Langchain tracing
-| LANGCHAIN_ENDPOINT | Optional | https://api.smith.langchain.com | Endpoint for Langchain API
+| LANGCHAIN_API_KEY | Optional | | API key for LangSmith
+| LANGCHAIN_PROJECT | Optional | | Project for LangSmith
+| LANGCHAIN_TRACING_V2 | Optional | true | Flag to enable LangSmith tracing
+| LANGCHAIN_ENDPOINT | Optional | https://api.smith.langchain.com | Endpoint for LangSmith API
 | BACKEND_API_URL | Optional | http://localhost:8000 | URL for backend API
-| BLOOM_URL | Optional | https://workspace-preview.neo4j.io/workspace/explore?connectURL={CONNECT_URL}&search=Show+me+a+graph&featureGenAISuggestions=true&featureGenAISuggestionsInternal=true | URL for Bloom visualization
+| BLOOM_URL | Optional | https://workspace-preview.neo4j.io/workspace/explore?connectURL={CONNECT_URL}&search=Show+me+a+graph | URL for Bloom visualization
 | REACT_APP_SOURCES | Optional | local,youtube,wiki,s3 | List of input sources that will be available
-| LLM_MODELS | Optional | Diffbot,OpenAI GPT 3.5,OpenAI GPT 4o | Models available for selection on the frontend, used for entities extraction and Q&A Chatbot
+| LLM_MODELS | Optional | Diffbot,OpenAI GPT 3.5,OpenAI GPT 4o | Models available for selection on the frontend, used for entities extraction and Q&A Chatbot (other models: `Gemini 1.0 Pro, Gemini 1.5 Pro, OpenAI GPT 4`)
 | ENV | Optional | DEV | Environment variable for the app
 | TIME_PER_CHUNK | Optional | 4 | Time per chunk for processing
 | CHUNK_SIZE | Optional | 5242880 | Size of each chunk for processing
-| GOOGLE_CLIENT_ID | Optional | | Client ID for Google authentication
+| GOOGLE_CLIENT_ID | Optional | | Client ID for Google authentication for GCS upload
 |===
