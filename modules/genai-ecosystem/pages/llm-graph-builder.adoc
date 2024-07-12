@@ -31,6 +31,8 @@ Afterwards you can use different RAG approaches (GraphRAG, Vector, Text2Cypher) 
 The front-end is a React Application and the back-end a Python FastAPI application running on Google Cloud Run, but you can deploy it locally using docker compose.
 It uses the https://python.langchain.com/docs/use_cases/graph/constructing[llm-graph-transformer module^] that Neo4j contributed to LangChain and other langchain integrations (e.g. for GraphRAG search).
 
+All Features are documented in detail here: xref::llm-graph-builder-features.adoc[]
+
 Here is a quick demo:
 
 ++++
@@ -92,6 +94,8 @@ The https://llm-graph-builder.neo4jlabs.com[LLM Knowledge Graph Builder Applicat
 You can also run it locally, by cloning the https://github.com/neo4j-labs/llm-graph-builder[GitHub repository] and following the instructions in the README.md file.
 
 It is using Docker for packaging front-end and back-end, and you can run `docker-compose up` to start the whole application.
+
+Local deployment and configuration details are available in the xref::llm-graph-builder-deployment.adoc[]
 
 
 == Videos & Tutorials
