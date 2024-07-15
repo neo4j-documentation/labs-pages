@@ -71,11 +71,11 @@ image::llm-graph-builder-taxonomy.png[width=600, align=center]
 
 If you want to use a pre-defined or your own graph schema, you can do so in the Graph Enhancements popup. This is also shown the first time you construct a graph and the state of the model configuration is listed below the connection information.
 
- You can either:
- * select a pre-defined schema from the dropdown on top,
- * use your own by entering the node labels and relationships, 
- * fetch the existing schema from an existing Neo4j database (`Use Existing Schema`), 
- * or copy/paste a text or schema description (also works with RDF ontologies or Cypher/GQL schema) and ask the LLM to analyze it and come up with a suggested schema (`Get Schema From Text`).
+You can either:
+* select a pre-defined schema from the dropdown on top,
+* use your own by entering the node labels and relationships, 
+* fetch the existing schema from an existing Neo4j database (`Use Existing Schema`), 
+* or copy/paste a text or schema description (also works with RDF ontologies or Cypher/GQL schema) and ask the LLM to analyze it and come up with a suggested schema (`Get Schema From Text`).
 
 === Delete Disconnected Nodes
 
@@ -94,6 +94,31 @@ Here we use a mixture of entity embedding, edit distance and substring containme
 You can select which sets of entities should be merged and exclude certain entities from the merge.
 ////
 
+== Visualization
+
+You can visualize the _lexical_, the _entity_ graph or the full _knowledge_ graph of your extracted documents.
+
+=== Graph Visualization
+
+You have 2 options - either per document with the magifying glass icon at the end of the table or for all selected documents with the "Preview Graph" button.
+
+The graph visualization will show for the relevant files in a pop-up and you can filter for the type of graph you wanto to see:
+
+- Lexical Graph - the document and chunk nodes and their relationships
+- Entity Graph - the entity nodes and their relationships
+- Full Graph - all nodes and relationships
+
+=== Explore in Neo4j Bloom
+
+With the button "Explore in Neo4j Bloom" you can open the constructed knowledge graph in Neo4j Workspace for further visual exploration, querying and analysis.
+
+In Bloom/Explore you can run low code pattern based queries (or use the co-pilot) to fetch data from the graph and succesfully expand. If you are running against a GDS enabled instance, you can also run graph algorithms and visualize the results.
+You can also interactively edit and add to the graph.
+
+In Neo4j Data Importer you can additionally import structured data from CSV files and connect it to your extracted knowledge graph.
+
+In Neo4j Query you can write Cypher queries (or use the co-pilot) to pull tabular and graph data from your database.
+
 == Chatbot
 
 === How it works
@@ -105,9 +130,10 @@ We also summarize the chat history and use it as an element to enrich the contex
 === Features
 
 - *Select RAG Mode* you can select vector-only or GraphRAG (vector+graph) modes
+- *Chat with selected documents:* Will use the selected documents only for RAG, uses pre-filtering to achieve that
+- *Details:* Will open a Retrieval information pop-up showing details on how the RAG agent collected and used sources (documents), chunks, and entities. Also provides information on the model used and the token consumption.
 - *Clear chat:* Will delete the current session's chat history.
 - *Expand view:* Will open the chatbot interface in a fullscreen mode.
-- *Details:* Will open a Retrieval information pop-up showing details on how the RAG agent collected and used sources (documents), chunks, and entities. Also provides information on the model used and the token consumption.
 - *Copy:* Will copy the content of the response to the clipboard.
 - *Text-To-Speech:* Will read out loud the content of the response.
 

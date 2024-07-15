@@ -22,27 +22,35 @@ If want to use https://neo4j.com/product/developer-tools/#desktop[Neo4j Desktop^
 By default only OpenAI and Diffbot are enabled since Gemini requires extra GCP configurations.
 
 In your root folder, create a .env file with your OPENAI and DIFFBOT keys (if you want to use both):
-```env
+
+[source,env]
+----
 OPENAI_API_KEY="your-openai-key"
 DIFFBOT_API_KEY="your-diffbot-key"
-```
+----
 
 if you only want OpenAI:
-```env
+
+[source,env]
+----
 LLM_MODELS="gpt-3.5,gpt-4o"
 OPENAI_API_KEY="your-openai-key"
-```
+----
 
 if you only want Diffbot:
-```env
+
+[source,env]
+----
 LLM_MODELS="diffbot"
 DIFFBOT_API_KEY="your-diffbot-key"
-```
+----
 
 You can then run Docker Compose to build and start all components:
-```bash
+
+[source,bash]
+----
 docker-compose up --build
-```
+----
 
 === Configuring LLM Models
 
@@ -61,7 +69,7 @@ To achieve that you need to set a number of environment variables:
 In your `.env` file, add the following lines. You can of course also add other model configurations from these providers or any OpenAI API compatible provider.
 
 [source,env]
-====
+----
 LLM_MODEL_CONFIG_azure_ai_gpt_35="gpt-35,https://<deployment>.openai.azure.com/,<api-key>,<version>"
 LLM_MODEL_CONFIG_anthropic_claude_35_sonnet="claude-3-5-sonnet-20240620,<api-key>"
 LLM_MODEL_CONFIG_fireworks_llama_v3_70b="accounts/fireworks/models/llama-v3-70b-instruct,<api-key>"
@@ -71,12 +79,12 @@ LLM_MODEL_CONFIG_fireworks_qwen_72b="accounts/fireworks/models/qwen2-72b-instruc
 
 # Optional Frontend config
 LLM_MODELS="diffbot,gpt-3.5,gpt-4o,azure_ai_gpt_35,azure_ai_gpt_4o,groq_llama3_70b,anthropic_claude_35_sonnet,fireworks_llama_v3_70b,bedrock_claude_35_sonnet,ollama_llama3,fireworks_qwen_72b"
-====
+----
 
 In your `docker-compose.yml` you need to pass the variables through:
 
 [source,yaml]
-====
+----
 - LLM_MODEL_CONFIG_anthropic_claude_35_sonnet=${LLM_MODEL_CONFIG_anthropic_claude_35_sonnet-}
 - LLM_MODEL_CONFIG_fireworks_llama_v3_70b=${LLM_MODEL_CONFIG_fireworks_llama_v3_70b-}
 - LLM_MODEL_CONFIG_azure_ai_gpt_4o=${LLM_MODEL_CONFIG_azure_ai_gpt_4o-}
@@ -85,21 +93,25 @@ In your `docker-compose.yml` you need to pass the variables through:
 - LLM_MODEL_CONFIG_bedrock_claude_3_5_sonnet=${LLM_MODEL_CONFIG_bedrock_claude_3_5_sonnet-}
 - LLM_MODEL_CONFIG_fireworks_qwen_72b=${LLM_MODEL_CONFIG_fireworks_qwen_72b-}
 - LLM_MODEL_CONFIG_ollama_llama3=${LLM_MODEL_CONFIG_ollama_llama3-}
-====
+----
 
 === Additional configs
 
 By default, the input sources will be: Local files, Youtube, Wikipedia and AWS S3. 
 This is the default config applied if you do not overwrite it in your .env file:
-```env
+
+[source,env]
+----
 REACT_APP_SOURCES="local,youtube,wiki,s3"
-```
+----
 
 If however you want the Google GCS integration, add `gcs` and your Google client ID:
-```env
+
+[source,env]
+----
 REACT_APP_SOURCES="local,youtube,wiki,s3,gcs"
 GOOGLE_CLIENT_ID="xxxx"
-```
+----
 
 The `REACT_APP_SOURCES` should be a comma-separated list of the sources you want to enable.
 You can of course combine all (local, youtube, wikipedia, s3 and gcs) or remove any you don't want or need.
@@ -113,23 +125,27 @@ Alternatively, you can run the backend and frontend separately:
 1. Create the frontend/.env file by copy/pasting the frontend/example.env.
 2. Change values as needed
 3. Run:
-```bash
+
+[source,bash]
+----
 cd frontend
 yarn
 yarn run dev
-```
+----
 
 - For the backend:
 1. Create the backend/.env file by copy/pasting the backend/example.env.
 2. Change values as needed
 3.  Run:
-```bash
+
+[source,bash]
+----
 cd backend
 python -m venv envName
 source envName/bin/activate 
 pip install -r requirements.txt
 uvicorn score:app --reload
-```
+----
 
 == ENV
 
