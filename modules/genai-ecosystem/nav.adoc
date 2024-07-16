@@ -1,8 +1,4 @@
 ** xref:index.adoc[GenAI Ecosystem]
-*** Cloud Examples
-**** xref:aws-demo.adoc[AWS Bedrock]
-**** xref:microsoft-azure-demo.adoc[Microsoft Azure OpenAI]
-**** xref:google-cloud-demo.adoc[Google Cloud Vertex AI]
 *** Example Projects
 **** xref:llm-graph-builder.adoc[LLM Graph Builder]
 ***** xref:llm-graph-builder-features.adoc[Features]
@@ -13,7 +9,11 @@
 *** Neo4j GenAI Features
 **** xref:vector-search.adoc[Vector Index and Search]
 **** xref:apoc-genai.adoc[APOC GenAI]
-*** Orchestration Libraries
+*** Cloud Examples
+**** xref:aws-demo.adoc[AWS Bedrock]
+**** xref:microsoft-azure-demo.adoc[Microsoft Azure OpenAI]
+**** xref:google-cloud-demo.adoc[Google Cloud Vertex AI]
+*** xref:genai-frameworks.adoc[GenAI Frameworks]
 **** xref:langchain.adoc[LangChain]
 **** xref:langchain-js.adoc[LangChainJS]
 **** xref:llamaindex.adoc[LlamaIndex]

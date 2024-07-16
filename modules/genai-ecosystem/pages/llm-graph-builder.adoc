@@ -11,7 +11,7 @@ include::_graphacademy_llm.adoc[]
 :imagesdir: https://dev.assets.neo4j.com/wp-content/uploads/2024/
 
 // image::llm-graph-builder.png[width=600, align=center]
-image::https://dist.neo4j.com/wp-content/uploads/20240618104511/build-kg-genai-e1718732751482.png[width=800, align=center]
+image::https://dist.neo4j.com/wp-content/uploads/20240618104511/build-kg-genai-e1718732751482.png[width=800, align=center,link="https://llm-graph-builder.neo4jlabs.com/",window="_blank"]
 
 The Neo4j LLM Knowledge Graph Builder is an https://llm-graph-builder.neo4jlabs.com/[online application^] for turning unstructured text into a knowledge graph, it provides a magical text to graph experience.
 

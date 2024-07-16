@@ -12,14 +12,17 @@ include::_graphacademy_llm.adoc[]
 image::https://dist.neo4j.com/wp-content/uploads/20231030151119/genai-art-diagram-1.svg[width=800]
 
 
-Knowledge Graphs can provide rich context to ground Large Language Models (LLMs) for enabling GenAI applications using Graph RAG (Retrieval Augmented Generation)
-The real world data captured in the graph avoids hallucination and provides a rich source of information for the LLMs to generate answers, summaries and suggestions from.
+Knowledge graphs bring more accurate responses, rich context, and explainability to each generative AI model interaction. 
+By combining knowledge graphs with native vector search, you get the best of both worlds with Graph RAG (Retrieval Augmented Generation). 
 
-LLMs can be used to extract entities and their relationships from unstructured text to build up and enrich knowledge graphs.
+Language models also can be used to extract entities and their relationships from unstructured text to build up and enrich knowledge graphs.
 
-Learn more at: https://neo4j.com/generativeai/
+== How to get started
 
-The Neo4j GenAI Ecosystem is a collection of tools and integrations that make it easy to use LLMs with Neo4j.
+1. For an high level overview, have a look at https://neo4j.com/generativeai/[neo4j.com/genai^]  
+2. Use the xref:llm-graph-builder.adoc[LLM-Knowledge Graph Builder] to turn your own documents into a knowledge graph
+3. If you want to learn more take one of the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[GenAI GraphAcademy courses^]
+4. Pick your xref:genai-frameworks.adoc[GenAI framework of choice] and start building your own GenAI applications with Neo4j
 
 == GraphAcademy Courses
 
@@ -29,14 +32,24 @@ image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundame
 
 == GenAI Ecosystem
 
+The Neo4j GenAI Ecosystem is a collection of tools and integrations that make it easy to use LLMs with Neo4j.
+
 === GraphRAG
 
+GraphRAG combines an ingestion process that extracts entities and relationships from unstructured text and further uses graph algorithms for enrichment and summarization. 
+The retrieval step then uses the knowledge graph in combination with vector search to navigate to more relevant information than just the initial text chunks.
+
+* https://neo4j.com/blog/graphrag-manifesto/[The GraphRAG Manifesto]
 * https://dev.neo4j.com/dlai-kg[DeepLearning AI Knowledge Graph Course^]
 * http://discord.gg/graphrag[GraphRAG Discord^]
-* https://huggingface.co/graphrag[GraphRAG HuggingFace Paper Collection^]
+// * https://huggingface.co/graphrag[GraphRAG HuggingFace Paper Collection^]
 * https://dev.neo4j.com/free-kg-book[(free) Knowledge Graph Book^]
+* https://neo4j.com/developer-blog/global-graphrag-neo4j-langchain/[Implementing GraphRAG with Neo4j, GDS and LangChain]
+* https://microsoft.github.io/graphrag/[Microsoft's GraphRAG project]
 
 === GraphRAG Ecosystem Tools
+
+In Neo4j Labs we built a number of tools, to demonstrate the power of combining graphs with LLMs. All these tools are open source, you can use and contribute to them or learn and build your own.
 
 * xref:llm-graph-builder.adoc[LLM Knowledge Graph Builder]
 * xref:neoconverse.adoc[NeoConverse multi-dataset query, chat, visualization]
@@ -45,16 +58,23 @@ image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundame
 
 === Cloud Examples
 
+Neo4j has worked with the main cloud providers to create GenAI integrations and examples on their platforms.
+
 * xref:aws-demo.adoc[AWS Demo]
 * xref:microsoft-azure-demo.adoc[Microsoft Azure Demo]
 * xref:google-cloud-demo.adoc[Google Cloud Demo]
 
 === Neo4j GenAI Features
 
+Neo4j added a number of features to make it easier to build GenAI applications and integrate LLMs with knowledge graphs.
+
 * xref:vector-search.adoc[Vector Index & Search]
 * xref:apoc-genai.adoc[APOC GenAI Procedures]
 
-=== Orchestration Libraries
+=== GenAI Frameworks
+
+Neo4j and our community have contributed integrations to many of these frameworks. 
+You can find overviews of these integrations in the pages of this section, as well as code examples, tutorials and more.
 
 * xref:langchain.adoc[LangChain (Python)]
 * xref:langchain-js.adoc[LangChainJS]
@@ -64,7 +84,6 @@ image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundame
 * xref:haystack.adoc[Haystack]
 * xref:semantic-kernel.adoc[Semantic Kernel]
 * xref:dspy.adoc[DSPy]
-
 
 == Highlighted Articles
 
