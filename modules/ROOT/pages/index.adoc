@@ -37,6 +37,9 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 Neo4j integrates with many libraries (LangChain, LlamaIndex, Haystack, Spring-AI) in the xref:genai-ecosystem:index.adoc[GenAI Ecosystem] to make building and deploying knowledge graph-powered GenAI applications easier.
 Most integrations use a combination of vector and graph search to improve quality and accuracy of typical generative AI tasks and can also be used to construct knowledge graphs from unstructured data.
 
+=== xref:genai-ecosystem:llm-graph-builder.adoc[LLM Knowledge Graph Builder]
+
+The Knowledge Graph Builder allows users to construct knowledge graphs from unstructured data (text files, PDFs, documents, webpages) by using LLMs for extraction, additional post-processing and GraphRAG question answering (Graph-Retrieval Augmented Generation) with explainability. It allows you to kickstart your graph journey using GenAI. The constructured graph can then be used for building applications or deriving insights.
 
 === xref:arrows:index.adoc[arrows.app]
 
