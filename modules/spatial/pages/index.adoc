@@ -1,0 +1,22 @@
+= Neo4j-Spatial:  Add spatial indexes to Neo4j
+:docs: https://github.com/neo4j-contrib/spatial
+:slug: neo4j-spatial
+:author: Craig Taverner
+:category: labs
+:tags: spatial
+:neo4j-versions: 5+
+:page-product: Neo4j Spatial
+
+Neo4j Spatial is a library facilitating the import, storage and querying of spatial data in Neo4j.
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| icon:user[] Authors | Craig Taverner, Andreas Berger
+| icon:gift[] Releases | https://github.com/neo4j-contrib/spatial/releases
+| icon:github[] Source | https://github.com/neo4j-contrib/spatial
+| icon:book[] Docs | https://neo4j.com/labs/neo4j-spatial/5
+|===
+
+// == Recent Articles
