@@ -65,9 +65,9 @@ Liquibase is an open source project for tracking, managing and applying database
 
 === xref:neo4j-migrations:index.adoc[Neo4j-Migrations]
 
-xref:neo4j-migrations:index.adoc[Neo4j-Migrations] is a set of tools to make your schema migrations as easy as possible. 
+xref:neo4j-migrations:index.adoc[Neo4j-Migrations] is a set of tools to make your schema migrations as easy as possible.
 It provides a uniform way for applications, the command line and build tools alike to track, manage and apply changes to your database.
-It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts. 
+It is inspired to a large extend by FlywayDB, so most things evolve around Cypher-Scripts.
 Neo4j-Migrations builds directly on top of the official Neo4j-Java-Driver, supports Neo4j from 3.5 up to 4.4, including enterprise features such as multidatabase support and impersonation.
 
 === xref:neosemantics:index.adoc[Neosemantics]
@@ -76,7 +76,7 @@ xref:neosemantics:index.adoc[Neosemantics] integrates RDF and Linked Data with N
 It allows to import a wide variety of RDF formats and to expose Neo4j property graphs as Linked Data.
 Ontology and Inference are also partially supported.
 
-=== xref:rdflib-neo4j:index.adoc[Rdflib-Neo4j] 
+=== xref:rdflib-neo4j:index.adoc[Rdflib-Neo4j]
 Integrate Neo4j with RDF and Linked Data by using the famous RDFLib library backed by an implementation of the Neo4j store. It provides a client-side alternative to Neosemantics for cloud-native Neo4j deployments.
 
 === xref:neodash:index.adoc[NeoDash]
@@ -98,6 +98,9 @@ The xref:cypher-workbench:index.adoc[Cypher Workbench] Cypher Workbench provides
 === xref:keymaker:index.adoc[Keymaker]
 xref:keymaker:index.adoc[Keymaker] includes an interface which allows users to build analytical pipelines ( or engines ) using Cypher and automatically makes the results of the analytical pipeline available through a GraphQL API endpoint.
 
+=== xref:spatial:index.adoc[Spatial]
+xref:spatial:index.adoc[Neo4j-Spatial] is a library facilitating the import, storage and querying of spatial data in Neo4j.
+
 === Other Active Projects
 
 * link:https://github.com/neo4j-contrib/neovis.js/[Neovis.js^], a graph visualization toolkit for the web, started out as a labs project but now moved to a community maintained project.
@@ -108,7 +111,7 @@ The following projects were successfully developed, incubated, and validated wit
 
 === link:/docs/operations-manual/current/kubernetes/[Neo4j-Helm^]
 
-xref:neo4j-helm:index.adoc[Neo4j-Helm] saw great adoption and provided important learnings and insights for the link:/docs/operations-manual/current/kubernetes/[official Kubernetes Support for Neo4j^].  
+xref:neo4j-helm:index.adoc[Neo4j-Helm] saw great adoption and provided important learnings and insights for the link:/docs/operations-manual/current/kubernetes/[official Kubernetes Support for Neo4j^].
 Using the Helm package manager for Kubernetes, makes it simple to specify advanced configurations of Neo4j, both standalone and cluster, and run them with Kubernetes across many cloud platforms.
 
 === https://neo4j.com/product/graphql-library/[GraphQL^] and GRANDstack
@@ -156,7 +159,7 @@ Current Neo4j Labs projects are being actively worked on by our engineers, and m
 
 === Can I get assistance?
 
-Whilst Neo4j does NOT offer support for Labs projects, you can get assistance from the Neo4j Professional Services team, who are  contributors to many of the Labs projects. 
+Whilst Neo4j does NOT offer support for Labs projects, you can get assistance from the Neo4j Professional Services team, who are  contributors to many of the Labs projects.
 Whilst the PS team cannot provide product support with an SLA, they can help you with extending the code of Labs Projects, improve code stability/consistency and help with installation, configuration and scale out of Labs technology.
 
 === How do I contribute?

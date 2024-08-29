@@ -20,6 +20,7 @@ nav:
 - modules/neomodel/nav.adoc
 - modules/neosemantics/nav.adoc
 - modules/rdflib-neo4j/nav.adoc
+- modules/spatial/nav.adoc
 
 asciidoc:
   attributes:
