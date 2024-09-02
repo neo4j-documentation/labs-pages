@@ -22,7 +22,7 @@ The workflow for Agent Neo is outlined as follows:
 . **Similarity and Graph Structuring**: Text embeddings are utilized to identify similar text chunks, which are interconnected using "SIMILAR_TO" relationships to further structure the graph via the Leiden algorithm.
 . **Metadata Integration and Feedback Loop**: Session metadata and user feedback are integrated into the graph, enhancing data richness for future queries and analyses.
 
-// im age::agent-neo-structure.png[Graph Structure Example, width=600, align="center"]
+// im age::agent-neo-structure[Graph Structure Example, width=600, align="center"]
 
 == Key enhancements
 
@@ -41,7 +41,7 @@ Agent Neo utilizes Graph-RAG technology to offer significant advantages:
 * *Explainability & Observability*: Enhances the transparency and explainability of operations by incorporating vectors within a graph structure, moving away from the "black box" nature of traditional models.
 * *Rapid Iteration and Integration*: Facilitates quick iterations and seamless integration of diverse data sources through Neo4j’s Label Property Graph, supported by in-platform feature engineering capabilities.
 
-// im age::agent-neo.png[Agent Neo Architecture, width=600, align="center"]
+// im age::agent-neo[Agent Neo Architecture, width=600, align="center"]
 
 == Installation
 
