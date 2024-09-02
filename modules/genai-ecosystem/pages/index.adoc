@@ -46,6 +46,7 @@ The retrieval step then uses the knowledge graph in combination with vector sear
 * https://dev.neo4j.com/free-kg-book[(free) Knowledge Graph Book^]
 * https://neo4j.com/developer-blog/global-graphrag-neo4j-langchain/[Implementing GraphRAG with Neo4j, GDS and LangChain]
 * https://microsoft.github.io/graphrag/[Microsoft's GraphRAG project]
+* https://www.googlecloudcommunity.com/gc/Cloud-Product-Articles/GenAI-GraphRAG-and-AI-agents-using-Vertex-AI-Reasoning-Engine/ta-p/789066[Deploy Neo4j-LangChain GraphRAG w/ GCP Vertex AI Reasoning Engine]
 
 === GraphRAG Ecosystem Tools
 
