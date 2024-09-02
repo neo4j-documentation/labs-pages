@@ -79,7 +79,7 @@ Graphs in general capture high information in a structured manner
 
 While documents mostly represent a vertical (and sometimes temporal) structure of a flow of segments of information, GraphRAG with entity extraction and clustering captures the horizontal re-occurrence and enhancement of topics across documents.
 
-image::graphrag-documents-horizontal.svg[]
+image::https://dev.assets.neo4j.com/wp-content/uploads/2024/graphrag-documents-horizontal.svg[]
 
 == Implementation Techniques
 
