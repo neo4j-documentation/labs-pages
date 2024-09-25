@@ -41,6 +41,8 @@ The retrieval step then uses the knowledge graph in combination with vector sear
 
 * https://neo4j.com/blog/graphrag-manifesto/[The GraphRAG Manifesto]
 * https://dev.neo4j.com/dlai-kg[DeepLearning AI Knowledge Graph Course^]
+* https://neo4j.com/developer-blog/graphrag-field-guide-rag-patterns/[GraphRAG Field Guide: Navigating the World of Advanced RAG Patterns^]
+* https://graphr.ag/[GraphRAG Pattern Catalogue^]
 * http://discord.gg/graphrag[GraphRAG Discord^]
 // * https://huggingface.co/graphrag[GraphRAG HuggingFace Paper Collection^]
 * https://dev.neo4j.com/free-kg-book[(free) Knowledge Graph Book^]
