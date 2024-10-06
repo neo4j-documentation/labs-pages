@@ -17,7 +17,7 @@ Using the graph database schema, question-statement examples, and fine-tuning, t
 Which is then validated and executed against the database.
 
 The query results are sent with the user question to the LLM to generate a natural language answer.
-Alterantively the LLM can be configured to generate the data an configuration to render the results of the query as a chart for visual representation.
+Alternatively the LLM can be configured to generate the data and configuration to render the results of the query as a chart for visual representation.
 
 image::neoconverse-chart.png[width=800, align=center]
 
@@ -29,7 +29,7 @@ image::neoconverse-chart.png[width=800, align=center]
   - Optionally add a few-shot examples to provide in-context learning to the LLM.
   - Save the conversation in a configured database for future analysis:
         . Evaluate the LLM responses.
-        . Rank the responses and use them to improve future LLM interactions
+        . Rank the responses and use them to improve future LLM interactions.
         . Prompt engineering adjustments.
 * Generate chart visualizations from natural language questions.
 * Interact with predefined agents from different domains:
@@ -42,7 +42,7 @@ image::neoconverse-chart.png[width=800, align=center]
 NeoConverse includes with selection of *predefined conversational agents*, each backed by Neo4J database, 
 To explore and converse with Neo4j database using these agents, user can select any agent from the `Explore Predefined Agent` section.
 Upon selection, users can engage with the chosen agent through the chat interface displayed on the right side of the screen.
-This enables users to interact directly with the database graoh, faciltating an interactive exploration of the knowledge graph.
+This enables users to interact directly with the database graph, facilitating an interactive exploration of the knowledge graph.
 
 Users have the flexibility to `*add your own local agents*` that are backed by your organizations neo4j database, and start interacting with your database knowledge graphs. 
 
@@ -98,10 +98,10 @@ image::neoconverse-arch.png[width=600, align=center]
 // image::https://kumarss.blob.core.windows.net/neoconverse-resources/neoconverse-arch.png?sp=r&st=2024-04-10T19:08:45Z&se=2026-04-09T03:08:45Z&spr=https&sv=2022-11-02&sr=b&sig=vE8JahnRHRgNO8xEZzQejX0ACMQdQ9kr6FzeIKs0ILw%3D[]
 
 == Available predefined datasets
-* *Enron Email Corpus Dataset*:  The subset of publicly available enron email corpus data has been anonymized and ingested in neo4j database, the ingested dataset contains about 500K email messages, The dataset facilitates an in-depth exploration of email communication both within enron leadership internally and with external parties, providing means to analyse anomolies and email leakages.  In addition to email communcation metadata, this dataset also enriched with entities and watch terms extracted from email subject & body.
+* *Enron Email Corpus Dataset*:  The subset of publicly available enron email corpus data has been anonymized and ingested in neo4j database, the ingested dataset contains about 500K email messages, The dataset facilitates an in-depth exploration of email communication both within enron leadership internally and with external parties, providing means to analyse anomalies and email leakages.  In addition to email communication metadata, this dataset also enriched with entities and watch terms extracted from email subject & body.
 * *Patient Journey Dataset* :  The patient journey dataset encapsulates the healthcare experiences of 1 million patients, detailing 41 million encounters that span doctor visits, diagnoses, treatments, and allergies, among other medical events. With 11 million prescriptions, 26 million observations, 9 million condition-specific observations, 200 unique conditions, and 500K allergy encounters, this rich dataset offers a comprehensive view of individual health narratives. It's a crucial resource for analyzing treatment patterns, patient outcomes, and drug efficacy, providing insights that can enhance healthcare delivery and personalize patient care strategies.
 * *Retail Dataset* : This retail dataset leverages a knowledge graph built from a public Amazon electronics dataset containing product information, reviews, and user purchase and review history. To extract deeper insights, Neo4j GDS graph algorithms have been applied to calculate similarity scores between users and products, considering not only product features and user demographics but also how users interact with the products.
-* *Business Intelligence*: Its a Knowledge graph of Software Applications with supported business processes, deployed instances, software vulnerability reports,
+* *Business Intelligence*: It's a Knowledge graph of Software Applications with supported business processes, deployed instances, software vulnerability reports,
 and data concepts that provides impact analysis for vulnerabilities as well as impact analysis for application changes and data traceability
 // TODO Add details on Business resilience and retail dataset
 
