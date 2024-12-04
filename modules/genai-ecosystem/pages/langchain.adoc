@@ -17,7 +17,7 @@ It manages templates, composes components into chains and supports monitoring an
 
 The broad and deep Neo4j integration allows for vector search, cypher generation and database querying and knowledge graph construction.
 
-Here is an overview of the https://python.langchain.com/docs/use_cases/graph/quickstart[Graph Integrations^].
+Here is an overview of the https://python.langchain.com/docs/tutorials/graph/[Graph Integrations^].
 
 * https://medium.com/towards-data-science/integrating-neo4j-into-the-langchain-ecosystem-df0e988344d2[Integrating Neo4j into the LangChain Ecosystem^]
 
@@ -66,7 +66,7 @@ embeddings = OpenAIEmbeddings()
 # The Neo4jVector Module will connect to Neo4j and create a vector index if needed.
 
 db = Neo4jVector.from_documents(
-    docs, OpenAIEmbeddings(), url=url, username=username, password=password
+    docs, embeddings, url=url, username=username, password=password
 )
 
 query = "What did the president say about Ketanji Brown Jackson"
@@ -101,8 +101,8 @@ embeddings = OpenAIEmbeddings()
 # The Neo4jVector Module will connect to Neo4j and create a vector index if needed.
 
 db = Neo4jVector.from_documents(
-    docs, OpenAIEmbeddings(), url=url, username=username, password=password,
-    search_type: 'hybrid'
+    docs, embeddings, url=url, username=username, password=password,
+    search_type="hybrid"
 )
 
 query = "What did the president say about Ketanji Brown Jackson"
@@ -142,12 +142,12 @@ from langchain_neo4j import Neo4jGraph
 graph = Neo4jGraph(url=NEO4J_URI, username=NEO4J_USERNAME, password=NEO4J_PASSWORD)
 
 QUERY = """
-"MATCH (m:Movie)-[:IN_GENRE]->(:Genre {name:$genre}) 
+MATCH (m:Movie)-[:IN_GENRE]->(:Genre {name: $genre}) 
 RETURN m.title, m.plot 
-ORDER BY m.imdbRating DESC LIMIT 5"
+ORDER BY m.imdbRating DESC LIMIT 5
 """
 
-graph.query(QUERY, genre="action")
+graph.query(QUERY, params={"genre": "action"})
 ----
 
 === CypherQAChain
@@ -168,20 +168,21 @@ graph = Neo4jGraph(url=NEO4J_URI, username=NEO4J_USERNAME, password=NEO4J_PASSWO
 
 # Insert some movie data
 graph.query(
-    """
-MERGE (m:Movie {title:"Top Gun"})
+"""
+MERGE (m:Movie {title:'Top Gun'})
 WITH m
-UNWIND ["Tom Cruise", "Val Kilmer", "Anthony Edwards", "Meg Ryan"] AS actor
+UNWIND ['Tom Cruise', 'Val Kilmer', 'Anthony Edwards', 'Meg Ryan'] AS actor
 MERGE (a:Actor {name:actor})
 MERGE (a)-[:ACTED_IN]->(m)
 """
 )
 
 chain = GraphCypherQAChain.from_llm(
-    ChatOpenAI(temperature=0), graph=graph, verbose=True
+    ChatOpenAI(temperature=0), graph=graph, verbose=True,
+    allow_dangerous_requests=True
 )
 
-chain.run("Who played in Top Gun?")
+chain.run("Who acted in Top Gun?")
 ----
 
 === Advanced RAG Strategies
@@ -195,8 +196,6 @@ These are also available as LangChain Templates.
 * *summary* - index summaries of the documents not the whole document
 
 * https://blog.langchain.dev/implementing-advanced-retrieval-rag-strategies-with-neo4j/[Implementing Advanced Retrieval RAG Strategies with Neo4j^]
-
-* https://python.langchain.com/docs/templates/neo4j-advanced-rag
 
 [source,shell]
 ----
@@ -228,33 +227,6 @@ langchain serve
 
 image::https://lh7-us.googleusercontent.com/jfDNiPa5ccefX6h0HiVzJbqnlgAZgfPda90truHSfbwSs3JkfxZ-xbA9mZE8y2fNf_3n5cgVhbdhN0ryuMoK2JNbMgTe1OLJMA6CQRhWBxzdKRLVurUFDndT7ki4vMh-cdv3SAn040HTpab9XkzGj5Q[]
 
-=== LangChain Templates
-
-https://blog.langchain.dev/langchain-templates/[Langchain Templates^] are a set of preconfigured chains and components that can be used to build GenAI workflows and applications.
-You can test them interactively on the LangChain Playground and run them with https://github.com/langchain-ai/langserve[LangServe^] to run as REST APIs, they also integrate with [LangSmith] for monitoring and observability.
-
-By creating an application from templates, their source code is added to your application and you can modify them to fit your needs.
-
-==== List of Templates
-
-This https://python.langchain.com/docs/templates/neo4j-cypher[Cypher template] allows you to interact with a Neo4j graph database in natural language, using an OpenAI LLM.
-
-It transforms a natural language question into a Cypher query (used to fetch data from Neo4j databases), executes the query, and provides a natural language response based on the query results.
-
-The https://python.langchain.com/docs/templates/neo4j-cypher-ft[Cypher-FT Template^] additionally utilizes a full-text index for efficient mapping of text values to database entries, thereby enhancing the generation of accurate Cypher statements.
-
-The https://python.langchain.com/docs/templates/neo4j-cypher-memory[Cypher Memory Template^] also features a conversational memory module that stores the dialogue history in the Neo4j graph database. The conversation memory is uniquely maintained for each user session, ensuring personalized interactions. 
-
-The https://python.langchain.com/docs/templates/neo4j-generation[Neo4j generation Template^] pairs LLM-based knowledge graph extraction using OpenAI functions, with Neo4j AuraDB, a fully managed cloud graph database.
-
-This https://python.langchain.com/docs/templates/neo4j-vector-memory[Neo4j Vector Memory Template^] allows you to integrate an LLM with a vector-based retrieval system using Neo4j as the vector store. Additionally, it uses the graph capabilities of the Neo4j database to store and retrieve the dialogue history of a specific user's session. Having the dialogue history stored as a graph allows for seamless conversational flows but also gives you the ability to analyze user behavior and text chunk retrieval through graph analytics.
-
-The https://python.langchain.com/docs/templates/neo4j-parent[Parent-Child Retriever Template^] allows you to balance precise embeddings and context retention by splitting documents into smaller chunks and retrieving their original or larger text information.
-
-Using a Neo4j vector index, the package queries child nodes using vector similarity search and retrieves the corresponding parent's text.
-
-The https://python.langchain.com/docs/templates/neo4j-semantic-layer[Neo4j Semantic Layer Template^] is designed to implement an agent capable of interacting with a graph database like Neo4j through a semantic layer using OpenAI function calling. The semantic layer equips the agent with a suite of robust tools, allowing it to interact with the graph databas based on the user's intent.
-
 === Semantic Layer
 
 A semantic layer on top of a (graph) database doesn't rely on automatic query generation but offers a number of APIs and tools to give the LLM access to the database and it's structures.
@@ -282,14 +254,14 @@ You can index embeddings for and link questions and answers back to the retrieve
 
 Creating a Knowledge Graph from unstructured data like PDF documents used to be a complex and time-consuming task that required training and using dedicated, large NLP models.
 
-The https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transformers^] are tools that allows you to extract structured data from unstructured documents and transform it into a Knowledge Graph.
+The https://python.langchain.com/v0.1/docs/use_cases/graph/constructing[Graph Transformers^] are tools that allows you to extract structured data from unstructured documents and transform it into a Knowledge Graph.
 
 NOTE: You can see a practical application, code and demo for extracting knowledge graphs from PDFs, YouTube transcripts, wikipedia articles and more with the xref:llm-graph-builder.adoc[LLM Graph Builder].
 
 image::
 
-* https://python.langchain.com/docs/use_cases/graph/integrations/diffbot_graphtransformer[Diffbot Graph Transformer^]
-* https://python.langchain.com/docs/use_cases/graph/constructing#llm-graph-transformer[LLM Graph Transformer^]
+* https://python.langchain.com/docs/integrations/graphs/diffbot/[Diffbot Graph Transformer^]
+* https://python.langchain.com/v0.1/docs/use_cases/graph/constructing/#llm-graph-transformer[LLM Graph Transformer^]
 
 * https://neo4j.com/developer-blog/knowledge-graph-based-chatbot-with-gpt-3-and-neo4j/[Knowledge Graph-based Chatbot with GPT-3 and Neo4j^]
 * https://blog.langchain.dev/constructing-knowledge-graphs-from-text-using-openai-functions/[Constructing Knowledge Graphs from Text using OpenAI Functions^]
@@ -299,13 +271,13 @@ image::
 == Documentation
 
 * https://python.langchain.com/docs/integrations/providers/neo4j/[Neo4j Integrations^]
-* https://python.langchain.com/docs/use_cases/graph/graph_cypher_qa[Graph Cypher QA Chain^]
+* https://python.langchain.com/docs/tutorials/graph/#chain[Graph Cypher QA Chain^]
 * https://python.langchain.com/docs/integrations/vectorstores/neo4jvector[Neo4j Vector^]
-* https://python.langchain.com/docs/use_cases/graph/constructing[Graph Transformers^]
+* https://python.langchain.com/v0.1/docs/use_cases/graph/constructing[Graph Transformers^]
 
 == Starter Kit
 
-This https://github.com/neo4j-examples/langchain-starter-kit/blob/main/app/vector_chain.py[starter-kit] demonstrates how to run a FastAPI server using LangChain to answer queries on data stored in a Neo4j instance. The single endpoint can be used to retrieve answers using either a https://python.langchain.com/v0.1/docs/integrations/vectorstores/neo4jvector/[Vector index chain],  https://python.langchain.com/v0.1/docs/integrations/graphs/neo4j_cypher/[GraphCypherQA Chain], or a composite answer of both. The https://github.com/neo4j-examples/langchain-starter-kit/tree/langserve[langserve] branch contains an example of the same service, using https://python.langchain.com/v0.1/docs/langserve/[LangServe]
+This https://github.com/neo4j-examples/langchain-starter-kit/blob/main/app/vector_chain.py[starter-kit] demonstrates how to run a FastAPI server using LangChain to answer queries on data stored in a Neo4j instance. The single endpoint can be used to retrieve answers using either a https://python.langchain.com/docs/integrations/vectorstores/neo4jvector/[Vector index chain],  https://python.langchain.com/docs/integrations/graphs/neo4j_cypher/[GraphCypherQA Chain], or a composite answer of both. The https://github.com/neo4j-examples/langchain-starter-kit/tree/langserve[langserve] branch contains an example of the same service, using https://python.langchain.com/v0.1/docs/langserve/[LangServe]
 
 See this https://neo4j.com/developer-blog/langchain-neo4j-starter-kit/[Developer Blog Article] for additional details and instructions on working with the Starter Kit.
 
@@ -314,10 +286,13 @@ See this https://neo4j.com/developer-blog/langchain-neo4j-starter-kit/[Developer
 |===
 | icon:user[] Authors | https://github.com/tomasonjo[Tomaz Bratanic^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
-| icon:github[] Data Repository | https://github.com/langchain-ai/langchain[GitHub]
-| icon:github[] Issues | https://github.com/langchain-ai/langchain/issues
+| icon:github[] LangChain Repository | https://github.com/langchain-ai/langchain[GitHub]
+| icon:github[] LangChain Issues | https://github.com/langchain-ai/langchain/issues[Issues]
+| icon:github[] LangChain Neo4j Repository | https://github.com/langchain-ai/langchain-neo4j[GitHub]
+| icon:book[] LangChain Neo4j API Docs | https://python.langchain.com/api_reference/neo4j/index.html[API Docs]
+| icon:book[] LangChain Neo4j Issues | https://github.com/langchain-ai/langchain-neo4j/issues[Issues]
 | icon:book[] Documentation | https://python.langchain.com/docs/integrations/providers/neo4j/[Neo4j Integrations^]
-| icon:book[] Documentation | https://python.langchain.com/docs/use_cases/graph/quickstart[Graph Overview Docs^]
+| icon:book[] Documentation | https://python.langchain.com/docs/tutorials/graph[Graph Overview Docs^]
 | icon:github[] Starter Kit |https://github.com/neo4j-examples/langchain-starter-kit[LangChain Starter Kit^]
 | icon:code[] Juypter | https://github.com/tomasonjo/blogs/tree/master/llm[Jupyter Notebooks^]
 |===
