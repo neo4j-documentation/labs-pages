@@ -40,6 +40,181 @@ An example is avalable at: https://github.com/langchain4j/langchain4j-examples/t
 include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-example/src/main/java/Neo4jEmbeddingStoreExample.java[]
 ----
 
+=== Usage Examples
+
+To create a Neo4jEmbeddingStore, we can write:
+[source,java]
+----
+Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder().<builderParameters>.build();
+
+// where <builderParameters> can be the following:
+.dimension(384)
+.label(LABEL_TO_SANITIZE)
+.build();
+
+// we can use with `withBasicAuth`
+.withBasicAuth(neo4jContainer.getBoltUrl(), USERNAME, ADMIN_PASSWORD)
+// as alternative to driver:
+Driver driver = GraphDatabase.driver(neo4jContainer.getBoltUrl(), AuthTokens.basic(USERNAME, ADMIN_PASSWORD));
+----
+
+To add embeddings, execute:
+[source,java]
+----
+Embedding embedding = embeddingModel.embed("embedText").content();
+String id = embeddingStore.add(embedding);
+// output: id of the embedding
+----
+
+To add embeddings with id:
+[source,java]
+----
+String id = randomUUID();
+Embedding embedding = embeddingModel.embed("embedText").content();
+embeddingStore.add(id, embedding);
+// output: id of the embedding
+----
+
+To add embeddings with segment:
+[source,java]
+----
+TextSegment segment = TextSegment.from(randomUUID());
+Embedding embedding = embeddingModel.embed(segment.text()).content();
+String id = embeddingStore.add(embedding, segment);
+// output: id of the embedding
+----
+
+Too add embeddings with segment and metadata:
+[source,java]
+----
+TextSegment segment = TextSegment.from(randomUUID(), Metadata.from(METADATA_KEY, "test-value"));
+Embedding embedding = embeddingModel.embed(segment.text()).content();
+String id = embeddingStore.add(embedding, segment);
+// output: id of the embedding
+----
+
+Search embeddings:
+[source,java]
+----
+Embedding embedding = embeddingModel.embed("embedText").content();
+String id = embeddingStore.add(embedding);
+final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+        .queryEmbedding(embedding)
+        .maxResults(10)
+        .build();
+final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
+// output: list of embeddings
+----
+
+Search embeddings with minScore:
+[source,java]
+----
+Embedding embedding = embeddingModel.embed("embedText").content();
+String id = embeddingStore.add(embedding);
+final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+        .queryEmbedding(embedding)
+        .maxResults(10)
+        .minScore(0.15)
+        .build();
+final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
+// output: list of embeddings
+----
+
+Search embeddings with segment with custom metadata prefix:
+[source,java]
+----
+String metadataPrefix = "metadata.";
+String labelName = "CustomLabelName";
+embeddingStore = Neo4jEmbeddingStore.builder()
+        .withBasicAuth(neo4jContainer.getBoltUrl(), USERNAME, ADMIN_PASSWORD)
+        .dimension(384)
+        .metadataPrefix(metadataPrefix)
+        .label(labelName)
+        .indexName("customIdxName")
+        .build();
+
+String metadataCompleteKey = metadataPrefix + METADATA_KEY;
+TextSegment segment = TextSegment.from(randomUUID(), Metadata.from(METADATA_KEY, "test-value"));
+Embedding embedding = embeddingModel.embed(segment.text()).content();
+
+String id = embeddingStore.add(embedding, segment);
+// output: id of the embedding
+
+final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+        .queryEmbedding(embedding)
+        .maxResults(10)
+        .build();
+final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
+// output: list of embeddings
+----
+
+Search embeddings with segment with metadata and custom id prop:
+[source,java]
+----
+String metadataPrefix = "metadata.";
+String customIdProp = "customId ` & Prop ` To Sanitize";
+
+embeddingStore = Neo4jEmbeddingStore.builder()
+        .withBasicAuth(neo4jContainer.getBoltUrl(), USERNAME, ADMIN_PASSWORD)
+        .dimension(384)
+        .metadataPrefix(metadataPrefix)
+        .label("CustomLabelName")
+        .indexName("customIdxName")
+        .idProperty(customIdProp)
+        .build();
+
+String metadataCompleteKey = metadataPrefix + METADATA_KEY;
+
+TextSegment segment = TextSegment.from(randomUUID(), Metadata.from(METADATA_KEY, "test-value"));
+Embedding embedding = embeddingModel.embed(segment.text()).content();
+String id = embeddingStore.add(embedding, segment);
+// output: id of the embedding
+
+final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+                .queryEmbedding(embedding)
+                .maxResults(10)
+                .build();
+final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
+// output: list of embeddings
+----
+
+Add multiple embeddings
+[source,java]
+----
+Embedding firstEmbedding = embeddingModel.embed("firstEmbedText").content();
+Embedding secondEmbedding = embeddingModel.embed("secondEmbedText").content();
+List<String> ids = embeddingStore.addAll(asList(firstEmbedding, secondEmbedding));
+// output: list of the embedding ids
+
+final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+                .queryEmbedding(firstEmbedding)
+                .maxResults(10)
+                .build();
+final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
+// output: list of embeddings
+----
+
+Add multiple embeddings with segments
+[source,java]
+----
+TextSegment firstSegment = TextSegment.from("firstText");
+Embedding firstEmbedding = embeddingModel.embed(firstSegment.text()).content();
+TextSegment secondSegment = TextSegment.from("secondText");
+Embedding secondEmbedding = embeddingModel.embed(secondSegment.text()).content();
+
+List<String> ids = embeddingStore.addAll(
+        asList(firstEmbedding, secondEmbedding),
+        asList(firstSegment, secondSegment)
+); // output: list of the embedding ids
+
+final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
+                .queryEmbedding(firstEmbedding)
+                .maxResults(10)
+                .build();
+final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
+// output: list of embeddings
+----
+
 == Relevant Links
 [cols="1,4"]
 |===
