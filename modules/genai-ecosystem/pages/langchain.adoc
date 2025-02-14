@@ -19,7 +19,7 @@ The broad and deep Neo4j integration allows for vector search, cypher generation
 
 Here is an overview of the https://python.langchain.com/docs/use_cases/graph/quickstart[Graph Integrations^].
 
-* https://towardsdatascience.com/integrating-neo4j-into-the-langchain-ecosystem-df0e988344d2[Integrating Neo4j into the LangChain Ecosystem^]
+* https://medium.com/towards-data-science/integrating-neo4j-into-the-langchain-ecosystem-df0e988344d2[Integrating Neo4j into the LangChain Ecosystem^]
 
 NOTE: When upgrading to LangChain 0.1.0+ make sure to read this article: https://medium.com/neo4j/langchain-v0-1-updating-graphacademy-neo4j-llm-courses-689e7c4eff3e[Updating GraphAcademy Neo4j & LLM Courses to Langchain v0.1^].
 
@@ -269,7 +269,7 @@ Examples for such tools or functions include:
 * retrieve the neighbors of a node
 * retrieve a shortest path between two nodes
 
-* https://towardsdatascience.com/enhancing-interaction-between-language-models-and-graph-databases-via-a-semantic-layer-0a78ad3eba49[ Enhancing Interaction Between Language Models and Graph Databases via a Semantic Layer^]
+* https://medium.com/towards-data-science/enhancing-interaction-between-language-models-and-graph-databases-via-a-semantic-layer-0a78ad3eba49[ Enhancing Interaction Between Language Models and Graph Databases via a Semantic Layer^]
 
 
 === Conversational Memory

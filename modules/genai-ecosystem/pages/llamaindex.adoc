@@ -380,3 +380,5 @@ This https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Query Engine Llam
 * https://levelup.gitconnected.com/a-simpler-way-to-query-neo4j-knowledge-graphs-99c0a8bbf1d7[A Simpler Way to Query Neo4j Knowledge Graphs^]
 
 * https://medium.com/@yu-joshua/using-llamaparse-for-knowledge-graph-creation-from-documents-3bd1e1849754[Using LlamaParse for Knowledge Graph Creation from Documents^]
+
+* https://medium.com/neo4j/building-knowledge-graph-agents-with-llamaindex-workflows-b81f8d372f19[Build Knowledge Graph Agents With LlamaIndex Workflows]

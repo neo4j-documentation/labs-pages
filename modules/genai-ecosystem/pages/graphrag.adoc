@@ -221,7 +221,7 @@ image::https://dist.neo4j.com/wp-content/uploads/20240618104511/build-kg-genai-e
 // * https://huggingface.co/graphrag[GraphRAG HuggingFace Paper Collection^]
 // * https://dev.neo4j.com/free-kg-book[(free) Knowledge Graph Book^]
 * https://neo4j.com/developer-blog/global-graphrag-neo4j-langchain/[Implementing GraphRAG with Neo4j, GDS and LangChain^]
-* https://towardsdatascience.com/integrating-microsoft-graphrag-into-neo4j-e0d4fa00714c[Store MSFT GraphRAG output into Neo4j and implement local and global retrievers with LangChain or LlamaIndex^]
+* https://medium.com/towards-data-science/integrating-microsoft-graphrag-into-neo4j-e0d4fa00714c[Store MSFT GraphRAG output into Neo4j and implement local and global retrievers with LangChain or LlamaIndex^]
 
 * https://www.googlecloudcommunity.com/gc/Cloud-Product-Articles/GenAI-GraphRAG-and-AI-agents-using-Vertex-AI-Reasoning-Engine/ta-p/789066[Deploy Neo4j-LangChain GraphRAG w/ GCP Vertex AI Reasoning Engine^]
 
