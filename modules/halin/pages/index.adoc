@@ -8,6 +8,12 @@
 
 image::https://halin.graphapp.io/img/halin-icon.png[float=right,width=200]
 
+[WARNING]
+====
+Halin features have been graduated to [Neo4j Operations Manager](https://neo4j.com/docs/ops-manager/current/) and the labs project has been discontinued. 
+Please move your usage of Halin to Neo4j Ops Manager instead.
+====
+
 Halin is a cluster-enabled monitoring tool for Neo4j, that provides insights into live metrics, queries, configuration and more.
 
 You can use it to identify bottlenecks or misconfigurations and to track system load interactively.
