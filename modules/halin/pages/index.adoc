@@ -10,7 +10,7 @@ image::https://halin.graphapp.io/img/halin-icon.png[float=right,width=200]
 
 [WARNING]
 ====
-Halin features have been graduated to [Neo4j Operations Manager](https://neo4j.com/docs/ops-manager/current/) and the labs project has been discontinued. 
+Halin features have been graduated to https://neo4j.com/docs/ops-manager/current/[Neo4j Operations Manager] and the labs project has been discontinued. 
 Please move your usage of Halin to Neo4j Ops Manager instead.
 ====
 
