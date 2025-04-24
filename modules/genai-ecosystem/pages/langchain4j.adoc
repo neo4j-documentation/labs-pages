@@ -79,7 +79,7 @@ Here is the complete builder list:
 
 LangChain4j provides the following classes for Neo4j integration:
 - `Neo4jEmbeddingStore`: Implements the EmbeddingStore interface, enabling storing and querying vector embeddings in a Neo4j database.
-- `Neo4jText2CypherRetriever`: Supports retrieving original content associated with stored embeddings.
+- `Neo4jText2CypherRetriever`: Implements the ContentRetriever interface for generating and executing Cypher queries from user questions, improving content retrieval from Neo4j databases.
 
 ==== Neo4jEmbeddingStore
 
