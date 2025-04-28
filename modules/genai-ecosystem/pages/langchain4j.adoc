@@ -35,20 +35,23 @@ include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-exam
 
 An example is avalable at: https://github.com/langchain4j/langchain4j-examples/tree/main/neo4j-example
 
+////
+Full include might be a bit too much?
 [source,java]
 ----
 include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-example/src/main/java/Neo4jEmbeddingStoreExample.java[]
 ----
+////
 
-To create a Neo4jEmbeddingStore, we can write:
+=== Connection Setup
+
 [source,java]
 ----
 Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder().<builderParameters>.build();
 
-
-
 // we can use with `withBasicAuth`
 .withBasicAuth(neo4jContainer.getBoltUrl(), USERNAME, ADMIN_PASSWORD)
+
 // as alternative to driver:
 Driver driver = GraphDatabase.driver(neo4jContainer.getBoltUrl(), AuthTokens.basic(USERNAME, ADMIN_PASSWORD));
 ----
@@ -72,16 +75,17 @@ Here is the complete builder list:
 | textProperty | "text" | the text property name
 | indexName | "vector" | the vector index name
 | databaseName | "neo4j" | the database name
-| retrievalQuery | "RETURN properties(node) AS metadata, node.`idProperty` AS `idProperty`, node.`textProperty` AS `textProperty`, node.`embeddingProperty` AS `embeddingProperty`, score" | the retrieval query
+| retrievalQuery | "RETURN properties(node) AS metadata, node.idProperty AS idProperty, node.textProperty AS textProperty, node.embeddingProperty AS embeddingProperty, score" | the retrieval query
 |===
 
-=== Usage Examples
+== Usage Examples
 
 LangChain4j provides the following classes for Neo4j integration:
+
 - `Neo4jEmbeddingStore`: Implements the EmbeddingStore interface, enabling storing and querying vector embeddings in a Neo4j database.
 - `Neo4jText2CypherRetriever`: Implements the ContentRetriever interface for generating and executing Cypher queries from user questions, improving content retrieval from Neo4j databases.
 
-==== Neo4jEmbeddingStore
+=== Neo4jEmbeddingStore
 
 We can define an `Neo4jEmbeddingStore` with the required Java Driver instance and dimension and an optional label name in this way:
 
@@ -96,25 +100,8 @@ Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder()
     .build();
 ----
 
-We can use `withBasicAuth` as an alternative to `driver` creation:
-[source,java]
-----
-Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder()
-    .withBasicAuth('<boltURL>', '<username>', '<password>')
-    .<otherBuilderParameters>
-    .build();
-
-/* instead of 
-    Driver driver = GraphDatabase.driver('<boltURL>', AuthTokens.basic('<username>', '<password>'));
-    Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder()
-        .withDriver(driver)
-        .<otherBuilderParameters>
-        .build()
-*/
- 
-----
-
 To add embeddings, execute:
+
 [source,java]
 ----
 Embedding embedding = embeddingModel.embed("embedText").content();
@@ -122,7 +109,8 @@ String id = embeddingStore.add(embedding);
 // output: id of the embedding
 ----
 
-To add embeddings with id:
+To add embeddings with an id:
+
 [source,java]
 ----
 String id = randomUUID();
@@ -131,7 +119,18 @@ embeddingStore.add(id, embedding);
 // output: id of the embedding
 ----
 
-To add embeddings with segment:
+Add multiple embeddings:
+
+[source,java]
+----
+Embedding firstEmbedding = embeddingModel.embed("firstEmbedText").content();
+Embedding secondEmbedding = embeddingModel.embed("secondEmbedText").content();
+List<String> ids = embeddingStore.addAll(asList(firstEmbedding, secondEmbedding));
+// output: list of the embedding ids
+----
+
+To add embeddings with a `TextSegment`:
+
 [source,java]
 ----
 TextSegment segment = TextSegment.from(randomUUID());
@@ -140,7 +139,8 @@ String id = embeddingStore.add(embedding, segment);
 // output: id of the embedding
 ----
 
-To add embeddings with segment and metadata:
+To add embeddings with `TextSegment` and metadata:
+
 [source,java]
 ----
 TextSegment segment = TextSegment.from(randomUUID(), Metadata.from(METADATA_KEY, "test-value"));
@@ -149,20 +149,24 @@ String id = embeddingStore.add(embedding, segment);
 // output: id of the embedding
 ----
 
+Add multiple embeddings with segments
+
+[source,java]
+----
+TextSegment firstSegment = TextSegment.from("firstText");
+Embedding firstEmbedding = embeddingModel.embed(firstSegment.text()).content();
+
+TextSegment secondSegment = TextSegment.from("secondText");
+Embedding secondEmbedding = embeddingModel.embed(secondSegment.text()).content();
+
+List<String> ids = embeddingStore.addAll(
+        asList(firstEmbedding, secondEmbedding),
+        asList(firstSegment, secondSegment)
+); 
+// output: list of the embedding ids
+----
+
 Search embeddings:
-[source,java]
-----
-Embedding embedding = embeddingModel.embed("embedText").content();
-String id = embeddingStore.add(embedding);
-final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
-        .queryEmbedding(embedding)
-        .maxResults(10)
-        .build();
-final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
-// output: list of embeddings
-----
-
-To search embeddings with `minScore`:
 
 [source,java]
 ----
@@ -171,13 +175,15 @@ String id = embeddingStore.add(embedding);
 final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
         .queryEmbedding(embedding)
         .maxResults(10)
-        .minScore(0.15)
+        .minScore(0.15) // Optional `minScore`
         .build();
+
 final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
 // output: list of embeddings
 ----
 
 To search embeddings with segment with custom metadata prefix:
+
 [source,java]
 ----
 String metadataPrefix = "metadata.";
@@ -192,6 +198,7 @@ Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder()
         .build();
 
 String metadataCompleteKey = metadataPrefix + METADATA_KEY;
+
 TextSegment segment = TextSegment.from(randomUUID(), Metadata.from(METADATA_KEY, "test-value"));
 Embedding embedding = embeddingModel.embed(segment.text()).content();
 
@@ -206,7 +213,8 @@ final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request
 // output: list of embeddings
 ----
 
-Search embeddings with segment with metadata and custom id prop:
+Search embeddings with segment with metadata-prefix and custom id property name:
+
 [source,java]
 ----
 String metadataPrefix = "metadata.";
@@ -236,44 +244,10 @@ final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request
 // output: list of embeddings
 ----
 
-Add multiple embeddings
-[source,java]
-----
-Embedding firstEmbedding = embeddingModel.embed("firstEmbedText").content();
-Embedding secondEmbedding = embeddingModel.embed("secondEmbedText").content();
-List<String> ids = embeddingStore.addAll(asList(firstEmbedding, secondEmbedding));
-// output: list of the embedding ids
+=== Neo4jText2CypherRetriever
 
-final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
-                .queryEmbedding(firstEmbedding)
-                .maxResults(10)
-                .build();
-final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
-// output: list of embeddings
-----
+// todo more explanation
 
-Add multiple embeddings with segments
-[source,java]
-----
-TextSegment firstSegment = TextSegment.from("firstText");
-Embedding firstEmbedding = embeddingModel.embed(firstSegment.text()).content();
-TextSegment secondSegment = TextSegment.from("secondText");
-Embedding secondEmbedding = embeddingModel.embed(secondSegment.text()).content();
-
-List<String> ids = embeddingStore.addAll(
-        asList(firstEmbedding, secondEmbedding),
-        asList(firstSegment, secondSegment)
-); // output: list of the embedding ids
-
-final EmbeddingSearchRequest request = EmbeddingSearchRequest.builder()
-                .queryEmbedding(firstEmbedding)
-                .maxResults(10)
-                .build();
-final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request).matches();
-// output: list of embeddings
-----
-
-==== Neo4jText2CypherRetriever
 [source,java]
 ----
 // create dataset
