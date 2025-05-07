@@ -57,6 +57,11 @@ include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-exam
 
 An example is available at : https://github.com/langchain4j/langchain4j-examples/tree/main/neo4j-example
 
+[source,java]
+----
+include::https://raw.githubusercontent.com/vga91/langchain4j-examples/refs/heads/test-tags/neo4j-example/src/main/java/Neo4jEmbeddingStoreExample.java[tags=test]
+----
+
 LangChain4j provides the following classes for Neo4j integration:
 
 - `Neo4jEmbeddingStore`: Implements the https://github.com/langchain4j/langchain4j/blob/main/langchain4j-core/src/main/java/dev/langchain4j/store/embedding/EmbeddingStore.java[EmbeddingStore] interface, enabling storing and querying vector embeddings in a Neo4j database.
