@@ -5,7 +5,7 @@ For users of the supported NeoDash offering, refer to https://neo4j.com/docs/neo
 
 ====
 
-= NeoDash - Dashboard Builder for Neo4j
+== NeoDash - Dashboard Builder for Neo4j
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: neodash
 :author: Niels de Jong
