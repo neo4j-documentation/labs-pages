@@ -62,6 +62,7 @@ Getting started in any new technology space can feel intimidating. Neo4j has bee
 | icon:github[] Issues | https://github.com/spring-projects/spring-ai/issues
 | icon:book[] Documentation | https://docs.spring.io/spring-ai/reference/api/vectordbs/neo4j.html
 | icon:github[] Starter Kit | https://github.com/neo4j-examples/spring-ai-starter-kit/[Spring AI Starter Kit^]
+| icon:book[] Reference Book | https://www.amazon.com/Building-Neo4j-Powered-Applications-LLMs-recommendations/dp/1836206232/
 |===
 
 ////
