@@ -1,3 +1,10 @@
+[NOTE]
+====
+This documentation pertains to the unsupported version of AuraCLI, as part of Neo4j Labs.
+Users are encourage to move to supported offering that is available  at https://github.com/neo4j/aura-cli[Supported Aura CLI].
+====
+
+
 = Aura CLI - Command Line Interface for Neo4j Aura
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
 :slug: aura-cli
