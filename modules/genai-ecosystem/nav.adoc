@@ -7,9 +7,10 @@
 **** xref:neoconverse.adoc[NeoConverse]
 **** xref:genai-stack.adoc[GenAI Stack]
 *** Neo4j GenAI Features
-**** xref:graphrag-python.adoc[GraphRAG Python Package]
-**** xref:vector-search.adoc[Vector Index and Search]
+**** https://neo4j.com/developer/genai-ecosystem/graphrag-python/[GraphRAG Python Package]
+**** https://neo4j.com/developer/genai-ecosystem/vector-search/[Vector Index and Search]
 **** xref:apoc-genai.adoc[APOC GenAI]
+**** https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP Servers]
 *** Cloud Examples
 **** xref:aws-demo.adoc[AWS Bedrock]
 **** xref:microsoft-azure-demo.adoc[Microsoft Azure OpenAI]
