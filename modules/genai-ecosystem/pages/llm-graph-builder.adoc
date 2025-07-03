@@ -99,6 +99,18 @@ It is using Docker for packaging front-end and back-end, and you can run `docker
 
 Local deployment and configuration details are available in the xref::llm-graph-builder-deployment.adoc[]
 
+== Blog Posts
+
+* https://neo4j.com/blog/developer/llm-knowledge-graph-builder/[Introduction to the Neo4j LLM Knowledge Graph Builder^]
+* https://neo4j.com/blog/developer/llm-knowledge-graph-builder-release/[Community summaries, Parallel retrievers, more Models^]
+* https://neo4j.com/blog/developer/llm-knowledge-graph-builder-back-end/[Back-End Architecture and API Overview^]
+* https://neo4j.com/blog/developer/frontend-architecture-and-integration/[Front-End Architecture^]
+* https://neo4j.com/blog/developer/knowledge-graph-extraction-challenges/[Graph Extraction and Challenges^]
+// * Retrievers
+// * Community Summaries
+// * Graph Visualization
+* https://neo4j.com/blog/developer/graphrag-llm-knowledge-graph-builder/[LLM Knowledge Graph Builder: From Zero to GraphRAG in Five Minutes^]
+
 
 == Videos & Tutorials
 
