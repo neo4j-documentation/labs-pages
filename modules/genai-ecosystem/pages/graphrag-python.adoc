@@ -6,6 +6,7 @@ include::_graphacademy_llm.adoc[]
 :tags: graphrag, knowledgegraph, embedding, vectorsearch, neo4j, python
 :neo4j-versions: 5.23+
 :page-pagination:
+:page-custom-canonical: https://neo4j.com/developer/genai-ecosystem/graphrag-python/
 :page-product: neo4j
 
 
