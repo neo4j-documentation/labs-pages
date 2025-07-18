@@ -45,6 +45,7 @@ document_store = Neo4jDocumentStore(
 | icon:github[] Issues | https://github.com/prosto/neo4j-haystack/issues
 | icon:book[] Documentation | https://haystack.deepset.ai/integrations/neo4j-document-store
 | icon:book[] Example Notebook | https://github.com/prosto/neo4j-haystack-playground
+| icon:book[] Reference Book | https://www.amazon.com/Building-Neo4j-Powered-Applications-LLMs-recommendations/dp/1836206232/
 |===
 
 
@@ -63,6 +64,7 @@ Neo4j & Haystack Part 2: How the Integration Works:
 ++++
 <iframe width="560" height="315" src="https://www.youtube.com/embed/gR49QZ9Lm0M?si=dcaB5NZJmMUFQSoL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
+
 
 ////
 == Highlighted Articles
