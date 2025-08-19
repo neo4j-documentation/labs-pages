@@ -39,7 +39,7 @@ See the documentation for more information.
 - 🛠️️ Modular approach: Facilitates easy customization.
 
 == Documentation
-For installing, configuring and extending the starter kit, check out the link:https://neo4j.com/labs/neo4j-needle-starterkit/2.0/[Documentation].
+For installing, configuring and extending the starter kit, check out the link:https://neo4j.com/labs/neo4j-needle-starterkit/2.1/[Documentation].
 
 == Relevant Links
 
@@ -50,7 +50,7 @@ For installing, configuring and extending the starter kit, check out the link:ht
 // | icon:gift[] Releases | https://github.com/neo4j-labs/neo4j-needle-starterkit/releases
 | icon:github[] Source | https://github.com/neo4j-labs/neo4j-needle-starterkit
 | icon:github[] Issues | https://github.com/neo4j-labs/neo4j-needle-starterkit/issues
-| icon:book[] Documentation | https://neo4j.com/labs/neo4j-needle-starterkit/2.0/
+| icon:book[] Documentation | https://neo4j.com/labs/neo4j-needle-starterkit/2.1/
 // | icon:book[] Article |
 // | icon:play-circle[] Example |
 |===
