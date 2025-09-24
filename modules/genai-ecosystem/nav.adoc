@@ -1,5 +1,6 @@
 ** xref:index.adoc[GenAI Ecosystem]
-*** Example Projects
+*** Labs Projects
+**** https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[MCP Servers]
 **** xref:llm-graph-builder.adoc[LLM Graph Builder]
 ***** xref:llm-graph-builder-features.adoc[Features]
 ***** xref:llm-graph-builder-deployment.adoc[Deployment]
@@ -10,7 +11,6 @@
 **** https://neo4j.com/developer/genai-ecosystem/graphrag-python/[GraphRAG Python Package]
 **** https://neo4j.com/developer/genai-ecosystem/vector-search/[Vector Index and Search]
 **** xref:apoc-genai.adoc[APOC GenAI]
-**** https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP Servers]
 *** Cloud Examples
 **** xref:aws-demo.adoc[AWS Bedrock]
 **** xref:microsoft-azure-demo.adoc[Microsoft Azure OpenAI]

@@ -23,8 +23,9 @@ Language models also can be used to extract entities and their relationships fro
 
 1. For an high level overview, have a look at https://neo4j.com/generativeai/[neo4j.com/genai^]  
 2. Use the xref:llm-graph-builder.adoc[LLM-Knowledge Graph Builder] to turn your own documents into a knowledge graph
-3. If you want to learn more take one of the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[GenAI GraphAcademy courses^]
-4. Pick your xref:genai-frameworks.adoc[GenAI framework of choice] and start building your own GenAI applications with Neo4j
+3. Integrate one of the https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j Labs MCP^] servers into your AI assistant or development workflow.
+4. If you want to learn more take one of the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[GenAI GraphAcademy courses^]
+5. Pick your xref:genai-frameworks.adoc[GenAI framework of choice] and start building your own GenAI applications with Neo4j
 
 == GraphAcademy Courses
 
@@ -56,6 +57,7 @@ The retrieval step then uses the knowledge graph in combination with vector sear
 
 In Neo4j Labs we built a number of tools, to demonstrate the power of combining graphs with LLMs. All these tools are open source, you can use and contribute to them or learn and build your own.
 
+* https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Labs MCP Servers^]
 * xref:llm-graph-builder.adoc[LLM Knowledge Graph Builder]
 * xref:neoconverse.adoc[NeoConverse multi-dataset query, chat, visualization]
 * xref:genai-stack.adoc[GenAI Stack (with Docker, Ollama, Neo4j, and LangChain)]
