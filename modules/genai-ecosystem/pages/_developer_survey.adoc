@@ -1,9 +1,7 @@
-:page-ad-overline-link: https://www.neo4j.com/nodes-2025?utm_source=docs&utm_medium=banner
-:page-ad-overline:
-:page-ad-image: https://neo4j.com/docs/assets/img/nodes-25.png
-:page-ad-icon:
-:page-ad-title: Neo4j Online Developer Conference
-:page-ad-description: Join us on November 6 for 24hrs of live and unique tech talks on graphs and AI
-:page-ad-link: https://www.neo4j.com/nodes-2025?utm_source=docs&utm_medium=banner
+// Developer survey
+:page-ad-icon: ~
+:page-ad-title: Neo4j Developer Survey
+:page-ad-description: Your input matters! Share your Feedback
 :page-ad-underline-role: button
-:page-ad-underline: Register
+:page-ad-underline: Start Here
+:page-ad-link: https://neo4j.typeform.com/to/E6yOZ2Py?utm_source=GA&utm_medium=blurb&utm_campaign=survey
