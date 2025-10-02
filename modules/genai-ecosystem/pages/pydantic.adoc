@@ -1,0 +1,179 @@
+= Pydantic AI
+:slug: pydantic-ai
+:author: 
+:category: genai-ecosystem
+:tags: pydantic-ai, mcp, llm, neo4j
+:page-pagination:
+:page-product: pydantic-ai
+
+Integration of Neo4j graph database with Pydantic AI. 
+Neo4j's graph and vector capabilities can be exposed as MCP tools, allowing LLMs to query and modify the database 
+via a standard protocol over HTTP, SSE, or stdio.
+
+There are two examples provided:
+
+* `main.py` — calls the Neo4j tool functions directly (does **not** use MCP transport, but the tools are the same).  
+* `server.py` + `client.py` — demonstrates a full MCP setup with a FastMCP server exposing Neo4j tools and a client agent using `MCPServerStreamableHTTP` (uses MCP transport).
+
+== Installation
+
+[source,bash]
+----
+pip install pydantic-ai mcp pydantic-neo4j anyio httpx httpx-sse
+----
+
+== Example: main.py (direct function calls, no MCP transport)
+
+[source,python]
+----
+from pydantic_neo4j import PydanticNeo4j, NodeModel
+from pydantic import BaseModel
+import asyncio
+
+# Neo4j node model
+class User(NodeModel):
+    name: str
+    email: str
+
+# Argument models
+class CreateUserArgs(BaseModel):
+    name: str
+    email: str
+
+class FindUserArgs(BaseModel):
+    email: str
+
+# Neo4j tool
+class Neo4jTool:
+    def __init__(self, uri, user, password):
+        self.db = PydanticNeo4j(uri=uri, username=user, password=password)
+
+    async def create_user_func(self, name: str, email: str):
+        new_user = User(name=name, email=email)
+        await self.db.create_utilities.create_node(model=new_user)
+        return f"User {new_user.name} with email {new_user.email} created."
+
+    async def find_user_func(self, email: str):
+        result = await self.db.match_utilities.node_query(
+            "User",
+            criteria={"email": email}
+        )
+        if result:
+            first_user = list(result.values())[0]
+            return f"Found user: {first_user.name}, {first_user.email}"
+        return "User not found."
+
+# Usage
+async def main():
+    neo4j_tool = Neo4jTool("bolt://localhost:7687", "neo4j", "apoc12345")
+    print(await neo4j_tool.create_user_func("Giuseppe", "giuseppe@example.com"))
+    print(await neo4j_tool.find_user_func("giuseppe@example.com"))
+
+asyncio.run(main())
+----
+
+Note: in `main.py` functions are called directly, so it **does not go through MCP**, but the tool logic is the same as in the MCP server.
+
+== Example: server.py (FastMCP server exposing Neo4j tools)
+
+[source,python]
+----
+from pydantic import BaseModel
+from pydantic_neo4j import PydanticNeo4j, NodeModel
+from pydantic_ai import Tool
+from mcp.server.fastmcp import FastMCP
+
+# Neo4j node model
+class User(NodeModel):
+    name: str
+    email: str
+
+# Argument models
+class CreateUserArgs(BaseModel):
+    name: str
+    email: str
+
+class FindUserArgs(BaseModel):
+    email: str
+
+# Neo4j tool
+class Neo4jTool:
+    def __init__(self, uri, user, password):
+        self.db = PydanticNeo4j(uri=uri, username=user, password=password)
+
+    async def create_user_func(self, name: str, email: str):
+        new_user = User(name=name, email=email)
+        await self.db.create_utilities.create_node(model=new_user)
+        return f"User {new_user.name} with email {new_user.email} created."
+
+    async def find_user_func(self, email: str):
+        result = await self.db.match_utilities.node_query(
+            "User",
+            criteria={"email": email}
+        )
+        if result:
+            first_user = list(result.values())[0]
+            return f"Found user: {first_user.name}, {first_user.email}"
+        return "User not found."
+
+# Instantiate tool
+neo4j_tool = Neo4jTool("bolt://localhost:7687", "neo4j", "apoc12345")
+
+create_user_tool = Tool(function=neo4j_tool.create_user_func, description="Creates a new user")
+find_user_tool = Tool(function=neo4j_tool.find_user_func, description="Finds a user")
+
+# Instantiate FastMCP server
+server = FastMCP(
+    name="Neo4j_MCP_Server",
+    tools=[create_user_tool, find_user_tool]
+)
+
+if __name__ == "__main__":
+    # Run with streamable HTTP transport
+    server.run(
+        transport="streamable-http",
+        mount_path="/mcp"
+    )
+----
+
+== Example: client.py (Agent using MCP)
+
+[source,python]
+----
+from pydantic_ai import Agent
+from pydantic_ai.mcp import MCPServerStreamableHTTP
+import asyncio
+
+# Connect to the FastMCP server
+server = MCPServerStreamableHTTP('http://localhost:8000/mcp')  
+agent = Agent('google-gla:gemini-2.0-flash', toolsets=[server])  
+
+async def main():
+    async with agent:  
+        # Ask the LLM to compute
+        result = await agent.run('What is 7 plus 5?')
+    print(result.output)
+    #> The answer is 12.
+
+asyncio.run(main())
+----
+
+Note: `client.py` uses the **MCP standard** because it communicates with `server.py` via the `MCPServerStreamableHTTP` toolset. This example shows how an LLM can interact with Neo4j tools using a standard protocol without calling the functions directly.
+
+== Functionality Includes
+
+* `Neo4jTool` - wraps Neo4j operations as Python async functions  
+* `CreateUserArgs` / `FindUserArgs` - argument models for tools  
+* FastMCP server exposing tools via MCP  
+* Client agent using MCPServerStreamableHTTP toolset  
+* LLM integration with Gemini / Google GLA  
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:user[] Authors | https://github.com/akollegger[Andreas Kollegger^]
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Integration | https://github.com/pydantic-ai/pydantic-ai[GitHub]
+| icon:github[] Issues | https://github.com/pydantic-ai/pydantic-ai/issues
+| icon:book[] Documentation | https://ai.pydantic.dev/mcp/client/[Docs]
+|===
