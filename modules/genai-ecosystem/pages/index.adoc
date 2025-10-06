@@ -23,7 +23,7 @@ Language models also can be used to extract entities and their relationships fro
 
 1. For an high level overview, have a look at https://neo4j.com/generativeai/[neo4j.com/genai^]  
 2. Use the xref:llm-graph-builder.adoc[LLM-Knowledge Graph Builder] to turn your own documents into a knowledge graph
-3. Integrate one of the https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j Labs MCP^] servers into your AI assistant or development workflow.
+3. Integrate one of the https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/#neo4j[Neo4j MCP servers^] into your AI assistant or development workflow.
 4. If you want to learn more take one of the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[GenAI GraphAcademy courses^]
 5. Pick your xref:genai-frameworks.adoc[GenAI framework of choice] and start building your own GenAI applications with Neo4j
 
