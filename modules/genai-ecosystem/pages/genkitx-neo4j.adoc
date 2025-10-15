@@ -1,0 +1,116 @@
+= GenkitX Neo4j Integration (preview)
+:slug: genkitx-neo4j
+:author: 
+:category: genai-ecosystem
+:tags: genkit, neo4j, llm, google-gla, gemini, vector index
+:page-pagination:
+:page-product: genkitx
+
+Integration of Neo4j graph database with Genkit AI using the Genkit Neo4j plugin. 
+This allows indexing and retrieving documents in Neo4j via LLMs with vector embeddings (e.g., Google Gemini), 
+supporting structured queries and vector search.
+
+The library allows using Neo4j as a vector storage and retrieval backend. 
+It exposes references for indexing and retrieval via `neo4jIndexerRef` and `neo4jRetrieverRef`.
+
+== Installation
+
+Hello world example:
+
+[source,bash]
+----
+npm install genkit genkitx-neo4j @genkit-ai/googleai neo4j-driver
+----
+
+== Example: Standalone Usage
+
+This example demonstrates how to index and retrieve documents using Genkit with Neo4j in a standalone script.
+
+[source,typescript]
+----
+import { googleAI } from '@genkit-ai/googleai';
+import { Document, genkit } from 'genkit';
+import neo4j, { neo4jIndexerRef, neo4jRetrieverRef } from 'genkitx-neo4j';
+import { driver as neo4jDriver, auth } from 'neo4j-driver';
+
+async function main() {
+  const indexId = 'genkit-demo-index';
+  const INDEX_LABEL = `\`${indexId}\``;
+  const INDEXER_REF = neo4jIndexerRef({ indexId });
+  const RETRIEVER_REF = neo4jRetrieverRef({ indexId });
+
+  // Assume we have a running Neo4j instance:
+  // URL: bolt://localhost:7687
+  // Username: neo4j
+  // Password: example
+  const clientParams = {
+    url: 'bolt://localhost:7687',
+    username: 'neo4j',
+    password: 'example',
+    database: 'neo4j',
+  };
+
+  // Initialize Genkit with Google AI and Neo4j plugin
+  const ai = genkit({
+    plugins: [
+      googleAI(),
+      neo4j([
+        { indexId, embedder: googleAI.embedder('gemini-embedding-001'), clientParams },
+      ]),
+    ],
+  });
+
+  // Standalone Neo4j driver for cleanup
+  const driver = neo4jDriver(clientParams.url, auth.basic(clientParams.username, clientParams.password));
+  const session = driver.session();
+
+  try {
+    // Create a new document
+    const uniqueId = `doc-${Date.now()}`;
+    const doc = new Document({
+      content: [{ text: 'This is a test document for indexing and retrieval.' }],
+      metadata: { uniqueId },
+    });
+
+    // Index the document in Neo4j
+    await ai.index({ indexer: INDEXER_REF, documents: [doc] });
+
+    // Retrieve the document using the retriever reference
+    const docs = await ai.retrieve({
+      retriever: RETRIEVER_REF,
+      query: 'This is a test document to be indexed.',
+      options: { k: 10 },
+    });
+
+    // This will print some retrieved documents (or indicate created entities)
+    console.log('Retrieved documents:', docs.map(d => d.content[0].text));
+
+  } finally {
+    // Cleanup: delete created nodes
+    await session.run(`MATCH (n:${INDEX_LABEL}) DETACH DELETE n`);
+    await session.close();
+    await driver.close();
+  }
+}
+
+main().catch(console.error);
+----
+
+Note: This example also integrates with the **Google Gemini AI** embedder for vector embeddings.
+We can optionally use another embedder like https://genkit.dev/docs/integrations/openai/[OpenAI].
+
+== Functionality Includes
+
+* `neo4jIndexerRef` - predefined reference for indexing documents in Neo4j  
+* `neo4jRetrieverRef` - predefined reference for retrieving documents from Neo4j  
+* Full integration with Genkit and Google AI  
+* Vector embeddings stored in Neo4j  
+* Standalone usage example without test frameworks  
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:github[] GitHub genkit | https://github.com/firebase/genkit[GitHub genkit]
+| icon:github[] GitHub genkitx-neo4j | https://github.com/neo4j-partners/genkitx-neo4j[GitHub genkitx-neo4j]
+| icon:book[] Documentation | https://genkit.dev/[Docs]
+|===
