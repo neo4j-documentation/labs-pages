@@ -94,9 +94,6 @@ xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python an
 === xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit]
 The xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit] is a React framework for quickly building an app using the Neo4j Needle design language.
 
-=== xref:aura-cli:index.adoc[Aura CLI]
-The xref:aura-cli:index.adoc[Aura CLI] is a command line interface for interacting with the Aura cloud platform through the public Aura API. It allows you to create and manage instances from your command line.
-
 === xref:cypher-workbench:index.adoc[Cypher Workbench]
 The xref:cypher-workbench:index.adoc[Cypher Workbench] Cypher Workbench provides a set of web-based development graph tools. It includes tools for data modeling, cypher building and debugging, validation, and more. Originally a SaaS offering, the code is now released so you can run it in your local environment.
 
@@ -113,6 +110,9 @@ xref:spatial:index.adoc[Neo4j-Spatial] is a library facilitating the import, sto
 == Graduated Projects
 
 The following projects were successfully developed, incubated, and validated within Neo4j Labs and have graduated to official and supported Neo4j products ready for production use at scale.
+
+=== link:https://neo4j.com/docs/aura/[aura-cli^]
+Aura CLI is a command line interface for interacting with the Aura cloud platform through the public Aura API. It allows you to create and manage instances from your command line.
 
 === link:https://neo4j.com/docs/operations-manual/current/kubernetes/[Neo4j-Helm^]
 
