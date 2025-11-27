@@ -28,3 +28,5 @@
 // **** link:xxx[Documentation]
 **** xref:semantic-kernel.adoc[Semantic Kernel]
 // **** link:xxx[Documentation]
+**** xref:strands-agents-neo4j[Strands Agents]
+// **** link:xxx[Documentation]
