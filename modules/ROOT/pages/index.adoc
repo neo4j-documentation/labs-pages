@@ -32,6 +32,11 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 == Current Projects
 
 [#goals.incremental]
+=== xref:neo4j-aura-terraform-provider:index.adoc[Neo4j Aura Terraform Provider]
+
+Neo4j Aura Terraform Provider is Neo4j Labs tool that allows infrastructure-as-code management of Neo4j AuraDB resources, primarily focusing on the lifecycle of AuraDB through declarative Terraform configurations.  
+
+
 === xref:genai-ecosystem:index.adoc[GenAI Ecosystem]
 
 Neo4j integrates with many libraries (LangChain, LlamaIndex, Haystack, Spring-AI) in the xref:genai-ecosystem:index.adoc[GenAI Ecosystem] to make building and deploying knowledge graph-powered GenAI applications easier.

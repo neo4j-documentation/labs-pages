@@ -1,0 +1,169 @@
+= Neo4j Aura Terraform Provider 
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:author:  Eugene Rubanov & Jonathan Giffard
+:category: labs
+:tags: aura, api, terraform
+// :neo4j-versions: 
+// :page-pagination:
+// :page-product: 
+
+
+Neo4j AuraDB customers who use Terraform to enable a declarative, infrastructure-as-code (IaC) approach to infrastructure, can now take advantage of Neo4j Aura Terraform Provider.  This codifies the interaction with Aura's management API for the provisioning and management of AuraDB infrastructure. Specifically Neo4j Aura Terraform provider allows for:- 
+
+* Obtaining information about a project ( tenant )
+* Create, modify, pause, resume and delete operations for AuraDB instances
+* Take and restore AuraDB snaphots.  
+* Creating an Aura instance from a snapshot
+
+Releasing in Neo4j Labs allows for rapid development incorporating suggestions from customers from the maintainers, and if desired, code submissions directly from customers in the form of Pull Requests ( PRs ).  If you want to submit code, please read <<contributing>>
+
+It is hoped that there will sufficient interest and usage such that the Neo4j Aura Terraform Provider can graduate from Neo4j Labs and become an official Neo4j offering. 
+
+
+As previously mentioned, Neo4j Aura Terraform Provider is a Neo4j Labs Project.  Please read the Disclaimer at the bottom of this page before use. 
+
+
+== Availability 
+
+Neo4j Aura Terraform Provider is available directly from link:https://github.com/neo4j-labs/terraform-provider-neo4jaura[Neo4j Labs] and from the link:https://registry.terraform.io/providers/neo4j-labs/neo4jaura/latest[Terraform Provider Repositry]
+
+
+== Using from the Terraform Provider Repositry
+
+To install this provider, copy and paste this code into your Terraform configuration, adjusting the configuration options to meet your requirements.  
+
+[source, console]
+----
+terraform {
+  required_providers {
+    neo4jaura = {
+      source = "neo4j-labs/neo4jaura"
+      version = "0.0.1-beta"
+    }
+  }
+}
+
+provider "neo4jaura" {
+  # Configuration options
+}
+----
+
+Then run 
+[source, console]
+----
+terraform init
+----
+
+See <<examples>> for the various possible configuration options
+
+
+== Using from GitHUb repository
+
+This is route to take if you wish to experiment with your own development of the provider or just try it out. 
+
+
+=== Requirements
+
+* Go 1.25+
+* Terraform 1.13.4+
+* A Client Id and Client Secret for access to the Aura API.  To obtain these, follow the guidance in the link:https://neo4j.com/docs/aura/api/authentication/[Neo4j AuraDB documentation]
+
+
+=== Installation
+
+Clone the repositry
+[source, console]
+----
+git clone https://github.com/neo-technology/neo4j-aura-terraform-provider-poc.git
+----
+
+Build the provider
+[source, console]
+----
+cd neo4j-aura-terraform-provider-poc/
+./build.sh
+----
+
+Add .terraformrc file to your $HOME folder
+
+
+[source, text]
+----
+provider_installation {
+  filesystem_mirror {
+    path    = "$YOUR_HOME_PATH/.terraform.d/plugins"
+  }
+  direct {
+    exclude = ["terraform.local/*/*"]
+  }
+}
+----
+
+== Examples [[examples]]
+There are several examples in the examples folder. You will need to set  TF_VAR_client_id and TF_VAR_client_secret environment variables before running any of the examples. 
+
+[source, console]
+----
+export TF_VAR_client_id="$AURA_CLIENT_ID"
+export TF_VAR_client_secret="$AURA_CLIENT_SECRET"
+----
+
+Move into the examples folder and then, to run an example
+
+[source, console]
+----
+/execute_example.sh <example folder name>
+----
+
+You may be prompted to enter values or text during execution.   
+
+[TIP]
+==== 
+The terraform files used in the examples may require editing to match your Neo4j AuraDB environment.  In particular , those that create or modify AuraDB Instances are likely to need changes. 
+==== 
+
+
+== Contributing [[contributing]]
+We welcome contributions to improve and extend the capabilities of the Neo4j Aura Terraform Provider.  If you wish to contribute, then follow these steps:-
+
+* Sign the link:https://neo4j.com/developer/contributing-code/#sign-cla[contributors agreement]
+* Fork the  link:https://github.com/neo-technology/neo4j-aura-terraform-provider-poc[repository]
+* Create a branch for your contribution on your _forked repo_
+* Submit a PR from your fork back to the Neo4j Aura Terraform Provider repository
+
+
+
+[TIP]
+==== 
+A good pull request is focused on one feature or issue and includes a clear title that summarizes the change. In the description, you should explain what you changed and why, and reference any related issues using syntax like "Fixes #123".
+==== 
+
+
+If you get stuck, start by checking existing GitHub issues to see if others have encountered similar problems. You can also ask questions directly in pull request discussions, where maintainers and other contributors can provide guidance. For complex architectural questions or decisions that might affect the project's design, reach out to maintainers directly to get their input before investing too much time in a particular approach.
+
+Thank you for contributing to make this better!
+
+
+== Disclaimer
+Neo4j Aura Terraform Provider is a Neo4j Labs project.  Neo4j Labs projects are useful ecosystem tools that are meant to benefit all Neo4j users. 
+They are not officially supported by Neo4j. Use them at your own risk.
+
+Neo4j Labs projects, while trying to apply sound engineering principles, are provided as is - with no guarantees, liabilities or warranty for function, API stability or continued maintenance. Support for Neo4j Labs projects happens by the community and maintainers as a best-effort through GitHub issues and community forums. These projects are examples that use public Neo4j APIs to show how to implement a certain capability.
+
+
+
+
+
+== Relevant Links
+
+[cols="1,4"]
+|===
+| Authors | https://github.com/venikkin[Eugene Rubanov^] 
+| Releases | https://github.com/neo4j-labs/terraform-provider-neo4jaura/releases
+| Source | https://github.com/neo4j-labs/terraform-provider-neo4jaura
+| Issues | https://github.com/neo4j-labs/terraform-provider-neo4jaura/issues
+| Terraform provider repositry | https://registry.terraform.io/providers/neo4j-labs/neo4jaura/latest
+| Terraform plugin framework | https://developer.hashicorp.com/terraform/plugin/framework
+| Terraform provider scaffolding framework | https://github.com/hashicorp/terraform-provider-scaffolding-framework
+| Aura API specifcation | https://neo4j.com/docs/aura/platform/api/specification/
+|===
