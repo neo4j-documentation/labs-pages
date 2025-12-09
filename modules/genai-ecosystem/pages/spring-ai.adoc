@@ -23,7 +23,7 @@ The next piece you will need to add is the configuration for the Neo4j Vector Da
 
 [source,java,tabsize=2]
 ----
-include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=21..42,indent=0]
+include::https://raw.githubusercontent.com/neo4j-examples/spring-ai-starter-kit/refs/heads/main/src/main/java/com/neo4j/springaistarterkit/SpringAiStarterKitApplication.java[lines=6..12,indent=0]
 ----
 
 Now that we have the vector store configured, we can use Spring AI for retrieval augmented generation (RAG) via a three-step process.
@@ -36,7 +36,7 @@ The code snippet below demonstrates how to use Spring AI for RAG with Neo4j Vect
 
 [source,java,tabsize=2]
 ----
-include::https://github.com/neo4j-examples/spring-ai-starter-kit/raw/main/src/main/java/com/neo4j/springaistarterkit/DocumentController.java[lines=30..57,indent=0]
+include::https://raw.githubusercontent.com/neo4j-examples/spring-ai-starter-kit/refs/heads/main/src/main/java/com/neo4j/springaistarterkit/ChunkController.java[lines=29..54,indent=0]
 ----
 
 == Functionality Includes
