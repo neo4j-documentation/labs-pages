@@ -1,0 +1,225 @@
+= MCP Toolbox Neo4j Integration
+:neo4j-versions: 5.x
+:page-product: mcp-toolbox
+:page-pagination:
+:author: Google GenAI Team
+:tags: mcp-toolbox, genai, semantic layer, neo4j
+:slug: mcp-toolbox
+:category: labs
+
+image::https://www.gstatic.com/images/branding/product/2x/google_assistant_48dp.png[width=800]
+
+The **Model Context Protocol (MCP) Toolbox** is an open-source framework that acts as a **semantic layer** between an AI agent (like a Large Language Model) and external data sources, such as Neo4j. It's designed to facilitate safe, structured data interaction by translating an agent's requests into predefined, secure database queries.
+
+Unlike systems that rely on an LLM to generate queries on the fly, the MCP Toolbox uses a **tool-based approach**. Developers define the specific queries and actions. The LLM then chooses the correct tool and passes the necessary parameters, ensuring accuracy and security while preventing the LLM from making things up or hallucinating.
+
+---
+## Installation
+
+To get started, you need to have both Neo4j and the MCP Toolbox running.
+
+. **Neo4j:** Ensure you have a running Neo4j instance, either locally or in the cloud.
+. **MCP Toolbox:** For installation instructions, refer to the official documentation at https://googleapis.github.io/genai-toolbox.
++
+[source,shell]
+----
+# Example for macOS with Homebrew
+brew install googleapis/genai-toolbox/toolbox
+----
+
+---
+## Source Configuration
+
+A Neo4j source specifies the connection to your Neo4j database. It is configured within your `tools.yaml` file and is a prerequisite for defining any Neo4j-specific tools.
+
+.Reference: `neo4j` Source
+[cols="1,1,4"]
+|===
+| Field | Type | Description
+| `kind` | string | **Required**. Must be `neo4j`.
+| `uri` | string | **Required**. The URI of the Neo4j database instance.
+| `user` | string | **Required**. The username for database authentication.
+| `password` | string | **Required**. The password for database authentication. It's highly recommended to use environment variables for production.
+|===
+
+---
+
+
+---
+## Tool Definition and Functionality
+
+The toolbox provides three specific Neo4j tool kinds, each with a different purpose:
+
+* **`neo4j-cypher`**:
+This is the most common tool. It executes a predefined, parameterized Cypher query. The query is defined by the developer in a YAML file, as seen in the examples above. It's the most secure approach because the LLM can't alter the query logic.
+
+* **`neo4j-execute-cypher`**:
+This tool is designed for more flexible use cases, such as developer assistant workflows. It takes an arbitrary Cypher string as a parameter and executes it. For security reasons, it can be configured as `readOnly: true` to prevent write operations like `CREATE`, `MERGE`, or `DELETE`. This tool is not recommended for production agents.
+
+* **`neo4j-schema`**:
+This tool extracts the complete Neo4j database schema. It requires no parameters and provides a structured JSON output. This is extremely useful for giving an LLM context about the data model, enabling it to formulate more complex queries that can then be handled by a `neo4j-execute-cypher` tool (or used to create new `neo4j-cypher` tools).
+
+
+### Example usages
+
+The MCP Toolbox integrates with Neo4j through its tool kinds.
+
+The core of the integration is the `tools.yaml` file, where you define the connection to your Neo4j instance and the specific tools for your agent.
+
+[source,yaml]
+----
+sources:
+  my-neo4j-source:
+    kind: neo4j
+    uri: bolt://localhost:7687
+    user: neo4j
+    password: my-password # Use environment variables in production
+
+tools:
+  search-movies-by-actor:
+    kind: neo4j-cypher
+    source: my-neo4j-source
+    description: "Searches for movies an actor has appeared in based on their name. Useful for questions like 'What movies has Tom Hanks been in?'"
+    parameters:
+      - name: actor_name
+        type: string
+        description: The full name of the actor to search for.
+    statement: |
+      MATCH (p:Person {name: $actor_name}) -[:ACTED_IN]-> (m:Movie)
+      RETURN m.title AS title, m.year AS year, m.genre AS genre
+  
+  get-actor-for-movie:
+    kind: neo4j-cypher
+    source: my-neo4j-source
+    description: "Finds the actors who starred in a specific movie. Useful for questions like 'Who acted in Inception?'"
+    parameters:
+      - name: movie_title
+        type: string
+        description: The exact title of the movie.
+    statement: |
+      MATCH (p:Person) -[:ACTED_IN]-> (m:Movie {title: $movie_title})
+      RETURN p.name AS actor
+      
+  find-nearest-cinema:
+    kind: neo4j-cypher
+    source: my-neo4j-source
+    description: "Find the nearest cinema to a given city. The city must be an exact match."
+    parameters:
+      - name: city_name
+        type: string
+        description: The name of the city to find cinemas near.
+    statement: |
+      MATCH (city:City {name: $city_name})
+      MATCH (cinema:Cinema)
+      WITH
+          city.latitude AS fromLat,
+          city.longitude AS fromLon,
+          cinema.latitude AS toLat,
+          cinema.longitude AS toLon,
+          cinema.name AS cinemaName
+      RETURN
+          cinemaName,
+          point.distance(
+              point({latitude: fromLat, longitude: fromLon}),
+              point({latitude: toLat, longitude: toLon})
+          ) AS distance
+      ORDER BY distance
+      LIMIT 1
+
+  get-movie-list:
+    kind: neo4j-cypher
+    source: my-neo4j-source
+    description: "Get a list of movies, optionally filtering by year. This is a very useful general tool for getting movies."
+    parameters:
+      - name: year
+        type: integer
+        optional: true
+        description: The year the movie was released.
+    statement: |
+      MATCH (movie:Movie)
+      WHERE $year IS NULL OR movie.released = $year
+      RETURN movie.title, movie.released
+      ORDER BY movie.released DESC
+      LIMIT 10
+      
+  get-movie:
+    kind: neo4j-cypher
+    source: my-neo4j-source
+    description: "Get all information about a specific movie by its title. If a user asks a question about a movie and provides the title, this is the tool to use."
+    parameters:
+      - name: title
+        type: string
+        description: The title of the movie.
+    statement: |
+      MATCH (movie:Movie {title: $title})
+      OPTIONAL MATCH (movie)<-[:ACTED_IN]-(actor)
+      OPTIONAL MATCH (movie)<-[:DIRECTED]-(director)
+      RETURN movie, collect(actor.name) AS actors, collect(director.name) AS directors
+----
+
+
+---
+### Running the Tools
+
+Once the `tools.yaml` file is configured, start the server.
+
+[source,shell]
+----
+toolbox --tools-file "tools.yaml"
+----
+
+. **Interact via API:** The toolbox exposes a REST API for invoking the defined tools. AI agents (or `curl` for testing) can call these endpoints.
++
+[source,shell]
+----
+# Example: Invoke 'search-movies-by-actor'
+curl -X POST http://127.0.0.1:5000/api/tool/search-movies-by-actor/invoke \
+-H "Content-Type: application/json" \
+-d '{
+  "actor_name": "Tom Hanks"
+}'
+----
+
+---
+## The Semantic Layer and its Value
+
+The MCP Toolbox provides a **semantic layer** on top of the Neo4j database, which is a powerful alternative to allowing LLMs to generate queries directly. This approach ensures:
+
+* **Security:** It prevents "Cypher injection" attacks by disallowing the LLM from creating its own, potentially harmful, queries. All interactions are funneled through the pre-approved, safe Cypher statements you defined.
+* **Accuracy:** It guarantees that the LLM executes the correct and most efficient query for a given task, avoiding the common pitfalls of natural language-to-code translation.
+* **Predictability:** The results are consistent because the underlying Cypher query is fixed and controlled by the developer, not by the LLM's stochastic nature.
+
+As the Neo4j article highlights, the toolbox's core advantage is its ability to "provide a consistent API that a large language model can rely on." Instead of an LLM attempting to "guess" the database structure, it simply selects the appropriate tool, and the toolbox handles the rest. This approach is key to building **reliable and scalable enterprise applications**.
+
+image::https://miro.medium.com/v2/resize:fit:1400/1*d6eK0d-t55W5eGk3R4gV1A.png[width=800]
+
+---
+## Using the Agent: A Sample Conversation
+
+This section simulates a natural language conversation with an AI agent powered by the MCP Toolbox, demonstrating how the agent chooses and uses the tools to provide accurate answers.
+
+**User:** "What movies came out in 1999?"
+
+* **Agent's Thought Process:** The agent analyzes the question and recognizes it requires information about movies from a specific year. It identifies the **`get-movie-list`** tool as the best fit and extracts the `year` parameter.
+* **Tool Call:** The agent calls the toolbox API: `POST /api/tool/get-movie-list/invoke` with `{"year": 1999}`.
+* **Toolbox Response:** The toolbox executes the Cypher query and returns a list of movies from 1999.
+* **Agent's Final Response:** "Here are some movies from 1999: *The Matrix*, *Fight Club*, *The Sixth Sense*."
+
+**User:** "Which actor starred in *The Matrix*?"
+
+* **Agent's Thought Process:** The agent sees a request for actors in a specific movie. It identifies the **`get-movie`** tool, as its description matches the user's intent. It extracts the `title` parameter.
+* **Tool Call:** The agent calls the toolbox API: `POST /api/tool/get-movie/invoke` with `{"title": "The Matrix"}`.
+* **Toolbox Response:** The toolbox executes the Cypher query and returns the details for *The Matrix*, including a list of actors.
+* **Agent's Final Response:** "The main actors in *The Matrix* are Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, and Hugo Weaving."
+
+This process highlights how the MCP Toolbox acts as a reliable and secure function-calling layer. The LLM's job is to interpret user intent and parameters, while the toolbox handles the complex and secure interaction with the database.
+
+---
+.Related Links
+[cols="1,4",options="header"]
+|===
+| icon:book[] Category | icon:link[] Link
+| Documentation | https://googleapis.github.io/genai-toolbox[MCP Toolbox Documentation^]
+| Repository | https://github.com/googleapis/genai-toolbox[MCP Toolbox GitHub Repository^]
+| Blog | https://neo4j.com/blog/developer/ai-agents-gen-ai-toolbox/[Neo4j Developer Blog Article^]
+|===

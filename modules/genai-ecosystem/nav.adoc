@@ -28,3 +28,5 @@
 // **** link:xxx[Documentation]
 **** xref:semantic-kernel.adoc[Semantic Kernel]
 // **** link:xxx[Documentation]
+**** xref:mcp-toolbox.adoc[MCP Toolbox]
+// **** link:xxx[Documentation]
