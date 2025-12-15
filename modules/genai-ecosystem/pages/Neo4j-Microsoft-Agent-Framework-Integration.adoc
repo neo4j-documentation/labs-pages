@@ -1,0 +1,184 @@
+= Building Graph-Aware Agents with Neo4j and Microsoft Agent Framework
+
+Microsoft Agent Framework is Microsoft's open-source SDK for building AI agents in .NET and Python. Agents can invoke external tools through a standardized interface, whether those tools are local functions, REST APIs, or MCP servers. They can form workflows where multiple specialized agents collaborate on complex tasks. The framework runs locally for development and then integrates with Microsoft Foundry for production deployment with tracing and metrics.
+
+The architecture stays flexible around data access. Custom tools can query databases directly. MCP servers expose data capabilities through a standard protocol. Context providers inject information automatically before each LLM call. Pick the pattern that fits your constraints.
+
+'''
+
+== Neo4j Integration Patterns
+
+There are four patterns for connecting Microsoft Agent Framework agents to Neo4j. Each reflects a different philosophy about where database logic lives and how much the agent controls directly. The community demos below show these patterns in production-style implementations.
+
+image::images/neo4j-integration-patterns.png[Neo4j and Microsoft Agent Framework Integration Patterns]
+
+.Architecture diagram showing the four integration patterns between Microsoft Agent Framework and Neo4j. The diagram illustrates how each pattern—Context Provider, Direct SDK, MCP Server, and HTTP API—connects to the Neo4j database through different layers, with varying levels of control and abstraction.
+
+=== Direct SDK Integration
+
+Write custom tools using the official Neo4j drivers. The agent calls your function, your code executes Cypher, and you control exactly what comes back.
+
+This pattern gives you the most control over what the LLM sees. You can filter results, reshape data, handle errors with custom logic, and summarize large result sets before they consume tokens. The tradeoff is maintenance: your integration code is tightly coupled to both the Neo4j driver version and your agent's tool interface.
+
+==== Demo: GraphRAG Contract Review Agents
+
+Christian Glessner (Microsoft MVP) built a contract analysis system on this pattern. Contracts, organizations, clauses, and jurisdictions exist as nodes in a knowledge graph. The agent combines structured Cypher queries with vector search to answer compliance questions across document sets.
+
+A user asks: "Which contracts reference GDPR and involve suppliers in Germany?" The agent's custom tool executes a Cypher query that matches Contract nodes linked to Clause nodes containing GDPR references, then traverses to Organization nodes filtered by jurisdiction. The tool formats the results as a structured response before the LLM generates its answer. No raw JSON parsing in the prompt.
+
+*Source:* https://iloveagents.ai/agent-framework-graphrag-neo4j[GraphRAG Contract Agents]
+
+'''
+
+=== MCP Server Integration
+
+Run a Neo4j MCP server as a separate process. The agent connects to it like any other MCP tool provider. The server exposes capabilities like `read_cypher` and `get_schema` through the standard protocol.
+
+This pattern separates data access from agent logic. The same MCP server configuration works whether your agent runs locally during development or in Azure for production. Swap the LLM, change the agent framework, the data layer stays constant. The cost is operational: you need to run and maintain the MCP server alongside your agent.
+
+==== Demo: Graph Database Detective
+
+Jose Luis Latorre (Microsoft AI MVP) built an investigative agent that connects to Neo4j Aura via MCP. The graph contains the POLE dataset: persons, objects, locations, and events from crime investigations.
+
+The agent adopts the persona of Holmsworth Marot, a Golden Age detective. When a user asks about connections between suspects and crime scenes, the agent calls the MCP server's Cypher tool to traverse the graph. It might query for all Location nodes within two hops of a Suspect node, filtered by event timestamps. The MCP server executes the query and returns results. The agent then narrates findings in the style of Hercule Poirot, turning graph traversals into detective monologues.
+
+The persona choice is deliberate. It demonstrates how agent personality and data access remain cleanly separated when using MCP.
+
+*Source:* https://github.com/joslat/neo4j-agent-framework-exploration[Graph Database Detective]
+
+'''
+
+=== HTTP Query API
+
+Treat Neo4j Aura as a REST endpoint. Send Cypher in POST request bodies, receive JSON responses. No driver installation required.
+
+This pattern works in constrained environments where you cannot install binary dependencies. Serverless functions, restricted containers, browser-based agents. The request is a standard HTTP call with your query in the payload. Latency is higher than the Bolt protocol, and the JSON responses can be verbose, but the simplicity is hard to beat for lightweight use cases.
+
+==== Demo: Sovereign AI Knowledge Base
+
+Matthias Buchhorn Roth (Sopra Steria) built a RAG solution for regulated environments. The graph holds regulations, legal documents, and operational procedures. The system runs in both cloud and air-gapped deployments.
+
+In air-gapped scenarios, installing and maintaining driver dependencies becomes a logistics problem. HTTP calls to a local Neo4j instance sidestep that entirely. The agent queries the regulation graph through REST, combines results with BitNet-based local inference, and produces citation-rich answers. Auditors can trace every response back to specific regulatory nodes in the graph.
+
+'''
+
+=== Context Provider Integration
+
+Context providers inject information into the conversation before each LLM call. The agent does not explicitly request data. The provider searches Neo4j automatically, enriches results through graph traversal, and merges context into the prompt.
+
+The Neo4j Context Provider builds on the `neo4j-graphrag-python` library, which provides a standard set of retrievers for different search strategies. The library includes `VectorRetriever` for semantic similarity, `HybridRetriever` for combined vector and fulltext search, and `VectorCypherRetriever` for vector search followed by graph traversal. The context provider wraps these retrievers and hooks them into the Microsoft Agent Framework lifecycle.
+
+Configuration is minimal. You specify an index name, choose a search type, and optionally provide a Cypher retrieval query for graph enrichment:
+
+[source,python]
+----
+from neo4j_context_provider import Neo4jContextProvider
+
+provider = Neo4jContextProvider(
+    uri="neo4j+s://your-instance.databases.neo4j.io",
+    username="neo4j",
+    password="your-password",
+    index_name="maintenance_events",
+    index_type="fulltext",  # or "vector"
+    top_k=5,
+    retrieval_query="""
+        MATCH (node)<-[:HAS_EVENT]-(comp:Component)
+              <-[:HAS_COMPONENT]-(sys:System)
+              <-[:HAS_SYSTEM]-(aircraft:Aircraft)
+        RETURN node.fault AS fault,
+               node.corrective_action AS corrective_action,
+               aircraft.model AS aircraft_model,
+               sys.name AS system_name
+    """
+)
+----
+
+The `index_type` parameter determines which retriever the provider uses internally. Set it to `"fulltext"` for keyword-based BM25 matching or `"vector"` for semantic similarity search (which requires a configured vectorizer). The `retrieval_query` runs after the initial search, traversing from matched nodes through the graph to pull in related context. Skip the retrieval query for basic search without graph enrichment.
+
+==== Demo: Aircraft Maintenance and Flight Operations
+
+The Neo4j Context Provider demo models maintenance events and flight delays as a knowledge graph. When a user asks about recurring faults on a specific aircraft type, the provider's `invoking()` method fires before the LLM processes the message.
+
+The provider runs a fulltext search against the maintenance index using the user's question. Results come back as maintenance event nodes. The configured retrieval query then traverses from those events through component and system relationships to aircraft nodes, pulling in fault codes, corrective actions, and affected systems. This enriched context merges into the prompt automatically.
+
+The flight delays agent works similarly. Questions about delay patterns trigger searches against flight data, with graph traversal expanding from delay nodes through flights to airports and routes. The LLM receives a connected view of the data without the agent ever making an explicit tool call.
+
+*Source:* https://github.com/neo4j-partners/neo4j-maf-provider[Neo4j Context Provider]
+
+'''
+
+== Choosing Your Integration Pattern
+
+*Start with the context provider* if you want graph-aware agents running quickly. Configure an index, point at your Neo4j instance, and the framework handles the rest. You can add a retrieval query later when you need graph traversal beyond the initial search results. This pattern works well when your primary goal is grounding agent responses in connected data without writing custom retrieval logic.
+
+*Move to direct SDK integration* when you need precise control over what the LLM sees. Complex business logic, token budget constraints, or custom result formatting all push toward this pattern. The contract analysis demo shows the value here: the tool can filter, summarize, and structure graph results before they ever reach the prompt. More code to maintain, but more control over costs and output quality.
+
+*MCP makes sense* when you want to reuse the same data layer across multiple agents or frameworks. The detective demo runs against the same Neo4j MCP server whether the agent uses GPT-4, Claude, or a local model. If you expect to swap LLMs or run agents in different environments, the separation MCP provides pays off. Keep the tool count reasonable to avoid bloating the system prompt.
+
+*The HTTP API* fits constrained environments where installing drivers is not an option. Serverless functions with strict dependency limits, sandboxed containers, or browser-based agents. Latency is higher and JSON parsing adds friction, but sometimes simplicity wins.
+
+Each pattern assumes you already have a graph worth querying. The agent integration is the last mile. Before that comes data modeling, relationship design, and index configuration. Get those right and the agent patterns fall into place. Get them wrong and no amount of retrieval sophistication will produce useful answers.
+
+The community demos linked throughout this guide provide working starting points. Clone one, swap in your Neo4j credentials, and see how graph context changes what your agents can do.
+
+'''
+
+== Relevant Links
+
+=== 🧑‍💻 Authors
+* https://www.linkedin.com/in/christian-glessner/[Christian Glessner]
+* https://www.linkedin.com/in/joslat/[Jose Luis Latorre]
+* https://www.linkedin.com/in/mbuchhorn/[Matthias Buchhorn-Roth]
+* https://www.linkedin.com/in/ryanknight/[Ryan Knight]
+* https://www.linkedin.com/in/zaidzaim/[Zaid Zaim]
+
+=== 💬 Community Support
+* https://github.com/microsoft/agent-framework[Microsoft Agent Framework Community]
+* https://community.neo4j.com/[Neo4j Online Community]
+
+=== 🔗 Integrations
+* *Neo4j + Microsoft Agent Framework (ma3u)*  
+  https://github.com/ma3u/neo4j-agentframework
+
+* *Neo4j Context Provider (Early Preview)*  
+  https://github.com/neo4j-partners/neo4j-maf-provider
+
+=== 🕵️ Crime Investigation Demo
+* *Graph Database Detective (Neo4j Agent Framework Exploration)*  
+  https://github.com/joslat/neo4j-agent-framework-exploration
+
+=== 📄 Contract Analysis Demo
+* *GraphRAG Contract Agents (iLoveAgents)*  
+  https://iloveagents.ai/agent-framework-graphrag-neo4j
+
+=== ✈️ Context Provider Demo
+* *Aircraft Maintenance & Flight Delays*  
+  https://github.com/neo4j-partners/neo4j-maf-provider
+
+=== 📁 Source Code
+GitHub Repositories:
+
+* https://github.com/ma3u/neo4j-agentframework[ma3u/neo4j-agentframework]
+* https://github.com/joslat/neo4j-agent-framework-exploration[joslat/neo4j-agent-framework-exploration]
+* https://github.com/iLoveAgents/agent-framework-graphrag-neo4j[iloveagents/agent-framework-graphrag-neo4j]
+
+=== 🐞 Issues
+Report or track issues across repos:
+
+* https://github.com/ma3u/neo4j-agentframework/issues
+* https://github.com/joslat/neo4j-agent-framework-exploration/issues
+* https://github.com/iLoveAgents/agent-framework-graphrag-neo4j/issues
+
+=== 📚 Documentation
+Neo4j + Agents patterns, architecture notes, and examples across the linked repositories
+
+=== 🧪 Examples
+End-to-end agents with Neo4j:
+
+* Graph crime solver
+* Contract analysis GraphRAG
+* Neo4j MCP Cypher tools
+
+'''
+
+_This document provides a comprehensive guide to integrating Neo4j graph databases with Microsoft Agent Framework, showcasing four distinct integration patterns with real-world examples and community-built demonstrations._
