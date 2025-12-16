@@ -32,6 +32,7 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 == Current Projects
 
 [#goals.incremental]
+
 === xref:genai-ecosystem:index.adoc[GenAI Ecosystem]
 
 Neo4j integrates with many libraries (LangChain, LlamaIndex, Haystack, Spring-AI) in the xref:genai-ecosystem:index.adoc[GenAI Ecosystem] to make building and deploying knowledge graph-powered GenAI applications easier.
@@ -67,6 +68,12 @@ For interactively modeling and importing CSV files, check out the https://data-i
 === xref:liquibase:index.adoc[Neo4j plugin for Liquibase]
 
 Liquibase is an open source project for tracking, managing and applying database schema changes. The link:https://github.com/liquibase/liquibase-neo4j[Neo4j plugin for Liquibase] allows you to define and execute changes against Neo4j, with all the features Liquibase supports.
+
+
+=== xref:neo4j-aura-terraform-provider:index.adoc[Neo4j Aura Terraform Provider]
+
+Neo4j Aura Terraform Provider is Neo4j Labs tool that allows infrastructure-as-code management of Neo4j AuraDB resources, primarily focusing on the lifecycle of AuraDB through declarative Terraform configurations.  
+
 
 === xref:neo4j-migrations:index.adoc[Neo4j-Migrations]
 

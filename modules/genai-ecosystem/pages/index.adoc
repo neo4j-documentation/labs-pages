@@ -91,6 +91,8 @@ You can find overviews of these integrations in the pages of this section, as we
 * xref:haystack.adoc[Haystack]
 * xref:semantic-kernel.adoc[Semantic Kernel]
 * xref:strands-agents-neo4j.adoc[Strands Agents]
+* xref:ms-agent-framework.adoc[MS Agent Framework]
+* xref:mcp-toolbox.adoc[MCP Toolbox]
 * xref:dspy.adoc[DSPy]
 
 == Highlighted Articles
