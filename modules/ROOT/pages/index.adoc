@@ -32,6 +32,7 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 == Current Projects
 
 [#goals.incremental]
+
 === xref:genai-ecosystem:index.adoc[GenAI Ecosystem]
 
 Neo4j integrates with many libraries (LangChain, LlamaIndex, Haystack, Spring-AI) in the xref:genai-ecosystem:index.adoc[GenAI Ecosystem] to make building and deploying knowledge graph-powered GenAI applications easier.
@@ -68,6 +69,12 @@ For interactively modeling and importing CSV files, check out the https://data-i
 
 Liquibase is an open source project for tracking, managing and applying database schema changes. The link:https://github.com/liquibase/liquibase-neo4j[Neo4j plugin for Liquibase] allows you to define and execute changes against Neo4j, with all the features Liquibase supports.
 
+
+=== xref:neo4j-aura-terraform-provider:index.adoc[Neo4j Aura Terraform Provider]
+
+Neo4j Aura Terraform Provider is Neo4j Labs tool that allows infrastructure-as-code management of Neo4j AuraDB resources, primarily focusing on the lifecycle of AuraDB through declarative Terraform configurations.  
+
+
 === xref:neo4j-migrations:index.adoc[Neo4j-Migrations]
 
 xref:neo4j-migrations:index.adoc[Neo4j-Migrations] is a set of tools to make your schema migrations as easy as possible.
@@ -94,9 +101,6 @@ xref:neomodel:index.adoc[neomodel] is an Object Graph Mapper (OGM) for Python an
 === xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit]
 The xref:neo4j-needle-starterkit:index.adoc[Needle Starter Kit] is a React framework for quickly building an app using the Neo4j Needle design language.
 
-=== xref:aura-cli:index.adoc[Aura CLI]
-The xref:aura-cli:index.adoc[Aura CLI] is a command line interface for interacting with the Aura cloud platform through the public Aura API. It allows you to create and manage instances from your command line.
-
 === xref:cypher-workbench:index.adoc[Cypher Workbench]
 The xref:cypher-workbench:index.adoc[Cypher Workbench] Cypher Workbench provides a set of web-based development graph tools. It includes tools for data modeling, cypher building and debugging, validation, and more. Originally a SaaS offering, the code is now released so you can run it in your local environment.
 
@@ -113,6 +117,9 @@ xref:spatial:index.adoc[Neo4j-Spatial] is a library facilitating the import, sto
 == Graduated Projects
 
 The following projects were successfully developed, incubated, and validated within Neo4j Labs and have graduated to official and supported Neo4j products ready for production use at scale.
+
+=== link:https://neo4j.com/docs/aura/[aura-cli^]
+Aura CLI is a command line interface for interacting with the Aura cloud platform through the public Aura API. It allows you to create and manage instances from your command line.
 
 === link:https://neo4j.com/docs/operations-manual/current/kubernetes/[Neo4j-Helm^]
 
