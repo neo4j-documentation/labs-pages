@@ -89,7 +89,7 @@ You can find overviews of these integrations in the pages of this section, as we
 * xref:spring-ai.adoc[Spring AI]
 * xref:langchain4j.adoc[LangChain4j]
 * xref:haystack.adoc[Haystack]
-* xref:semantic-kernel.adoc[Semantic Kernel]
+* xref:ms-agent-framework.adoc[MS Agent Framework]
 * xref:mcp-toolbox.adoc[MCP Toolbox]
 * xref:dspy.adoc[DSPy]
 
