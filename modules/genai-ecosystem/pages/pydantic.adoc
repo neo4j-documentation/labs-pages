@@ -10,123 +10,321 @@ Integration of Neo4j graph database with Pydantic AI.
 Neo4j's graph and vector capabilities can be exposed as MCP tools, allowing LLMs to query and modify the database 
 via a standard protocol over HTTP, SSE, or stdio.
 
-There are two examples provided:
+There are two examples provided using the **Neo4j "Companies" Demo Database**:
 
 * `main.py` — calls the Neo4j tool functions directly (does **not** use MCP transport, but the tools are the same).  
-* `server.py` + `client.py` — demonstrates a full MCP setup with a FastMCP server exposing Neo4j tools and a client agent using `MCPServerStreamableHTTP` (uses MCP transport).
+* `server.py` + `client.py` — demonstrates a full MCP setup with a FastMCP server exposing Neo4j tools and a client agent using `MCPServerStreamableHTTP`.
 
 == Installation
 
 [source,bash]
 ----
-pip install pydantic-ai mcp pydantic-neo4j anyio httpx httpx-sse
+pip install pydantic-ai mcp neo4j anyio
 ----
 
 == Example: main.py (direct function calls, no MCP transport)
 
+This example connects to the public **Companies** demo database and retrieves information using specific Cypher queries.
+== The Companies Dataset
+
+The examples below use the public **Companies** demo database (`demo.neo4jlabs.com`). 
+It contains information about Organizations, People, Articles, and their relationships.
+
+To understand the graph schema, you can run the visualization command:
+
+[source,cypher]
+----
+CALL db.schema.visualization()
+----
+
+The schema visualization given by the command above is this:
+
+image::companies-db-schema-viz.png[width=600, align=center]
+
+While the output of `CALL apoc.meta.schema()`, which provides detailed metadata about nodes and relationships, is available below:
+
+
+[source,json]
+----
+{
+  "HAS_COMPETITOR": {
+    "count": 8212,
+    "properties": {},
+    "type": "relationship"
+  },
+  "HAS_CHUNK": {
+    "count": 108112,
+    "properties": {},
+    "type": "relationship"
+  },
+  "HAS_BOARD_MEMBER": {
+    "count": 5978,
+    "properties": {},
+    "type": "relationship"
+  },
+
+  "IndustryCategory": {
+    "count": 258,
+    "labels": [],
+    "properties": {
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_CATEGORY": { "count": 225, "direction": "in", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "HAS_INVESTOR": {
+    "count": 10645,
+    "properties": {},
+    "type": "relationship"
+  },
+  "Organization": {
+    "count": 46088,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "isDissolved": { "unique": false, "indexed": false, "type": "BOOLEAN", "existence": false },
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "diffbotId": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "nbrEmployees": { "unique": false, "indexed": false, "type": "INTEGER", "existence": false },
+      "name": { "unique": false, "indexed": true, "type": "STRING", "existence": false },
+      "motto": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "isPublic": { "unique": false, "indexed": false, "type": "BOOLEAN", "existence": false },
+      "revenue": { "unique": false, "indexed": false, "type": "FLOAT", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_COMPETITOR": { "count": 68, "direction": "out", "labels": ["Organization"], "properties": {} },
+      "HAS_BOARD_MEMBER": { "count": 0, "direction": "out", "labels": ["Person"], "properties": {} },
+      "MENTIONS": { "count": 2316, "direction": "in", "labels": ["Article"], "properties": {} },
+      "HAS_CEO": { "count": 0, "direction": "out", "labels": ["Person"], "properties": {} },
+      "HAS_SUBSIDIARY": { "count": 9, "direction": "out", "labels": ["Organization"], "properties": {} },
+      "HAS_INVESTOR": { "count": 60, "direction": "out", "labels": ["Person", "Organization"], "properties": {} },
+      "HAS_CATEGORY": { "count": 0, "direction": "out", "labels": ["IndustryCategory"], "properties": {} },
+      "HAS_SUPPLIER": { "count": 124, "direction": "out", "labels": ["Organization"], "properties": {} },
+      "IN_CITY": { "count": 0, "direction": "out", "labels": ["City"], "properties": {} }
+    }
+  },
+  "Country": {
+    "count": 119,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "IN_COUNTRY": { "count": 1129, "direction": "in", "labels": ["City"], "properties": {} }
+    }
+  },
+  "City": {
+    "count": 9131,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "IN_COUNTRY": { "count": 0, "direction": "out", "labels": ["Country"], "properties": {} },
+      "IN_CITY": { "count": 598, "direction": "in", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "Article": {
+    "count": 65578,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "sentiment": { "unique": false, "indexed": false, "type": "FLOAT", "existence": false },
+      "author": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "title": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "date": { "unique": false, "indexed": false, "type": "DATE_TIME", "existence": false },
+      "siteName": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_CHUNK": { "count": 0, "direction": "out", "labels": ["Chunk"], "properties": {} },
+      "MENTIONS": { "count": 0, "direction": "out", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "HAS_PARENT": { "count": 75, "properties": {}, "type": "relationship" },
+  "MENTIONS": { "count": 138800, "properties": {}, "type": "relationship" },
+  "HAS_CEO": { "count": 1900, "properties": {}, "type": "relationship" },
+  "HAS_SUBSIDIARY": { "count": 24869, "properties": {}, "type": "relationship" },
+  "HAS_CHILD": { "count": 49, "properties": {}, "type": "relationship" },
+  "IN_COUNTRY": { "count": 9052, "properties": {}, "type": "relationship" },
+  "HAS_CATEGORY": { "count": 9905, "properties": {}, "type": "relationship" },
+  "HAS_SUPPLIER": { "count": 36184, "properties": {}, "type": "relationship" },
+  "Chunk": {
+    "count": 108112,
+    "labels": [],
+    "properties": {
+      "id": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "text": { "unique": false, "indexed": true, "type": "STRING", "existence": false },
+      "embedding": { "unique": false, "indexed": false, "type": "LIST", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_CHUNK": { "count": 1738, "direction": "in", "labels": ["Article"], "properties": {} }
+    }
+  },
+  "Person": {
+    "count": 8064,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": true, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_PARENT": { "count": 4, "direction": "out", "labels": ["Person"], "properties": {} },
+      "HAS_BOARD_MEMBER": { "count": 131, "direction": "in", "labels": ["Organization"], "properties": {} },
+      "HAS_CEO": { "count": 45, "direction": "in", "labels": ["Organization"], "properties": {} },
+      "HAS_CHILD": { "count": 2, "direction": "out", "labels": ["Person"], "properties": {} },
+      "HAS_INVESTOR": { "count": 221, "direction": "in", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "IN_CITY": { "count": 36200, "properties": {}, "type": "relationship" }
+}
+----
+
+== Installation
+
+[source,bash]
+----
+pip install pydantic-ai mcp neo4j anyio
+----
+
+== Example: main.py (direct function calls, no MCP transport)
+
+This example connects to the public **Companies** demo database and retrieves information using specific Cypher queries.
+
 [source,python]
 ----
-from pydantic_neo4j import PydanticNeo4j, NodeModel
-from pydantic import BaseModel
+from neo4j import GraphDatabase
 import asyncio
 
-# Neo4j node model
-class User(NodeModel):
-    name: str
-    email: str
-
-# Argument models
-class CreateUserArgs(BaseModel):
-    name: str
-    email: str
-
-class FindUserArgs(BaseModel):
-    email: str
-
-# Neo4j tool
+# Neo4j Tool Wrapper
 class Neo4jTool:
     def __init__(self, uri, user, password):
-        self.db = PydanticNeo4j(uri=uri, username=user, password=password)
+        self.driver = GraphDatabase.driver(uri, auth=(user, password))
 
-    async def create_user_func(self, name: str, email: str):
-        new_user = User(name=name, email=email)
-        await self.db.create_utilities.create_node(model=new_user)
-        return f"User {new_user.name} with email {new_user.email} created."
+    def close(self):
+        self.driver.close()
 
-    async def find_user_func(self, email: str):
-        result = await self.db.match_utilities.node_query(
-            "User",
-            criteria={"email": email}
-        )
-        if result:
-            first_user = list(result.values())[0]
-            return f"Found user: {first_user.name}, {first_user.email}"
-        return "User not found."
+    async def search_companies(self, search_term: str) -> str:
+        """
+        List of Companies (company_id, name, summary) by fulltext search.
+        """
+        query = """
+        CALL db.index.fulltext.queryNodes('entity', $search, {limit: 5}) 
+        YIELD node as c, score WHERE c:Organization 
+        AND NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
+        RETURN c.id as company_id, c.name as name, c.summary as summary
+        """
+        try:
+            results, _, _ = self.driver.execute_query(query, search=search_term)
+            if not results:
+                return f"No companies found matching '{search_term}'."
+            return "\n".join([f"Name: {r['name']}, Summary: {r['summary'][:100]}..." for r in results])
+        except Exception as e:
+            return f"Error: {e}"
+
+    async def get_companies_in_industry(self, industry: str) -> str:
+        """
+        Companies (company_id, name, summary) in a given industry by industry name.
+        """
+        query = """
+        MATCH (:IndustryCategory {name:$industry})<-[:HAS_CATEGORY]-(c) 
+        WHERE NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
+        RETURN c.id as company_id, c.name as name, c.summary as summary
+        LIMIT 5
+        """
+        try:
+            results, _, _ = self.driver.execute_query(query, industry=industry)
+            if not results:
+                return f"No companies found in industry '{industry}'."
+            return "\n".join([f"Name: {r['name']}" for r in results])
+        except Exception as e:
+            return f"Error: {e}"
 
 # Usage
 async def main():
-    neo4j_tool = Neo4jTool("bolt://localhost:7687", "neo4j", "apoc12345")
-    print(await neo4j_tool.create_user_func("Giuseppe", "giuseppe@example.com"))
-    print(await neo4j_tool.find_user_func("giuseppe@example.com"))
+    # Connect to the public demo database
+    neo4j_tool = Neo4jTool("neo4j+s://demo.neo4jlabs.com", "companies", "companies")
+    
+    try:
+        print("--- Search for 'Patagonia' ---")
+        print(await neo4j_tool.search_companies("Patagonia"))
+        
+        print("\n--- Find 'Retail' Companies ---")
+        print(await neo4j_tool.get_companies_in_industry("Retail"))
+    finally:
+        neo4j_tool.close()
 
 asyncio.run(main())
 ----
 
-Note: in `main.py` functions are called directly, so it **does not go through MCP**, but the tool logic is the same as in the MCP server.
-
 == Example: server.py (FastMCP server exposing Neo4j tools)
+
+Here we expose the company retrieval tools via the Model Context Protocol (MCP).
 
 [source,python]
 ----
-from pydantic import BaseModel
-from pydantic_neo4j import PydanticNeo4j, NodeModel
-from pydantic_ai import Tool
 from mcp.server.fastmcp import FastMCP
+from neo4j import GraphDatabase
 
-# Neo4j node model
-class User(NodeModel):
-    name: str
-    email: str
-
-# Argument models
-class CreateUserArgs(BaseModel):
-    name: str
-    email: str
-
-class FindUserArgs(BaseModel):
-    email: str
-
-# Neo4j tool
-class Neo4jTool:
-    def __init__(self, uri, user, password):
-        self.db = PydanticNeo4j(uri=uri, username=user, password=password)
-
-    async def create_user_func(self, name: str, email: str):
-        new_user = User(name=name, email=email)
-        await self.db.create_utilities.create_node(model=new_user)
-        return f"User {new_user.name} with email {new_user.email} created."
-
-    async def find_user_func(self, email: str):
-        result = await self.db.match_utilities.node_query(
-            "User",
-            criteria={"email": email}
-        )
-        if result:
-            first_user = list(result.values())[0]
-            return f"Found user: {first_user.name}, {first_user.email}"
-        return "User not found."
-
-# Instantiate tool
-neo4j_tool = Neo4jTool("bolt://localhost:7687", "neo4j", "apoc12345")
-
-create_user_tool = Tool(function=neo4j_tool.create_user_func, description="Creates a new user")
-find_user_tool = Tool(function=neo4j_tool.find_user_func, description="Finds a user")
+# Initialize Neo4j Driver
+# Using the public 'companies' demo database
+driver = GraphDatabase.driver("neo4j+s://demo.neo4jlabs.com", auth=("companies", "companies"))
 
 # Instantiate FastMCP server
-server = FastMCP(
-    name="Neo4j_MCP_Server",
-    tools=[create_user_tool, find_user_tool]
-)
+server = FastMCP(name="Neo4j_Companies_Server")
+
+@server.tool()
+async def search_companies(search_term: str) -> str:
+    """
+    Search for companies by name using fulltext search. 
+    Useful when the user asks for a specific company name.
+    """
+    query = """
+    CALL db.index.fulltext.queryNodes('entity', $search, {limit: 5}) 
+    YIELD node as c, score WHERE c:Organization 
+    AND NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
+    RETURN c.id as company_id, c.name as name, c.summary as summary
+    """
+    try:
+        results, _, _ = driver.execute_query(query, search=search_term)
+        if not results:
+            return "No companies found."
+        return "\n".join([f"Name: {r['name']}, Summary: {r['summary']}" for r in results])
+    except Exception as e:
+        return f"Database error: {e}"
+
+@server.tool()
+async def get_companies_in_industry(industry: str) -> str:
+    """
+    Find companies belonging to a specific industry (e.g., 'Retail', 'Technology').
+    """
+    query = """
+    MATCH (:IndustryCategory {name:$industry})<-[:HAS_CATEGORY]-(c) 
+    WHERE NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
+    RETURN c.id as company_id, c.name as name, c.summary as summary
+    LIMIT 10
+    """
+    try:
+        results, _, _ = driver.execute_query(query, industry=industry)
+        if not results:
+            return f"No companies found in {industry}."
+        return "\n".join([f"Name: {r['name']}" for r in results])
+    except Exception as e:
+        return f"Database error: {e}"
 
 if __name__ == "__main__":
     # Run with streamable HTTP transport
@@ -137,6 +335,8 @@ if __name__ == "__main__":
 ----
 
 == Example: client.py (Agent using MCP)
+
+The agent now uses the MCP server to answer business questions about companies.
 
 [source,python]
 ----
@@ -150,21 +350,25 @@ agent = Agent('google-gla:gemini-2.0-flash', toolsets=[server])
 
 async def main():
     async with agent:  
-        # Ask the LLM to compute
-        result = await agent.run('What is 7 plus 5?')
+        # Ask the LLM a question that requires the Neo4j tools
+        # It should decide to use 'get_companies_in_industry'
+        result = await agent.run('Find me some companies in the Retail industry.')
     print(result.output)
-    #> The answer is 12.
+    #> Here are some companies in the Retail industry:
+    #> 1. Walmart
+    #> 2. Patagonia
+    #> ...
 
 asyncio.run(main())
 ----
 
-Note: `client.py` uses the **MCP standard** because it communicates with `server.py` via the `MCPServerStreamableHTTP` toolset. This example shows how an LLM can interact with Neo4j tools using a standard protocol without calling the functions directly.
+Note: `client.py` uses the **MCP standard** to discover the tools exposed by `server.py` and execute them to answer the prompt.
 
 == Functionality Includes
 
-* `Neo4jTool` - wraps Neo4j operations as Python async functions  
-* `CreateUserArgs` / `FindUserArgs` - argument models for tools  
-* FastMCP server exposing tools via MCP  
+* `Neo4jTool` - wraps Neo4j Cypher operations
+* FastMCP server exposing graph database tools via MCP  
+* Real-world "Companies" dataset queryable via public demo credentials
 * Client agent using MCPServerStreamableHTTP toolset  
 * LLM integration with Gemini / Google GLA  
 
