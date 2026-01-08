@@ -19,7 +19,7 @@ There are two examples provided using the **Neo4j "Companies" Demo Database**:
 
 [source,bash]
 ----
-pip install pydantic-ai mcp neo4j anyio
+pip install pydantic-ai mcp neo4j anyio pydantic-graph
 ----
 
 == Example: main.py (direct function calls, no MCP transport)
@@ -363,6 +363,168 @@ asyncio.run(main())
 ----
 
 Note: `client.py` uses the **MCP standard** to discover the tools exposed by `server.py` and execute them to answer the prompt.
+
+
+== Example using pydantic-graph package
+
+In this example, `pydantic-graph`` manages the logic flow (State Machine), 
+and Neo4j is used as a "Audit Log" or "Long-term Memory," saving every step the agent takes into the database.
+
+[source,python]
+----
+import asyncio
+import os
+import uuid
+from dataclasses import dataclass
+from typing import Optional
+
+from neo4j import GraphDatabase
+from pydantic_graph import BaseNode, Graph, RunContext, End
+
+# --- 1. NEO4J LOGGER (The Persistence Layer) ---
+class WorkflowLogger:
+    """
+    Handles saving the workflow execution steps into Neo4j.
+    It creates a linked list of :WorkflowStep nodes attached to a :WorkflowSession.
+    """
+    def __init__(self, uri, user, password, session_id):
+        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+        self.session_id = session_id
+        self._init_session()
+
+    def close(self):
+        self.driver.close()
+
+    def _init_session(self):
+        """Creates the Session node in Neo4j if it doesn't exist."""
+        query = """
+        MERGE (s:WorkflowSession {id: $sid})
+        ON CREATE SET s.created_at = datetime()
+        RETURN s
+        """
+        self.driver.execute_query(query, sid=self.session_id)
+        print(f"[Neo4j] Session {self.session_id} initialized.")
+
+    def log_step(self, step_name: str, input_data: str, output_data: str):
+        """
+        Creates a :WorkflowStep node and links it to the previous step (if any).
+        """
+        query = """
+        MATCH (s:WorkflowSession {id: $sid})
+        
+        // 1. Create the new step node
+        CREATE (new_step:WorkflowStep {
+            id: randomUUID(),
+            name: $name,
+            input: $input_data,
+            output: $output_data,
+            timestamp: datetime()
+        })
+        
+        // 2. Link session to step
+        CREATE (s)-[:OWNS_STEP]->(new_step)
+        
+        // 3. Find the immediately preceding step (the latest one before this)
+        //    and link them with [:NEXT] to form a chain.
+        WITH s, new_step
+        MATCH (s)-[:OWNS_STEP]->(last_step)
+        WHERE last_step.id <> new_step.id 
+          AND last_step.timestamp < new_step.timestamp
+        WITH last_step, new_step
+        ORDER BY last_step.timestamp DESC LIMIT 1
+        CREATE (last_step)-[:NEXT]->(new_step)
+        """
+        self.driver.execute_query(
+            query, 
+            sid=self.session_id, 
+            name=step_name, 
+            input_data=str(input_data),
+            output_data=str(output_data)
+        )
+        print(f"[Neo4j] Logged step: {step_name}")
+
+# --- 2. DEPENDENCIES ---
+@dataclass
+class GraphDeps:
+    logger: WorkflowLogger
+
+# --- 3. PYDANTIC GRAPH NODES (The Logic) ---
+
+@dataclass
+class InputNode(BaseNode[None, None, GraphDeps]):
+    """State 1: Simulates receiving user input."""
+    
+    async def run(self, ctx: RunContext[GraphDeps]) -> 'SearchNode':
+        user_query = "Find Google info"
+        print(f"--- 1. InputNode: Received '{user_query}' ---")
+        
+        # Log to Neo4j
+        ctx.deps.logger.log_step("InputNode", input_data="User Start", output_data=user_query)
+        
+        return SearchNode(query=user_query)
+
+@dataclass
+class SearchNode(BaseNode[None, None, GraphDeps]):
+    """State 2: Simulates searching a database."""
+    query: str
+    
+    async def run(self, ctx: RunContext[GraphDeps]) -> 'ResultNode':
+        print(f"--- 2. SearchNode: Processing '{self.query}' ---")
+        
+        # Simulate logic (e.g., calling another Neo4j tool here)
+        result = f"Found company: Google Inc. (ID: 123)"
+        
+        # Log to Neo4j
+        ctx.deps.logger.log_step("SearchNode", input_data=self.query, output_data=result)
+        
+        return ResultNode(final_text=result)
+
+@dataclass
+class ResultNode(BaseNode[None, None, GraphDeps]):
+    """State 3: Final output."""
+    final_text: str
+
+    async def run(self, ctx: RunContext[GraphDeps]) -> End:
+        print(f"--- 3. ResultNode: {self.final_text} ---")
+        
+        # Log to Neo4j
+        ctx.deps.logger.log_step("ResultNode", input_data=self.final_text, output_data="End of flow")
+        
+        return End(self.final_text)
+
+# --- 4. MAIN EXECUTION ---
+async def main():
+    # Configuration (Public Demo DB)
+    URI = "neo4j+s://demo.neo4jlabs.com"
+    USER = "companies"
+    PWD = "companies"
+    
+    # Create a unique session ID for this run
+    session_id = str(uuid.uuid4())
+    
+    logger = WorkflowLogger(URI, USER, PWD, session_id)
+    deps = GraphDeps(logger=logger)
+
+    # Define the Pydantic Graph
+    workflow = Graph(nodes=[InputNode, SearchNode, ResultNode])
+
+    try:
+        print(f"Starting Workflow (Session: {session_id})...")
+        await workflow.run(InputNode(), deps=deps)
+        
+        print("\n" + "="*50)
+        print("WORKFLOW FINISHED.")
+        print("To visualize the execution graph, run this Cypher in Neo4j Browser:")
+        print(f"MATCH (s:WorkflowSession {{id: '{session_id}'}})-[:OWNS_STEP]->(step) RETURN s, step ORDER BY step.timestamp")
+        print("="*50)
+
+    finally:
+        logger.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+----
+
 
 == Functionality Includes
 
