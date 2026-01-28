@@ -4,8 +4,12 @@ site:
 
 content:
   sources:
-  - url: ./
-    branches: publish
+    - url: ./
+      branches: publish
+    # Neo4j Agent Memory - external content source
+    - url: https://github.com/neo4j-labs/agent-memory.git
+      branches: main
+      start_path: docs
 
 ui:
   bundle:
@@ -17,8 +21,8 @@ urls:
 
 asciidoc:
   extensions:
-  - "@neo4j-documentation/remote-include"
-  - "@neo4j-documentation/macros"
+    - "@neo4j-documentation/remote-include"
+    - "@neo4j-documentation/macros"
   attributes:
     page-theme: labs
     page-disabletracking: true
