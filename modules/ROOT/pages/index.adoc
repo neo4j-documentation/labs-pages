@@ -41,7 +41,11 @@ Most integrations use a combination of vector and graph search to improve qualit
 === https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[MCP Servers]
 
 The Model Context Protocol (MCP) allows LLMs and Agents to use APIs, databases and many other capabilities easily into their architecture via active function calling.
-The https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j Labs MCP Servers] cover a range of functionality, from executing Cypher or Graph Algorithms, to modeling graphs or managing Aura infrastructure. 
+The https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j Labs MCP Servers] cover a range of functionality, from executing Cypher or Graph Algorithms, to modeling graphs or managing Aura infrastructure.
+
+=== xref:agent-memory::index.adoc[Neo4j Agent Memory]
+
+xref:agent-memory::index.adoc[Neo4j Agent Memory] is a graph-based memory system for AI agents. It provides three types of memory - short-term (conversation context), long-term (persistent knowledge via entity extraction), and reasoning (decision traces) - all backed by Neo4j's graph database for rich relationship modeling and efficient retrieval. The library integrates with popular frameworks including LangChain, LlamaIndex, PydanticAI, CrewAI, and OpenAI Agents.
 
 === xref:genai-ecosystem:llm-graph-builder.adoc[LLM Knowledge Graph Builder]
 
@@ -72,7 +76,7 @@ Liquibase is an open source project for tracking, managing and applying database
 
 === xref:neo4j-aura-terraform-provider:index.adoc[Neo4j Aura Terraform Provider]
 
-Neo4j Aura Terraform Provider is Neo4j Labs tool that allows infrastructure-as-code management of Neo4j AuraDB resources, primarily focusing on the lifecycle of AuraDB through declarative Terraform configurations.  
+Neo4j Aura Terraform Provider is Neo4j Labs tool that allows infrastructure-as-code management of Neo4j AuraDB resources, primarily focusing on the lifecycle of AuraDB through declarative Terraform configurations.
 
 
 === xref:neo4j-migrations:index.adoc[Neo4j-Migrations]
