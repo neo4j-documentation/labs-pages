@@ -92,7 +92,7 @@ def main():
         )
 
         # 5) Ask a question
-        query = "Find the company 'Patagonia' and tell me who its competitors are."
+        query = "What are 5 companies mentioned in articles from January 2023?"
         print(f"\nUser Query: {query}")
         
         response = agent(query)
