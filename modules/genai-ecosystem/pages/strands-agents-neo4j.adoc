@@ -9,132 +9,95 @@
 Integration of Neo4j graph database with Strands Agents.  
 Neo4j's graph capabilities can be exposed as MCP tools, allowing LLM-powered Strands Agents to query and modify the database via a standard protocol over HTTP or SSE.
 
-Two main examples are provided:
-
-* `mcp_neo4j_client.py` — calls Neo4j tools via a Strands Agent using MCP transport.  
-* `mcp_neo4j_server.py` — demonstrates a full MCP setup with a FastMCP server exposing Neo4j tools.
+This guide provides examples using the official **Neo4j MCP Server** via `stdio` transport, eliminating the need to run a separate local server process manually.
 
 == Installation
 
 [source,bash]
 ----
-pip install openai fastapi uvicorn neo4j strands-agents strands-agents-tools pandas matplotlib seaborn
+pip install strands-agents mcp neo4j pandas matplotlib seaborn openai
 ----
 
-Start a Neo4j instance (local or cloud).  
+You will also need `uv` installed to run the Neo4j MCP server directly:
+[source,bash]
+----
+pip install uv
+----
 
 == Usage
 
-1) Run the MCP server exposing Neo4j tools:
+Run the Strands Agent client directly. It will automatically launch the Neo4j MCP server as a subprocess.
 
+*Prerequisite:* Ensure you have set your OpenAI API key in your environment.
 [source,bash]
 ----
-python mcp_neo4j_server.py
+export OPENAI_API_KEY=sk-proj-...
+python client.py
 ----
 
-2) Run the Strands Agent client connecting to the server:
+== Example: client.py (Using Official Neo4j MCP via Stdio)
 
-[source,bash]
-----
-python mcp_neo4j_client.py
-----
-
-== Example: mcp_neo4j_server.py (FastMCP server exposing Neo4j tools)
+This example demonstrates a Strands Agent connecting directly to the official `mcp-neo4j-cypher` server using `uvx`. It connects to the public **Companies** demo database.
 
 [source,python]
 ----
-from mcp.server import FastMCP
-from neo4j import GraphDatabase
-from neo4j.exceptions import Neo4jError
 import os
-
-# Neo4j configuration
-NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
-NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "apoc12345")
-
-# Create FastMCP server
-mcp = FastMCP("Neo4j MCP Server")
-
-@mcp.tool(description="Execute a Neo4j query, return the result, and log it")
-def neo4j_query(query: str):
-    try:
-        with GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD)) as driver:
-            print(f"[LOG] Connecting to Neo4j at {NEO4J_URI} with user {NEO4J_USER}")
-            try:
-                with driver.session() as session:
-                    def run_main_query(tx):
-                        print(f"[LOG] Executing query: {query}")
-                        records = [record.data() for record in tx.run(query)]
-                        print(f"[LOG] Query results: {records}")
-                        return records
-
-                    records = session.execute_read(run_main_query)
-
-                    session.run(
-                        "CREATE (q:ExecutedQuery) SET q.executedQuery = $query RETURN q",
-                        parameters={"query": query}
-                    ).single()
-
-                    print("[LOG] Query executed and logged successfully.")
-                    return records
-
-            except Neo4jError as e:
-                print(f"[ERROR] Query execution failed: {e}")
-                return {"error": str(e)}
-    except Neo4jError as e:
-        print(f"[ERROR] Connection failed: {e}")
-        return {"error": str(e)}
-
-if __name__ == "__main__":
-    print("MCP Neo4j server running at http://localhost:8000/mcp")
-    mcp.run(transport="streamable-http")
-----
-
-== Example: mcp_neo4j_client.py (Strands Agent using MCP)
-
-[source,python]
-----
 from strands import Agent
-from strands.tools.mcp.mcp_client import MCPClient
-from mcp.client.streamable_http import streamablehttp_client
+from strands.tools.mcp import MCPClient
+from strands.models.openai import OpenAIModel
+from mcp import stdio_client, StdioServerParameters
 
-def create_transport():
-    return streamablehttp_client("http://localhost:8000/mcp/")
+# 1) Configure the MCP Client with Stdio transport
+# This uses 'uvx' to run the official mcp-neo4j-cypher package directly
+# Environment variables are passed to configure the specific database connection
+def create_mcp_client():
+    return stdio_client(
+        StdioServerParameters(
+            command="uvx",
+            args=["mcp-neo4j-cypher"],
+            env={
+                "NEO4J_URI": "neo4j+s://demo.neo4jlabs.com:7687",
+                "NEO4J_USERNAME": "companies",
+                "NEO4J_PASSWORD": "companies",
+                "NEO4J_DATABASE": "companies"
+            }
+        )
+    )
 
 def main():
-    # 1) Create MCP client
-    client = MCPClient(create_transport)
+    # 2) Initialize the MCP Client wrapper
+    # Strands uses this wrapper to manage the tool discovery and execution
+    client = MCPClient(create_mcp_client)
 
+    print("Connecting to Neo4j via MCP...")
+    
     with client:
-        # 2) List available tools
+        # 3) List available tools
         tools = client.list_tools_sync()
-        print("Available tools:", [getattr(t, "name", t.mcp_tool.name) for t in tools])
+        
+        # Helper to print tool names (accessing the internal mcp_tool object)
+        tool_names = [t.mcp_tool.name for t in tools]
+        print("Available tools:", tool_names)
 
-        # 3) Create a Strands Agent using the Mistral model
-        from strands.models.mistral import MistralModel
-        import os
+        # 4) Create a Strands Agent using OpenAI
+        # We explicitly use OpenAIModel to avoid defaulting to AWS Bedrock.
+        # Note: 'model_id' is required (not 'model'). 
+        # The API Key is picked up automatically from the OPENAI_API_KEY env var.
         agent = Agent(
             tools=tools,
-            model=MistralModel(
-                api_key=os.getenv("MISTRAL_API_KEY"),
-                model_id="mistral-small-latest",
-                temperature=0.7,
-                max_tokens=200
-            )
+            model=OpenAIModel(
+                model_id="gpt-4o"
+            ),
+            system_prompt="You are a helper for querying graph databases. Use the available tools to answer questions."
         )
 
-        # 4) Ask a question through the agent
-        response = agent("What is 125 plus 375?")
-        print("Agent response:", response)
-
-        # 5) Or directly call a tool
-        result = client.call_tool_sync(
-            tool_use_id="tool-1",
-            name="neo4j_query",
-            arguments={"x": 125, "y": 375}
-        )
-        print("Calculator result:", result["content"][0]["text"])
+        # 5) Ask a question
+        query = "Find the company 'Patagonia' and tell me who its competitors are."
+        print(f"\nUser Query: {query}")
+        
+        response = agent(query)
+        print("\nAgent Response:")
+        print(response)
 
 if __name__ == "__main__":
     main()
@@ -142,14 +105,15 @@ if __name__ == "__main__":
 
 == Example: Financial Crime Analysis (Stdio Transport)
 
-This example utilizes the FinCEN dataset hosted on a public Neo4j demo instance. It demonstrates how to connect a Strands Agent to Neo4j using the `stdio` transport via `uvx` to run the `mcp-neo4j-cypher` server.
+This example utilizes the FinCEN dataset hosted on a public Neo4j demo instance. It demonstrates a more complex use case with a sliding window conversation manager.
 
 [source,python]
 ----
-import boto3
+import os
 from strands import Agent
 from strands.agent.conversation_manager import SlidingWindowConversationManager
 from strands.tools.mcp import MCPClient
+from strands.models.openai import OpenAIModel
 from mcp import stdio_client, StdioServerParameters
 
 # 1) Configure the MCP Client with Stdio transport
@@ -186,7 +150,10 @@ def call_agent(query):
         agent = Agent(
             tools=tools, 
             callback_handler=None, 
-            conversation_manager=conversation_manager
+            conversation_manager=conversation_manager,
+            model=OpenAIModel(
+                model_id="gpt-4o"
+            )
         )
         
         # Execute the query
@@ -248,10 +215,9 @@ if __name__ == "__main__":
 
 == Functionality Includes
 
-* `neo4j_query` — wraps Neo4j operations as an MCP tool  
-* FastMCP server exposing Neo4j tools  
+* `read-cypher` / `write-cypher` — Standard tools exposed by the official server
 * Strands Agent using MCP transport to call tools  
-* LLM integration via Mistral model
+* LLM integration via OpenAI or Mistral
 * Support for `stdio` transport using `uvx` for ephemeral server execution
 * Data visualization integration using `pandas`, `seaborn`, and `matplotlib`
 
