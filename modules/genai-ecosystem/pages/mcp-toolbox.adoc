@@ -9,7 +9,7 @@
 
 image::https://www.gstatic.com/images/branding/product/2x/google_assistant_48dp.png[width=800]
 
-The **Model Context Protocol (MCP) Toolbox** is an open-source framework that acts as a **semantic layer** between an AI agent (like a Large Language Model) and external data sources, such as Neo4j. It's designed to facilitate safe, structured data interaction by translating an agent's requests into predefined, secure database queries.
+The **Model Context Protocol (MCP) Toolbox** is an open-source framework that acts as a **semantic layer** between an AI agent (like a Large Language Model) and external data sources, such as Neo4j. It is designed to facilitate safe, structured data interaction by translating agent requests into predefined, secure database queries.
 
 Unlike systems that rely on an LLM to generate queries on the fly, the MCP Toolbox uses a **tool-based approach**. Developers define the specific queries and actions. The LLM then chooses the correct tool and passes the necessary parameters, ensuring accuracy and security while preventing the LLM from making things up or hallucinating.
 
@@ -19,12 +19,12 @@ Unlike systems that rely on an LLM to generate queries on the fly, the MCP Toolb
 To get started, you need to have both Neo4j and the MCP Toolbox running.
 
 . **Neo4j:** Ensure you have a running Neo4j instance, either locally or in the cloud.
-. **MCP Toolbox:** For installation instructions, refer to the official documentation at https://googleapis.github.io/genai-toolbox.
+. **MCP Toolbox:** Install the toolbox using Homebrew.
 +
 [source,shell]
 ----
 # Example for macOS with Homebrew
-brew install googleapis/genai-toolbox/toolbox
+brew install mcp-toolbox
 ----
 
 ---
@@ -39,11 +39,8 @@ A Neo4j source specifies the connection to your Neo4j database. It is configured
 | `kind` | string | **Required**. Must be `neo4j`.
 | `uri` | string | **Required**. The URI of the Neo4j database instance.
 | `user` | string | **Required**. The username for database authentication.
-| `password` | string | **Required**. The password for database authentication. It's highly recommended to use environment variables for production.
+| `password` | string | **Required**. The password for database authentication. It is highly recommended to use environment variables for production.
 |===
-
----
-
 
 ---
 ## Tool Definition and Functionality
@@ -157,7 +154,6 @@ tools:
       RETURN movie, collect(actor.name) AS actors, collect(director.name) AS directors
 ----
 
-
 ---
 ### Running the Tools
 
@@ -179,6 +175,110 @@ curl -X POST http://127.0.0.1:5000/api/tool/search-movies-by-actor/invoke \
   "actor_name": "Tom Hanks"
 }'
 ----
+
+---
+## Example: Public Companies Dataset
+
+This example connects to the public "Companies" demo database and defines a tool to answer the question: *"What are first 5 organizations alphabetically?"*.
+
+### 1. Configuration (`tools_companies.yaml`)
+
+This configuration defines a tool `get-organizations-alphabetical` that retrieves a list of organizations ordered by name.
+
+[source,yaml]
+----
+sources:
+  companies-demo:
+    kind: neo4j
+    uri: neo4j+s://demo.neo4jlabs.com:7687
+    user: companies
+    password: companies
+    database: companies
+
+tools:
+  get-schema:
+    kind: neo4j-schema
+    source: companies-demo
+    description: "Extracts the database schema."
+
+  get-organizations-alphabetical:
+    kind: neo4j-cypher
+    source: companies-demo
+    description: "Retrieves a list of organizations sorted alphabetically."
+    parameters:
+      - name: limit
+        type: integer
+        description: "The number of results to return."
+    statement: |
+      MATCH (o:Organization)
+      RETURN o.name as OrganizationName
+      ORDER BY o.name ASC
+      LIMIT $limit
+----
+
+### 2. Python Client (`client.py`)
+
+This script mimics an AI agent. It connects to the toolbox and invokes the tool to get the first 5 organizations.
+
+[source,python]
+----
+import asyncio
+import os
+from mcp import StdioServerParameters
+from mcp.client.stdio import stdio_client
+from mcp import ClientSession
+
+# Configuration: Launch toolbox with the companies yaml
+server_params = StdioServerParameters(
+    command="toolbox", 
+    args=["--tools-file", "tools_companies.yaml", "--stdio"],
+    env=os.environ.copy()
+)
+
+async def main():
+    print("Connecting to MCP Toolbox (Companies Demo)...")
+    
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            print("Connected!")
+            
+            print("\n--- Question: What are first 5 organizations alphabetically? ---")
+            
+            result = await session.call_tool(
+                "get-organizations-alphabetical",
+                arguments={
+                    "limit": 5
+                }
+            )
+            
+            # Display the result
+            for content in result.content:
+                print(content.text)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+----
+
+### 3. How to Run the Client
+
+To run the example above, follow these steps:
+
+1.  **Install dependencies:** You need the `mcp` python package.
+    [source,shell]
+    ----
+    pip install mcp
+    ----
+
+2.  **Save the files:**
+    * Save the YAML configuration as `tools_companies.yaml`.
+    * Save the Python code as `client.py`.
+
+3.  **Run the script:**
+    [source,shell]
+    ----
+    python client.py
+    ----
 
 ---
 ## The Semantic Layer and its Value
