@@ -13,7 +13,7 @@ via a standard protocol over HTTP, SSE, or stdio.
 There are two examples provided using the **Neo4j "Companies" Demo Database**:
 
 * `main.py` — calls the Neo4j tool functions directly (does **not** use MCP transport, but the tools are the same).  
-* `server.py` + `client.py` — demonstrates a full MCP setup with a FastMCP server exposing Neo4j tools and a client agent using `MCPServerStreamableHTTP`.
+* `client.py` — demonstrates a client agent that connects directly to the official **Neo4j MCP Server** using `stdio` transport.
 
 == Installation
 
@@ -24,7 +24,8 @@ pip install pydantic-ai mcp neo4j anyio pydantic-graph
 
 == Example: main.py (direct function calls, no MCP transport)
 
-This example connects to the public **Companies** demo database and retrieves information using specific Cypher queries.
+This example connects to the public **Companies** demo database and retrieves information using specific Cypher queries without using the MCP protocol.
+
 == The Companies Dataset
 
 The examples below use the public **Companies** demo database (`demo.neo4jlabs.com`). 
@@ -42,7 +43,6 @@ The schema visualization given by the command above is this:
 image::companies-db-schema-viz.png[width=600, align=center]
 
 While the output of `CALL apoc.meta.schema()`, which provides detailed metadata about nodes and relationships, is available below:
-
 
 [source,json]
 ----
@@ -62,7 +62,6 @@ While the output of `CALL apoc.meta.schema()`, which provides detailed metadata 
     "properties": {},
     "type": "relationship"
   },
-
   "IndustryCategory": {
     "count": 258,
     "labels": [],
@@ -194,17 +193,6 @@ While the output of `CALL apoc.meta.schema()`, which provides detailed metadata 
 }
 ----
 
-== Installation
-
-[source,bash]
-----
-pip install pydantic-ai mcp neo4j anyio
-----
-
-== Example: main.py (direct function calls, no MCP transport)
-
-This example connects to the public **Companies** demo database and retrieves information using specific Cypher queries.
-
 [source,python]
 ----
 from neo4j import GraphDatabase
@@ -217,24 +205,6 @@ class Neo4jTool:
 
     def close(self):
         self.driver.close()
-
-    async def search_companies(self, search_term: str) -> str:
-        """
-        List of Companies (company_id, name, summary) by fulltext search.
-        """
-        query = """
-        CALL db.index.fulltext.queryNodes('entity', $search, {limit: 5}) 
-        YIELD node as c, score WHERE c:Organization 
-        AND NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
-        RETURN c.id as company_id, c.name as name, c.summary as summary
-        """
-        try:
-            results, _, _ = self.driver.execute_query(query, search=search_term)
-            if not results:
-                return f"No companies found matching '{search_term}'."
-            return "\n".join([f"Name: {r['name']}, Summary: {r['summary'][:100]}..." for r in results])
-        except Exception as e:
-            return f"Error: {e}"
 
     async def get_companies_in_industry(self, industry: str) -> str:
         """
@@ -260,114 +230,137 @@ async def main():
     neo4j_tool = Neo4jTool("neo4j+s://demo.neo4jlabs.com", "companies", "companies")
     
     try:
-        print("--- Search for 'Patagonia' ---")
-        print(await neo4j_tool.search_companies("Patagonia"))
-        
-        print("\n--- Find 'Retail' Companies ---")
-        print(await neo4j_tool.get_companies_in_industry("Retail"))
+        print("\n--- Find 'CRM Software Companies' ---")
+        print(await neo4j_tool.get_companies_in_industry("CRM Software Companies"))
     finally:
         neo4j_tool.close()
 
 asyncio.run(main())
 ----
 
-== Example: server.py (FastMCP server exposing Neo4j tools)
+== Example: client.py (Using Official Neo4j MCP via Stdio)
 
-Here we expose the company retrieval tools via the Model Context Protocol (MCP).
+In this example, we configure the Pydantic AI agent to launch the official `mcp-neo4j-cypher` server directly as a subprocess using `stdio`. 
 
-[source,python]
-----
-from mcp.server.fastmcp import FastMCP
-from neo4j import GraphDatabase
-
-# Initialize Neo4j Driver
-# Using the public 'companies' demo database
-driver = GraphDatabase.driver("neo4j+s://demo.neo4jlabs.com", auth=("companies", "companies"))
-
-# Instantiate FastMCP server
-server = FastMCP(name="Neo4j_Companies_Server")
-
-@server.tool()
-async def search_companies(search_term: str) -> str:
-    """
-    Search for companies by name using fulltext search. 
-    Useful when the user asks for a specific company name.
-    """
-    query = """
-    CALL db.index.fulltext.queryNodes('entity', $search, {limit: 5}) 
-    YIELD node as c, score WHERE c:Organization 
-    AND NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
-    RETURN c.id as company_id, c.name as name, c.summary as summary
-    """
-    try:
-        results, _, _ = driver.execute_query(query, search=search_term)
-        if not results:
-            return "No companies found."
-        return "\n".join([f"Name: {r['name']}, Summary: {r['summary']}" for r in results])
-    except Exception as e:
-        return f"Database error: {e}"
-
-@server.tool()
-async def get_companies_in_industry(industry: str) -> str:
-    """
-    Find companies belonging to a specific industry (e.g., 'Retail', 'Technology').
-    """
-    query = """
-    MATCH (:IndustryCategory {name:$industry})<-[:HAS_CATEGORY]-(c) 
-    WHERE NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
-    RETURN c.id as company_id, c.name as name, c.summary as summary
-    LIMIT 10
-    """
-    try:
-        results, _, _ = driver.execute_query(query, industry=industry)
-        if not results:
-            return f"No companies found in {industry}."
-        return "\n".join([f"Name: {r['name']}" for r in results])
-    except Exception as e:
-        return f"Database error: {e}"
-
-if __name__ == "__main__":
-    # Run with streamable HTTP transport
-    server.run(
-        transport="streamable-http",
-        mount_path="/mcp"
-    )
-----
-
-== Example: client.py (Agent using MCP)
-
-The agent now uses the MCP server to answer business questions about companies.
+This approach uses `uvx` (from the `uv` package) to run the server without manual installation, connecting to the remote database using the specified credentials.
 
 [source,python]
 ----
-from pydantic_ai import Agent
-from pydantic_ai.mcp import MCPServerStreamableHTTP
 import asyncio
+import os
+from dataclasses import dataclass
+from pydantic_ai import Agent, RunContext
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
 
-# Connect to the FastMCP server
-server = MCPServerStreamableHTTP('http://localhost:8000/mcp')  
-agent = Agent('google-gla:gemini-2.0-flash', toolsets=[server])  
+# --- 1. Dependencies Definition ---
+@dataclass
+class McpDeps:
+    session: ClientSession
+
+# --- 2. Agent Configuration ---
+# Uses OpenAI (GPT-4o)
+agent = Agent(
+    'openai:gpt-4o',
+    deps_type=McpDeps,
+    system_prompt="You are a business data expert. Use the 'run_cypher' tool to query the Neo4j database."
+)
+
+# --- 3. Tool Registration ---
+@agent.tool
+async def run_cypher(ctx: RunContext[McpDeps], query: str) -> str:
+    """
+    Executes a read-only Cypher query on the Neo4j database.
+    Use this tool to find companies, people, or relationships.
+    """
+    print(f"[Tool] Running Cypher query: {query}")
+    
+    tool_name = "read-cypher" 
+    
+    try:
+        result = await ctx.deps.session.call_tool(
+            tool_name, 
+            arguments={"query": query}
+        )
+        return str(result.content)
+    except Exception as e:
+        return f"Error executing tool '{tool_name}': {str(e)}"
+
+# --- 4. Connection Configuration ---
+server_params = StdioServerParameters(
+    command="neo4j-mcp", 
+    args=[],
+    env={
+        "NEO4J_URI": "neo4j+s://demo.neo4jlabs.com:7687",
+        "NEO4J_USERNAME": "companies",
+        "NEO4J_PASSWORD": "companies",
+        "NEO4J_DATABASE": "companies"
+    }
+)
 
 async def main():
-    async with agent:  
-        # Ask the LLM a question that requires the Neo4j tools
-        # It should decide to use 'get_companies_in_industry'
-        result = await agent.run('Find me some companies in the Retail industry.')
-    print(result.output)
-    #> Here are some companies in the Retail industry:
-    #> 1. Walmart
-    #> 2. Patagonia
-    #> ...
+    print("Connecting to Neo4j MCP Server...")
+    
+    # Open the communication channel
+    async with stdio_client(server_params) as (read, write):
+        # Initialize the MCP Session
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            print("MCP Session Initialized.")
 
-asyncio.run(main())
+            # List available tools for debugging purposes
+            print("\nList of available tools on remote server:")
+            tools = await session.list_tools()
+            for t in tools.tools:
+                print(f" - {t.name}: {t.description}")
+            print("-" * 50)
+            
+            # Prepare dependencies
+            deps = McpDeps(session=session)
+            
+            print("Starting Agent...")
+            
+            try:
+                # Run the agent
+                result = await agent.run(
+                    'What are first 5 organizations alphabetically?',
+                    deps=deps
+                )
+                
+                print("\n--- Final Answer ---")
+                if hasattr(result, 'data'):
+                    print(result.data)
+                else:
+                    print(result)
+            except Exception as e:
+                print(f"\nAgent Error: {e}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ----
 
-Note: `client.py` uses the **MCP standard** to discover the tools exposed by `server.py` and execute them to answer the prompt.
+=== How to run the client
 
+To start the agent, you need to set the API key for your LLM provider (in this example, Google Gemini) and run the script.
+
+[source,bash]
+----
+# Set your API Key
+export GEMINI_API_KEY=your_gemini_api_key_here
+
+# Run the client
+python client.py
+----
+
+You will also need `uv` installed to run the Neo4j MCP server directly:
+[source,bash]
+----
+pip install uv
+----
 
 == Example using pydantic-graph package
 
-In this example, `pydantic-graph`` manages the logic flow (State Machine), 
+In this example, `pydantic-graph` manages the logic flow (State Machine), 
 and Neo4j is used as a "Audit Log" or "Long-term Memory," saving every step the agent takes into the database.
 
 [source,python]
@@ -525,14 +518,13 @@ if __name__ == "__main__":
     asyncio.run(main())
 ----
 
-
 == Functionality Includes
 
 * `Neo4jTool` - wraps Neo4j Cypher operations
-* FastMCP server exposing graph database tools via MCP  
+* **Official Neo4j MCP Server** - run directly via `uvx`
 * Real-world "Companies" dataset queryable via public demo credentials
-* Client agent using MCPServerStreamableHTTP toolset  
-* LLM integration with Gemini / Google GLA  
+* Client agent using `stdio` transport for secure, local process communication
+* LLM integration with Gemini / Google GLA
 
 == Relevant Links
 [cols="1,4"]
