@@ -7,7 +7,7 @@
 :slug: mcp-toolbox
 :category: labs
 
-image::https://www.gstatic.com/images/branding/product/2x/google_assistant_48dp.png[width=800]
+image::https://github.com/googleapis/genai-toolbox/raw/main/logo.png[width=800]
 
 The **Model Context Protocol (MCP) Toolbox** is an open-source framework that acts as a **semantic layer** between an AI agent (like a Large Language Model) and external data sources, such as Neo4j. It is designed to facilitate safe, structured data interaction by translating agent requests into predefined, secure database queries.
 
