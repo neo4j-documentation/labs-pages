@@ -13,7 +13,7 @@ via a standard protocol over HTTP, SSE, or stdio.
 There are two examples provided using the **Neo4j "Companies" Demo Database**:
 
 * `main.py` — calls the Neo4j tool functions directly (does **not** use MCP transport, but the tools are the same).  
-* `client.py` — demonstrates a client agent that connects directly to the official **Neo4j MCP Server** using `stdio` transport.
+* `client.py` — demonstrates a client agent that connects directly to the official https://github.com/neo4j/mcp[**Neo4j MCP Server**] using `stdio` transport.
 
 == Installation
 
@@ -240,7 +240,7 @@ asyncio.run(main())
 
 == Example: client.py (Using Official Neo4j MCP via Stdio)
 
-In this example, we configure the Pydantic AI agent to launch the official `mcp-neo4j-cypher` server directly as a subprocess using `stdio`. 
+In this example, we configure the Pydantic AI agent to launch the official `neo4j-mcp` server directly as a subprocess using `stdio`. 
 
 This approach uses `uvx` (from the `uv` package) to run the server without manual installation, connecting to the remote database using the specified credentials.
 
@@ -529,9 +529,9 @@ if __name__ == "__main__":
 == Relevant Links
 [cols="1,4"]
 |===
-| icon:user[] Authors | https://github.com/akollegger[Andreas Kollegger^]
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Integration | https://github.com/pydantic-ai/pydantic-ai[GitHub]
 | icon:github[] Issues | https://github.com/pydantic-ai/pydantic-ai/issues
+| icon:github[] Neo4j MCP Server | https://github.com/neo4j/mcp[Neo4j MCP Server]
 | icon:book[] Documentation | https://ai.pydantic.dev/mcp/client/[Docs]
 |===
