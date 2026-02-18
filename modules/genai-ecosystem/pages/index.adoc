@@ -4,7 +4,7 @@ include::_graphacademy_llm.adoc[]
 :slug: genai-ecosystem
 :author: Michael Hunger, Tomaz Bratanic, Oskar Hane
 :category: labs
-:tags: llm, genai, generative ai, large language models, integrations, rag, vector search, retrieval augmented generation, 
+:tags: llm, genai, generative ai, large language models, integrations, rag, vector search, retrieval augmented generation,
 :neo4j-versions: 5.X
 :page-pagination:
 :page-product: GenAI Ecosystem
@@ -14,14 +14,14 @@ include::_developer_survey.adoc[]
 image::https://dist.neo4j.com/wp-content/uploads/20231030151119/genai-art-diagram-1.svg[width=800]
 
 
-Knowledge graphs bring more accurate responses, rich context, and explainability to each generative AI model interaction. 
-By combining knowledge graphs with native vector search, you get the best of both worlds with Graph RAG (Retrieval Augmented Generation). 
+Knowledge graphs bring more accurate responses, rich context, and explainability to each generative AI model interaction.
+By combining knowledge graphs with native vector search, you get the best of both worlds with Graph RAG (Retrieval Augmented Generation).
 
 Language models also can be used to extract entities and their relationships from unstructured text to build up and enrich knowledge graphs.
 
 == How to get started
 
-1. For an high level overview, have a look at https://neo4j.com/generativeai/[neo4j.com/genai^]  
+1. For an high level overview, have a look at https://neo4j.com/generativeai/[neo4j.com/genai^]
 2. Use the xref:llm-graph-builder.adoc[LLM-Knowledge Graph Builder] to turn your own documents into a knowledge graph
 3. Integrate one of the https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/#neo4j[Neo4j MCP servers^] into your AI assistant or development workflow.
 4. If you want to learn more take one of the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[GenAI GraphAcademy courses^]
@@ -39,7 +39,7 @@ The Neo4j GenAI Ecosystem is a collection of tools and integrations that make it
 
 === GraphRAG
 
-GraphRAG combines an ingestion process that extracts entities and relationships from unstructured text and further uses graph algorithms for enrichment and summarization. 
+GraphRAG combines an ingestion process that extracts entities and relationships from unstructured text and further uses graph algorithms for enrichment and summarization.
 The retrieval step then uses the knowledge graph in combination with vector search to navigate to more relevant information than just the initial text chunks.
 
 * https://neo4j.com/blog/graphrag-manifesto/[The GraphRAG Manifesto]
@@ -80,7 +80,7 @@ Neo4j added a number of features to make it easier to build GenAI applications a
 
 === GenAI Frameworks
 
-Neo4j and our community have contributed integrations to many of these frameworks. 
+Neo4j and our community have contributed integrations to many of these frameworks.
 You can find overviews of these integrations in the pages of this section, as well as code examples, tutorials and more.
 
 * xref:langchain.adoc[LangChain (Python)]
@@ -91,7 +91,7 @@ You can find overviews of these integrations in the pages of this section, as we
 * xref:haystack.adoc[Haystack]
 * xref:ms-agent-framework.adoc[MS Agent Framework]
 * xref:mcp-toolbox.adoc[MCP Toolbox]
-* xref:dspy.adoc[DSPy]
+// * xref:dspy.adoc[DSPy]
 
 == Highlighted Articles
 
