@@ -10,10 +10,14 @@ content:
   - url: https://github.com/mroiter-larus/neo4j-streams.git
     branches: ['antora_docs']
     start_path: doc/docs
+  # Neo4j Agent Memory - external content source
+  - url: https://github.com/neo4j-labs/agent-memory.git
+    branches: main
+    start_path: docs
 
 ui:
   bundle:
-    url: https://github.com/neo4j-documentation/docs-refresh/raw/master/ui/build/ui-bundle.zip
+    url: https://d12wh7zj8x3amw.cloudfront.net/build/ui-bundle-latest.zip
     # url: /Users/adam/projects/docs/ui/build/ui-bundle.zip
     snapshot: true
 urls:

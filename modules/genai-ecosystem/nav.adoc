@@ -31,4 +31,5 @@
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
 **** xref:pydantic.adoc[Pydantic AI]
+**** xref:strands-agents-neo4j[Strands Agents]
 // **** link:xxx[Documentation]

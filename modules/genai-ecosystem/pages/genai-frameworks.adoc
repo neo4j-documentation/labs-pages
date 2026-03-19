@@ -11,12 +11,12 @@ include::_graphacademy_llm.adoc[]
 
 While current foundation models (language, image, speech, embeddings) are available through APIs and can be used just with a http request or a few lines of code, the devil is as always in the details. It is not just about a single API call but full applications, workflows and architectures.
 
-In the last years a number of really powerful open-source orchestration libraries have been developed, many with a large contributor community and a lot of momentum. 
+In the last years a number of really powerful open-source orchestration libraries have been developed, many with a large contributor community and a lot of momentum.
 Even the large cloud providers and AI companies contributed and are using these libraries as in this fast moving world it is hard to keep up otherwise.
 
 Those libraries cover a number of aspects:
 
-- LLM usage, including Prompt and Output 
+- LLM usage, including Prompt and Output
 - Embedding generation
 - Vector and database integration
 - RAG workflows
@@ -35,8 +35,9 @@ Neo4j and our community have contributed integrations to many of these framework
 * xref:haystack.adoc[Haystack]
 * xref:semantic-kernel.adoc[Semantic Kernel]
 * xref:pydantic.adoc[Pydantic AI]
+* xref:strands-agents-neo4j.adoc[Strands Agents]
 * xref:mcp-toolbox.adoc[MCP Toolbox]
-* xref:dspy.adoc[DSPy]
+// * xref:dspy.adoc[DSPy]
 
 == GraphAcademy Courses
 
