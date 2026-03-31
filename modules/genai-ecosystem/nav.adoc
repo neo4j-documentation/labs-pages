@@ -28,11 +28,9 @@
 // **** link:xxx[Documentation]
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
-**** GenAI Libraries
-***** xref:genai-frameworks/langchain-agents.adoc[LangChain]
-***** xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex]
-// ***** xref:genai-frameworks/haystack-agents.adoc[Haystack]
 *** Agent Frameworks
+**** xref:genai-frameworks/langchain-agents.adoc[LangChain]
+**** xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex]
 **** xref:genai-frameworks/langgraph.adoc[LangGraph]
 **** xref:genai-frameworks/openai-agents.adoc[OpenAI Agents SDK]
 // **** xref:strands-agents-neo4j[Strands Agents]

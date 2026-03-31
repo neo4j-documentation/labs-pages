@@ -281,6 +281,13 @@ This https://github.com/neo4j-examples/langchain-starter-kit/blob/main/app/vecto
 
 See this https://neo4j.com/developer-blog/langchain-neo4j-starter-kit/[Developer Blog Article] for additional details and instructions on working with the Starter Kit.
 
+== Agent Integration
+
+For using LangChain and LangGraph as agent frameworks with Neo4j — including MCP integration, custom tools, checkpoint savers, and multi-agent workflows — see:
+
+* xref:genai-frameworks/langchain-agents.adoc[LangChain Agent Integration]
+* xref:genai-frameworks/langgraph.adoc[LangGraph Agent Integration]
+
 == Relevant Links
 [cols="1,4"]
 |===
