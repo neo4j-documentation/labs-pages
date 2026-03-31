@@ -28,7 +28,7 @@
 // **** link:xxx[Documentation]
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
-*** Agent Frameworks
+*** xref:agent-frameworks.adoc[Agent Frameworks]
 **** xref:genai-frameworks/langchain-agents.adoc[LangChain]
 **** xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex]
 **** xref:genai-frameworks/langgraph.adoc[LangGraph]
@@ -41,7 +41,7 @@
 **** xref:genai-frameworks/google-adk.adoc[Google ADK]
 // **** xref:genai-frameworks/crewai.adoc[CrewAI]
 // **** xref:genai-frameworks/langflow.adoc[Langflow]
-*** Agent Platforms
+*** xref:agent-platforms.adoc[Agent Platforms]
 **** xref:genai-frameworks/aws-agentcore.adoc[AWS AgentCore]
 ***** xref:genai-frameworks/aws-agentcore-mcp-docker.adoc[MCP Runtime (Docker)]
 ***** xref:genai-frameworks/aws-agentcore-gateway.adoc[Gateway + External MCP]
