@@ -26,8 +26,6 @@
 // **** link:xxx[Documentation]
 **** xref:haystack.adoc[Haystack]
 // **** link:xxx[Documentation]
-**** xref:ms-agent-framework.adoc[Microsoft Agent Framework]
-// **** link:xxx[Documentation]
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
 **** GenAI Libraries
