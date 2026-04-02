@@ -1,9 +1,4 @@
-[NOTE]
-====
-This documentation pertains to the unsupported version of NeoDash, as part of Neo4j Labs.
-For users of the supported NeoDash offering, refer to https://neo4j.com/docs/neodash-commercial/[NeoDash commercial].
 
-====
 
 == NeoDash - Dashboard Builder for Neo4j
 :imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
@@ -22,6 +17,12 @@ For users of the supported NeoDash offering, refer to https://neo4j.com/docs/neo
 :page-ad-underline: Start Here
 :page-ad-link: https://neo4j.typeform.com/to/E6yOZ2Py?utm_source=GA&utm_medium=blurb&utm_campaign=survey
 
+[NOTE]
+====
+This documentation pertains to the unsupported version of NeoDash, as part of Neo4j Labs.
+For users of the supported NeoDash offering, refer to https://neo4j.com/docs/neodash-commercial/[NeoDash commercial].
+
+====
 
 image::neodash.png[width=800]
 
