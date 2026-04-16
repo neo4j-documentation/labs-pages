@@ -185,3 +185,17 @@ End-to-end agents with Neo4j:
 * Neo4j MCP Cypher tools
 ////
 
+'''
+
+== Videos & Tutorials
+
+NODES 2025 with Christian Glessner
+
+Live-Coding Graph-Native Agents: Neo4j AuraDB + Microsoft Agent Framework in Action:
+
+AI agents are great at reasoning — but not at remembering.
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aJY7Sm5vtko" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+

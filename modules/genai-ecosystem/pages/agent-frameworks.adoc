@@ -1,0 +1,36 @@
+= Agent Frameworks
+include::_graphacademy_llm.adoc[]
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:slug: agent-frameworks
+:author: Neo4j Labs
+:category: labs
+:tags: agents, llm, neo4j, mcp, langchain, langgraph, openai, pydantic, claude, microsoft, google, adk
+:neo4j-versions: 5.X
+:page-pagination:
+:page-product: Agent Frameworks
+
+Agent frameworks give developers the building blocks to go beyond single LLM calls — connecting language models to tools, memory, and external data sources. Instead of a linear prompt-response cycle, agents can reason over multiple steps, choose which tools to invoke, and adapt their behaviour based on intermediate results.
+
+Neo4j fits naturally into agent workflows as both a knowledge source and a memory store. Agents query the graph through MCP tools or direct driver integrations to retrieve structured context, traverse relationships across entities, and ground responses in real data rather than model weights alone.
+
+The connection point is usually the https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP server^], which exposes schema inspection and Cypher execution as standard tools that any MCP-compatible agent can call. For frameworks that prefer direct integration, the Neo4j Python driver and `langchain-neo4j` / `llama-index-graph-stores-neo4j` packages provide native tool definitions and vector store support.
+
+== Agent Frameworks
+
+Neo4j integrates with all major agent frameworks through the Neo4j MCP server, direct driver connections, and framework-native tool definitions.
+
+* xref:genai-frameworks/langchain-agents.adoc[LangChain] — ReAct-style agents with `langchain-neo4j` and MCP adapter support
+* xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex] — FunctionAgent with `BasicMCPClient`, `Neo4jVectorStore`, and GraphRAG retrievers
+* xref:genai-frameworks/langgraph.adoc[LangGraph] — Stateful multi-actor graph workflows with Neo4j checkpoint persistence
+* xref:genai-frameworks/openai-agents.adoc[OpenAI Agents SDK] — Tool-calling agents using the OpenAI Agents SDK with Neo4j MCP
+* xref:genai-frameworks/aws-strands-agents.adoc[AWS Strands Agents] — AWS-native agent framework with Bedrock model support
+* xref:genai-frameworks/pydantic-ai.adoc[Pydantic AI] — Type-safe agent framework with structured tool definitions
+* xref:genai-frameworks/claude-agent.adoc[Claude Agent SDK] — Anthropic's agent SDK with tool use and MCP integration
+* xref:genai-frameworks/microsoft-agent-framework.adoc[Microsoft Agent Framework] — Multi-pattern integration: Direct SDK, MCP, HTTP API, and Context Provider
+* xref:genai-frameworks/google-adk.adoc[Google ADK] — Google's Agent Development Kit with MCP Toolbox support
+
+== GraphAcademy Courses
+
+If you want to learn how LLMs and Knowledge Graphs combine to improve GenAI applications, check out the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[Neo4j & LLM courses on GraphAcademy^].
+
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundamentals.png[link=https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs]

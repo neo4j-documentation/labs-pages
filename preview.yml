@@ -4,8 +4,8 @@ site:
 
 content:
   sources:
-  - url: ./
-    branches: publish
+    - url: ./
+      branches: publish
 
 ui:
   bundle:
@@ -17,8 +17,8 @@ urls:
 
 asciidoc:
   extensions:
-  - "@neo4j-documentation/remote-include"
-  - "@neo4j-documentation/macros"
+    - "@neo4j-documentation/remote-include"
+    - "@neo4j-documentation/macros"
   attributes:
     page-theme: labs
     page-disabletracking: true

@@ -1,0 +1,230 @@
+= Strands AI Agents with MCP and Neo4j
+:slug: strands-mcp-neo4j
+:author: 
+:category: genai-ecosystem
+:tags: strands, mcp, llm, neo4j
+:page-pagination:
+:page-product: strands-ai
+
+Integration of Neo4j graph database with Strands Agents.  
+Neo4j's graph capabilities can be exposed as MCP tools, allowing LLM-powered Strands Agents to query and modify the database via a standard protocol over HTTP or SSE.
+
+This guide provides examples using the official https://github.com/neo4j/mcp[**Neo4j MCP Server**] via `stdio` transport, eliminating the need to run a separate local server process manually.
+
+== Installation
+
+[source,bash]
+----
+pip install strands mcp neo4j pandas matplotlib seaborn openai
+----
+
+You will also need `uv` installed to run the Neo4j MCP server directly:
+[source,bash]
+----
+pip install uv
+----
+
+== Usage
+
+Run the Strands Agent client directly. It will automatically launch the Neo4j MCP server as a subprocess.
+
+*Prerequisite:* Ensure you have set your OpenAI API key in your environment.
+[source,bash]
+----
+export OPENAI_API_KEY=sk-proj-...
+python client.py
+----
+
+== Example: client.py (Using Official Neo4j MCP via Stdio)
+
+This example demonstrates a Strands Agent connecting directly to the official `neo4j-mcp` server using `uvx`. It connects to the public **Companies** demo database.
+
+[source,python]
+----
+import os
+from strands import Agent
+from strands.tools.mcp import MCPClient
+from strands.models.openai import OpenAIModel
+from mcp import stdio_client, StdioServerParameters
+
+# 1) Configure the MCP Client with Stdio transport
+# This uses 'uvx' to run the official neo4j-mcp package directly
+# Environment variables are passed to configure the specific database connection
+def create_mcp_client():
+    return stdio_client(
+        StdioServerParameters(
+            command="neo4j-mcp",
+            args=[],
+            env={
+                "NEO4J_URI": "neo4j+s://demo.neo4jlabs.com:7687",
+                "NEO4J_USERNAME": "companies",
+                "NEO4J_PASSWORD": "companies",
+                "NEO4J_DATABASE": "companies"
+            }
+        )
+    )
+
+def main():
+    # 2) Initialize the MCP Client wrapper
+    # Strands uses this wrapper to manage the tool discovery and execution
+    client = MCPClient(create_mcp_client)
+
+    print("Connecting to Neo4j via MCP...")
+    
+    with client:
+        # 3) List available tools
+        tools = client.list_tools_sync()
+        
+        # Helper to print tool names (accessing the internal mcp_tool object)
+        tool_names = [t.mcp_tool.name for t in tools]
+        print("Available tools:", tool_names)
+
+        # 4) Create a Strands Agent using OpenAI
+        # We explicitly use OpenAIModel to avoid defaulting to AWS Bedrock.
+        # Note: 'model_id' is required (not 'model'). 
+        # The API Key is picked up automatically from the OPENAI_API_KEY env var.
+        agent = Agent(
+            tools=tools,
+            model=OpenAIModel(
+                model_id="gpt-4o"
+            ),
+            system_prompt="You are a helper for querying graph databases. Use the available tools to answer questions."
+        )
+
+        # 5) Ask a question
+        query = "What are 5 companies mentioned in articles from January 2023?"
+        print(f"\nUser Query: {query}")
+        
+        response = agent(query)
+        print("\nAgent Response:")
+        print(response)
+
+if __name__ == "__main__":
+    main()
+----
+
+== Example: Financial Crime Analysis (Stdio Transport)
+
+This example utilizes the FinCEN dataset hosted on a public Neo4j demo instance. It demonstrates a more complex use case with a sliding window conversation manager.
+
+[source,python]
+----
+import os
+from strands import Agent
+from strands.agent.conversation_manager import SlidingWindowConversationManager
+from strands.tools.mcp import MCPClient
+from strands.models.openai import OpenAIModel
+from mcp import stdio_client, StdioServerParameters
+
+# 1) Configure the MCP Client with Stdio transport
+# This uses 'uvx' to run the official neo4j-mcp package
+stdio_neo4j_mcp_client = MCPClient(
+    lambda: stdio_client(
+        StdioServerParameters(
+            command="neo4j-mcp"
+            args=[],
+            env = {
+                "NEO4J_URI" :  "neo4j+s://demo.neo4jlabs.com:7687",
+                "NEO4J_USERNAME" : "fincen",
+                "NEO4J_PASSWORD" :  "fincen",
+                "NEO4J_DATABASE" : "fincen"
+            }
+        )
+    )
+)
+
+# 2) Create a conversation manager
+conversation_manager = SlidingWindowConversationManager(
+    window_size=20,  # Maximum number of messages to keep
+)
+
+def call_agent(query):
+    print('Starting agent query...')
+    
+    # 3) Create and run the agent context
+    with stdio_neo4j_mcp_client:
+        # Fetch available tools dynamically from the MCP server
+        tools = stdio_neo4j_mcp_client.list_tools_sync()
+        
+        # Initialize the Strands Agent
+        agent = Agent(
+            tools=tools, 
+            callback_handler=None, 
+            conversation_manager=conversation_manager,
+            model=OpenAIModel(
+                model_id="gpt-4o"
+            )
+        )
+        
+        # Execute the query
+        response = agent(query)
+    
+    print('Agent response:')
+    print(response)
+    return response
+
+if __name__ == "__main__":
+    # Example Query suitable for the FinCEN dataset
+    call_agent("Retrieve the schema of the database to understand the nodes and relationships.")
+----
+
+== Example: Visualization with Pandas & Seaborn
+
+After retrieving data via the Agent or directly from Neo4j, you can visualize the results using Python data science libraries.
+
+[source,python]
+----
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from neo4j import GraphDatabase
+
+# 1) Direct connection for visualization data retrieval
+NEO4J_URI = "neo4j+s://demo.neo4jlabs.com:7687"
+NEO4J_USERNAME = "fincen"
+NEO4J_PASSWORD = "fincen"
+
+def get_transaction_data():
+    with GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD)) as driver:
+        # Example query: Count transactions by Entity
+        query = """
+        MATCH (s:Entity)-[r:FILED]->(f:Filing)
+        RETURN s.name as Entity, count(r) as TransactionCount
+        ORDER BY TransactionCount DESC
+        LIMIT 10
+        """
+        records, summary, keys = driver.execute_query(query, database_="fincen")
+        # Convert to Pandas DataFrame
+        return pd.DataFrame([r.data() for r in records])
+
+# 2) Visualize Data
+if __name__ == "__main__":
+    df = get_transaction_data()
+    
+    if not df.empty:
+        plt.figure(figsize=(10, 6))
+        sns.barplot(data=df, x='TransactionCount', y='Entity', palette='viridis')
+        plt.title('Top 10 Entities by Transaction Filings (FinCEN)')
+        plt.xlabel('Number of Filings')
+        plt.ylabel('Entity Name')
+        plt.tight_layout()
+        plt.show()
+    else:
+        print("No data found to visualize.")
+----
+
+== Functionality Includes
+
+* `read-cypher` / `write-cypher` — Standard tools exposed by the official server
+* Strands Agent using MCP transport to call tools  
+* LLM integration via OpenAI or Mistral
+* Support for `stdio` transport using `uvx` for ephemeral server execution
+* Data visualization integration using `pandas`, `seaborn`, and `matplotlib`
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Neo4j MCP Server | https://github.com/neo4j/mcp[Neo4j MCP Server]
+| icon:documentation[] Documentation | https://strandsagents.com/latest/documentation/docs/[Strands Agents SDK]
+|===
