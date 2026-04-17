@@ -579,8 +579,8 @@ export async function manageChatSessions() {
 == Relevant Links
 [cols="1,4"]
 |===
-| icon:github[] GitHub genkit | https://github.com/firebase/genkit[GitHub genkit]
-| icon:github[] GitHub genkitx-neo4j | https://github.com/neo4j-partners/genkitx-neo4j[GitHub genkitx-neo4j]
-| icon:book[] Genkit Documentation | https://genkit.dev/[Docs]
-| icon:book[] Neo4j Integration Docs | https://genkit.dev/docs/js/integrations/neo4j/
+| icon:github[] GitHub Genkit | https://github.com/firebase/genkit[GitHub Genkit]
+| icon:github[] GitHub genkitx-neo4j | https://github.com/neo4j-labs/genkitx-neo4j[GitHub genkitx-neo4j]
+| icon:book[] Genkit Google Documentation | https://genkit.dev/docs/js/get-started/[Genkit Google Docs]
+| icon:book[] Neo4j Integration Docs | https://genkit.dev/docs/js/integrations/neo4j/[Neo4j Genkit Google Docs]
 |===
