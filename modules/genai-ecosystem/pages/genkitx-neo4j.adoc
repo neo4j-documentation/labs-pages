@@ -1,0 +1,586 @@
+= Neo4j graph vector database
+:description: Learn how to use Neo4j with Genkit for graph-based vector storage, semantic search, and knowledge graph applications.
+:page-supportedLanguages: js
+
+The Neo4j plugin provides indexer and retriever implementations that use the https://neo4j.com/[Neo4j] graph database for vector search capabilities.
+
+Neo4j combines the power of graph relationships with native vector search. It lets you store documents (or any entities) as nodes with vector embeddings while preserving rich, traversable relationships between them. This makes Neo4j an excellent choice for knowledge graphs, recommendation systems, GraphRAG pipelines, and any AI application that benefits from both semantic similarity and structural context.
+
+== Installation
+
+Install the required dependencies:
+
+[source,bash]
+----
+npm install genkit genkitx-neo4j @genkit-ai/googleai neo4j-driver
+----
+
+== Configuration
+
+Initialize the plugin when creating your Genkit instance. You must provide at least an `indexId` and an `embedder`.
+
+[source,typescript]
+----
+import { genkit } from 'genkit';
+import { neo4j } from 'genkitx-neo4j';
+import { googleAI } from '@genkit-ai/googleai';
+
+const ai = genkit({
+  plugins: [
+    googleAI(),
+    neo4j([
+      {
+        indexId: 'my-vector-index',
+        embedder: googleAI.embedder('gemini-embedding-001'),
+      },
+    ]),
+  ],
+});
+----
+
+You must specify a Neo4j index ID and the embedding model you want to use.
+
+== Quick Start
+
+Minimal example to index and query documents:
+
+[source,typescript]
+----
+import { genkit } from 'genkit';
+import { neo4j, neo4jIndexerRef, neo4jRetrieverRef } from 'genkitx-neo4j';
+import { googleAI } from '@genkit-ai/googleai';
+
+const ai = genkit({
+  plugins: [
+    googleAI(),
+    neo4j([
+      {
+        indexId: 'my-vector-index',
+        embedder: googleAI.embedder('gemini-embedding-001'),
+      },
+    ]),
+  ],
+});
+
+const indexer = neo4jIndexerRef({ indexId: 'my-vector-index' });
+const retriever = neo4jRetrieverRef({ indexId: 'my-vector-index' });
+
+await ai.index({ indexer, documents: [
+  new Document({
+    content: [{ text: 'Neo4j integrates natively with Genkit.' }],
+    metadata: { category: 'technology', uniqueId: 'doc-101' },
+  })
+] });
+const docs = await ai.retrieve({ retriever, query: "example" });
+----
+
+=== Connection Configuration
+
+You can configure the Neo4j connection in two ways:
+
+. **Using environment variables:**
+
+If no parameters are passed explicitly, the plugin will look for the following environment variables in your system:
+
+[source,bash]
+----
+NEO4J_URI=bolt://localhost:7687  # Neo4j's binary protocol
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=password
+NEO4J_DATABASE=neo4j  # Optional: specify database name
+----
+
+. **Using the `clientParams` option:**
+
+You can pass the connection configuration directly in your code during initialization:
+
+[source,typescript]
+----
+neo4j([
+  {
+    indexId: 'my-vector-index',
+    embedder: googleAI.embedder('gemini-embedding-001'),
+    clientParams: {
+      url: 'bolt://localhost:7687',
+      username: 'neo4j',
+      password: 'password',
+      database: 'neo4j', // Optional
+    },
+  },
+]),
+----
+
+
+=== Full Configuration Options
+
+[cols="1,1,3"]
+|===
+| Option | Type / Default | Description
+
+| `indexId` 
+| string (required) 
+| Unique identifier for the vector index. The plugin creates the index if it does not exist.
+
+| `embedder` 
+| Embedder reference (required) 
+| Genkit embedder used to generate vectors (e.g. Gemini, OpenAI, etc.).
+
+| `clientParams` 
+| object (optional) 
+| Connection details. Falls back to environment variables if omitted.
+
+| `label` 
+| string (optional) 
+| Node label in Neo4j. Defaults to `indexId`.
+
+| `textProperty` 
+| string (optional) 
+| Property name for the text content. Defaults to `text`.
+
+| `embeddingProperty` 
+| string (optional) 
+| Property name for the vector. Defaults to `embedding`.
+
+| `idProperty` 
+| string (optional) 
+| Property for unique document ID. Defaults to `id`.
+
+| `retrievalQuery` 
+| string (optional) 
+| Custom Cypher `RETURN` clause to enrich retrieved results.
+
+| `searchType` 
+| `'vector'` or `'hybrid'` (optional) 
+| Use `'hybrid'` to combine vector and full-text search.
+
+| `fullTextIndexName` 
+| string (optional) 
+| Custom name for the full-text index used in hybrid search.
+
+| `searchStrategy` 
+| Strategy instance (optional) 
+| e.g. `new MatchSearchClauseStrategy()` for native in-index filtering (Neo4j 2026.01+).
+
+| `filterMetadata` 
+| string[] (optional) 
+| Metadata fields to optimize for fast in-index filtering.
+
+| `ragModel` 
+| Model reference (optional) 
+| LLM used for HyDE and other GraphRAG strategies.
+
+| `customGraphRagConfigs` 
+| object (optional) 
+| Definitions for custom multi-hop GraphRAG topologies.
+|===
+
+
+== Usage
+
+Import retriever and indexer references like so:
+
+[source,typescript]
+----
+import { neo4jRetrieverRef } from 'genkitx-neo4j';
+import { neo4jIndexerRef } from 'genkitx-neo4j';
+----
+
+=== Indexing
+
+Use the indexer reference with `ai.index()` to store documents and their embeddings into your Neo4j database:
+
+[source,typescript]
+----
+import { Document } from 'genkit';
+
+export async function indexCompanyDocuments(ai: any) {
+  // Use the indexer reference
+  const INDEXER_REF = neo4jIndexerRef({ 
+    indexId: 'my-vector-index',
+    displayName: 'Company Documents Indexer'
+  });
+
+  const doc1 = new Document({
+    content: [{ text: 'Neo4j integrates natively with Genkit.' }],
+    metadata: { category: 'technology', uniqueId: 'doc-101' },
+  });
+
+  const doc2 = new Document({
+    content: [{ text: 'Vector search allows semantic similarity matching.' }],
+    metadata: { category: 'technology', uniqueId: 'doc-102' },
+  });
+
+  // Execute the indexing process
+  await ai.index({ 
+    indexer: INDEXER_REF, 
+    documents: [doc1, doc2] 
+  });
+
+  console.log('Documents indexed successfully.');
+}
+----
+
+=== Retrieval
+
+Use the retriever reference with `ai.retrieve()` to fetch semantically similar documents:
+
+[source,typescript]
+----
+export async function searchCompanyDocuments(ai: any, userQuery: string) {
+  // Use the retriever reference
+  const RETRIEVER_REF = neo4jRetrieverRef({ 
+    indexId: 'my-vector-index',
+    displayName: 'Company Documents Retriever'
+  });
+
+  const docs = await ai.retrieve({
+    retriever: RETRIEVER_REF,
+    query: userQuery,
+    // Optional: limit number of results
+    options: { k: 5 },
+  });
+
+  return docs;
+}
+----
+
+
+== Advanced Graph Features
+
+The true power of using a Graph Database as a vector store lies in combining semantic search with structural graph capabilities.
+
+=== Custom Entity and Label Properties
+
+Instead of being constrained to a predefined schema, you can configure the plugin to use custom node labels, ID fields, and properties for text and embeddings. This enables you to integrate embeddings into an existing Neo4j domain model seamlessly.
+
+[source,typescript]
+----
+// 1. Initialization with custom mappings
+const ai = genkit({
+  plugins: [
+    googleAI(),
+    neo4j([
+      {
+        indexId: 'custom-entities-idx', 
+        embedder: googleAI.embedder('gemini-embedding-001'),
+        clientParams, 
+        
+        // Define your domain-specific schema mapping here:
+        label: 'Article',
+        textProperty: 'bodyContent',
+        embeddingProperty: 'semanticVector',
+        idProperty: 'articleId',
+      },
+    ]),
+  ],
+});
+
+// 2. Retrieval over custom schema
+export async function retrieveArticles(query: string) {
+  const RETRIEVER_REF = neo4jRetrieverRef({ indexId: 'custom-entities-idx' });
+
+  const docs = await ai.retrieve({
+    retriever: RETRIEVER_REF,
+    query: query,
+    options: { k: 10 },
+  });
+
+  return docs;
+}
+----
+
+=== Metadata Filtering (Neo4j 2026.01+ Syntax)
+
+The plugin supports advanced metadata filtering, allowing retrieval queries to include structured constraints alongside semantic similarity.
+
+By using the `MatchSearchClauseStrategy`, the plugin leverages the new Vector Search syntax introduced in Neo4j 2026.01 (`MATCH (n) SEARCH n IN VECTOR INDEX`). This enables native in-index filtering, making queries significantly faster.
+
+To optimize performance, you can pass `filterMetadata` to explicitly instruct Neo4j to build index structures specifically for those fields.
+
+[source,typescript]
+----
+import { MatchSearchClauseStrategy } from 'genkitx-neo4j';
+
+// 1. Initialization with Metadata Filter Optimization
+neo4j([
+  {
+    indexId: 'optimized-docs',
+    embedder: googleAI.embedder('gemini-embedding-001'),
+    searchStrategy: new MatchSearchClauseStrategy(),
+    // Configure the index to optimize filtering on these specific metadata properties
+    filterMetadata: ['department', 'status'], 
+  },
+])
+
+// 2. Retrieval with Exact Metadata Matching
+export async function retrieveActiveItDocs(ai: any, query: string) {
+  const RETRIEVER_REF = neo4jRetrieverRef({ indexId: 'optimized-docs' });
+
+  const docs = await ai.retrieve({
+    retriever: RETRIEVER_REF,
+    query: query,
+    options: {
+      k: 10,
+      // This filter is applied natively inside the vector index lookup
+      filter: { department: 'IT', status: 'active' }
+    },
+  });
+
+  return docs;
+}
+----
+
+=== Hybrid Search (Vector + Full-Text)
+
+Hybrid search blends exact full-text keyword matching with the semantic ranking of vector search. This is particularly useful when queries contain domain-specific jargon, part numbers, or exact names that must be matched precisely, while still leveraging semantic reasoning for the overall ranking.
+
+[NOTE]
+====
+Metadata filtering cannot be used in combination with the hybrid search approach. Attempting to pass `filter: {...}` while `searchType: 'hybrid'` is active will throw an error.
+====
+
+[source,typescript]
+----
+// 1. Initialization with Hybrid Search enabled
+neo4j([
+  {
+    indexId: 'hybrid-search-idx',
+    embedder: googleAI.embedder('gemini-embedding-001'),
+    searchType: 'hybrid', // Enables both vector and full-text keyword retrieval
+    fullTextIndexName: 'custom-fulltext-index', // Optional
+    fullTextQuery: 'documentation', // Baseline query
+  },
+])
+
+// 2. Retrieval using Hybrid Search
+export async function retrieveWithHybridSearch(ai: any, query: string) {
+  const RETRIEVER_REF = neo4jRetrieverRef({ indexId: 'hybrid-search-idx' });
+
+  const docs = await ai.retrieve({
+    retriever: RETRIEVER_REF,
+    query: query,
+    options: { k: 5 },
+  });
+
+  return docs;
+}
+----
+
+=== Custom Retrieval Queries
+
+If standard vector similarity isn't enough, you can define your own specific retrieval logic by supplying custom Cypher queries via the `retrievalQuery` configuration parameter.
+
+This allows you to combine graph traversals, aggregations, and business logic directly in the retrieval step, returning extra properties alongside the standard text.
+
+[source,typescript]
+----
+// 1. Initialization with Custom Cypher Retrieval
+neo4j([
+  {
+    indexId: 'custom-query-idx',
+    embedder: googleAI.embedder('gemini-embedding-001'),
+    // Override the default RETURN statement. 
+    // Return the text, plus any graph-derived metrics (like PageRank)
+    retrievalQuery: "RETURN node.text AS text, {pagerank: node.pagerankScore, author: node.authorName} AS metadata"
+  },
+])
+----
+
+== GraphRAG Capabilities
+
+The plugin natively bundles advanced **GraphRAG** strategies. These strategies exploit the connected nature of your graph to provide significantly richer context to the LLM compared to simple vector similarity.
+
+=== Parent-Child Retriever
+
+The Parent-Child strategy chunks documents into smaller subchunks for dense, accurate vector matching, but retrieves the broader context (the "parent" document or chunk) to feed to the LLM.
+
+The plugin provides a specific tool (`parentChildIngestor`) to automatically ingest data respecting this topology.
+
+[source,typescript]
+----
+import { neo4jParentChildRetrieverRef } from 'genkitx-neo4j';
+
+export async function useParentChildGraphRag(ai: any, userQuery: string) {
+  const INDEX_ID = 'graphrag-index';
+
+  // 1. Ingest Data using the bundled Genkit Tool
+  // Note: Ensure 'llm-chunk' is installed in your project for this tool to work
+  const ingestorTool = ai.tool(`neo4j/${INDEX_ID}/parentChildIngestor`);
+  await ingestorTool({
+    documents: [{ text: "Massive corporate document text...", metadata: { source: "internal" } }]
+  });
+
+  // 2. Retrieve using Parent-Child strategy
+  const PC_RETRIEVER_REF = neo4jParentChildRetrieverRef({ indexId: INDEX_ID });
+
+  const parentDocs = await ai.retrieve({
+    retriever: PC_RETRIEVER_REF,
+    query: userQuery,
+    options: { k: 3 }
+  });
+
+  return parentDocs;
+}
+----
+
+=== Hypothetical Question Retriever (HyDE)
+
+HyDE uses the LLM to generate a hypothetical, ideal answer to the user's query first, and then uses that generated text to query the vector space.
+
+[source,typescript]
+----
+import { neo4jHyDERetrieverRef } from 'genkitx-neo4j';
+import { gemini15Flash } from '@genkit-ai/googleai';
+
+// 1. Configuration requires the 'ragModel' parameter
+neo4j([
+  {
+    indexId: 'hyde-index',
+    embedder: googleAI.embedder('gemini-embedding-001'),
+    ragModel: gemini15Flash // Required to generate the hypothetical answer
+  },
+])
+
+export async function useHydeGraphRag(ai: any, userQuery: string) {
+  const INDEX_ID = 'hyde-index';
+
+  // 2. Ingest Data
+  const ingestorTool = ai.tool(`neo4j/${INDEX_ID}/hydeIngestor`);
+  await ingestorTool({
+    documents: [{ text: "Information about Planet Zeta.", metadata: {} }]
+  });
+
+  // 3. Retrieve using HyDE strategy
+  const HYDE_RETRIEVER_REF = neo4jHyDERetrieverRef({ indexId: INDEX_ID });
+  
+  const hydeDocs = await ai.retrieve({
+    retriever: HYDE_RETRIEVER_REF,
+    query: userQuery,
+    options: { k: 3 }
+  });
+
+  return hydeDocs;
+}
+----
+
+=== Custom / Generic GraphRAG
+
+You can define entirely custom multi-hop graph retrieval strategies (e.g., finding a node, and returning all its "siblings").
+
+[source,typescript]
+----
+import { neo4jCustomRetrieverRef } from 'genkitx-neo4j';
+
+// 1. Define custom Cypher traversal during initialization
+neo4j([
+  {
+    indexId: 'custom-rag-index',
+    embedder: googleAI.embedder('gemini-embedding-001'),
+    customGraphRagConfigs: {
+      'sibling-search': {
+        systemPrompt: "Use the sibling documents to answer the question.",
+        idMetadataKey: "docId",
+        cypherIdParamName: "startIds",
+        cypherQuery: `
+          MATCH (start:Document)-[:SIBLING_OF]->(sibling:Document)
+          WHERE start.id IN $startIds
+          RETURN sibling.text AS siblingText
+        `,
+        cypherReturnTextField: "siblingText"
+      }
+    }
+  },
+])
+
+// 2. Execute retrieval
+export async function useCustomGraphRag(ai: any, userQuery: string) {
+  const CUSTOM_RAG_REF = neo4jCustomRetrieverRef({ 
+    indexId: 'custom-rag-index', 
+    name: 'sibling-search' 
+  });
+
+  const customRagDocs = await ai.retrieve({
+    retriever: CUSTOM_RAG_REF,
+    query: userQuery,
+    options: { k: 3 }
+  });
+
+  return customRagDocs;
+}
+----
+
+== Genkit Chat Memory with Neo4j
+
+The plugin provides a `Neo4jSessionStore`, establishing a robust Session Persistence layer mapped natively to Neo4j. The module models conversation turns as linked graphs (`(:Session)-[:LAST_MESSAGE]->(:Message)<-[:NEXT]-(:Message)`), granting state persistence, easily tunable context limits, and long-term conversation analysis.
+
+=== Basic Setup and Window Size
+
+You can use `setWindowSize(n)` to limit the amount of historical messages injected into the context window, avoiding LLM token bloat while keeping the full history safely stored in the graph.
+
+[source,typescript]
+----
+import { Neo4jSessionStore } from 'genkitx-neo4j';
+import { gemini15Flash } from '@genkit-ai/googleai';
+
+export async function startPersistentChat(ai: any, sessionId: string, userMessage: string) {
+  
+  // 1. Initialize the Neo4j backed session memory
+  const neo4jStore = new Neo4jSessionStore({
+    url: 'bolt://localhost:7687',
+    username: 'neo4j',
+    password: 'password',
+  });
+  
+  // 2. Control Token Bloat: Only feed the last 10 messages into the LLM context
+  neo4jStore.setWindowSize(10); 
+
+  // 3. Initialize the chat session
+  const chat = ai.chat({
+    model: gemini15Flash,
+    store: neo4jStore,
+    sessionId: sessionId
+  });
+
+  // 4. Send message and persist to Graph
+  const response = await chat.send(userMessage);
+  console.log(response.text);
+}
+----
+
+=== Advanced Customization and Session Clearing
+
+You can customize the node labels and relationship types to fit an existing application schema. You can also programmatically clear a user's session history.
+
+[source,typescript]
+----
+import { Neo4jSessionStore } from 'genkitx-neo4j';
+
+export async function manageChatSessions() {
+  
+  // Custom schema configuration
+  const customStore = new Neo4jSessionStore({
+    url: 'bolt://localhost:7687',
+    username: 'neo4j',
+    password: 'password',
+    sessionLabel: 'AppSession',          // Defaults to 'GenkitSession'
+    messageLabel: 'ChatMessage',         // Defaults to 'Message'
+    nextMessageRelType: 'THREAD_NEXT',   // Defaults to 'NEXT'
+    lastMessageRelType: 'THREAD_HEAD'    // Defaults to 'LAST_MESSAGE'
+  });
+
+  const sessionId = 'user-123-session';
+
+  // Programmatically clear/delete all messages and relationships for a session
+  await customStore.clear(sessionId);
+  console.log(`Session ${sessionId} has been wiped.`);
+}
+----
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:github[] GitHub Genkit | https://github.com/firebase/genkit[GitHub Genkit]
+| icon:github[] GitHub genkitx-neo4j | https://github.com/neo4j-labs/genkitx-neo4j[GitHub genkitx-neo4j]
+| icon:book[] Genkit Google Documentation | https://genkit.dev/docs/js/get-started/[Genkit Google Docs]
+| icon:book[] Neo4j Integration Docs | https://genkit.dev/docs/js/integrations/neo4j/[Neo4j Genkit Google Docs]
+|===

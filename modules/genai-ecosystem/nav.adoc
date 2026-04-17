@@ -28,6 +28,8 @@
 // **** link:xxx[Documentation]
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
+**** xref:genkitx-neo4j[Genkit]
+// **** link:xxx[Documentation]
 *** xref:agent-frameworks.adoc[Agent Frameworks]
 **** xref:genai-frameworks/langchain-agents.adoc[LangChain]
 **** xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex]
