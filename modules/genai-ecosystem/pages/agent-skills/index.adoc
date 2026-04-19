@@ -1,0 +1,34 @@
+= Agent Skills & Coding Tools
+include::_graphacademy_llm.adoc[]
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:slug: agent-skills
+:author: Neo4j Labs
+:category: labs
+:tags: agents, llm, neo4j, mcp, skills, cursor, vscode, claude, kiro, gemini, antigravity
+:neo4j-versions: 5.X
+:page-pagination:
+:page-product: Agent Skills
+
+AI agents and coding tools become significantly more effective when they have direct access to your Neo4j graph database.
+Rather than relying solely on training data, agents can retrieve live schema information, execute and validate Cypher queries, and use real graph data to generate code, tests, and integrations — all without leaving the editor.
+
+Neo4j supports two complementary integration layers for AI agents and coding environments:
+
+* xref:agent-skills/neo4j-skills.adoc[*Neo4j Agent Skills*] — Standardized, installable knowledge bundles that teach AI agents Neo4j-specific patterns: how to write correct Cypher, how to manage migrations, how to use CLI tools. Skills work across any https://agentskills.io/specification[Agent Skills^]-compliant agent including Claude Code, Cursor, and Cline.
+
+* xref:agent-skills/coding-skills.adoc[*Coding Tool Integrations*] — The https://github.com/neo4j/mcp[Neo4j MCP server^] and dedicated editor extensions connect AI agents directly to a live Neo4j database. Agents can inspect schema, run read queries, and validate generated Cypher against real data. Supported in VS Code, Gemini CLI, Antigravity, Kiro, Claude Code, Cursor, and more.
+
+== Why Connect Your AI Agent to Neo4j?
+
+Without a live database connection, AI agents guess at schema and cannot validate generated Cypher. With the Neo4j MCP server or a live connection:
+
+* **Schema-aware code generation** — retrieve node labels, relationship types, and property keys; use them to generate Pydantic models, GraphQL schemas, Java POJOs, or TypeScript types that match your actual graph
+* **Cypher validation in the editor** — run generated queries against the database before shipping; catch syntax errors, missing indexes, and logic bugs immediately
+* **Data-driven test generation** — sample real records to produce realistic integration tests and test fixtures
+* **Migration guidance** — skills cover driver upgrades and Cypher dialect changes when moving to Neo4j 2025.x/2026.x
+
+== GraphAcademy Courses
+
+If you want to learn how LLMs and Knowledge Graphs combine to improve GenAI applications, check out the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[Neo4j & LLM courses on GraphAcademy^].
+
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundamentals.png[link=https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs]

@@ -1,6 +1,5 @@
 ** xref:index.adoc[GenAI Ecosystem]
 *** Labs Projects
-**** https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[MCP Servers]
 **** xref:llm-graph-builder.adoc[LLM Graph Builder]
 ***** xref:llm-graph-builder-features.adoc[Features]
 ***** xref:llm-graph-builder-deployment.adoc[Deployment]
@@ -60,6 +59,10 @@
 ***** xref:genai-frameworks/google-gemini-ge-marketplace.adoc[GE Marketplace]
 **** xref:genai-frameworks/salesforce-agentforce.adoc[Salesforce Agentforce]
 // **** xref:genai-frameworks/ibm-watsonx.adoc[IBM watsonx Orchestrate]
+*** https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[MCP Servers]
+*** xref:agent-skills/index.adoc[Agent Skills]
+**** xref:agent-skills/neo4j-skills.adoc[Neo4j Skills]
+**** xref:agent-skills/coding-skills.adoc[Coding Tools]
 // **** xref:genai-frameworks/servicenow-ai-agents.adoc[ServiceNow AI Agents]
 // **** xref:genai-frameworks/snowflake-cortex.adoc[Snowflake Cortex]
 // *** Workflow & Orchestration

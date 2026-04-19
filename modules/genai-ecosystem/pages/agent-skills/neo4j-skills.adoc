@@ -1,0 +1,115 @@
+= Neo4j Agent Skills
+:slug: neo4j-agent-skills
+:author: Neo4j Labs
+:category: genai-ecosystem
+:tags: agents, llm, neo4j, cypher, skills, claude, cursor, cline
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: Neo4j Agent Skills
+:attribute-missing: skip
+
+https://github.com/neo4j-contrib/neo4j-skills[Neo4j Agent Skills^] is a collection of installable knowledge packages for AI agents — Claude Code, Cursor, Cline, and any other https://agentskills.io/specification[Agent Skills^]-compatible tool.
+
+Skills bundle step-by-step instructions, reference documentation, and executable scripts into a progressive disclosure model: the agent loads only what it needs, keeping context usage minimal while ensuring correct, Neo4j-specific behavior.
+
+== Available Skills
+
+=== neo4j-cypher-skill
+
+Helps agents update Cypher queries when migrating a database from Neo4j 4.x or 5.x to 2025.x or 2026.x.
+
+**Use this skill when:**
+
+* Migrating Cypher queries to use the `CYPHER 25` pragma
+* Updating syntax for quantified path expressions, `SHORTEST`, `COLLECT {}`, and `COUNT {}` subqueries
+* Ensuring queries are compatible with the new Cypher 25 dialect introduced in Neo4j 2025.x
+
+=== neo4j-migration-skill
+
+Helps agents upgrade Neo4j driver code across supported languages when moving to a new major driver version.
+
+**Use this skill when:**
+
+* Upgrading Neo4j drivers for .NET, Go, Java, JavaScript, or Python projects
+* Identifying deprecated APIs and their replacements
+* Updating connection configuration and authentication patterns for newer driver versions
+
+=== neo4j-cli-tools-skill
+
+Comprehensive guidance for Neo4j command-line tools:
+
+* https://neo4j.com/docs/operations-manual/current/neo4j-admin-neo4j-cli/[`neo4j-admin`^] — database administration, backup/restore, import
+* https://neo4j.com/docs/operations-manual/current/tools/cypher-shell/[`cypher-shell`^] — execute Cypher queries from a terminal
+* https://neo4j.com/docs/aura/aura-cli/[`aura-cli`^] — manage Neo4j Aura cloud instances
+* https://neo4j.com/docs/mcp/current/[`neo4j-mcp`^] — set up the Neo4j MCP server for AI agents
+
+**Use this skill when:**
+
+* Setting up or configuring Neo4j databases from the command line
+* Running administrative tasks with `neo4j-admin`
+* Executing Cypher queries from a shell using `cypher-shell`
+* Managing Neo4j Aura cloud instances with `aura-cli`
+* Setting up the Neo4j MCP server for use with AI agents
+* Troubleshooting Neo4j CLI issues
+
+=== neo4j-cypher-authoring-skill _(in development)_
+
+An advanced skill that teaches agents to write correct, index-aware, parameterized Cypher 25 queries from scratch — including a mandatory schema-first protocol, `MERGE` safety patterns, and self-validation via `EXPLAIN`.
+
+This skill is actively being developed. Follow https://github.com/neo4j-contrib/neo4j-skills[neo4j-contrib/neo4j-skills^] for updates.
+
+== Installation
+
+=== Using npx skills (Recommended)
+
+The `skills` package automatically detects your AI agent (Claude Code, Cursor, Cline, etc.) and installs into the correct location:
+
+[source,bash]
+----
+# Install all Neo4j skills at once
+npx skills add neo4j-contrib/neo4j-skills
+
+# Or install individual skills
+npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
+npx skills add neo4j-contrib/neo4j-skills/neo4j-migration-skill
+npx skills add neo4j-contrib/neo4j-skills/neo4j-cli-tools-skill
+----
+
+=== Manual Installation for Claude Code
+
+[source,bash]
+----
+# Clone the repository
+git clone https://github.com/neo4j-contrib/neo4j-skills.git
+
+# Symlink skills into Claude's skills directory
+ln -s $(pwd)/neo4j-skills/neo4j-cypher-skill ~/.claude/skills/
+ln -s $(pwd)/neo4j-skills/neo4j-migration-skill ~/.claude/skills/
+ln -s $(pwd)/neo4j-skills/neo4j-cli-tools-skill ~/.claude/skills/
+----
+
+=== Manual Installation for Other Agents
+
+For Cursor, Cline, or any other https://agentskills.io/specification[Agent Skills^]-compliant agent, point your agent's skills configuration to the cloned repository directory, or copy the relevant skill folder into your agent's configured skills path.
+
+== Usage
+
+Once installed, skills activate automatically. Describe your task in plain language and the agent selects and loads the appropriate skill:
+
+[source]
+----
+"Update these Cypher queries for Neo4j 2026"        → neo4j-cypher-skill
+"Upgrade our Python driver to the latest version"   → neo4j-migration-skill
+"Set up the Neo4j MCP server with cypher-shell"     → neo4j-cli-tools-skill
+----
+
+Skills use a three-level progressive disclosure model. The agent loads a short description (~50 tokens) first, then the full protocol (~2,000 tokens) only when the skill is needed, and selectively loads deep reference files on demand — minimizing context usage across a long session.
+
+== Related Resources
+
+* https://github.com/neo4j-contrib/neo4j-skills[neo4j-contrib/neo4j-skills on GitHub^]
+* https://agentskills.io/specification[Agent Skills Specification^]
+* https://towardsdatascience.com/using-claude-skills-with-neo4j/[Using Claude Skills with Neo4j^] — how Claude Skills work as file-based procedural memory to improve Cypher generation
+* https://medium.com/neo4j/from-weeks-to-minutes-how-ai-agent-skills-automate-neo4j-driver-and-cypher-migration-17a4ec487834[From Weeks to Minutes: Automating Neo4j Driver and Cypher Migration^] — how agent skills reduce migration work from weeks to minutes
+* https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP Servers^] — for live database access from your AI agent
+* xref:agent-skills/coding-skills.adoc[Coding Tool Integrations] — Neo4j MCP server setup in VS Code, Cursor, Kiro, and Gemini CLI
