@@ -8,24 +8,91 @@ include::_graphacademy_llm.adoc[]
 :neo4j-versions: 5.X
 :page-pagination:
 :page-product: Agent Skills
+:neo4j-skills-repo: https://github.com/neo4j-contrib/neo4j-skills
 
 AI agents and coding tools become significantly more effective when they have direct access to your Neo4j graph database.
-Rather than relying solely on training data, agents can retrieve live schema information, execute and validate Cypher queries, and use real graph data to generate code, tests, and integrations — all without leaving the editor.
+Rather than relying solely on training data, agents can retrieve live schema information, execute and validate Cypher queries, and use real graph data to generate code, tests, and integrations -- all without leaving the editor.
 
-Neo4j supports two complementary integration layers for AI agents and coding environments:
+Neo4j supports two complementary integration layers:
 
-* xref:agent-skills/neo4j-skills.adoc[*Neo4j Agent Skills*] — Standardized, installable knowledge bundles that teach AI agents Neo4j-specific patterns: how to write correct Cypher, how to manage migrations, how to use CLI tools. Skills work across any https://agentskills.io/specification[Agent Skills^]-compliant agent including Claude Code, Cursor, and Cline.
+* xref:agent-skills/neo4j-skills.adoc[*Neo4j Agent Skills*] -- Installable knowledge bundles that teach AI agents Neo4j-specific patterns. 20+ skills covering Cypher, GraphRAG, drivers, GDS, data import, agent memory, and more. Works with Claude Code, Cursor, Cline, Gemini CLI, Codex, and any https://agentskills.io/specification[Agent Skills^]-compliant tool.
 
-* xref:agent-skills/coding-skills.adoc[*Coding Tool Integrations*] — The https://github.com/neo4j/mcp[Neo4j MCP server^] and dedicated editor extensions connect AI agents directly to a live Neo4j database. Agents can inspect schema, run read queries, and validate generated Cypher against real data. Supported in VS Code, Gemini CLI, Antigravity, Kiro, Claude Code, Cursor, and more.
+* xref:agent-skills/coding-skills.adoc[*Coding Tool Integrations*] -- The https://github.com/neo4j/mcp[Neo4j MCP server^] and dedicated editor extensions connect agents directly to a live Neo4j database for schema inspection, Cypher execution, and real-data validation. Supported in VS Code, Gemini CLI, Antigravity, Kiro, Claude Code, Cursor, and more.
 
-== Why Connect Your AI Agent to Neo4j?
+== Neo4j Agent Skills
 
-Without a live database connection, AI agents guess at schema and cannot validate generated Cypher. With the Neo4j MCP server or a live connection:
+Browse and install at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
 
-* **Schema-aware code generation** — retrieve node labels, relationship types, and property keys; use them to generate Pydantic models, GraphQL schemas, Java POJOs, or TypeScript types that match your actual graph
-* **Cypher validation in the editor** — run generated queries against the database before shipping; catch syntax errors, missing indexes, and logic bugs immediately
-* **Data-driven test generation** — sample real records to produce realistic integration tests and test fixtures
-* **Migration guidance** — skills cover driver upgrades and Cypher dialect changes when moving to Neo4j 2025.x/2026.x
+=== neo4j-getting-started-skill
+
+The flagship skill: takes you from zero to a running graph application in a single Claude Code session.
+Invoke it with a plain-language description -- it provisions a database, designs the schema, loads data, and generates a runnable app end-to-end.
+
+[source]
+----
+/neo4j-getting-started-skill fraud detection for a fintech startup
+/neo4j-getting-started-skill healthcare patient graph, local Docker, FastAPI, synthetic data
+----
+
+Install: `npx skills add neo4j-contrib/neo4j-skills/neo4j-getting-started-skill`
+
+=== Skills by Category
+
+[cols="1,3", options="header"]
+|===
+| Category | Skills available
+
+| Querying and Modeling
+| {neo4j-skills-repo}/tree/main/neo4j-cypher-skill[neo4j-cypher-skill^], {neo4j-skills-repo}/tree/main/neo4j-modeling-skill[neo4j-modeling-skill^], {neo4j-skills-repo}/tree/main/neo4j-getting-started-skill[neo4j-getting-started-skill^]
+
+| Importing Data
+| {neo4j-skills-repo}/tree/main/neo4j-import-skill[neo4j-import-skill^], {neo4j-skills-repo}/tree/main/neo4j-document-import-skill[neo4j-document-import-skill^], {neo4j-skills-repo}/tree/main/neo4j-migration-skill[neo4j-migration-skill^]
+
+| AI and Search
+| {neo4j-skills-repo}/tree/main/neo4j-graphrag-skill[neo4j-graphrag-skill^], {neo4j-skills-repo}/tree/main/neo4j-vector-index-skill[neo4j-vector-index-skill^], {neo4j-skills-repo}/tree/main/neo4j-genai-plugin-skill[neo4j-genai-plugin-skill^], {neo4j-skills-repo}/tree/main/neo4j-agent-memory-skill[neo4j-agent-memory-skill^], {neo4j-skills-repo}/tree/main/neo4j-mcp-skill[neo4j-mcp-skill^]
+
+| Graph Data Science
+| {neo4j-skills-repo}/tree/main/neo4j-gds-skill[neo4j-gds-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-graph-analytics-skill[neo4j-aura-graph-analytics-skill^]
+
+| Drivers
+| {neo4j-skills-repo}/tree/main/neo4j-driver-python-skill[neo4j-driver-python-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-javascript-skill[neo4j-driver-javascript-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-java-skill[neo4j-driver-java-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-dotnet-skill[neo4j-driver-dotnet-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-go-skill[neo4j-driver-go-skill^]
+
+| Frameworks and Platforms
+| {neo4j-skills-repo}/tree/main/neo4j-graphql-skill[neo4j-graphql-skill^], {neo4j-skills-repo}/tree/main/neo4j-spring-data-skill[neo4j-spring-data-skill^], {neo4j-skills-repo}/tree/main/neo4j-cli-tools-skill[neo4j-cli-tools-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-provisioning-skill[neo4j-aura-provisioning-skill^]
+|===
+
+See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for descriptions and install commands for each skill.
+
+=== Quick Install
+
+[cols="1,3", options="header"]
+|===
+| Agent | Install command
+
+| Claude Code
+| `/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git`
+
+| Gemini CLI
+| `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`
+
+| Cursor / Cline / Windsurf
+| `npx skills add neo4j-contrib/neo4j-skills`
+
+| Codex
+| Clone repo, copy to `~/.codex/plugins/` -- see xref:agent-skills/neo4j-skills.adoc#_codex[install guide]
+|===
+
+== Coding Tool Integrations
+
+The https://github.com/neo4j/mcp[Neo4j MCP server^] gives any MCP-compatible coding tool live access to your graph:
+
+* **Schema-aware code generation** -- retrieve node labels, relationship types, and property keys to generate Pydantic models, GraphQL schemas, Java POJOs, or TypeScript interfaces matching your actual graph
+* **Cypher validation** -- run generated queries against the real database before shipping; catch syntax errors, full scans, and logic bugs immediately
+* **Data-driven test generation** -- sample real records to produce realistic integration tests and fixtures
+
+Supported editors: VS Code, Claude Code, Claude Desktop, Cursor, Windsurf, Kiro, Antigravity, Cline, Gemini CLI, and any https://modelcontextprotocol.io/clients[MCP-compatible client^].
+
+See xref:agent-skills/coding-skills.adoc[Coding Tool Integrations] for editor-specific configuration.
 
 == GraphAcademy Courses
 

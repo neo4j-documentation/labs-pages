@@ -11,6 +11,73 @@
 Neo4j integrates with AI-powered coding tools through dedicated extensions, curated rules, and the https://github.com/neo4j/mcp[Neo4j MCP server^].
 This gives your AI coding assistant live access to your graph database — schema inspection, Cypher execution, and real data — without leaving the editor.
 
+TIP: Want to go from zero to a running graph application in one session? The xref:agent-skills/neo4j-skills.adoc#_neo4j_getting_started_skill[neo4j-getting-started-skill] for Claude Code handles database provisioning, schema design, data loading, and app generation end-to-end — and can configure the MCP server automatically as its final step.
+
+== Installing Neo4j Agent Skills
+
+Neo4j Agent Skills teach your coding agent Neo4j-specific patterns -- correct Cypher, GraphRAG pipelines, drivers, GDS, and more.
+Browse all skills at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+
+=== Claude Code
+
+[source]
+----
+/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git
+/plugin install neo4j-skills@neo4j-skills-marketplace
+----
+
+Use `/plugin list` to verify, or `/reload-plugins` after installation.
+
+=== Gemini CLI
+
+[source,bash]
+----
+gemini extensions install https://github.com/neo4j-contrib/neo4j-skills
+----
+
+Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `NEO4J_DATABASE`) when prompted. Run `/extensions list` inside Gemini to verify.
+
+=== Cursor, Cline, Windsurf, and others
+
+[source,bash]
+----
+# Install all Neo4j skills
+npx skills add neo4j-contrib/neo4j-skills
+
+# Or individual skills
+npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
+npx skills add neo4j-contrib/neo4j-skills/neo4j-graphrag-skill
+----
+
+=== Codex
+
+[source,bash]
+----
+git clone https://github.com/neo4j-contrib/neo4j-skills.git
+mkdir -p ~/.codex/plugins
+cp -R neo4j-skills ~/.codex/plugins/neo4j-skills
+----
+
+Add to `~/.agents/plugins/marketplace.json`:
+
+[source,json]
+----
+{
+  "name": "neo4j-marketplace",
+  "interface": { "displayName": "Neo4j Skills" },
+  "plugins": [
+    {
+      "name": "neo4j-skills",
+      "source": { "source": "local", "path": "./plugins/neo4j-skills" },
+      "policy": { "installation": "AVAILABLE" },
+      "category": "Database"
+    }
+  ]
+}
+----
+
+See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list of available skills.
+
 == What You Can Do
 
 With Neo4j connected to your coding tool, your AI assistant can:
@@ -102,6 +169,8 @@ Create a Customer node with customer_id = "Gemini".
 Using the data modeling server, list all labels and relationship types.
 Use the neo4j-memory server to store: "Customer Asha prefers enterprise support."
 ----
+
+TIP: To install Neo4j Agent Skills for Gemini CLI (Cypher authoring, GraphRAG, drivers, GDS, and more), use the separate skills extension: `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`. See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list.
 
 === Antigravity
 
@@ -360,5 +429,7 @@ with relationships to Company nodes, matching our schema
 * https://marketplace.visualstudio.com/items?itemName=neo4j-extensions.neo4j-for-vscode[Neo4j for VS Code on Marketplace^]
 * https://cloud.google.com/blog/topics/developers-practitioners/using-the-neo4j-extension-in-gemini-cli[Neo4j Extension in Gemini CLI (Google Cloud Blog)^]
 * https://antigravity.codes/mcp/neo4j[Neo4j MCP in Antigravity^]
+* https://neo4j.com/llms.txt[neo4j.com/llms.txt^] — agentic-engineering reference covering GraphRAG, MCP, drivers, Cypher, and CLI tools, optimized for AI agents and LLMs
+* https://neo4j.com/docs/llms-full.txt[neo4j.com/docs/llms-full.txt^] — full documentation index for AI/LLM contexts
 * https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP Servers Overview^] — all available Labs MCP servers
 * xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] — installable knowledge bundles for Cypher authoring, migrations, and CLI tools
