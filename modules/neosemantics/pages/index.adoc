@@ -22,7 +22,7 @@ neosemantics runs as an extension to your Neo4j database. Downloading the approp
 
 The n10s GraphApp will help you get started with neosemantics.
 
-Note that neosemantics is only available for Neo4j self-hosted (CE and EE) bot **not** available in Aura.
+Note that neosemantics is only available for Neo4j self-hosted (CE and EE) and is **not** available in Aura.
 An alternative to this plugin is the rdflib-neo4j driver, see link:https://neo4j.com/labs/rdflib-neo4j/[] for more information.
 
 == Functionality Includes
