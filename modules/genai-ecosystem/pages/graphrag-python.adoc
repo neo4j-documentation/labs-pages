@@ -1,213 +1,299 @@
 = Neo4j GraphRAG Python Package
 include::_graphacademy_llm.adoc[]
 :slug: graphrag-python
-:author: 
+:author:
 :category: genai-ecosystem
 :tags: graphrag, knowledgegraph, embedding, vectorsearch, neo4j, python
-:neo4j-versions: 5.23+
+:neo4j-versions: 5.18+
 :page-pagination:
 :page-custom-canonical: https://neo4j.com/developer/genai-ecosystem/graphrag-python/
 :page-product: neo4j
 
 
-The Neo4j GraphRAG package is a comprehensive Python library that allows building GenAI applications.
-It supports knowledge graph creation through a pipeline that extracts entities from unstructured text, generates embeddings, and creates a graph in Neo4j.
-The package also provides a number of retrievers, for graph search, vector search and integration with vector databases.
+The Neo4j GraphRAG package for Python (`neo4j-graphrag`) is the official first-party library for building GenAI applications on Neo4j.
+It provides a full pipeline from unstructured documents to a knowledge graph, and a suite of retrievers for GraphRAG search — combining semantic vector search with graph traversal.
+
+**Current version: 1.16.0** | Python 3.10–3.14 | link:https://neo4j.com/docs/neo4j-graphrag-python/current/[Documentation^]
 
 == Functionality Includes
 
-* Knowledge Graph Construction Pipeline
-* Neo4j Vector Retriever
-* Vector Cypher Retriever
-* Vector Database Retriever
+* **Knowledge Graph Construction Pipeline** — `SimpleKGPipeline` extracts entities and relationships from PDF, plain text, and Markdown using an LLM, stores them in Neo4j, and generates embeddings on chunks
+* **GraphRAG Retrievers** — vector, hybrid (vector + fulltext), and Cypher-augmented variants for graph-traversal context
+* **Text2Cypher Retriever** — LLM-generated Cypher with EXPLAIN safety guard (v1.16.0+)
+* **ToolsRetriever** — LLM-routed multi-retriever (v1.10.0+)
+* **External Vector DB Retrievers** — Weaviate, Pinecone, Qdrant
+* **All major LLM providers** — OpenAI, Anthropic, Vertex AI, Amazon Bedrock, Cohere, MistralAI, Ollama
+* **All major embedding providers** — same providers plus SentenceTransformers (local)
+* **LLM token usage tracking** — `LLMUsage` on every response (v1.15.0+)
+* **Schema-driven extraction** with `GraphSchema`, typed constraints (UNIQUENESS, EXISTENCE, KEY), and auto-extraction from text
+* **Entity Resolvers** — exact, fuzzy, and semantic deduplication
+* **Parquet export** of knowledge graphs (v1.14.0+)
 
 image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/genai-workshop-graphrag.png[width=800,link="https://graphacademy.neo4j.com/courses/genai-workshop-graphrag/"]
 
-== Usage - Examples for a BioMedical Knowledge Graph
+== Retriever Selection
 
-First Knowlege Graph Construction using the SimpleKGPipeline
+[cols="1,1,1,1,3"]
+|===
+| Retriever | Vector | Fulltext | Graph | Best For
+
+| `VectorRetriever` | ✓ | | | Baseline semantic search
+| `HybridRetriever` | ✓ | ✓ | | Better recall, no graph expansion
+| `VectorCypherRetriever` | ✓ | | ✓ | GraphRAG without fulltext
+| `HybridCypherRetriever` | ✓ | ✓ | ✓ | **Production GraphRAG — default**
+| `Text2CypherRetriever` | | | ✓ | NL→Cypher, no embedder needed
+| `ToolsRetriever` | — | — | — | LLM-routed multi-retriever
+|===
+
+== Usage — GraphRAG Pipeline
+
+=== Install
+
+[source,bash]
+----
+pip install neo4j-graphrag[openai]      # OpenAI LLM + embeddings
+pip install neo4j-graphrag[anthropic]   # Anthropic Claude
+pip install neo4j-graphrag[google]      # Vertex AI / Gemini
+pip install neo4j-graphrag[bedrock]     # Amazon Bedrock
+pip install neo4j-graphrag[ollama]      # Ollama (local)
+----
+
+=== HybridCypherRetriever (Production GraphRAG)
+
+[source,python]
+----
+from neo4j import GraphDatabase
+from neo4j_graphrag.embeddings import OpenAIEmbeddings
+from neo4j_graphrag.generation import GraphRAG
+from neo4j_graphrag.llm import OpenAILLM
+from neo4j_graphrag.retrievers import HybridCypherRetriever
+
+driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+embedder = OpenAIEmbeddings(model="text-embedding-3-large")
+
+# Cypher fragment executed after vector/fulltext lookup.
+# `node` (matched node) and `score` (similarity float) are auto-injected.
+retrieval_query = """
+MATCH (node)<-[:HAS_CHUNK]-(article:Article)
+OPTIONAL MATCH (article)-[:MENTIONS]->(org:Organization)
+RETURN node.text AS chunk_text,
+       article.title AS article_title,
+       collect(DISTINCT org.name) AS organizations,
+       score
+"""
+
+retriever = HybridCypherRetriever(
+    driver=driver,
+    vector_index_name="chunk_embedding",
+    fulltext_index_name="chunk_fulltext",
+    retrieval_query=retrieval_query,
+    embedder=embedder,
+)
+
+llm = OpenAILLM(model_name="gpt-4.1", model_params={"temperature": 0})
+rag = GraphRAG(retriever=retriever, llm=llm)
+
+response = rag.search(
+    query_text="Who is Paul Atreides and what house does he lead?",
+    retriever_config={"top_k": 5},
+)
+print(response.answer)
+driver.close()
+----
+
+=== query_params — Parameterized Retrieval
+
+[source,python]
+----
+retrieval_query = """
+MATCH (node)<-[:HAS_CHUNK]-(a:Article)-[:MENTIONS]->(org:Organization {name: $entity_name})
+RETURN node.text, a.title, score
+"""
+
+response = rag.search(
+    query_text="What happened at Apple?",
+    retriever_config={"top_k": 10, "query_params": {"entity_name": "Apple"}},
+)
+----
+
+=== Text2CypherRetriever (NL→Cypher, v1.16.0 security hardening)
+
+[source,python]
+----
+from neo4j_graphrag.retrievers import Text2CypherRetriever
+
+# Since v1.16.0: every LLM-generated Cypher is run through EXPLAIN first.
+# Destructive statements raise Text2CypherRetrievalError instead of executing.
+retriever = Text2CypherRetriever(
+    driver=driver,
+    llm=OpenAILLM(model_name="gpt-4.1"),
+    neo4j_schema=None,   # None = auto-fetch from DB
+    examples=[
+        "Q: Who works at Neo4j? A: MATCH (p:Person)-[:WORKS_AT]->(c:Company {name:'Neo4j'}) RETURN p.name"
+    ],
+)
+results = retriever.search(query_text="Which people work at Neo4j?")
+----
+
+=== Filters
+
+[source,python]
+----
+results = retriever.search(
+    query_text="quarterly earnings",
+    top_k=5,
+    filters={"date": {"$gte": "2024-01-01"}, "source": {"$eq": "10-K"}},
+)
+----
+
+== Usage — Knowledge Graph Construction
 
 image::https://dist.neo4j.com/wp-content/uploads/20241015075828/simplekgpipeline-1.png[]
 
-Setup of Neo4j connection, schema and foundation models (LLM, Eebeddings) and extraction prompt template.
+The `SimpleKGPipeline` extracts entities and relationships from text or files using an LLM,
+stores the resulting graph in Neo4j, and generates embeddings on text chunks.
 
 [source,python]
 ----
-# Neo4j Driver
-import neo4j
-
-neo4j_driver = neo4j.GraphDatabase.driver(NEO4J_URI,
-                auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
-
-# LLM and Embedding Model
-from neo4j_graphrag.llm import OpenAILLM
-from neo4j_graphrag.embeddings.openai import OpenAIEmbeddings
-
-llm=OpenAILLM(
-   model_name="gpt-4o-mini",
-   model_params={
-       "response_format": {"type": "json_object"}, # use json_object formatting for best results
-       "temperature": 0 # turning temperature down for more deterministic results
-   }
-)
-
-# Graph Schema Setup
-basic_node_labels = ["Object", "Entity", "Group", "Person", "Organization", "Place"]
-
-academic_node_labels = ["ArticleOrPaper", "PublicationOrJournal"]
-
-medical_node_labels = ["Anatomy", "BiologicalProcess", "Cell", "CellularComponent",
-                      "CellType", "Condition", "Disease", "Drug",
-                      "EffectOrPhenotype", "Exposure", "GeneOrProtein", "Molecule",
-                      "MolecularFunction", "Pathway"]
-
-node_labels = basic_node_labels + academic_node_labels + medical_node_labels
-
-# define relationship types
-rel_types = ["ACTIVATES", "AFFECTS", "ASSESSES", "ASSOCIATED_WITH", "AUTHORED",
-   "BIOMARKER_FOR", …]
-
-#create text embedder
-embedder = OpenAIEmbeddings()
-
-# define prompt template
-prompt_template = '''
-You are a medical researcher tasks with extracting information from papers 
-and structuring it in a property graph to inform further medical and research Q&A.
-
-Extract the entities (nodes) and specify their type from the following Input text.
-Also extract the relationships between these nodes. the relationship direction goes from the start node to the end node. 
-
-
-Return result as JSON using the following format:
-{{"nodes": [ {{"id": "0", "label": "the type of entity", "properties": {{"name": "name of entity" }} }}],
-  "relationships": [{{"type": "TYPE_OF_RELATIONSHIP", "start_node_id": "0", "end_node_id": "1", "properties": {{"details": "Description of the relationship"}} }}] }}
-
-...
-
-Use only fhe following nodes and relationships:
-{schema}
-
-Assign a unique ID (string) to each node, and reuse it to define relationships.
-Do respect the source and target node types for relationship and the relationship direction.
-
-Do not return any additional information other than the JSON in it.
-
-Examples:
-{examples}
-
-Input text:
-
-{text}
-'''
-----
-
-Knowledge Graph Pipeline Setup and Execution with example PDFs
-
-[source,python]
-----
-# Knowledge Graph Builder
-from neo4j_graphrag.experimental.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
+import asyncio
+from neo4j import GraphDatabase
 from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
+from neo4j_graphrag.experimental.components.schema import (
+    GraphSchema, NodeType, RelationshipType, PropertyType,
+    ConstraintType, GraphConstraintType,
+)
+from neo4j_graphrag.experimental.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
+from neo4j_graphrag.llm import OpenAILLM
+from neo4j_graphrag.embeddings import OpenAIEmbeddings
 
-kg_builder_pdf = SimpleKGPipeline(
-   llm=ex_llm,
-   driver=driver,
-   text_splitter=FixedSizeSplitter(chunk_size=500, chunk_overlap=100),
-   embedder=embedder,
-   entities=node_labels,
-   relations=rel_types,
-   prompt_template=prompt_template,
-   from_pdf=True
+driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
+
+# Schema definition (typed GraphSchema — recommended for production)
+schema = GraphSchema(
+    node_types=[
+        NodeType(label="Person", properties=[PropertyType(name="name", type="STRING")]),
+        NodeType(label="House", properties=[PropertyType(name="name", type="STRING")]),
+        NodeType(label="Planet", properties=[PropertyType(name="name", type="STRING")]),
+    ],
+    relationship_types=[
+        RelationshipType(label="PARENT_OF"),
+        RelationshipType(label="HEIR_OF"),
+        RelationshipType(label="RULES"),
+    ],
+    patterns=[
+        ("Person", "PARENT_OF", "Person"),
+        ("Person", "HEIR_OF", "House"),
+        ("House", "RULES", "Planet"),
+    ],
+    # Optional: schema constraints (v1.15.0+)
+    constraints=[
+        ConstraintType(label="Person", property_name="name", type=GraphConstraintType.UNIQUENESS),
+        ConstraintType(label="House", property_name="name", type=GraphConstraintType.KEY),
+    ],
 )
 
-pdf_file_paths = ['truncated-pdfs/biomolecules-11-00928-v2-trunc.pdf',
-            'truncated-pdfs/GAP-between-patients-and-clinicians_2023_Best-Practice-trunc.pdf',
-            'truncated-pdfs/pgpm-13-39-trunc.pdf']
+llm = OpenAILLM(
+    model_name="gpt-4.1-mini",
+    model_params={"temperature": 0},
+    # SimpleKGPipeline auto-enables structured output for OpenAI/VertexAI (v1.14.0+)
+)
+embedder = OpenAIEmbeddings(model="text-embedding-3-small")
 
-for path in pdf_file_paths:
-    print(f"Processing : {path}")
-    pdf_result = await kg_builder_pdf.run_async(file_path=path)
-    print(f"Result: {pdf_result}")
+pipeline = SimpleKGPipeline(
+    llm=llm,
+    driver=driver,
+    embedder=embedder,
+    schema=schema,
+    text_splitter=FixedSizeSplitter(chunk_size=500, chunk_overlap=100),
+    from_file=True,           # True = pass file_path=; False = pass text=
+    on_error="IGNORE",
+    perform_entity_resolution=True,
+)
+
+# From PDF:
+result = asyncio.run(pipeline.run_async(file_path="paper.pdf"))
+
+# From Markdown (v1.15.0+):
+result = asyncio.run(pipeline.run_async(file_path="notes.md"))
+
+# From raw text:
+result = asyncio.run(pipeline.run_async(text="The son of Duke Leto Atreides..."))
 ----
 
 image::https://dist.neo4j.com/wp-content/uploads/20241015075652/document-chunk-entity.png[width=800]
 
-Then running the GraphRAG Search with the VectorCypher Retriever.
+=== Entity Resolution
 
 [source,python]
 ----
-from neo4j_graphrag.indexes import create_vector_index
-
-create_vector_index(driver, name="text_embeddings", label="Chunk",
-                   embedding_property="embedding", dimensions=1536, similarity_fn="cosine")
-
-# Vector Retriever
-from neo4j_graphrag.retrievers import VectorRetriever
-
-vector_retriever = VectorRetriever(
-   driver,
-   index_name="text_embeddings",
-   embedder=embedder,
-   return_properties=["text"],
+from neo4j_graphrag.experimental.components.resolver import (
+    SinglePropertyExactMatchResolver,   # exact name match
+    FuzzyMatchResolver,                  # fuzzy; pip install neo4j-graphrag[fuzzy-matching]
 )
 
-# GraphRAG Vector Cypher Retriever
-from neo4j_graphrag.retrievers import VectorCypherRetriever
-
-graph_retriever = VectorCypherRetriever(
+resolver = SinglePropertyExactMatchResolver(
     driver,
-    index_name="text_embeddings",
-    embedder=embedder,
-    retrieval_query="""
-//1) Go out 2-3 hops in the entity graph and get relationships
-WITH node AS chunk
-MATCH (chunk)<-[:FROM_CHUNK]-(entity)-[relList:!FROM_CHUNK]-{1,2}(nb)
-UNWIND relList AS rel
-
-//2) collect relationships and text chunks
-WITH collect(DISTINCT chunk) AS chunks, collect(DISTINCT rel) AS rels
-
-//3) format and return context
-RETURN apoc.text.join([c in chunks | c.text], '\n') + 
-  apoc.text.join([r in rels | 
-  startNode(r).name+' - '+type(r)+' '+r.details+' -> '+endNode(r).name],  
-  '\n') AS info
-"""
+    filter_query="WHERE n:Organization OR n:Person",
 )
-
-llm = LLM(model_name="gpt-4o",  model_params={"temperature": 0.0})
-
-rag_template = RagTemplate(template='''Answer the Question using the following Context. Only respond with information mentioned in the Context. Do not inject any speculative information not mentioned. 
-
-# Question:
-{query_text}
- 
-# Context:
-{context}
-
-# Answer:
-''', expected_inputs=['query_text', 'context'])
-
-vector_rag  = GraphRAG(llm=llm, retriever=vector_retriever, prompt_template=rag_template)
-
-graph_rag = GraphRAG(llm=llm, retriever=graph_retriever, prompt_template=rag_template)
-
-q = "Can you summarize systemic lupus erythematosus (SLE)? including common effects, biomarkers, and treatments? Provide in detailed list format."
-
-vector_rag.search(q, retriever_config={'top_k':5}).answer
-graph_rag.search(q, retriever_config={'top_k':5}).answer
+asyncio.run(resolver.run())
 ----
 
-image::https://dist.neo4j.com/wp-content/uploads/20241128072906/Bildschirmfoto-2024-11-19-um-17.31.45.png[]
+=== LLM Token Usage (v1.15.0+)
+
+[source,python]
+----
+response = llm.invoke("Summarize this text...")
+print(response.usage)
+# LLMUsage(request_tokens=412, response_tokens=89, total_tokens=501)
+----
+
+=== Resource Cleanup (v1.16.0+)
+
+[source,python]
+----
+# Gracefully close LLM client connections
+llm.close()        # sync
+await llm.aclose() # async
+----
+
+== LLM and Embedding Providers
+
+[cols="1,1,2"]
+|===
+| Provider | Extra | Notes
+
+| OpenAI | `openai` | Structured output; tool calling; recommended default
+| Anthropic | `anthropic` | Tool calling
+| Vertex AI / Gemini | `google` | Structured output; tool calling
+| Amazon Bedrock | `bedrock` | Boto3 Converse API — added v1.15.0
+| Cohere | `cohere` |
+| MistralAI | `mistralai` | Tool calling
+| Ollama | `ollama` | Local; no API key; tool calling
+| SentenceTransformers | `sentence-transformers` | Embeddings only; local HuggingFace models
+|===
+
+[source,python]
+----
+from neo4j_graphrag.llm import OpenAILLM, AnthropicLLM, VertexAILLM, BedrockLLM, OllamaLLM
+from neo4j_graphrag.embeddings import OpenAIEmbeddings, BedrockEmbeddings, SentenceTransformerEmbeddings
+
+llm = AnthropicLLM(model_name="claude-3-5-sonnet-20241022")
+llm = VertexAILLM(model_name="gemini-2.0-flash")
+llm = BedrockLLM(model_id="anthropic.claude-3-5-sonnet-20241022-v2:0")
+llm = OllamaLLM(model_name="llama3")  # local, no API key
+
+embedder = SentenceTransformerEmbeddings(model="all-MiniLM-L6-v2")  # 384 dims, local
+embedder = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0")
+----
 
 == Documentation
 
 [cols="1,4"]
 |===
 | icon:book[] Documentation | https://neo4j.com/docs/neo4j-graphrag-python/current/
-| icon:book[] Guides | https://neo4j.com/docs/neo4j-graphrag-python/current/user_guide_rag.html[RAG & GraphRAG^]
-| icon:book[] Guides | https://neo4j.com/docs/neo4j-graphrag-python/current/user_guide_kg_builder.html[Guide Knowledge Graph Builder^]
+| icon:book[] RAG & GraphRAG Guide | https://neo4j.com/docs/neo4j-graphrag-python/current/user_guide_rag.html[RAG & GraphRAG^]
+| icon:book[] KG Builder Guide | https://neo4j.com/docs/neo4j-graphrag-python/current/user_guide_kg_builder.html[Knowledge Graph Builder^]
+| icon:code[] Examples | https://github.com/neo4j/neo4j-graphrag-python/tree/main/examples[GitHub Examples^]
 
 |===
 
@@ -218,6 +304,7 @@ image::https://dist.neo4j.com/wp-content/uploads/20241128072906/Bildschirmfoto-2
 | icon:user[] Authors | Neo4j Engineering
 | icon:github[] Repository | https://github.com/neo4j/neo4j-graphrag-python[GitHub]
 | icon:github[] Issues | https://github.com/neo4j/neo4j-graphrag-python/issues
+| icon:download[] PyPI | https://pypi.org/project/neo4j-graphrag/[neo4j-graphrag^]
 |===
 
 
@@ -238,3 +325,4 @@ image::https://dist.neo4j.com/wp-content/uploads/20241128072906/Bildschirmfoto-2
 * https://neo4j.com/developer-blog/graph-traversal-graphrag-python-package/[Vector Search With Graph Traversal the Using Neo4j GraphRAG Package^]
 * https://neo4j.com/developer-blog/hybrid-retrieval-graphrag-python-package/[Hybrid Retrieval Using the Neo4j GraphRAG Package for Python^]
 * https://neo4j.com/developer-blog/enhancing-hybrid-retrieval-graphrag-python-package/[Enhancing Hybrid Retrieval With Graph Traversal: Neo4j GraphRAG Python^]
+* https://medium.com/neo4j/effortless-rag-with-text2cypherretriever-cb1a781ca53c[Effortless RAG With Text2CypherRetriever^]
