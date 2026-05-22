@@ -64,7 +64,7 @@ For answering involved questions, vector and structural graph search are combine
 
 === GraphRAG Structures
 
-GraphRAG is based on structuring information into relevant pieces and connecting them, this allows for making these specific elements accessible and addressable and make them part of a navigation across a network of information
+GraphRAG is based on structuring information into relevant pieces and connecting them, this allows for making these specific elements accessible and addressable and make them usable for navigation across a network of information.
 
 * e.g. documents to chunks and chunks to each other
 * or entities to each others and their originating chunks
@@ -83,7 +83,7 @@ image::https://dev.assets.neo4j.com/wp-content/uploads/2024/graphrag-documents-h
 
 == Implementation Techniques
 
-GraphRAG is based on structuring information into relevant pieces and connecting them, this allows for making these specific elements accessible and addressable and make them part of a navigation across a network of information  
+GraphRAG is based on structuring information into relevant pieces and connecting them, this allows for making these specific elements accessible and addressable and making them part of a navigation across a network of information.
 
 * e.g. documents to chunks and chunks to each other  
 * or entities to each others and their originating chunks  
@@ -93,14 +93,15 @@ While GraphRAG is used during the Retrieval phase it relies on graph data struct
 
 == Data Processing
 
-That's why the first part of GraphRAG is in the data processing i.e. building, enriching and updating a knowledge graph  
+That's why the first part of GraphRAG is in the data processing i.e. building, enriching and updating a knowledge graph.
+
 * this can use existing KGs and augment them  
 * or build new KGs from scratch using structured and unstructured information  
 
 === Unstructured Document Processing
 
 Text attributes of structured data or **unstructured documents** are structured into **chunks** (can be document hierarchies).
-This is also referred to as the *lexical graph*
+This is also referred to as the *lexical graph*.
 
 * chunks are connected to each other via sequential links and to their documents  
 * chunks are vector embedded  and stored in an vector index  
@@ -109,9 +110,9 @@ This is also referred to as the *lexical graph*
 
 === Entity Extraction
 
-*Entities* of different types and their typed relationships are extracted from text chunks with a given graph schema (or automatic)
+*Entities* of different types and their typed relationships are extracted from text chunks with a given graph schema.
 
-This is also referred to as the *domain graph or entity graph*
+This is also referred to as the *domain graph or entity graph*.
 
 * additional entity and relationship attributes (besides name and description) can be extracted as well  
 * relationships between entities are stored in the graph  
@@ -121,30 +122,30 @@ This is also referred to as the *domain graph or entity graph*
 
 === Topic clustering with graph algorithms  
 
-As extracted entities form clusters of information in the graph these clusters can be determined with graph algorithms (WCC, Louvain, Leiden) and used to aggregated larger set of entities into "topic" clusters that can both be named but also summarize entities and their relationships  
+As extracted entities form clusters of information in the graph, these clusters can be determined with graph algorithms (WCC, Louvain, Leiden) and used to aggregated larger set of entities into "topic" clusters that can both be named but also summarize entities and their relationships.
 
 * the topic clusters are connected to their entities  
 * those cluster summaries are also vector embedded and stored in an vector index  
 
 === Extracting other Facts
 
-Optionally other information like **facts or claims** on entities and relationships can be extracted from the text and stored in the graph  
+Optionally other information like **facts or claims** on entities and relationships can be extracted from the text and stored in the graph.
 
-The graph can be **enriched** from other enterprise or public sources  
+The graph can be **enriched** from other enterprise or public sources.
 
 == GraphRAG Retrieval
 
 === Text based retrieval (vector+graph)  
 
-This retrieval pattern combines scored vector search with structural graph search, with vector search text chunks are identified that are relevant to the question, then entities related to these chunks are extracted and from these entities relationships are followed further out (multi-hop) to find farther away, but related information  
+This retrieval pattern combines scored vector search with structural graph search, with vector search text chunks identified that are relevant to the question, then entities related to these chunks are extracted and from these entities relationships are followed outwards (multi-hop) to find farther away, but related information.
 
 === Entity based retrieval (local retrieval)  
 
-Here entities are retrieved by vector and/or full-text search based on the user's question and then related information (text chunks, cluster summaries, claims, facts, …) is retrieved  
+Here entities are retrieved by vector and/or full-text search based on the user's question and then related information (text chunks, cluster summaries, claims, facts, …) is retrieved.
 
 === Cluster based retrieval (global retrieval)  
 
-This is used for answering global questions \- it uses the clustered topic summaries to capture the general themes of the dataset and then navigates from there to other relevant entities.
+This is used for answering global questions. It uses the clustered topic summaries to capture the general themes of the dataset and then navigates from there to other relevant entities.
 
 === Graph based retrieval using NL2Cypher (or in general natural language to graph query language)  
 
@@ -197,7 +198,7 @@ Democratization of of access to information in a structured, trustworthy and exp
 
 ==== Neo4j LLM Knowledge Graph Builder
 
-With the xref:llm-graph-builder.adoc[Neo4j LLM Knowledge Graph Builder] we provide an online tool based on our open-source GenAI framework integrations, that allows you to turn your own documents into a knowledge graph and then use it for high-quality Querstion-Answering and further GraphRAG applications.
+With the xref:llm-graph-builder.adoc[Neo4j LLM Knowledge Graph Builder] we provide an online tool based on our open-source GenAI framework integrations, that allows you to turn your own documents into a knowledge graph and then use it for high-quality Question-Answering and further GraphRAG applications.
 
 // TODO image
 image::https://dist.neo4j.com/wp-content/uploads/20240618104511/build-kg-genai-e1718732751482.png[Neo4j LLM Knowledge Graph Builder, link=https://llm-graph-builder.neo4jlabs.com/]
