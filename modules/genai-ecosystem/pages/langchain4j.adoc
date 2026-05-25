@@ -23,7 +23,7 @@ The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index avai
 ----
 Except when specified, the following LangChain4j features are available from version 1.0.0-beta3 of Langchain4j Community.
 Previously they were also available in Langchain Core, but since version 1.0.0-beta3 they have been migrated to the Community project.
-The advanced Knowledge Graph and persistent memory integrations detailed below are featured from version 1.0.0-beta19 onwards.
+The advanced Knowledge Graph transformations, programmatically compiled safe-Cypher integrations, and persistent multimodal memory features detailed below are fully featured from version 1.0.0-beta19 onwards.
 ----
 
 .pom.xml
@@ -34,27 +34,41 @@ include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-exam
 
 [source,xml]
 ----
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-community-neo4j</artifactId>
-    <version>{langchain4j.version}</version>
-</dependency>
+<properties>
+    <langchain4j.version>1.0.0-beta19</langchain4j.version>
+</properties>
 
-<dependency>
-    <groupId>dev.langchain4j</groupId>
-    <artifactId>langchain4j-community-neo4j-retriever</artifactId>
-    <version>{langchain4j.version}</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>dev.langchain4j</groupId>
+        <artifactId>langchain4j-community-neo4j</artifactId>
+        <version>${langchain4j.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>dev.langchain4j</groupId>
+        <artifactId>langchain4j-community-neo4j-retriever</artifactId>
+        <version>${langchain4j.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>dev.langchain4j</groupId>
+        <artifactId>langchain4j</artifactId>
+        <version>${langchain4j.version}</version>
+    </dependency>
+</dependencies>
 ----
 
 == Functionality Includes
 
-* Create vector index and query with native in-index metadata filtering
-* Separate search granularity from LLM content context via Parent-Child chunking
+* Create vector index and query with native in-index metadata filtering (Neo4j 2026.01+ syntax)
+* Separate search granularity from LLM content context via Parent-Child chunking pipelines
 * Auto-generate and store token-efficient summaries using LLM-driven graph ingestors
-* Convert natural language questions into valid Cypher queries with dynamic APOC schema sampling
-* Automate Knowledge Graph construction using structural transformers and idempotent writers with original document provenance
-* Persist conversational message threads and multimodal history within an isolated graph topology
+* Convert natural language questions into valid Cypher queries with dynamic consolidated single-query schema extractions
+* Protect against Cypher injection vulnerabilities inside internal components via programmatic Abstract Syntax Tree (AST) construction
+* Extract unstructured text into graph representations using schema few-shot guidance
+* Track data lineage and provenance back to the source node using cryptographic MD5 tracing
+* Persist conversational message threads and multimodal memory history within isolated, sequential graph chains
 
 == Documentation
 
@@ -69,7 +83,7 @@ LangChain4j provides the following specialized classes for Neo4j integration:
 
 - `Neo4jEmbeddingStore`: Implements the `EmbeddingStore` interface, enabling storing and querying vector embeddings in a Neo4j database with native filtering optimization.
 - `Neo4jText2CypherRetriever`: Implements the `ContentRetriever` interface for generating and executing Cypher queries from user questions, improving content retrieval from Neo4j databases.
-- `Neo4jEmbeddingStoreIngestor`: Orchestrates structural data ingest patterns like Parent-Child mappings.
+- `Neo4jEmbeddingStoreIngestor`: Orchestrates structured data ingest patterns like Parent-Child mappings.
 - `SummaryGraphIngestor`: Automates generating and linking a centralized document summary to its constituent vector nodes during ingestion.
 - `LLMGraphTransformer`: Interacts with LLMs to convert raw unstructured data strings into structured `GraphDocument` entity-relationship models.
 - `KnowledgeGraphWriter`: Persists structured entity frameworks into Neo4j using safe, injection-resistant, idempotent statements.
@@ -364,7 +378,7 @@ final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request
 ----
 
 ==== Native In-Index Metadata Filtering
-When deploying applications on modern Neo4j instances (version 2026.01+), the library natively delegates complex structural filters directly down to the core engine during vector graph traversals. This completely avoids costly, unscalable memory-level post-filtering.
+When deploying applications on modern Neo4j instances (version 2026.01+), the library natively delegates complex structural filters directly down to the core engine during vector graph traversals using native `db.index.vector.queryNodes()` metadata filter constraints. This completely avoids costly, unscalable memory-level post-filtering.
 
 [source,java]
 ----
@@ -442,6 +456,34 @@ List<Content> summarizedContexts = summaryRetriever.retrieve(Query.from("summari
 ----
 This produces an optimized cluster layout within your database:
 `(:DocumentChunk)-[:HAS_SUMMARY]->(:Summary)`
+
+=== Dynamic Schema Abstraction via Neo4jGraph
+
+When dealing with advanced Text-to-Cypher conversions, hardcoding a database schema in the client layer becomes fragile. The `Neo4jGraph` component dynamically tracks and abstracts database topology into memory using a highly optimized single-query APOC execution framework.
+
+[source,java]
+----
+import dev.langchain4j.store.graph.neo4j.Neo4jGraph;
+
+Neo4jGraph graph = Neo4jGraph.builder()
+        .driver(driver)
+        .build();
+
+// Triggers a single consolidated query to fetch labels, relationship types, and properties
+graph.refreshSchema();
+
+Neo4jGraph.StructuredSchema schema = graph.getStructuredSchema();
+
+// The retrieved schema splits cleanly into structural components for context feeding:
+System.out.println("Nodes Properties: " + schema.nodesProperties());
+// Output Example: :Person {name: STRING}, :Company {name: STRING}
+
+System.out.println("Relationships Properties: " + schema.relationshipsProperties());
+// Output Example: :WORKS_FOR {since: INTEGER}
+
+System.out.println("Graph Patterns: " + schema.patterns());
+// Output Example: (:Person)-[:WORKS_FOR]->(:Company)
+----
 
 === Neo4jText2CypherRetriever
 
@@ -560,7 +602,30 @@ System.out.println(contents.get(0).textSegment().text());
 // output: "The most followed italian streamer"
 ----
 
+=== Architectural Safety via Cypher DSL
+
+To eliminate dangerous string concatenations or runtime syntax errors generated by structural components, the integration layer constructs database commands programmatically via an integrated programmatic AST (Abstract Syntax Tree) builder powered by the `Cypher-DSL` framework. 
+
+[source,java]
+----
+import org.neo4j.cypherdsl.core.Cypher;
+import org.neo4j.cypherdsl.core.Statement;
+import org.neo4j.cypherdsl.core.Node;
+
+// Programmatic AST generation guarantees complete literal parameterization and injection safety
+Node documentNode = Cypher.node("Document").named("d");
+
+Statement programmaticStatement = Cypher.match(documentNode)
+        .where(Cypher.property("d", "id").isEqualTo(Cypher.literalOf("doc-123")))
+        .returning(Cypher.property("d", "text"))
+        .build();
+
+String dynamicSafeCypher = programmaticStatement.getCypher();
+// Output Compiled: MATCH (d:`Document`) WHERE d.id = 'doc-123' RETURN d.text
+----
+
 === Automated Knowledge Graph Construction
+
 To handle entity extraction and graph hydration from raw unstructured documents without maintaining manual, brittle Named Entity Recognition (NER) frameworks, you can combine the `LLMGraphTransformer` and `KnowledgeGraphWriter`. 
 
 To guide the extraction process and enforce a precise structural output format without entity label fragmentation, you can pass structured JSON few-shot examples directly to the transformer builder:
