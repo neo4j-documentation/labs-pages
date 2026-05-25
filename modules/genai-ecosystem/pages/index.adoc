@@ -91,10 +91,35 @@ You can find overviews of these integrations in the pages of this section, as we
 * xref:haystack.adoc[Haystack]
 * xref:semantic-kernel.adoc[Semantic Kernel]
 * xref:pydantic.adoc[Pydantic AI]
+* xref:genkitx-neo4j[Genkit]
 * xref:strands-agents-neo4j.adoc[Strands Agents]
 * xref:ms-agent-framework.adoc[MS Agent Framework]
 * xref:mcp-toolbox.adoc[MCP Toolbox]
 // * xref:dspy.adoc[DSPy]
+
+=== Agent Frameworks
+
+Agent frameworks give developers the building blocks to connect language models to tools, memory, and external data sources like Neo4j. Agents can reason over multiple steps, choose which tools to invoke, and adapt their behaviour based on intermediate results.
+
+* xref:genai-frameworks/langchain-agents.adoc[LangChain]
+* xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex]
+* xref:genai-frameworks/langgraph.adoc[LangGraph]
+* xref:genai-frameworks/openai-agents.adoc[OpenAI Agents SDK]
+* xref:genai-frameworks/aws-strands-agents.adoc[AWS Strands Agents]
+* xref:genai-frameworks/pydantic-ai.adoc[Pydantic AI]
+* xref:genai-frameworks/claude-agent.adoc[Claude Agent SDK]
+* xref:genai-frameworks/microsoft-agent-framework.adoc[Microsoft Agent Framework]
+* xref:genai-frameworks/google-adk.adoc[Google ADK]
+
+=== Agent Platforms
+
+Agent platforms are managed, enterprise-grade environments for deploying and operating AI agents at scale. They provide hosted runtimes, observability, governance, and marketplace integrations, with Neo4j available as a knowledge tool through MCP or REST.
+
+* xref:genai-frameworks/aws-agentcore.adoc[AWS AgentCore]
+* xref:genai-frameworks/microsoft-foundry.adoc[Azure AI Foundry]
+* xref:genai-frameworks/databricks-agent-bricks.adoc[Databricks Agent Bricks]
+* xref:genai-frameworks/google-gemini-enterprise.adoc[Google Gemini Enterprise]
+* xref:genai-frameworks/salesforce-agentforce.adoc[Salesforce Agentforce]
 
 == Highlighted Articles
 

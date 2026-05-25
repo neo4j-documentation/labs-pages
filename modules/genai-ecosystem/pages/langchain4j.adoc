@@ -47,6 +47,7 @@ include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-exam
 | icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
 | icon:github[] Data Repository | https://github.com/langchain4j/langchain4j/[GitHub]
 | icon:github[] Issues | https://github.com/langchain4j/langchain4j/issues
+| icon:book[] Reference Book | https://www.amazon.com/Building-Neo4j-Powered-Applications-LLMs-recommendations/dp/1836206232/
 // | icon:book[] Documentation |
 |===
 

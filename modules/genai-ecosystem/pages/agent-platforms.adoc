@@ -1,0 +1,30 @@
+= Agent Platforms
+include::_graphacademy_llm.adoc[]
+:imagesdir: https://s3.amazonaws.com/dev.assets.neo4j.com/wp-content/uploads
+:slug: agent-platforms
+:author: Neo4j Labs
+:category: labs
+:tags: agents, llm, neo4j, mcp, aws, azure, databricks, google, salesforce, enterprise, platforms
+:neo4j-versions: 5.X
+:page-pagination:
+:page-product: Agent Platforms
+
+Agent platforms are managed, enterprise-grade environments for building, deploying, and operating AI agents at scale. Unlike open-source frameworks that run in your own infrastructure, platforms provide hosted runtimes, built-in observability, governance controls, and marketplace integrations out of the box.
+
+Neo4j connects to these platforms through MCP server integrations, REST APIs, and native driver connections. The knowledge graph becomes available as a tool within each platform's agent runtime — providing structured relationship data, real-time graph traversal, and vector search that complement the platform's own data sources.
+
+The https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP server^] is the primary integration point across all platforms, exposing Cypher execution and schema inspection as standard tools. Platforms without native MCP support can connect through REST bridges or platform-specific extension mechanisms.
+
+== Agent Platforms
+
+* xref:genai-frameworks/aws-agentcore.adoc[AWS AgentCore] — Amazon Bedrock-based agent runtime with MCP support, IAM authentication, and AgentCore Gateway
+* xref:genai-frameworks/microsoft-foundry.adoc[Azure AI Foundry] — Microsoft's enterprise agent platform with Copilot Studio and Azure AI Agent Service
+* xref:genai-frameworks/databricks-agent-bricks.adoc[Databricks Agent Bricks] — Databricks-native agent framework with Unity Catalog tool governance and MCP integration
+* xref:genai-frameworks/google-gemini-enterprise.adoc[Google Gemini Enterprise] — Google's enterprise AI platform with Vertex AI Extensions and Agent-to-Agent protocol support
+* xref:genai-frameworks/salesforce-agentforce.adoc[Salesforce Agentforce] — Salesforce's Atlas Reasoning Engine with External Service Actions and native MCP client
+
+== GraphAcademy Courses
+
+If you want to learn how LLMs and Knowledge Graphs combine to improve GenAI applications, check out the https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs[Neo4j & LLM courses on GraphAcademy^].
+
+image::https://cdn.graphacademy.neo4j.com/assets/img/courses/banners/llm-fundamentals.png[link=https://graphacademy.neo4j.com/categories/llms/?ref=genai-docs]

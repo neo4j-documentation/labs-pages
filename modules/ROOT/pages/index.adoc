@@ -38,6 +38,12 @@ They are actively developed and maintained, but we don't provide any SLAs or gua
 Neo4j integrates with many libraries (LangChain, LlamaIndex, Haystack, Spring-AI) in the xref:genai-ecosystem:index.adoc[GenAI Ecosystem] to make building and deploying knowledge graph-powered GenAI applications easier.
 Most integrations use a combination of vector and graph search to improve quality and accuracy of typical generative AI tasks and can also be used to construct knowledge graphs from unstructured data.
 
+=== https://neo4j.sh[Neo4j-cli]
+
+https://neo4j.sh[Neo4j-cli] is  new modern and fast super CLI for humans and coding agents with consistent structure, efficient-output and self documenting capabilities and skills. 
+It allows to manage databases locally and remotely, query your database, compute embeddings as parameters and much more. Built with AI for AI.
+
+
 === https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[MCP Servers]
 
 The Model Context Protocol (MCP) allows LLMs and Agents to use APIs, databases and many other capabilities easily into their architecture via active function calling.

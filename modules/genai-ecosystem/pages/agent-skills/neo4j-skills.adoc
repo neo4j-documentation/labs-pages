@@ -1,0 +1,215 @@
+= Neo4j Agent Skills
+:slug: neo4j-agent-skills
+:author: Neo4j Labs
+:category: genai-ecosystem
+:tags: agents, llm, neo4j, cypher, skills, claude, cursor, cline, codex, gemini
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: Neo4j Agent Skills
+:attribute-missing: skip
+:neo4j-skills-repo: https://github.com/neo4j-contrib/neo4j-skills
+
+https://github.com/neo4j-contrib/neo4j-skills[Neo4j Agent Skills^] is a collection of installable knowledge packages for AI agents -- Claude Code, Cursor, Cline, Gemini CLI, Codex, and any other https://agentskills.io/specification[Agent Skills^]-compatible tool.
+
+Browse and install at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+
+[source,bash]
+----
+npx skills add neo4j-contrib/neo4j-skills
+----
+
+TIP: For Claude Code, Gemini CLI, and Codex-specific install commands, see xref:agent-skills/coding-skills.adoc#_installing_neo4j_agent_skills[Installing Neo4j Agent Skills].
+
+Skills bundle step-by-step instructions, reference documentation, and executable scripts into a progressive disclosure model: the agent loads only what it needs, keeping context usage minimal while ensuring correct, Neo4j-specific behavior.
+
+== Available Skills
+
+=== neo4j-getting-started-skill
+
+A Claude Code skill that takes you from zero to a running graph application in a single session.
+Invoke it with `/neo4j-getting-started-skill` and a plain-language description -- the skill collects any missing context and then runs 8 stages automatically: prerequisites -> context -> provision -> model -> load -> explore -> query -> build.
+
+[source]
+----
+/neo4j-getting-started-skill fraud detection for a fintech startup
+/neo4j-getting-started-skill Healthcare patient journey analysis, intermediate Python dev,
+local Docker, synthetic data, Jupyter notebook please.
+----
+
+**Database targets:** `aura-free`, `aura-pro`, `local-docker`, `local-desktop`, `existing-cloud`
+
+**Data sources:** `synthetic`, `demo`, `csv`, `documents` (GraphRAG via `neo4j-graphrag`)
+
+**App types:** `notebook`, `streamlit`, `fastapi`, `graphrag`, `mcp`, `explore-only`
+
+When all six context variables are provided upfront the skill runs fully autonomously (<=15 min local, <=25 min with Aura provisioning). It writes `progress.md` after each stage and resumes automatically if interrupted.
+
+**Prerequisites:** Claude Code, Python >= 3.10, Docker (only for `local-docker`).
+
+[source,bash]
+----
+npx skills add neo4j-contrib/neo4j-skills/neo4j-getting-started-skill
+----
+
+=== neo4j-cypher-skill
+
+Write, optimize, and debug Cypher queries. Covers Cypher 25 syntax, query planning, indexes, and common patterns.
+
+WARNING: AI agents trained on older data frequently generate deprecated Cypher. The patterns below are deprecated or replaced in Neo4j 2025.x -- prefer the Cypher 25 equivalents.
+
+[cols="1,1", options="header"]
+|===
+| Deprecated (4.x / 5.x) | Cypher 25 replacement
+
+| `+shortestPath((a)-[*]-(b))+` | `SHORTEST 1 (a)-[*]-(b)`
+| `()-[*1..5]-()` variable-length | Quantified path: `()-[]{1,5}-()`
+| `CALL { ... } IN TRANSACTIONS` | `CALL { ... } IN TRANSACTIONS OF N ROWS`
+| `WITH collect(x) AS ...` subquery workaround | `COLLECT { MATCH ... RETURN ... }`
+| `WITH count(*) AS ...` subquery workaround | `COUNT { MATCH ... }`
+| `RETURN exists((n)-[:R]->())` | `RETURN exists { (n)-[:R]->() }`
+|===
+
+For driver API deprecations, see `neo4j-migration-skill`.
+
+[source,bash]
+----
+npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
+----
+
+=== All Skills by Category
+
+==== Querying and Modeling
+
+[cols="1,3", options="header"]
+|===
+| Skill | When to use
+
+| {neo4j-skills-repo}/tree/main/neo4j-cypher-skill[neo4j-cypher-skill^]
+| Write, optimize, and debug Cypher queries. Covers Cypher 25 syntax, query planning, indexes, and common patterns.
+
+| {neo4j-skills-repo}/tree/main/neo4j-modeling-skill[neo4j-modeling-skill^]
+| Design and review graph data models. Covers node/relationship patterns, property choices, and relational-to-graph migration.
+
+| {neo4j-skills-repo}/tree/main/neo4j-getting-started-skill[neo4j-getting-started-skill^]
+| Zero-to-app walkthrough: provision -> model -> load -> query. Use for first-time setup on Aura or Docker.
+|===
+
+==== Importing Data
+
+[cols="1,3", options="header"]
+|===
+| Skill | When to use
+
+| {neo4j-skills-repo}/tree/main/neo4j-import-skill[neo4j-import-skill^]
+| Load structured data (CSV, JSON) via `LOAD CSV`, `neo4j-admin import`, and the Data Importer GUI.
+
+| {neo4j-skills-repo}/tree/main/neo4j-document-import-skill[neo4j-document-import-skill^]
+| Extract knowledge graphs from unstructured documents and PDFs using `SimpleKGPipeline`.
+
+| {neo4j-skills-repo}/tree/main/neo4j-migration-skill[neo4j-migration-skill^]
+| Upgrade drivers and Cypher from 4.x/5.x to 2025.x. Covers API changes, deprecated functions, and Cypher 25 syntax.
+|===
+
+==== AI and Search
+
+[cols="1,3", options="header"]
+|===
+| Skill | When to use
+
+| {neo4j-skills-repo}/tree/main/neo4j-vector-index-skill[neo4j-vector-index-skill^]
+| Create and query vector indexes for semantic similarity search. Covers index creation, embedding ingestion, and `ai.text.embed()`.
+
+| {neo4j-skills-repo}/tree/main/neo4j-genai-plugin-skill[neo4j-genai-plugin-skill^]
+| In-Cypher LLM integration via `ai.text.*` functions: embeddings, text completion, structured output, chat, and pure-Cypher GraphRAG.
+
+| {neo4j-skills-repo}/tree/main/neo4j-graphrag-skill[neo4j-graphrag-skill^]
+| Build GraphRAG retrieval pipelines with `neo4j-graphrag`. Covers retriever selection, `retrieval_query` patterns, and LangChain/LlamaIndex integration.
+
+| {neo4j-skills-repo}/tree/main/neo4j-agent-memory-skill[neo4j-agent-memory-skill^]
+| Graph-native agent memory: short-term (conversations), long-term (POLE+O entity model), and reasoning traces. Covers `neo4j-agent-memory`, MCP, LangChain, CrewAI, ADK.
+
+| {neo4j-skills-repo}/tree/main/neo4j-mcp-skill[neo4j-mcp-skill^]
+| Set up and use the Neo4j MCP server for tool-based agent access to the database.
+|===
+
+==== Graph Data Science
+
+[cols="1,3", options="header"]
+|===
+| Skill | When to use
+
+| {neo4j-skills-repo}/tree/main/neo4j-gds-skill[neo4j-gds-skill^]
+| Run graph algorithms (PageRank, Louvain, node embeddings) on self-managed Neo4j using GDS.
+
+| {neo4j-skills-repo}/tree/main/neo4j-aura-graph-analytics-skill[neo4j-aura-graph-analytics-skill^]
+| Run GDS-compatible graph algorithms on Neo4j Aura via the Graph Analytics API.
+|===
+
+==== Drivers
+
+[cols="1,3", options="header"]
+|===
+| Skill | When to use
+
+| {neo4j-skills-repo}/tree/main/neo4j-driver-python-skill[neo4j-driver-python-skill^]
+| Python driver: `execute_query`, sessions, transactions, async, UNWIND batching, data types.
+
+| {neo4j-skills-repo}/tree/main/neo4j-driver-javascript-skill[neo4j-driver-javascript-skill^]
+| JavaScript/TypeScript driver: `executeQuery`, managed transactions, RxJS, data types.
+
+| {neo4j-skills-repo}/tree/main/neo4j-driver-java-skill[neo4j-driver-java-skill^]
+| Java driver: `ExecutableQuery`, managed/explicit transactions, object mapping, reactive.
+
+| {neo4j-skills-repo}/tree/main/neo4j-driver-dotnet-skill[neo4j-driver-dotnet-skill^]
+| .NET/C# driver: `ExecuteReadAsync`/`ExecuteWriteAsync`, DI registration, `IResultCursor`.
+
+| {neo4j-skills-repo}/tree/main/neo4j-driver-go-skill[neo4j-driver-go-skill^]
+| Go driver: `ExecuteQuery`, generic helpers, spatial types, connection configuration.
+|===
+
+==== Frameworks and Platforms
+
+[cols="1,3", options="header"]
+|===
+| Skill | When to use
+
+| {neo4j-skills-repo}/tree/main/neo4j-graphql-skill[neo4j-graphql-skill^]
+| Build GraphQL APIs backed by Neo4j using `@neo4j/graphql`. Covers type definitions, `@relationship`, `@cypher`, and filtering.
+
+| {neo4j-skills-repo}/tree/main/neo4j-spring-data-skill[neo4j-spring-data-skill^]
+| Spring Boot + Neo4j with Spring Data Neo4j: `@Node`, `@Relationship`, repositories, projections.
+
+| {neo4j-skills-repo}/tree/main/neo4j-cli-tools-skill[neo4j-cli-tools-skill^]
+| DB admin via `neo4j-admin`, `cypher-shell`, and `aura-cli`. Covers backups, imports, user management, and Aura provisioning.
+
+| {neo4j-skills-repo}/tree/main/neo4j-aura-provisioning-skill[neo4j-aura-provisioning-skill^]
+| Create and manage Neo4j Aura instances via the Aura CLI and REST API. Covers async polling, credential handling, and tier selection.
+|===
+
+== Usage
+
+Once installed, skills activate automatically. Describe your task in plain language and the agent selects and loads the appropriate skill:
+
+[source]
+----
+"Update these Cypher queries for Neo4j 2026"          -> neo4j-cypher-skill
+"Upgrade our Python driver to the latest version"     -> neo4j-migration-skill
+"Import this CSV file into Neo4j"                     -> neo4j-import-skill
+"Build a GraphRAG pipeline over our document corpus"  -> neo4j-graphrag-skill
+"Run PageRank on the graph"                           -> neo4j-gds-skill
+"/neo4j-getting-started-skill fraud detection"        -> neo4j-getting-started-skill
+----
+
+Skills use a three-level progressive disclosure model. The agent loads a short description (~50 tokens) first, then the full protocol (~2,000 tokens) only when the skill is needed, and selectively loads deep reference files on demand -- minimizing context usage across a long session.
+
+== Related Resources
+
+* https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^] -- browse and install all skills
+* https://github.com/neo4j-contrib/neo4j-skills[neo4j-contrib/neo4j-skills on GitHub^]
+* https://agentskills.io/specification[Agent Skills Specification^]
+* https://neo4j.com/llms.txt[neo4j.com/llms.txt^] -- agentic-engineering reference covering GraphRAG, MCP, drivers, Cypher, and CLI tools, optimized for AI agents and LLMs
+* https://neo4j.com/docs/llms-full.txt[neo4j.com/docs/llms-full.txt^] -- full documentation index for AI/LLM contexts
+* https://towardsdatascience.com/using-claude-skills-with-neo4j/[Using Claude Skills with Neo4j^] -- how Claude Skills work as file-based procedural memory to improve Cypher generation
+* https://medium.com/neo4j/from-weeks-to-minutes-how-ai-agent-skills-automate-neo4j-driver-and-cypher-migration-17a4ec487834[From Weeks to Minutes: Automating Neo4j Driver and Cypher Migration^] -- how agent skills reduce migration work from weeks to minutes
+* https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP Servers^] -- for live database access from your AI agent
+* xref:agent-skills/coding-skills.adoc[Coding Tool Integrations] -- Neo4j MCP server setup in VS Code, Cursor, Kiro, and Gemini CLI

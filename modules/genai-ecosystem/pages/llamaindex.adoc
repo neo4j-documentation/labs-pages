@@ -325,25 +325,15 @@ print(str(response))
 
 * https://docs.llamaindex.ai/en/latest/module_guides/indexing/lpg_index_guide/[Property Graph Index^]
 * https://docs.llamaindex.ai/en/stable/examples/property_graph/property_graph_custom_retriever/[Custom retriever example^]
-* https://github.com/run-llama/llama_parse/blob/main/examples/knowledge_graphs/kg_agent.ipynb[Knowledge graph agent with LlamaParse^]
 * https://docs.llamaindex.ai/en/stable/examples/vector_stores/Neo4jVectorDemo.html[Neo4jVectorDemo^]
 
 * https://llamahub.ai/l/readers/llama-index-readers-graphdb-cypher[Cypher Loader^]
 * https://llamahub.ai/l/graph_stores/llama-index-graph-stores-neo4j[Neo4j Graph Store^]
 * https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Schema Query Builder^]
 
-=== Neo4j Query Engine Pack
+== Agent Integration
 
-This https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Query Engine LlamaPack^] creates a Neo4j query engine, and executes its query function. This pack offers the option of creating multiple types of query engines, namely:
-
-* Knowledge graph vector-based entity retrieval (default if no query engine type option is provided)
-* Knowledge graph keyword-based entity retrieval
-* Knowledge graph hybrid entity retrieval
-* Raw vector index retrieval
-* Custom combo query engine (vector similarity + KG entity retrieval)
-* KnowledgeGraphQueryEngine
-* KnowledgeGraphRAGRetriever
-
+For using LlamaIndex as an agent framework with Neo4j — including MCP integration, `FunctionAgent`, `TextToCypherRetriever` as agent tools, and the Neo4j Query Engine tool spec — see xref:genai-frameworks/llamaindex-agents.adoc[LlamaIndex Agent Integration].
 
 == Relevant Links
 [cols="1,4"]
@@ -381,4 +371,4 @@ This https://llamahub.ai/l/tools/llama-index-tools-neo4j[Neo4j Query Engine Llam
 
 * https://medium.com/@yu-joshua/using-llamaparse-for-knowledge-graph-creation-from-documents-3bd1e1849754[Using LlamaParse for Knowledge Graph Creation from Documents^]
 
-* https://medium.com/neo4j/building-knowledge-graph-agents-with-llamaindex-workflows-b81f8d372f19[Build Knowledge Graph Agents With LlamaIndex Workflows]
+* https://neo4j.com/blog/knowledge-graph/knowledge-graph-agents-llamaindex/[Build Knowledge Graph Agents With LlamaIndex Workflows^]

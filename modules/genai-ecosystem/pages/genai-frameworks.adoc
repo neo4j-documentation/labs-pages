@@ -35,6 +35,7 @@ Neo4j and our community have contributed integrations to many of these framework
 * xref:haystack.adoc[Haystack]
 * xref:semantic-kernel.adoc[Semantic Kernel]
 * xref:pydantic.adoc[Pydantic AI]
+* xref:genkitx-neo4j[Genkit]
 * xref:strands-agents-neo4j.adoc[Strands Agents]
 * xref:mcp-toolbox.adoc[MCP Toolbox]
 // * xref:dspy.adoc[DSPy]

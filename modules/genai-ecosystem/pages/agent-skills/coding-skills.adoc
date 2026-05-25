@@ -1,0 +1,435 @@
+= Neo4j in Coding Tools & Editors
+:slug: neo4j-coding-skills
+:author: Neo4j Labs
+:category: genai-ecosystem
+:tags: agents, llm, neo4j, mcp, vscode, cursor, kiro, gemini, claude, codex, antigravity, editors
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: Coding Tool Integrations
+:attribute-missing: skip
+
+Neo4j integrates with AI-powered coding tools through dedicated extensions, curated rules, and the https://github.com/neo4j/mcp[Neo4j MCP server^].
+This gives your AI coding assistant live access to your graph database — schema inspection, Cypher execution, and real data — without leaving the editor.
+
+TIP: Want to go from zero to a running graph application in one session? The xref:agent-skills/neo4j-skills.adoc#_neo4j_getting_started_skill[neo4j-getting-started-skill] for Claude Code handles database provisioning, schema design, data loading, and app generation end-to-end — and can configure the MCP server automatically as its final step.
+
+== Installing Neo4j Agent Skills
+
+Neo4j Agent Skills teach your coding agent Neo4j-specific patterns -- correct Cypher, GraphRAG pipelines, drivers, GDS, and more.
+Browse all skills at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+
+=== Claude Code
+
+[source]
+----
+/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git
+/plugin install neo4j-skills@neo4j-skills-marketplace
+----
+
+Use `/plugin list` to verify, or `/reload-plugins` after installation.
+
+=== Gemini CLI
+
+[source,bash]
+----
+gemini extensions install https://github.com/neo4j-contrib/neo4j-skills
+----
+
+Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `NEO4J_DATABASE`) when prompted. Run `/extensions list` inside Gemini to verify.
+
+=== Cursor, Cline, Windsurf, and others
+
+[source,bash]
+----
+# Install all Neo4j skills
+npx skills add neo4j-contrib/neo4j-skills
+
+# Or individual skills
+npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
+npx skills add neo4j-contrib/neo4j-skills/neo4j-graphrag-skill
+----
+
+=== Codex
+
+[source,bash]
+----
+git clone https://github.com/neo4j-contrib/neo4j-skills.git
+mkdir -p ~/.codex/plugins
+cp -R neo4j-skills ~/.codex/plugins/neo4j-skills
+----
+
+Add to `~/.agents/plugins/marketplace.json`:
+
+[source,json]
+----
+{
+  "name": "neo4j-marketplace",
+  "interface": { "displayName": "Neo4j Skills" },
+  "plugins": [
+    {
+      "name": "neo4j-skills",
+      "source": { "source": "local", "path": "./plugins/neo4j-skills" },
+      "policy": { "installation": "AVAILABLE" },
+      "category": "Database"
+    }
+  ]
+}
+----
+
+See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list of available skills.
+
+== What You Can Do
+
+With Neo4j connected to your coding tool, your AI assistant can:
+
+* **Retrieve the database schema** — labels, relationship types, property keys, and indexes — and use it as context for all subsequent code generation
+* **Generate typed data classes** — Pydantic models, GraphQL schemas, Java POJOs, TypeScript interfaces, Go structs — matching your actual graph structure
+* **Validate generated Cypher** — execute queries against the real database to catch syntax errors, full scans, and logic bugs before they reach production
+* **Generate integration tests** — sample real records from the database to produce realistic test data and integration test fixtures
+* **Generate synthetic test data** — use the schema to produce `CREATE` or `MERGE` statements for seeding test environments
+
+== Editor Integrations
+
+=== Neo4j for VS Code
+
+The https://marketplace.visualstudio.com/items?itemName=neo4j-extensions.neo4j-for-vscode[Neo4j for VS Code^] extension provides native Cypher development support without requiring MCP.
+
+**Install:** Search for `Neo4j` in the VS Code Extensions panel, or run:
+
+[source]
+----
+ext install neo4j-extensions.neo4j-for-vscode
+----
+
+**Features:**
+
+* Syntax highlighting, linting, and semantic error checking for `.cypher` files (unknown labels, type mismatches)
+* Autocompletion for Cypher keywords, functions, labels, properties, relationship types, and database names
+* Signature help for all Cypher functions, formatted to the official styleguide
+* Multi-database connection management with quick switching
+* Query execution via `Ctrl+Enter` (single statement) or `Ctrl+Alt+Enter` (all/selected)
+* Query results and graph visualization in the editor panel
+* **Version-tailored linting** — reads your connected database version (5.23+) and applies the correct dialect rules automatically
+* **Embedded Cypher support** — syntax highlighting for Cypher in Python, Java, JavaScript, Go, and .NET string literals marked with `// cypher` or `/* cypher */`
+
+=== Gemini CLI
+
+Neo4j provides a dedicated https://cloud.google.com/blog/topics/developers-practitioners/using-the-neo4j-extension-in-gemini-cli[Gemini CLI extension^] that bundles four MCP servers in a single install:
+
+[cols="1,3", options="header"]
+|===
+| Server | Capability
+
+| `mcp-neo4j-cloud-aura-api`
+| Deploy and manage Neo4j Aura instances directly from the terminal
+
+| `mcp-neo4j-cypher`
+| Convert natural language to Cypher queries against a live database
+
+| `mcp-neo4j-data-modeling`
+| Interactive graph schema visualization and modeling
+
+| `mcp-neo4j-memory`
+| Store and retrieve facts as a persistent knowledge graph for agentic workflows
+|===
+
+**Install:**
+
+[source,bash]
+----
+gemini extensions install https://github.com/neo4j-contrib/mcp-neo4j
+----
+
+**Configure** — set these environment variables before launching Gemini CLI:
+
+[source,bash]
+----
+export NEO4J_URI="neo4j+s://your-instance.databases.neo4j.io"
+export NEO4J_USERNAME="neo4j"
+export NEO4J_PASSWORD="your-password"
+# For Aura management:
+export NEO4J_AURA_CLIENT_ID="your-client-id"
+export NEO4J_AURA_CLIENT_SECRET="your-client-secret"
+export NEO4J_AURA_TENANT_ID="your-tenant-id"
+----
+
+**Verify** the extension loaded:
+
+[source]
+----
+/mcp desc
+----
+
+**Example prompts:**
+
+[source]
+----
+Create a new AuraDB Pro instance.
+Create a Customer node with customer_id = "Gemini".
+Using the data modeling server, list all labels and relationship types.
+Use the neo4j-memory server to store: "Customer Asha prefers enterprise support."
+----
+
+TIP: To install Neo4j Agent Skills for Gemini CLI (Cypher authoring, GraphRAG, drivers, GDS, and more), use the separate skills extension: `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`. See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list.
+
+=== Antigravity
+
+https://antigravity.codes[Antigravity^] is an AI coding IDE with curated rules and MCP integrations for hundreds of technologies.
+Neo4j is supported through two complementary resources:
+
+* https://antigravity.codes/rules/database-data/graph-databases-neo4j[Graph Databases (Neo4j) rules^] — best-practice guidance injected into the AI context: data modeling patterns, Cypher fundamentals, indexing strategies, query profiling, and common use cases (social networks, fraud detection, knowledge graphs)
+* https://antigravity.codes/mcp/neo4j[Neo4j MCP server^] — one-click install from the Antigravity MCP store; provides `get-schema`, `read-cypher`, and `write-cypher` tools against a live database
+
+**To add the Neo4j MCP server in Antigravity:**
+
+. Open the `...` dropdown in the agent panel → *Manage MCP Servers*
+. Click *View raw config*
+. Add the Neo4j server to `mcp_config.json` (same `mcpServers` format as other editors — see xref:#mcp-server[below])
+
+=== Kiro
+
+Neo4j is listed in the https://kiro.dev/docs/mcp/servers/[Kiro MCP server directory^].
+Install with one click from the directory, or add it manually via the deep-link URL:
+
+[source]
+----
+kiro://kiro.mcp/add?name=neo4j&config=%7B%22command%22%3A%22neo4j-mcp%22%2C%22env%22%3A%7B%22NEO4J_URI%22%3A%22YOUR_URI%22%2C%22NEO4J_USERNAME%22%3A%22YOUR_USERNAME%22%2C%22NEO4J_PASSWORD%22%3A%22YOUR_PASSWORD%22%7D%7D
+----
+
+Manual config in `.kiro/settings/mcp.json` (project) or `~/.kiro/settings/mcp.json` (global) — uses the same `mcpServers` format described xref:#mcp-server[below].
+Kiro supports `${VARIABLE}` syntax in env values to pull credentials from the shell environment.
+
+[#mcp-server]
+== Neo4j MCP Server
+
+The https://github.com/neo4j/mcp[Neo4j MCP server^] exposes four tools to any MCP-compatible client:
+
+[cols="1,3", options="header"]
+|===
+| Tool | Description
+
+| `get-schema`
+| Introspect labels, relationship types, property keys, and indexes
+
+| `read-cypher`
+| Execute read-only Cypher queries
+
+| `write-cypher`
+| Execute write Cypher (disable with `NEO4J_READ_ONLY=true`)
+
+| `list-gds-procedures`
+| List available Graph Data Science procedures
+|===
+
+Install from https://neo4j.com/docs/mcp/current/installation/[Neo4j MCP docs^], https://github.com/neo4j/mcp/releases[GitHub Releases^], or via Docker:
+
+[source,bash]
+----
+docker pull neo4j/mcp
+----
+
+=== Configuration
+
+Most editors use the same `mcpServers` JSON structure — only the config file path differs:
+
+[cols="2,3", options="header"]
+|===
+| Editor | Config file
+
+| Claude Code
+| `~/.claude/settings.json`
+
+| Claude Desktop (macOS)
+| `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+| Cursor (global)
+| `~/.cursor/mcp.json`
+
+| Cursor (project)
+| `.cursor/mcp.json`
+
+| Windsurf (global)
+| `~/.codeium/windsurf/mcp_config.json`
+
+| Windsurf (project)
+| `.windsurf/mcp_config.json`
+
+| Cline
+| VS Code settings → Cline MCP panel
+
+| Kiro (global)
+| `~/.kiro/settings/mcp.json`
+
+| Kiro (project)
+| `.kiro/settings/mcp.json`
+
+| Antigravity
+| `mcp_config.json`
+|===
+
+The Neo4j MCP server works with any https://modelcontextprotocol.io/clients[MCP-compatible client^], including GitHub Copilot (agent mode in VS Code, JetBrains, Eclipse, and Xcode), JetBrains AI Assistant, Zed, Continue.dev, Sourcegraph Cody, and Replit — configure it the same way using each tool's MCP settings.
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "neo4j": {
+      "command": "neo4j-mcp",
+      "env": {
+        "NEO4J_URI": "bolt://localhost:7687",
+        "NEO4J_USERNAME": "neo4j",
+        "NEO4J_PASSWORD": "password",
+        "NEO4J_DATABASE": "neo4j",
+        "NEO4J_READ_ONLY": "true"
+      }
+    }
+  }
+}
+----
+
+**Claude Code** also supports a CLI shortcut:
+
+[source,bash]
+----
+claude mcp add neo4j -- neo4j-mcp
+----
+
+**VS Code** uses a slightly different key (`servers` instead of `mcpServers`) in `.vscode/mcp.json`:
+
+[source,json]
+----
+{
+  "servers": {
+    "neo4j": {
+      "type": "stdio",
+      "command": "neo4j-mcp",
+      "env": {
+        "NEO4J_URI": "bolt://localhost:7687",
+        "NEO4J_USERNAME": "neo4j",
+        "NEO4J_PASSWORD": "password",
+        "NEO4J_DATABASE": "neo4j",
+        "NEO4J_READ_ONLY": "true"
+      }
+    }
+  }
+}
+----
+
+=== HTTP Transport
+
+By default the MCP server communicates via STDIO (standard in/out), which is suitable for local process launch from an editor. HTTP transport mode instead serves MCP over a network endpoint — useful when you want to host a shared MCP server, run it in a container, or connect multiple clients to a single instance. Both modes support any Neo4j deployment (local, Docker, or Aura).
+
+In HTTP mode, the database URI and database name must be provided when starting the server via environment variables or CLI flags. Credentials (username/password) can either be set at startup the same way, or supplied per-request via a Basic Auth or Bearer token header.
+
+Start the server:
+
+[source,bash]
+----
+neo4j-mcp \
+  --neo4j-transport-mode http \
+  --neo4j-http-host 127.0.0.1 \
+  --neo4j-http-port 8080 \
+  --neo4j-uri bolt://localhost:7687 \
+  --neo4j-database neo4j
+  # omit --neo4j-username/--neo4j-password to require per-request auth
+----
+
+NOTE: The server binds to `127.0.0.1` by default, making it only reachable from the local machine. Only change `--neo4j-http-host` to a broader address (e.g. a specific interface IP) if you intentionally need remote access, and secure it with TLS and auth headers.
+
+Point your editor at the HTTP endpoint. Pass credentials as a `Basic` or `Bearer` auth header:
+
+[source,json]
+----
+{
+  "mcpServers": {
+    "neo4j-http": {
+      "type": "http",
+      "url": "http://your-mcp-server:8080/mcp",
+      "headers": {
+        "Authorization": "Basic <base64(username:password)>"
+      }
+    }
+  }
+}
+----
+
+== Use Cases
+
+=== Generate Data Classes from Graph Schema
+
+*Python (Pydantic)*
+[source]
+----
+Use the Neo4j schema to generate Pydantic models for all node types
+----
+
+*TypeScript*
+[source]
+----
+Generate TypeScript interfaces for our graph node labels and their properties
+----
+
+*GraphQL*
+[source]
+----
+Create a GraphQL schema from the current database schema
+----
+
+*Java*
+[source]
+----
+Generate Java domain objects with Neo4j OGM annotations
+----
+
+=== Validate Generated Cypher
+
+*Validate queries against the database*
+[source]
+----
+Validate all queries in file recommendations.ts against the running database
+with suitable parameters, ensure correct query execution, no warnings,
+and non-zero results
+----
+
+*Verify index usage*
+[source]
+----
+Generate a MERGE statement to upsert a Product node,
+run EXPLAIN to check it uses the product_id index
+----
+
+=== Generate Integration Tests
+
+*Python (pytest)*
+[source]
+----
+Sample 5 real User nodes from the database and use them
+to write pytest integration tests for our user repository
+----
+
+*Test fixture factory*
+[source]
+----
+Fetch the schema and generate a test fixture factory
+that creates valid connected subgraphs for testing
+----
+
+=== Generate Test Data
+
+[source]
+----
+Generate 20 realistic CREATE statements for Person nodes
+with relationships to Company nodes, matching our schema
+----
+
+== Related Resources
+
+* https://github.com/neo4j/mcp[Neo4j MCP Server on GitHub^]
+* https://neo4j.com/docs/mcp/current/[Neo4j MCP Documentation^]
+* https://marketplace.visualstudio.com/items?itemName=neo4j-extensions.neo4j-for-vscode[Neo4j for VS Code on Marketplace^]
+* https://cloud.google.com/blog/topics/developers-practitioners/using-the-neo4j-extension-in-gemini-cli[Neo4j Extension in Gemini CLI (Google Cloud Blog)^]
+* https://antigravity.codes/mcp/neo4j[Neo4j MCP in Antigravity^]
+* https://neo4j.com/llms.txt[neo4j.com/llms.txt^] — agentic-engineering reference covering GraphRAG, MCP, drivers, Cypher, and CLI tools, optimized for AI agents and LLMs
+* https://neo4j.com/docs/llms-full.txt[neo4j.com/docs/llms-full.txt^] — full documentation index for AI/LLM contexts
+* https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4j MCP Servers Overview^] — all available Labs MCP servers
+* xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] — installable knowledge bundles for Cypher authoring, migrations, and CLI tools
