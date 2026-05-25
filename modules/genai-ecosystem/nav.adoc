@@ -27,6 +27,8 @@
 // **** link:xxx[Documentation]
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
+**** xref:pydantic.adoc[Pydantic AI]
+**** xref:strands-agents-neo4j[Strands Agents]
 **** xref:genkitx-neo4j[Genkit]
 // **** link:xxx[Documentation]
 *** xref:agent-frameworks.adoc[Agent Frameworks]

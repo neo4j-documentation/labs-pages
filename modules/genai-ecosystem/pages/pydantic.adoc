@@ -1,0 +1,537 @@
+= Pydantic AI
+:slug: pydantic-ai
+:author: 
+:category: genai-ecosystem
+:tags: pydantic-ai, mcp, llm, neo4j
+:page-pagination:
+:page-product: pydantic-ai
+
+Integration of Neo4j graph database with Pydantic AI. 
+Neo4j's graph and vector capabilities can be exposed as MCP tools, allowing LLMs to query and modify the database 
+via a standard protocol over HTTP, SSE, or stdio.
+
+There are two examples provided using the **Neo4j "Companies" Demo Database**:
+
+* `main.py` — calls the Neo4j tool functions directly (does **not** use MCP transport, but the tools are the same).  
+* `client.py` — demonstrates a client agent that connects directly to the official https://github.com/neo4j/mcp[**Neo4j MCP Server**] using `stdio` transport.
+
+== Installation
+
+[source,bash]
+----
+pip install pydantic-ai mcp neo4j anyio pydantic-graph
+----
+
+== Example: main.py (direct function calls, no MCP transport)
+
+This example connects to the public **Companies** demo database and retrieves information using specific Cypher queries without using the MCP protocol.
+
+== The Companies Dataset
+
+The examples below use the public **Companies** demo database (`demo.neo4jlabs.com`). 
+It contains information about Organizations, People, Articles, and their relationships.
+
+To understand the graph schema, you can run the visualization command:
+
+[source,cypher]
+----
+CALL db.schema.visualization()
+----
+
+The schema visualization given by the command above is this:
+
+image::companies-db-schema-viz.png[width=600, align=center]
+
+While the output of `CALL apoc.meta.schema()`, which provides detailed metadata about nodes and relationships, is available below:
+
+[source,json]
+----
+{
+  "HAS_COMPETITOR": {
+    "count": 8212,
+    "properties": {},
+    "type": "relationship"
+  },
+  "HAS_CHUNK": {
+    "count": 108112,
+    "properties": {},
+    "type": "relationship"
+  },
+  "HAS_BOARD_MEMBER": {
+    "count": 5978,
+    "properties": {},
+    "type": "relationship"
+  },
+  "IndustryCategory": {
+    "count": 258,
+    "labels": [],
+    "properties": {
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_CATEGORY": { "count": 225, "direction": "in", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "HAS_INVESTOR": {
+    "count": 10645,
+    "properties": {},
+    "type": "relationship"
+  },
+  "Organization": {
+    "count": 46088,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "isDissolved": { "unique": false, "indexed": false, "type": "BOOLEAN", "existence": false },
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "diffbotId": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "nbrEmployees": { "unique": false, "indexed": false, "type": "INTEGER", "existence": false },
+      "name": { "unique": false, "indexed": true, "type": "STRING", "existence": false },
+      "motto": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "isPublic": { "unique": false, "indexed": false, "type": "BOOLEAN", "existence": false },
+      "revenue": { "unique": false, "indexed": false, "type": "FLOAT", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_COMPETITOR": { "count": 68, "direction": "out", "labels": ["Organization"], "properties": {} },
+      "HAS_BOARD_MEMBER": { "count": 0, "direction": "out", "labels": ["Person"], "properties": {} },
+      "MENTIONS": { "count": 2316, "direction": "in", "labels": ["Article"], "properties": {} },
+      "HAS_CEO": { "count": 0, "direction": "out", "labels": ["Person"], "properties": {} },
+      "HAS_SUBSIDIARY": { "count": 9, "direction": "out", "labels": ["Organization"], "properties": {} },
+      "HAS_INVESTOR": { "count": 60, "direction": "out", "labels": ["Person", "Organization"], "properties": {} },
+      "HAS_CATEGORY": { "count": 0, "direction": "out", "labels": ["IndustryCategory"], "properties": {} },
+      "HAS_SUPPLIER": { "count": 124, "direction": "out", "labels": ["Organization"], "properties": {} },
+      "IN_CITY": { "count": 0, "direction": "out", "labels": ["City"], "properties": {} }
+    }
+  },
+  "Country": {
+    "count": 119,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "IN_COUNTRY": { "count": 1129, "direction": "in", "labels": ["City"], "properties": {} }
+    }
+  },
+  "City": {
+    "count": 9131,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "IN_COUNTRY": { "count": 0, "direction": "out", "labels": ["Country"], "properties": {} },
+      "IN_CITY": { "count": 598, "direction": "in", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "Article": {
+    "count": 65578,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "sentiment": { "unique": false, "indexed": false, "type": "FLOAT", "existence": false },
+      "author": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "title": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "date": { "unique": false, "indexed": false, "type": "DATE_TIME", "existence": false },
+      "siteName": { "unique": false, "indexed": false, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_CHUNK": { "count": 0, "direction": "out", "labels": ["Chunk"], "properties": {} },
+      "MENTIONS": { "count": 0, "direction": "out", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "HAS_PARENT": { "count": 75, "properties": {}, "type": "relationship" },
+  "MENTIONS": { "count": 138800, "properties": {}, "type": "relationship" },
+  "HAS_CEO": { "count": 1900, "properties": {}, "type": "relationship" },
+  "HAS_SUBSIDIARY": { "count": 24869, "properties": {}, "type": "relationship" },
+  "HAS_CHILD": { "count": 49, "properties": {}, "type": "relationship" },
+  "IN_COUNTRY": { "count": 9052, "properties": {}, "type": "relationship" },
+  "HAS_CATEGORY": { "count": 9905, "properties": {}, "type": "relationship" },
+  "HAS_SUPPLIER": { "count": 36184, "properties": {}, "type": "relationship" },
+  "Chunk": {
+    "count": 108112,
+    "labels": [],
+    "properties": {
+      "id": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "text": { "unique": false, "indexed": true, "type": "STRING", "existence": false },
+      "embedding": { "unique": false, "indexed": false, "type": "LIST", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_CHUNK": { "count": 1738, "direction": "in", "labels": ["Article"], "properties": {} }
+    }
+  },
+  "Person": {
+    "count": 8064,
+    "labels": [],
+    "properties": {
+      "summary": { "unique": false, "indexed": false, "type": "STRING", "existence": false },
+      "id": { "unique": true, "indexed": true, "type": "STRING", "existence": false },
+      "name": { "unique": false, "indexed": true, "type": "STRING", "existence": false }
+    },
+    "type": "node",
+    "relationships": {
+      "HAS_PARENT": { "count": 4, "direction": "out", "labels": ["Person"], "properties": {} },
+      "HAS_BOARD_MEMBER": { "count": 131, "direction": "in", "labels": ["Organization"], "properties": {} },
+      "HAS_CEO": { "count": 45, "direction": "in", "labels": ["Organization"], "properties": {} },
+      "HAS_CHILD": { "count": 2, "direction": "out", "labels": ["Person"], "properties": {} },
+      "HAS_INVESTOR": { "count": 221, "direction": "in", "labels": ["Organization"], "properties": {} }
+    }
+  },
+  "IN_CITY": { "count": 36200, "properties": {}, "type": "relationship" }
+}
+----
+
+[source,python]
+----
+from neo4j import GraphDatabase
+import asyncio
+
+# Neo4j Tool Wrapper
+class Neo4jTool:
+    def __init__(self, uri, user, password):
+        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+
+    def close(self):
+        self.driver.close()
+
+    async def get_companies_in_industry(self, industry: str) -> str:
+        """
+        Companies (company_id, name, summary) in a given industry by industry name.
+        """
+        query = """
+        MATCH (:IndustryCategory {name:$industry})<-[:HAS_CATEGORY]-(c) 
+        WHERE NOT EXISTS { (c)<-[:HAS_SUBSIDARY]-() }
+        RETURN c.id as company_id, c.name as name, c.summary as summary
+        LIMIT 5
+        """
+        try:
+            results, _, _ = self.driver.execute_query(query, industry=industry)
+            if not results:
+                return f"No companies found in industry '{industry}'."
+            return "\n".join([f"Name: {r['name']}" for r in results])
+        except Exception as e:
+            return f"Error: {e}"
+
+# Usage
+async def main():
+    # Connect to the public demo database
+    neo4j_tool = Neo4jTool("neo4j+s://demo.neo4jlabs.com", "companies", "companies")
+    
+    try:
+        print("\n--- Find 'CRM Software Companies' ---")
+        print(await neo4j_tool.get_companies_in_industry("CRM Software Companies"))
+    finally:
+        neo4j_tool.close()
+
+asyncio.run(main())
+----
+
+== Example: client.py (Using Official Neo4j MCP via Stdio)
+
+In this example, we configure the Pydantic AI agent to launch the official `neo4j-mcp` server directly as a subprocess using `stdio`. 
+
+This approach uses `uvx` (from the `uv` package) to run the server without manual installation, connecting to the remote database using the specified credentials.
+
+[source,python]
+----
+import asyncio
+import os
+from dataclasses import dataclass
+from pydantic_ai import Agent, RunContext
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+# --- 1. Dependencies Definition ---
+@dataclass
+class McpDeps:
+    session: ClientSession
+
+# --- 2. Agent Configuration ---
+# Uses OpenAI (GPT-4o)
+agent = Agent(
+    'openai:gpt-4o',
+    deps_type=McpDeps,
+    system_prompt="You are a business data expert. Use the 'run_cypher' tool to query the Neo4j database."
+)
+
+# --- 3. Tool Registration ---
+@agent.tool
+async def run_cypher(ctx: RunContext[McpDeps], query: str) -> str:
+    """
+    Executes a read-only Cypher query on the Neo4j database.
+    Use this tool to find companies, people, or relationships.
+    """
+    print(f"[Tool] Running Cypher query: {query}")
+    
+    tool_name = "read-cypher" 
+    
+    try:
+        result = await ctx.deps.session.call_tool(
+            tool_name, 
+            arguments={"query": query}
+        )
+        return str(result.content)
+    except Exception as e:
+        return f"Error executing tool '{tool_name}': {str(e)}"
+
+# --- 4. Connection Configuration ---
+server_params = StdioServerParameters(
+    command="neo4j-mcp", 
+    args=[],
+    env={
+        "NEO4J_URI": "neo4j+s://demo.neo4jlabs.com:7687",
+        "NEO4J_USERNAME": "companies",
+        "NEO4J_PASSWORD": "companies",
+        "NEO4J_DATABASE": "companies"
+    }
+)
+
+async def main():
+    print("Connecting to Neo4j MCP Server...")
+    
+    # Open the communication channel
+    async with stdio_client(server_params) as (read, write):
+        # Initialize the MCP Session
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            print("MCP Session Initialized.")
+
+            # List available tools for debugging purposes
+            print("\nList of available tools on remote server:")
+            tools = await session.list_tools()
+            for t in tools.tools:
+                print(f" - {t.name}: {t.description}")
+            print("-" * 50)
+            
+            # Prepare dependencies
+            deps = McpDeps(session=session)
+            
+            print("Starting Agent...")
+            
+            try:
+                # Run the agent
+                result = await agent.run(
+                    'What are first 5 organizations alphabetically?',
+                    deps=deps
+                )
+                
+                print("\n--- Final Answer ---")
+                if hasattr(result, 'data'):
+                    print(result.data)
+                else:
+                    print(result)
+            except Exception as e:
+                print(f"\nAgent Error: {e}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+----
+
+=== How to run the client
+
+To start the agent, you need to set the API key for your LLM provider (in this example, Google Gemini) and run the script.
+
+[source,bash]
+----
+# Set your API Key
+export GEMINI_API_KEY=your_gemini_api_key_here
+
+# Run the client
+python client.py
+----
+
+You will also need `uv` installed to run the Neo4j MCP server directly:
+[source,bash]
+----
+pip install uv
+----
+
+== Example using pydantic-graph package
+
+In this example, `pydantic-graph` manages the logic flow (State Machine), 
+and Neo4j is used as a "Audit Log" or "Long-term Memory," saving every step the agent takes into the database.
+
+[source,python]
+----
+import asyncio
+import os
+import uuid
+from dataclasses import dataclass
+from typing import Optional
+
+from neo4j import GraphDatabase
+from pydantic_graph import BaseNode, Graph, RunContext, End
+
+# --- 1. NEO4J LOGGER (The Persistence Layer) ---
+class WorkflowLogger:
+    """
+    Handles saving the workflow execution steps into Neo4j.
+    It creates a linked list of :WorkflowStep nodes attached to a :WorkflowSession.
+    """
+    def __init__(self, uri, user, password, session_id):
+        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+        self.session_id = session_id
+        self._init_session()
+
+    def close(self):
+        self.driver.close()
+
+    def _init_session(self):
+        """Creates the Session node in Neo4j if it doesn't exist."""
+        query = """
+        MERGE (s:WorkflowSession {id: $sid})
+        ON CREATE SET s.created_at = datetime()
+        RETURN s
+        """
+        self.driver.execute_query(query, sid=self.session_id)
+        print(f"[Neo4j] Session {self.session_id} initialized.")
+
+    def log_step(self, step_name: str, input_data: str, output_data: str):
+        """
+        Creates a :WorkflowStep node and links it to the previous step (if any).
+        """
+        query = """
+        MATCH (s:WorkflowSession {id: $sid})
+        
+        // 1. Create the new step node
+        CREATE (new_step:WorkflowStep {
+            id: randomUUID(),
+            name: $name,
+            input: $input_data,
+            output: $output_data,
+            timestamp: datetime()
+        })
+        
+        // 2. Link session to step
+        CREATE (s)-[:OWNS_STEP]->(new_step)
+        
+        // 3. Find the immediately preceding step (the latest one before this)
+        //    and link them with [:NEXT] to form a chain.
+        WITH s, new_step
+        MATCH (s)-[:OWNS_STEP]->(last_step)
+        WHERE last_step.id <> new_step.id 
+          AND last_step.timestamp < new_step.timestamp
+        WITH last_step, new_step
+        ORDER BY last_step.timestamp DESC LIMIT 1
+        CREATE (last_step)-[:NEXT]->(new_step)
+        """
+        self.driver.execute_query(
+            query, 
+            sid=self.session_id, 
+            name=step_name, 
+            input_data=str(input_data),
+            output_data=str(output_data)
+        )
+        print(f"[Neo4j] Logged step: {step_name}")
+
+# --- 2. DEPENDENCIES ---
+@dataclass
+class GraphDeps:
+    logger: WorkflowLogger
+
+# --- 3. PYDANTIC GRAPH NODES (The Logic) ---
+
+@dataclass
+class InputNode(BaseNode[None, None, GraphDeps]):
+    """State 1: Simulates receiving user input."""
+    
+    async def run(self, ctx: RunContext[GraphDeps]) -> 'SearchNode':
+        user_query = "Find Google info"
+        print(f"--- 1. InputNode: Received '{user_query}' ---")
+        
+        # Log to Neo4j
+        ctx.deps.logger.log_step("InputNode", input_data="User Start", output_data=user_query)
+        
+        return SearchNode(query=user_query)
+
+@dataclass
+class SearchNode(BaseNode[None, None, GraphDeps]):
+    """State 2: Simulates searching a database."""
+    query: str
+    
+    async def run(self, ctx: RunContext[GraphDeps]) -> 'ResultNode':
+        print(f"--- 2. SearchNode: Processing '{self.query}' ---")
+        
+        # Simulate logic (e.g., calling another Neo4j tool here)
+        result = f"Found company: Google Inc. (ID: 123)"
+        
+        # Log to Neo4j
+        ctx.deps.logger.log_step("SearchNode", input_data=self.query, output_data=result)
+        
+        return ResultNode(final_text=result)
+
+@dataclass
+class ResultNode(BaseNode[None, None, GraphDeps]):
+    """State 3: Final output."""
+    final_text: str
+
+    async def run(self, ctx: RunContext[GraphDeps]) -> End:
+        print(f"--- 3. ResultNode: {self.final_text} ---")
+        
+        # Log to Neo4j
+        ctx.deps.logger.log_step("ResultNode", input_data=self.final_text, output_data="End of flow")
+        
+        return End(self.final_text)
+
+# --- 4. MAIN EXECUTION ---
+async def main():
+    # Configuration (Public Demo DB)
+    URI = "neo4j+s://demo.neo4jlabs.com"
+    USER = "companies"
+    PWD = "companies"
+    
+    # Create a unique session ID for this run
+    session_id = str(uuid.uuid4())
+    
+    logger = WorkflowLogger(URI, USER, PWD, session_id)
+    deps = GraphDeps(logger=logger)
+
+    # Define the Pydantic Graph
+    workflow = Graph(nodes=[InputNode, SearchNode, ResultNode])
+
+    try:
+        print(f"Starting Workflow (Session: {session_id})...")
+        await workflow.run(InputNode(), deps=deps)
+        
+        print("\n" + "="*50)
+        print("WORKFLOW FINISHED.")
+        print("To visualize the execution graph, run this Cypher in Neo4j Browser:")
+        print(f"MATCH (s:WorkflowSession {{id: '{session_id}'}})-[:OWNS_STEP]->(step) RETURN s, step ORDER BY step.timestamp")
+        print("="*50)
+
+    finally:
+        logger.close()
+
+if __name__ == "__main__":
+    asyncio.run(main())
+----
+
+== Functionality Includes
+
+* `Neo4jTool` - wraps Neo4j Cypher operations
+* **Official Neo4j MCP Server** - run directly via `uvx`
+* Real-world "Companies" dataset queryable via public demo credentials
+* Client agent using `stdio` transport for secure, local process communication
+* LLM integration with Gemini / Google GLA
+
+== Relevant Links
+[cols="1,4"]
+|===
+| icon:comments[] Community Support | https://community.neo4j.com/[Neo4j Online Community^]
+| icon:github[] Integration | https://github.com/pydantic-ai/pydantic-ai[GitHub]
+| icon:github[] Issues | https://github.com/pydantic-ai/pydantic-ai/issues
+| icon:github[] Neo4j MCP Server | https://github.com/neo4j/mcp[Neo4j MCP Server]
+| icon:book[] Documentation | https://ai.pydantic.dev/mcp/client/[Docs]
+|===
