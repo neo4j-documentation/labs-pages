@@ -3,8 +3,8 @@ include::_graphacademy_llm.adoc[]
 :slug: langchain4j
 :author: Giuseppe Villani
 :category: genai-ecosystem
-:tags: langchain, langchain4j, java, neo4j, vector, index
-:neo4j-versions: 5.x
+:tags: langchain, langchain4j, java, neo4j, vector, index, graphrag, knowledge-graph, chat-memory, parent-child, text2cypher
+:neo4j-versions: 5.x, 2026.01+
 :page-pagination:
 :page-product: langchain4j
 
@@ -13,7 +13,7 @@ image::https://avatars.githubusercontent.com/u/132277850?v=4[width=400]
 https://github.com/langchain4j[Langchain4j^] is a Java implementation of the langchain library.
 It uses similar concepts, with Prompts, Chains, Transformers, Document Loaders, Agents, and more.
 
-The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index available in the Langchain4j library.
+The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index available in the Langchain4j library, providing native mechanisms for both vector similarity searches and advanced GraphRAG topologies, automated knowledge graph extraction, and structural AI memory persistence.
 
 // https://github.com/langchain4j/langchain4j/tree/main/langchain4j-neo4j
 
@@ -23,6 +23,7 @@ The Neo4j Integration makes the xref:vector-search.adoc[Neo4j Vector] index avai
 ----
 Except when specified, the following LangChain4j features are available from version 1.0.0-beta3 of Langchain4j Community.
 Previously they were also available in Langchain Core, but since version 1.0.0-beta3 they have been migrated to the Community project.
+The advanced Knowledge Graph and persistent memory integrations detailed below are featured from version 1.0.0-beta19 onwards.
 ----
 
 .pom.xml
@@ -48,10 +49,12 @@ include::https://github.com/langchain4j/langchain4j-examples/raw/main/neo4j-exam
 
 == Functionality Includes
 
-* Create vector index
-* Populate nodes and vector index from documents
-* Query vector index
-* Convert natural language questions in cypher queries
+* Create vector index and query with native in-index metadata filtering
+* Separate search granularity from LLM content context via Parent-Child chunking
+* Auto-generate and store token-efficient summaries using LLM-driven graph ingestors
+* Convert natural language questions into valid Cypher queries with dynamic APOC schema sampling
+* Automate Knowledge Graph construction using structural transformers and idempotent writers with original document provenance
+* Persist conversational message threads and multimodal history within an isolated graph topology
 
 == Documentation
 
@@ -62,15 +65,20 @@ An example is available at : https://github.com/langchain4j/langchain4j-examples
 include::https://raw.githubusercontent.com/vga91/langchain4j-examples/refs/heads/test-tags/neo4j-example/src/main/java/Neo4jEmbeddingStoreExample.java[tags=test]
 ----
 
-LangChain4j provides the following classes for Neo4j integration:
+LangChain4j provides the following specialized classes for Neo4j integration:
 
-- `Neo4jEmbeddingStore`: Implements the https://github.com/langchain4j/langchain4j/blob/main/langchain4j-core/src/main/java/dev/langchain4j/store/embedding/EmbeddingStore.java[EmbeddingStore] interface, enabling storing and querying vector embeddings in a Neo4j database.
-- `Neo4jText2CypherRetriever`: Implements the https://github.com/langchain4j/langchain4j/blob/main/langchain4j-core/src/main/java/dev/langchain4j/rag/content/retriever/ContentRetriever.java[ContentRetriever] interface for generating and executing Cypher queries from user questions, improving content retrieval from Neo4j databases.
+- `Neo4jEmbeddingStore`: Implements the `EmbeddingStore` interface, enabling storing and querying vector embeddings in a Neo4j database with native filtering optimization.
+- `Neo4jText2CypherRetriever`: Implements the `ContentRetriever` interface for generating and executing Cypher queries from user questions, improving content retrieval from Neo4j databases.
+- `Neo4jEmbeddingStoreIngestor`: Orchestrates structural data ingest patterns like Parent-Child mappings.
+- `SummaryGraphIngestor`: Automates generating and linking a centralized document summary to its constituent vector nodes during ingestion.
+- `LLMGraphTransformer`: Interacts with LLMs to convert raw unstructured data strings into structured `GraphDocument` entity-relationship models.
+- `KnowledgeGraphWriter`: Persists structured entity frameworks into Neo4j using safe, injection-resistant, idempotent statements.
+- `Neo4jChatMemoryStore`: Implements the `ChatMemoryStore` interface, turning historical text and image interactions into linked graph chains.
 
 
 === Connection Setup
 
-We can connect to Neo4j and instantiate the above classes via builders.
+We can connect to Neo4j and instantiate the core integration components via dedicated builders.
 
 ==== Neo4jEmbeddingStore
 
@@ -104,8 +112,8 @@ Here is the complete builder list:
 
 ==== Neo4jText2CypherRetriever
 
-The `Neo4jContentRetriever` translates natural language questions into Cypher queries,
-leveraging the Neo4j schema calculated via https://neo4j.com/docs/apoc/current/overview/apoc.meta/apoc.meta.data/[apoc.meta.data] procedure.
+The `Neo4jText2CypherRetriever` translates natural language questions into Cypher queries,
+leveraging the Neo4j schema calculated via the `apoc.meta.data` procedure.
 
 
 Here is how to create a `Neo4jText2CypherRetriever` instance
@@ -135,7 +143,21 @@ Neo4jGraph neo4jGraph = Neo4jGraph.builder()
     .build();
 ----
 
-or using withBasicAuth as the `Neo4jEmbeddingStore`:
+When operating on massive production databases with billions of elements, scanning every single node to construct a metadata representation is too expensive. To prevent application startup latency, you can configure optional APOC sampling constraints within the builder:
+
+[source,java]
+----
+Neo4jGraph optimizedGraph = Neo4jGraph.builder()
+    .driver(driver)
+    .sample(100)    // Limits the number of nodes inspected per label
+    .maxRels(10)    // Limits the number of relationships inspected per node
+    .build();
+
+// Under the hood, this executes a single query: CALL apoc.meta.data({maxRels: 10, sample: 100})
+optimizedGraph.refreshSchema();
+----
+
+Alternatively, use `withBasicAuth` as seen with `Neo4jEmbeddingStore`:
 
 [source,java]
 ----
@@ -144,7 +166,7 @@ Neo4jGraph neo4jGraph = Neo4jGraph.builder()
     .build();
 ----
 
-and then pass it to the builder:
+And then pass it to the retriever builder:
 
 [source,java]
 ----
@@ -183,8 +205,7 @@ Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder()
 Or use withBasicAuth as alternative to `driver(<driver>)`
 [source,java]
 ----
-
-// we can use with `withBasicAuth` as alternative to driver:
+// we can use `withBasicAuth` as alternative to driver:
 Neo4jEmbeddingStore embeddingStore = Neo4jEmbeddingStore.builder().withBasicAuth("<Bolt URL>", "<username>", "<password>").build();
 ----
 
@@ -342,6 +363,86 @@ final List<EmbeddingMatch<TextSegment>> relevant = embeddingStore.search(request
 // output: list of embeddings
 ----
 
+==== Native In-Index Metadata Filtering
+When deploying applications on modern Neo4j instances (version 2026.01+), the library natively delegates complex structural filters directly down to the core engine during vector graph traversals. This completely avoids costly, unscalable memory-level post-filtering.
+
+[source,java]
+----
+import dev.langchain4j.store.embedding.filter.Filter;
+import dev.langchain4j.store.embedding.filter.comparison.IsEqualTo;
+
+Filter structuralFilter = new IsEqualTo("category", "genai-ecosystem");
+
+EmbeddingSearchRequest structuredSearch = EmbeddingSearchRequest.builder()
+        .queryEmbedding(embeddingModel.embed("What is GraphRAG?").content())
+        .maxResults(5)
+        .filter(structuralFilter)
+        .build();
+
+List<EmbeddingMatch<TextSegment>> results = embeddingStore.search(structuredSearch).matches();
+----
+
+=== Advanced Ingestion Frameworks (GraphRAG Patterns)
+
+==== The Parent-Child Pattern
+A common problem in RAG systems is the granularity mismatch: small text chunks are best for accurate vector matching, but large text blocks are better for giving the LLM rich conversational context. The Parent-Child pattern handles this by indexing fine-grained *Child chunks*, but having a successful search return the entire *Parent document*.
+
+[source,java]
+----
+import dev.langchain4j.community.store.embedding.neo4j.Neo4jEmbeddingStoreIngestor;
+import dev.langchain4j.community.rag.content.retriever.neo4j.Neo4jParentRetriever;
+
+// Create an ingestor that splits texts into small child chunks while preserving parent connections
+Neo4jEmbeddingStoreIngestor parentChildIngestor = Neo4jEmbeddingStoreIngestor.builder()
+        .driver(driver)
+        .embeddingModel(embeddingModel)
+        .parentSplitter(DocumentSplitters.recursive(1000, 100)) // Large text parent context
+        .childSplitter(DocumentSplitters.recursive(200, 20))    // Small searchable child vector chunks
+        .build();
+
+Document largePolicyDoc = Document.from("Highly detailed enterprise policy document text...");
+parentChildIngestor.ingest(largePolicyDoc);
+
+// Querying using the Parent Retriever ensures vector matching happens on Child chunks, 
+// but returns the complete unfragmented Parent Node context to the LLM.
+Neo4jParentRetriever retriever = Neo4jParentRetriever.builder()
+        .embeddingStore(embeddingStore)
+        .maxResults(1)
+        .build();
+
+List<Content> answers = retriever.retrieve(Query.from("enterprise policy details"));
+----
+The resulting graph layout matches searchable vectors to high-level data points:
+`(:DocumentChunk)-[:HAS_PARENT]->(:Document)`
+
+==== The Summary Pattern
+When full parent documents are too large and exceed LLM token windows, a summary pattern offers a cleaner approach. The `SummaryGraphIngestor` asks an LLM to generate high-level summaries of documents at ingestion time, stores them as standalone nodes, and links them to the searchable child chunks.
+
+[source,java]
+----
+import dev.langchain4j.community.store.embedding.neo4j.SummaryGraphIngestor;
+import dev.langchain4j.community.rag.content.retriever.neo4j.Neo4jSummaryRetriever;
+
+final Neo4jEmbeddingStoreIngestor summaryIngestor = SummaryGraphIngestor.builder()
+        .driver(driver)
+        .embeddingModel(embeddingModel)
+        .questionModel(chatLanguageModel) // LLM engine that computes the summary
+        .documentSplitter(DocumentSplitters.recursive(1500, 150))
+        .build();
+
+summaryIngestor.ingest(List.of(largePolicyDoc));
+
+// Retrieve pre-computed summaries when individual child chunks are matched
+Neo4jSummaryRetriever summaryRetriever = Neo4jSummaryRetriever.builder()
+        .embeddingStore(embeddingStore)
+        .maxResults(2)
+        .build();
+
+List<Content> summarizedContexts = summaryRetriever.retrieve(Query.from("summarized overview"));
+----
+This produces an optimized cluster layout within your database:
+`(:DocumentChunk)-[:HAS_SUMMARY]->(:Summary)`
+
 === Neo4jText2CypherRetriever
 
 
@@ -459,7 +560,123 @@ System.out.println(contents.get(0).textSegment().text());
 // output: "The most followed italian streamer"
 ----
 
+=== Automated Knowledge Graph Construction
+To handle entity extraction and graph hydration from raw unstructured documents without maintaining manual, brittle Named Entity Recognition (NER) frameworks, you can combine the `LLMGraphTransformer` and `KnowledgeGraphWriter`. 
 
+To guide the extraction process and enforce a precise structural output format without entity label fragmentation, you can pass structured JSON few-shot examples directly to the transformer builder:
+
+[source,java]
+----
+import dev.langchain4j.community.data.document.transformer.graph.LLMGraphTransformer;
+import dev.langchain4j.community.data.document.graph.GraphDocument;
+import dev.langchain4j.community.rag.content.retriever.neo4j.KnowledgeGraphWriter;
+import dev.langchain4j.data.document.DefaultDocument;
+
+String schemaFewShotPrompt = """
+[
+  {
+    "head": "Adam", "head_type": "Person",
+    "relation": "WORKS_FOR",
+    "tail": "Neo4j", "tail_type": "Company"
+  }
+]
+""";
+
+LLMGraphTransformer transformer = LLMGraphTransformer.builder()
+        .model(chatLanguageModel)
+        .examples(schemaFewShotPrompt) // Injects precise extraction models into system prompt
+        .build();
+
+Document inputDoc = new DefaultDocument("Keanu Reeves acted in Matrix.", Metadata.from("sourceId", "DOC-001"));
+
+// Transform unstructured payload into memory-resident Graph structures (Nodes & Edges)
+List<GraphDocument> graphDocs = transformer.transformAll(List.of(inputDoc));
+
+KnowledgeGraphWriter writer = KnowledgeGraphWriter.builder()
+        .graph(neo4jGraph)
+        .build();
+
+// Idempotent Graph Persistence: 
+// The writer generates internal UNWIND and MERGE logic, ensuring duplicate 
+// executions do not spawn redundant parallel entities or relationships.
+writer.addGraphDocuments(graphDocs, false); // includeSource = false
+----
+
+==== Maintaining Data Provenance (`includeSource`)
+To preserve absolute analytical visibility over data lineages—knowing exactly which underlying text chunk generated a specific relationship node—set the `includeSource` flag to `true`.
+
+[source,java]
+----
+writer.addGraphDocuments(graphDocs, true);
+----
+Setting this flag triggers three automated graph actions:
+1. It builds an independent, clean `Document` node within the graph, holding the original text snippet and full source metadata fields.
+2. If the processed document lacks an explicit identifier, it generates a unique cryptographic MD5 hash of the payload to handle identity tracking.
+3. It maps the tracking document back to all extracted graph entities using a dedicated structural edge relationship layout:
+`(:Document {id: "MD5_HASH", sourceId: "DOC-001"})-[:HAS_ENTITY]->(:__Entity__)`
+
+==== Deep Schema Customization
+To match strict pre-existing corporate database models, you can fully customize the generated default labels (`__Entity__`) and relationship identifiers (`HAS_ENTITY`), with automatic sanitization against Cypher injection vulnerabilities:
+
+[source,java]
+----
+KnowledgeGraphWriter customWriter = KnowledgeGraphWriter.builder()
+        .graph(neo4jGraph)
+        .label("KnowledgeNode")         // Replaces "__Entity__"
+        .idProperty("uniqueKey")        // Replaces "id"
+        .textProperty("payloadText")    // Replaces "text" on Document node
+        .relType("EXTRACTED_FROM")      // Replaces "HAS_ENTITY"
+        .constraintName("pk_constraint")// Custom constraint naming identifier
+        .build();
+----
+
+=== Persistent AI Chat Memory Store
+Graph-backed message histories map user conversations directly onto interconnected node structures. This makes it easy to track cross-session dependencies and query multi-session customer behaviors over time.
+
+[source,java]
+----
+import dev.langchain4j.store.memory.chat.neo4j.Neo4jChatMemoryStore;
+import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.data.message.ImageContent;
+
+ChatMemoryStore memoryStore = Neo4jChatMemoryStore.builder()
+        .driver(driver)
+        .databaseName("neo4j")
+        .build();
+
+String aliceSession = "session-alice-777";
+String bobSession   = "session-bob-888";
+
+// Append standard textual chat components
+memoryStore.updateMessages(aliceSession, List.of(
+    new UserMessage("My name is Alice."),
+    new AiMessage("Hello Alice!")
+));
+
+// Multimodal Context Capabilities: Save images and binary elements directly into the graph
+memoryStore.updateMessages(bobSession, List.of(
+    new UserMessage("What is inside this document?", List.of(new ImageContent("https://example.com/spec.png")))
+));
+----
+
+==== Conversation Isolation and Custom Topology
+The store isolates independent user sessions into distinct, un-entangled link structures. To seamlessly blend memory components with an existing domain architecture without polluting your graph with default names like `Memory` or `Message`, use the custom schema options in the builder:
+
+[source,java]
+----
+Neo4jChatMemoryStore businessMemoryStore = Neo4jChatMemoryStore.builder()
+        .driver(driver)
+        .memoryLabel("UserAccount")        // Replaces "Memory"
+        .messageLabel("InteractionTurn")   // Replaces "Message"
+        .lastMessageRelType("LATEST_TALK") // Replaces "LAST_MESSAGE"
+        .nextMessageRelType("THEN")        // Replaces "NEXT" link chain
+        .idProperty("accountKey")          // Replaces "id"
+        .messageProperty("rawText")        // Replaces "message" text property
+        .build();
+----
+When conversations progress, the configuration automatically executes clean, domain-specific Cypher expressions:
+`MERGE (u:UserAccount {accountKey: 'session-alice-777'})-[:LATEST_TALK]->(m:InteractionTurn {rawText: 'My name is Alice.'})`
 
 == Relevant Links
 [cols="1,4"]
