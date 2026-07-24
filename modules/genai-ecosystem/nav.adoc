@@ -27,7 +27,7 @@
 // **** link:xxx[Documentation]
 **** xref:mcp-toolbox.adoc[MCP Toolbox]
 // **** link:xxx[Documentation]
-**** xref:genkitx-neo4j[Genkit]
+**** xref:genkitx-neo4j.adoc[Genkit]
 // **** link:xxx[Documentation]
 *** xref:agent-frameworks.adoc[Agent Frameworks]
 **** xref:genai-frameworks/langchain-agents.adoc[LangChain]
