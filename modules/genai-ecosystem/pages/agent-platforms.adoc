@@ -19,9 +19,14 @@ The https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4
 
 * xref:genai-frameworks/aws-agentcore.adoc[AWS AgentCore] — Amazon Bedrock-based agent runtime with MCP support, IAM authentication, and AgentCore Gateway
 * xref:genai-frameworks/microsoft-foundry.adoc[Azure AI Foundry] — Microsoft's enterprise agent platform with Copilot Studio and Azure AI Agent Service
+* xref:genai-frameworks/microsoft-copilot-studio.adoc[Microsoft Copilot Studio] — Low-code agent builder with self-hosted or Aura-hosted Neo4j MCP tools
 * xref:genai-frameworks/databricks-agent-bricks.adoc[Databricks Agent Bricks] — Databricks-native agent framework with Unity Catalog tool governance and MCP integration
+* xref:genai-frameworks/gcp-managed-agents.adoc[Vertex AI Managed Agents] — Google's serverless managed-agent runtime with skills, MCP egress, and Memory Bank
 * xref:genai-frameworks/google-gemini-enterprise.adoc[Google Gemini Enterprise] — Google's enterprise AI platform with Vertex AI Extensions and Agent-to-Agent protocol support
 * xref:genai-frameworks/salesforce-agentforce.adoc[Salesforce Agentforce] — Salesforce's Atlas Reasoning Engine with External Service Actions and native MCP client
+* xref:genai-frameworks/uipath-ai-agent.adoc[UiPath AI Agent] — UiPath's automation platform with MCP-connected agents and RPA workflows
+* xref:genai-frameworks/datarobot.adoc[DataRobot] — DataRobot Agentic AI with MCP tools and Neo4j Agent Memory
+* xref:genai-frameworks/ibm-watsonx.adoc[IBM watsonx Orchestrate] — IBM's enterprise agent orchestration with MCP toolsets and agent memory
 
 == GraphAcademy Courses
 

@@ -1,0 +1,57 @@
+name: llms.txt Monthly Update
+
+on:
+  schedule:
+    - cron: '0 9 1 * *'   # 1st of every month at 09:00 UTC
+  workflow_dispatch:        # allow manual trigger
+
+jobs:
+  update-llms-txt:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run llms.txt update agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude \
+            --model claude-opus-4-7 \
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebFetch,WebSearch" \
+            --max-turns 50 \
+            --print \
+            "$(cat llms-txt/UPDATE_PROMPT.md)"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet llms-txt/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Push branch and open PR
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="llms-txt/monthly-update-$(date +%Y-%m)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add llms-txt/
+          git commit -m "llms.txt monthly update $(date +%Y-%m)
+
+          Automated update via Claude Code agent.
+
+          Co-Authored-By: Claude <noreply@anthropic.com>"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "llms.txt monthly update $(date +%Y-%m)" \
+            --body "Automated monthly update of \`llms.txt\` and \`llms-full.txt\`. Review diff carefully before merging — agent may have added, changed, or removed content." \
+            --base publish \
+            --label "llms-txt,automated"

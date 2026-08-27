@@ -27,7 +27,9 @@ Neo4j integrates with all major agent frameworks through the Neo4j MCP server, d
 * xref:genai-frameworks/pydantic-ai.adoc[Pydantic AI] — Type-safe agent framework with structured tool definitions
 * xref:genai-frameworks/claude-agent.adoc[Claude Agent SDK] — Anthropic's agent SDK with tool use and MCP integration
 * xref:genai-frameworks/microsoft-agent-framework.adoc[Microsoft Agent Framework] — Multi-pattern integration: Direct SDK, MCP, HTTP API, and Context Provider
-* xref:genai-frameworks/google-adk.adoc[Google ADK] — Google's Agent Development Kit with MCP Toolbox support
+* xref:genai-frameworks/google-adk.adoc[Google ADK] — Google's Agent Development Kit with MCP Toolbox and GraphRAG support
+* xref:genai-frameworks/vercel-agent.adoc[Vercel AI SDK] — TypeScript agents with MCP, custom tools, and Neo4j Agent Memory
+* xref:genai-frameworks/flue.adoc[Flue] — TypeScript "agents as functions" framework with a native MCP client
 
 == GraphAcademy Courses
 
