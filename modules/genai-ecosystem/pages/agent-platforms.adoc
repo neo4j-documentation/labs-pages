@@ -27,6 +27,7 @@ The https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[Neo4
 * xref:genai-frameworks/uipath-ai-agent.adoc[UiPath AI Agent] — UiPath's automation platform with MCP-connected agents and RPA workflows
 * xref:genai-frameworks/datarobot.adoc[DataRobot] — DataRobot Agentic AI with MCP tools and Neo4j Agent Memory
 * xref:genai-frameworks/ibm-watsonx.adoc[IBM watsonx Orchestrate] — IBM's enterprise agent orchestration with MCP toolsets and agent memory
+* xref:genai-frameworks/snowflake-cortex.adoc[Snowflake Cortex Agents] — Cortex Agents with Cortex Search/Analyst, Snowsight setup, and Terraform deployment
 
 == GraphAcademy Courses
 
