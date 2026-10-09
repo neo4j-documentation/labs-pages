@@ -28,6 +28,8 @@ A project typically either graduates to being maintained as a formal Neo4j proje
 These Labs are supported via the link:https://community.neo4j.com/?_ga=2.65967848.79768660.1594637016-1548419832.1589810895[online community].
 They are actively developed and maintained, but we don't provide any SLAs or guarantees around backwards compatibility and deprecation, see the FAQ below.
 
+NOTE: Neo4j Labs projects are experimental and governed by the <<disclaimer, Neo4j Labs Terms>>.
+
 
 == Current Projects
 
@@ -190,3 +192,17 @@ We welcome contributions for those labs which are open source projects. You'll f
 
 === Which Neo4j Labs projects have been deprecated?
 The MongoDB Doc Manager and Cassandra Connector have both been deprecated. The source is still available on GitHub, but we found most developers could accomplish similiar goals by using APOC, Kafka and other technologies.
+
+[#disclaimer]
+== Neo4j Labs Terms Disclaimer
+
+Neo4j Labs projects are experimental projects provided solely for evaluation, education, demonstration, and the exchange of
+implementation ideas and emerging technical capabilities. They are not official Neo4j products or supported components of the Neo4j portfolio.
+Their functionality may change, be discontinued, or may never become part of a Neo4j product or service.
+
+Labs projects are provided "as is," without warranties, service-level commitments, maintenance guarantees, security assurances, or official technical support.
+Neo4j does not assume responsibility for their reliability, availability, compatibility, supportability, or security.
+They are not intended or approved for use in production or pre-production environments. Any use is entirely at the user's own risk.
+To the fullest extent permitted by applicable law, Neo4j will not be liable for any loss, damage, security incident, service interruption,
+data loss, or other consequence arising from or related to the use of these projects.
+Project ownership, copyright, and permitted use remain subject to the license and notices included with each project.
