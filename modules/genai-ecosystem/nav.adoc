@@ -83,6 +83,7 @@
 **** xref:genai-frameworks/snowflake-cortex.adoc[Snowflake Cortex]
 ***** xref:genai-frameworks/snowflake-cortex-terraform.adoc[Terraform]
 ***** xref:genai-frameworks/snowflake-cortex-snowsight.adoc[Snowsight]
+***** xref:genai-frameworks/snowflake-cortex-aura-mcp.adoc[Aura MCP]
 *** https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp/[MCP Servers]
 *** xref:agent-skills/index.adoc[Agent Skills]
 **** xref:agent-skills/neo4j-skills.adoc[Neo4j Skills]
