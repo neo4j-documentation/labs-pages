@@ -78,7 +78,10 @@ See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for descriptions and
 | Antigravity (`agy`)
 | `agy plugin install https://github.com/neo4j/agent-skills`
 
-| Kiro / Cursor / Cline / Windsurf
+| Kiro
+| Powers panel -> Add Custom Power -> import `https://github.com/neo4j/agent-skills` -- see xref:agent-skills/coding-skills.adoc#_kiro[install guide]
+
+| Cursor / Cline / Windsurf
 | `npx skills add neo4j/agent-skills`
 
 | Codex

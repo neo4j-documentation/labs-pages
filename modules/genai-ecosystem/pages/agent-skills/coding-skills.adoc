@@ -50,7 +50,7 @@ gemini extensions install https://github.com/neo4j/agent-skills
 
 Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `NEO4J_DATABASE`) when prompted. Run `/extensions list` inside Gemini to verify.
 
-=== Kiro, Cursor, Cline, Windsurf, and others
+=== Cursor, Cline, Windsurf, and others
 
 [source,bash]
 ----
@@ -62,7 +62,11 @@ npx skills add neo4j/agent-skills/neo4j-cypher-skill
 npx skills add neo4j/agent-skills/neo4j-graphrag-skill
 ----
 
-Kiro loads Agent Skills from `.kiro/skills/` (workspace) or `~/.kiro/skills/` (global); `npx skills add` can install into either.
+=== Kiro
+
+Install the skills as a Kiro power as a Kiro power: open the *Powers* panel, choose *Add Custom Power*, then *Import power from a repository URL* (*Import power from GitHub* before Kiro IDE 1.4.236) and enter `https://github.com/neo4j/agent-skills`.
+For a local clone, choose *Import power from a folder*.
+Alternatively, copy individual skills into `.kiro/skills/` (workspace) or `~/.kiro/skills/` (global).
 
 === Codex
 
