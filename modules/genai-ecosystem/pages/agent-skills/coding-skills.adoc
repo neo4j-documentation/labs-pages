@@ -16,13 +16,13 @@ TIP: Want to go from zero to a running graph application in one session? The xre
 == Installing Neo4j Agent Skills
 
 Neo4j Agent Skills teach your coding agent Neo4j-specific patterns -- correct Cypher, GraphRAG pipelines, drivers, GDS, and more.
-Browse all skills at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+Browse all skills at https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-skills^].
 
 === Claude Code
 
 [source]
 ----
-/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git
+/plugin marketplace add https://github.com/neo4j/agent-skills.git
 /plugin install neo4j-skills@neo4j-skills-marketplace
 ----
 
@@ -32,7 +32,7 @@ Use `/plugin list` to verify, or `/reload-plugins` after installation.
 
 [source,bash]
 ----
-gemini extensions install https://github.com/neo4j-contrib/neo4j-skills
+gemini extensions install https://github.com/neo4j/agent-skills
 ----
 
 Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `NEO4J_DATABASE`) when prompted. Run `/extensions list` inside Gemini to verify.
@@ -42,18 +42,18 @@ Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD
 [source,bash]
 ----
 # Install all Neo4j skills
-npx skills add neo4j-contrib/neo4j-skills
+npx skills add neo4j/agent-skills
 
 # Or individual skills
-npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
-npx skills add neo4j-contrib/neo4j-skills/neo4j-graphrag-skill
+npx skills add neo4j/agent-skills/neo4j-cypher-skill
+npx skills add neo4j/agent-skills/neo4j-graphrag-skill
 ----
 
 === Codex
 
 [source,bash]
 ----
-git clone https://github.com/neo4j-contrib/neo4j-skills.git
+git clone https://github.com/neo4j/agent-skills.git
 mkdir -p ~/.codex/plugins
 cp -R neo4j-skills ~/.codex/plugins/neo4j-skills
 ----
@@ -170,7 +170,7 @@ Using the data modeling server, list all labels and relationship types.
 Use the neo4j-memory server to store: "Customer Asha prefers enterprise support."
 ----
 
-TIP: To install Neo4j Agent Skills for Gemini CLI (Cypher authoring, GraphRAG, drivers, GDS, and more), use the separate skills extension: `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`. See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list.
+TIP: To install Neo4j Agent Skills for Gemini CLI (Cypher authoring, GraphRAG, drivers, GDS, and more), use the separate skills extension: `gemini extensions install https://github.com/neo4j/agent-skills`. See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list.
 
 === Antigravity
 

@@ -7,15 +7,15 @@
 :page-pagination:
 :page-product: Neo4j Agent Skills
 :attribute-missing: skip
-:neo4j-skills-repo: https://github.com/neo4j-contrib/neo4j-skills
+:neo4j-skills-repo: https://github.com/neo4j/agent-skills
 
-https://github.com/neo4j-contrib/neo4j-skills[Neo4j Agent Skills^] is a collection of installable knowledge packages for AI agents -- Claude Code, Cursor, Cline, Gemini CLI, Codex, and any other https://agentskills.io/specification[Agent Skills^]-compatible tool.
+https://github.com/neo4j/agent-skills[Neo4j Agent Skills^] is a collection of installable knowledge packages for AI agents -- Claude Code, Cursor, Cline, Gemini CLI, Codex, and any other https://agentskills.io/specification[Agent Skills^]-compatible tool.
 
-Browse and install at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+Browse and install at https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-skills^].
 
 [source,bash]
 ----
-npx skills add neo4j-contrib/neo4j-skills
+npx skills add neo4j/agent-skills
 ----
 
 TIP: For Claude Code, Gemini CLI, and Codex-specific install commands, see xref:agent-skills/coding-skills.adoc#_installing_neo4j_agent_skills[Installing Neo4j Agent Skills].
@@ -48,7 +48,7 @@ When all six context variables are provided upfront the skill runs fully autonom
 
 [source,bash]
 ----
-npx skills add neo4j-contrib/neo4j-skills/neo4j-getting-started-skill
+npx skills add neo4j/agent-skills/neo4j-getting-started-skill
 ----
 
 === neo4j-cypher-skill
@@ -73,7 +73,7 @@ For driver API deprecations, see `neo4j-migration-skill`.
 
 [source,bash]
 ----
-npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
+npx skills add neo4j/agent-skills/neo4j-cypher-skill
 ----
 
 === All Skills by Category
@@ -204,8 +204,8 @@ Skills use a three-level progressive disclosure model. The agent loads a short d
 
 == Related Resources
 
-* https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^] -- browse and install all skills
-* https://github.com/neo4j-contrib/neo4j-skills[neo4j-contrib/neo4j-skills on GitHub^]
+* https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-skills^] -- browse and install all skills
+* https://github.com/neo4j/agent-skills[neo4j/agent-skills on GitHub^]
 * https://agentskills.io/specification[Agent Skills Specification^]
 * https://neo4j.com/llms.txt[neo4j.com/llms.txt^] -- agentic-engineering reference covering GraphRAG, MCP, drivers, Cypher, and CLI tools, optimized for AI agents and LLMs
 * https://neo4j.com/docs/llms-full.txt[neo4j.com/docs/llms-full.txt^] -- full documentation index for AI/LLM contexts

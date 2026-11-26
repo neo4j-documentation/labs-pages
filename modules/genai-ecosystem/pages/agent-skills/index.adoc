@@ -8,7 +8,7 @@ include::_graphacademy_llm.adoc[]
 :neo4j-versions: 5.X
 :page-pagination:
 :page-product: Agent Skills
-:neo4j-skills-repo: https://github.com/neo4j-contrib/neo4j-skills
+:neo4j-skills-repo: https://github.com/neo4j/agent-skills
 
 AI agents and coding tools become significantly more effective when they have direct access to your Neo4j graph database.
 Rather than relying solely on training data, agents can retrieve live schema information, execute and validate Cypher queries, and use real graph data to generate code, tests, and integrations -- all without leaving the editor.
@@ -21,7 +21,7 @@ Neo4j supports two complementary integration layers:
 
 == Neo4j Agent Skills
 
-Browse and install at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+Browse and install at https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-skills^].
 
 === neo4j-getting-started-skill
 
@@ -34,7 +34,7 @@ Invoke it with a plain-language description -- it provisions a database, designs
 /neo4j-getting-started-skill healthcare patient graph, local Docker, FastAPI, synthetic data
 ----
 
-Install: `npx skills add neo4j-contrib/neo4j-skills/neo4j-getting-started-skill`
+Install: `npx skills add neo4j/agent-skills/neo4j-getting-started-skill`
 
 === Skills by Category
 
@@ -70,13 +70,13 @@ See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for descriptions and
 | Agent | Install command
 
 | Claude Code
-| `/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git`
+| `/plugin marketplace add https://github.com/neo4j/agent-skills.git`
 
 | Gemini CLI
-| `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`
+| `gemini extensions install https://github.com/neo4j/agent-skills`
 
 | Cursor / Cline / Windsurf
-| `npx skills add neo4j-contrib/neo4j-skills`
+| `npx skills add neo4j/agent-skills`
 
 | Codex
 | Clone repo, copy to `~/.codex/plugins/` -- see xref:agent-skills/neo4j-skills.adoc#_codex[install guide]
