@@ -28,6 +28,19 @@ Browse all skills at https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-
 
 Use `/plugin list` to verify, or `/reload-plugins` after installation.
 
+=== Antigravity
+
+Install the plugin with the Antigravity CLI (`agy`):
+
+[source,bash]
+----
+agy plugin install https://github.com/neo4j/agent-skills
+----
+
+Verify with `agy plugin list` (or `/plugin list` inside an interactive `agy` session).
+In the Antigravity app or IDE, open the *Customizations* tab and install *Neo4j* from the Marketplace, or clone the repository into `~/.gemini/config/plugins/neo4j-skills` (global) or `.agents/plugins/neo4j-skills` (workspace).
+To migrate existing Gemini CLI extensions, run `agy plugin import gemini`.
+
 === Gemini CLI
 
 [source,bash]
@@ -37,7 +50,7 @@ gemini extensions install https://github.com/neo4j/agent-skills
 
 Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `NEO4J_DATABASE`) when prompted. Run `/extensions list` inside Gemini to verify.
 
-=== Cursor, Cline, Windsurf, and others
+=== Kiro, Cursor, Cline, Windsurf, and others
 
 [source,bash]
 ----
@@ -49,32 +62,18 @@ npx skills add neo4j/agent-skills/neo4j-cypher-skill
 npx skills add neo4j/agent-skills/neo4j-graphrag-skill
 ----
 
+Kiro loads Agent Skills from `.kiro/skills/` (workspace) or `~/.kiro/skills/` (global); `npx skills add` can install into either.
+
 === Codex
 
 [source,bash]
 ----
-git clone https://github.com/neo4j/agent-skills.git
-mkdir -p ~/.codex/plugins
-cp -R neo4j-skills ~/.codex/plugins/neo4j-skills
+codex plugin marketplace add neo4j/agent-skills
+codex plugin add neo4j-skills@neo4j-skills-marketplace
 ----
 
-Add to `~/.agents/plugins/marketplace.json`:
-
-[source,json]
-----
-{
-  "name": "neo4j-marketplace",
-  "interface": { "displayName": "Neo4j Skills" },
-  "plugins": [
-    {
-      "name": "neo4j-skills",
-      "source": { "source": "local", "path": "./plugins/neo4j-skills" },
-      "policy": { "installation": "AVAILABLE" },
-      "category": "Database"
-    }
-  ]
-}
-----
+Verify with `codex plugin marketplace list` and `codex plugin list`, and start a new Codex thread so the plugin loads.
+To refresh later: `codex plugin marketplace upgrade neo4j-skills-marketplace`.
 
 See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list of available skills.
 
