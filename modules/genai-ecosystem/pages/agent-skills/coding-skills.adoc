@@ -16,23 +16,36 @@ TIP: Want to go from zero to a running graph application in one session? The xre
 == Installing Neo4j Agent Skills
 
 Neo4j Agent Skills teach your coding agent Neo4j-specific patterns -- correct Cypher, GraphRAG pipelines, drivers, GDS, and more.
-Browse all skills at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+Browse all skills at https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-skills^].
 
 === Claude Code
 
 [source]
 ----
-/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git
+/plugin marketplace add https://github.com/neo4j/agent-skills.git
 /plugin install neo4j-skills@neo4j-skills-marketplace
 ----
 
 Use `/plugin list` to verify, or `/reload-plugins` after installation.
 
+=== Antigravity
+
+Install the plugin with the Antigravity CLI (`agy`):
+
+[source,bash]
+----
+agy plugin install https://github.com/neo4j/agent-skills
+----
+
+Verify with `agy plugin list` (or `/plugin list` inside an interactive `agy` session).
+In the Antigravity app or IDE, open the *Customizations* tab and install *Neo4j* from the Marketplace, or clone the repository into `~/.gemini/config/plugins/neo4j-skills` (global) or `.agents/plugins/neo4j-skills` (workspace).
+To migrate existing Gemini CLI extensions, run `agy plugin import gemini`.
+
 === Gemini CLI
 
 [source,bash]
 ----
-gemini extensions install https://github.com/neo4j-contrib/neo4j-skills
+gemini extensions install https://github.com/neo4j/agent-skills
 ----
 
 Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD`, `NEO4J_DATABASE`) when prompted. Run `/extensions list` inside Gemini to verify.
@@ -42,41 +55,47 @@ Enter your environment variables (`NEO4J_URI`, `NEO4J_USERNAME`, `NEO4J_PASSWORD
 [source,bash]
 ----
 # Install all Neo4j skills
-npx skills add neo4j-contrib/neo4j-skills
+npx skills add neo4j/agent-skills
 
 # Or individual skills
-npx skills add neo4j-contrib/neo4j-skills/neo4j-cypher-skill
-npx skills add neo4j-contrib/neo4j-skills/neo4j-graphrag-skill
+npx skills add neo4j/agent-skills/neo4j-cypher-skill
+npx skills add neo4j/agent-skills/neo4j-graphrag-skill
 ----
+
+=== Kiro
+
+Install the skills as a Kiro power as a Kiro power: open the *Powers* panel, choose *Add Custom Power*, then *Import power from a repository URL* (*Import power from GitHub* before Kiro IDE 1.4.236) and enter `https://github.com/neo4j/agent-skills`.
+For a local clone, choose *Import power from a folder*.
+Alternatively, copy individual skills into `.kiro/skills/` (workspace) or `~/.kiro/skills/` (global).
 
 === Codex
 
 [source,bash]
 ----
-git clone https://github.com/neo4j-contrib/neo4j-skills.git
-mkdir -p ~/.codex/plugins
-cp -R neo4j-skills ~/.codex/plugins/neo4j-skills
+codex plugin marketplace add neo4j/agent-skills
+codex plugin add neo4j-skills@neo4j-skills-marketplace
 ----
 
-Add to `~/.agents/plugins/marketplace.json`:
-
-[source,json]
-----
-{
-  "name": "neo4j-marketplace",
-  "interface": { "displayName": "Neo4j Skills" },
-  "plugins": [
-    {
-      "name": "neo4j-skills",
-      "source": { "source": "local", "path": "./plugins/neo4j-skills" },
-      "policy": { "installation": "AVAILABLE" },
-      "category": "Database"
-    }
-  ]
-}
-----
+Verify with `codex plugin marketplace list` and `codex plugin list`, and start a new Codex thread so the plugin loads.
+To refresh later: `codex plugin marketplace upgrade neo4j-skills-marketplace`.
 
 See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list of available skills.
+
+=== Relate
+
+https://relatedb.ai/[Relate^] -- the embedded, agent-native Cypher graph database -- ships its own skill, separate from the Neo4j skills above:
+
+[source,bash]
+----
+curl -sSfL https://relatedb.ai/install.sh | bash
+relate skill install    # every detected agent
+----
+
+That teaches Claude Code, Cursor, Codex, Gemini CLI, Copilot, and more the Relate CLI flags, the Cypher dialect, and the gotchas; `relate upgrade` keeps it current.
+The skill is also readable directly at https://relatedb.ai/skill.md[relatedb.ai/skill.md^], with the full documentation index for agents at https://relatedb.ai/docs/llms.txt[relatedb.ai/docs/llms.txt^].
+For live database access from an agent over MCP: `relate serve --mcp stdio --database ./graph.rl --read-only`.
+
+See xref:relate.adoc[Relate] for what it is and why an agent would want a graph database in-process.
 
 == What You Can Do
 
@@ -170,7 +189,7 @@ Using the data modeling server, list all labels and relationship types.
 Use the neo4j-memory server to store: "Customer Asha prefers enterprise support."
 ----
 
-TIP: To install Neo4j Agent Skills for Gemini CLI (Cypher authoring, GraphRAG, drivers, GDS, and more), use the separate skills extension: `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`. See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list.
+TIP: To install Neo4j Agent Skills for Gemini CLI (Cypher authoring, GraphRAG, drivers, GDS, and more), use the separate skills extension: `gemini extensions install https://github.com/neo4j/agent-skills`. See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list.
 
 === Antigravity
 
@@ -268,6 +287,14 @@ Most editors use the same `mcpServers` JSON structure — only the config file p
 |===
 
 The Neo4j MCP server works with any https://modelcontextprotocol.io/clients[MCP-compatible client^], including GitHub Copilot (agent mode in VS Code, JetBrains, Eclipse, and Xcode), JetBrains AI Assistant, Zed, Continue.dev, Sourcegraph Cody, and Replit — configure it the same way using each tool's MCP settings.
+
+=== Agent Safety with the MCP Server
+
+When an agent executes Cypher against your live database, a few habits prevent most accidents:
+
+* **Read-only by default.** Start the server with `NEO4J_READ_ONLY=true` and drop the flag only for sessions that must write.
+* **Confirm before writes.** Have the agent show the statement and its expected impact before running `CREATE`, `MERGE`, `SET`, `DELETE`, or `DETACH DELETE` through `write-cypher` -- and never let it auto-run `CALL { ... } IN TRANSACTIONS` without approval.
+* **Size before you run.** `EXPLAIN` the statement (or run a `count(*)` variant) before traversals on large graphs, and keep a `LIMIT` on exploratory queries -- a pattern that can match millions of nodes will otherwise flood the agent's context.
 
 [source,json]
 ----

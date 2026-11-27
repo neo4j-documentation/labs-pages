@@ -8,20 +8,22 @@ include::_graphacademy_llm.adoc[]
 :neo4j-versions: 5.X
 :page-pagination:
 :page-product: Agent Skills
-:neo4j-skills-repo: https://github.com/neo4j-contrib/neo4j-skills
+:neo4j-skills-repo: https://github.com/neo4j/agent-skills
 
 AI agents and coding tools become significantly more effective when they have direct access to your Neo4j graph database.
 Rather than relying solely on training data, agents can retrieve live schema information, execute and validate Cypher queries, and use real graph data to generate code, tests, and integrations -- all without leaving the editor.
 
-Neo4j supports two complementary integration layers:
+Neo4j supports complementary integration layers for AI agents:
 
-* xref:agent-skills/neo4j-skills.adoc[*Neo4j Agent Skills*] -- Installable knowledge bundles that teach AI agents Neo4j-specific patterns. 20+ skills covering Cypher, GraphRAG, drivers, GDS, data import, agent memory, and more. Works with Claude Code, Cursor, Cline, Gemini CLI, Codex, and any https://agentskills.io/specification[Agent Skills^]-compliant tool.
+* xref:agent-skills/neo4j-skills.adoc[*Neo4j Agent Skills*] -- Installable knowledge bundles that teach AI agents Neo4j-specific patterns. 30+ skills covering Cypher, query tuning, GraphRAG, drivers, GDS, data import, Kafka, Spark, agent memory, and more. Works with Claude Code, Cursor, Cline, Gemini CLI, Antigravity, Kiro, Codex, and any https://agentskills.io/specification[Agent Skills^]-compliant tool.
 
 * xref:agent-skills/coding-skills.adoc[*Coding Tool Integrations*] -- The https://github.com/neo4j/mcp[Neo4j MCP server^] and dedicated editor extensions connect agents directly to a live Neo4j database for schema inspection, Cypher execution, and real-data validation. Supported in VS Code, Gemini CLI, Antigravity, Kiro, Claude Code, Cursor, and more.
 
+* xref:relate.adoc[*Relate*] -- An embedded, agent-native graph database in a single binary. The same Cypher you know, in-process: throwaway graph compute in scripts, notebooks, and agent sandboxes, a queryable memory in one `.rl` file, or a store pulled from and pushed to Neo4j. Installs its own agent skill with `relate skill install`.
+
 == Neo4j Agent Skills
 
-Browse and install at https://skills.sh/neo4j-contrib/neo4j-skills[skills.sh/neo4j-contrib/neo4j-skills^].
+Browse and install at https://skills.sh/neo4j/agent-skills[skills.sh/neo4j/agent-skills^].
 
 === neo4j-getting-started-skill
 
@@ -34,7 +36,7 @@ Invoke it with a plain-language description -- it provisions a database, designs
 /neo4j-getting-started-skill healthcare patient graph, local Docker, FastAPI, synthetic data
 ----
 
-Install: `npx skills add neo4j-contrib/neo4j-skills/neo4j-getting-started-skill`
+Install: `npx skills add neo4j/agent-skills/neo4j-getting-started-skill`
 
 === Skills by Category
 
@@ -43,22 +45,22 @@ Install: `npx skills add neo4j-contrib/neo4j-skills/neo4j-getting-started-skill`
 | Category | Skills available
 
 | Querying and Modeling
-| {neo4j-skills-repo}/tree/main/neo4j-cypher-skill[neo4j-cypher-skill^], {neo4j-skills-repo}/tree/main/neo4j-modeling-skill[neo4j-modeling-skill^], {neo4j-skills-repo}/tree/main/neo4j-getting-started-skill[neo4j-getting-started-skill^]
+| {neo4j-skills-repo}/tree/main/neo4j-cypher-skill[neo4j-cypher-skill^], {neo4j-skills-repo}/tree/main/neo4j-modeling-skill[neo4j-modeling-skill^], {neo4j-skills-repo}/tree/main/neo4j-query-tuning-skill[neo4j-query-tuning-skill^], {neo4j-skills-repo}/tree/main/neo4j-ontology-skill[neo4j-ontology-skill^], {neo4j-skills-repo}/tree/main/neo4j-getting-started-skill[neo4j-getting-started-skill^]
 
 | Importing Data
-| {neo4j-skills-repo}/tree/main/neo4j-import-skill[neo4j-import-skill^], {neo4j-skills-repo}/tree/main/neo4j-document-import-skill[neo4j-document-import-skill^], {neo4j-skills-repo}/tree/main/neo4j-migration-skill[neo4j-migration-skill^]
+| {neo4j-skills-repo}/tree/main/neo4j-import-skill[neo4j-import-skill^], {neo4j-skills-repo}/tree/main/neo4j-document-import-skill[neo4j-document-import-skill^], {neo4j-skills-repo}/tree/main/neo4j-migration-skill[neo4j-migration-skill^], {neo4j-skills-repo}/tree/main/neo4j-kafka-skill[neo4j-kafka-skill^], {neo4j-skills-repo}/tree/main/neo4j-spark-skill[neo4j-spark-skill^]
 
 | AI and Search
 | {neo4j-skills-repo}/tree/main/neo4j-graphrag-skill[neo4j-graphrag-skill^], {neo4j-skills-repo}/tree/main/neo4j-vector-index-skill[neo4j-vector-index-skill^], {neo4j-skills-repo}/tree/main/neo4j-genai-plugin-skill[neo4j-genai-plugin-skill^], {neo4j-skills-repo}/tree/main/neo4j-agent-memory-skill[neo4j-agent-memory-skill^], {neo4j-skills-repo}/tree/main/neo4j-mcp-skill[neo4j-mcp-skill^]
 
 | Graph Data Science
-| {neo4j-skills-repo}/tree/main/neo4j-gds-skill[neo4j-gds-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-graph-analytics-skill[neo4j-aura-graph-analytics-skill^]
+| {neo4j-skills-repo}/tree/main/neo4j-gds-skill[neo4j-gds-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-graph-analytics-skill[neo4j-aura-graph-analytics-skill^], {neo4j-skills-repo}/tree/main/neo4j-snowflake-graph-analytics-skill[neo4j-snowflake-graph-analytics-skill^]
 
 | Drivers
 | {neo4j-skills-repo}/tree/main/neo4j-driver-python-skill[neo4j-driver-python-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-javascript-skill[neo4j-driver-javascript-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-java-skill[neo4j-driver-java-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-dotnet-skill[neo4j-driver-dotnet-skill^], {neo4j-skills-repo}/tree/main/neo4j-driver-go-skill[neo4j-driver-go-skill^]
 
 | Frameworks and Platforms
-| {neo4j-skills-repo}/tree/main/neo4j-graphql-skill[neo4j-graphql-skill^], {neo4j-skills-repo}/tree/main/neo4j-spring-data-skill[neo4j-spring-data-skill^], {neo4j-skills-repo}/tree/main/neo4j-cli-tools-skill[neo4j-cli-tools-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-provisioning-skill[neo4j-aura-provisioning-skill^]
+| {neo4j-skills-repo}/tree/main/neo4j-graphql-skill[neo4j-graphql-skill^], {neo4j-skills-repo}/tree/main/neo4j-spring-data-skill[neo4j-spring-data-skill^], {neo4j-skills-repo}/tree/main/neo4j-cli-tools-skill[neo4j-cli-tools-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-provisioning-skill[neo4j-aura-provisioning-skill^], {neo4j-skills-repo}/tree/main/neo4j-aura-agent-skill[neo4j-aura-agent-skill^], {neo4j-skills-repo}/tree/main/neo4j-security-skill[neo4j-security-skill^], {neo4j-skills-repo}/tree/main/neo4j-nvl-skill[neo4j-nvl-skill^]
 |===
 
 See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for descriptions and install commands for each skill.
@@ -70,16 +72,22 @@ See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for descriptions and
 | Agent | Install command
 
 | Claude Code
-| `/plugin marketplace add https://github.com/neo4j-contrib/neo4j-skills.git`
+| `/plugin marketplace add https://github.com/neo4j/agent-skills.git`
 
 | Gemini CLI
-| `gemini extensions install https://github.com/neo4j-contrib/neo4j-skills`
+| `gemini extensions install https://github.com/neo4j/agent-skills`
+
+| Antigravity (`agy`)
+| `agy plugin install https://github.com/neo4j/agent-skills`
+
+| Kiro
+| Powers panel -> Add Custom Power -> import `https://github.com/neo4j/agent-skills` -- see xref:agent-skills/coding-skills.adoc#_kiro[install guide]
 
 | Cursor / Cline / Windsurf
-| `npx skills add neo4j-contrib/neo4j-skills`
+| `npx skills add neo4j/agent-skills`
 
 | Codex
-| Clone repo, copy to `~/.codex/plugins/` -- see xref:agent-skills/neo4j-skills.adoc#_codex[install guide]
+| `codex plugin marketplace add neo4j/agent-skills`
 |===
 
 == Coding Tool Integrations
