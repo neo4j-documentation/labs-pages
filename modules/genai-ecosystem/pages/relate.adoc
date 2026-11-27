@@ -131,6 +131,12 @@ result.rows;                   // [{ "p.name": "Alice" }, ...]
 == A Worked Example: Stack Overflow as a Graph
 
 A classic "why graphs" dataset: questions, answers, users, and tags, connected by `ASKED`, `TAGGED`, `ANSWERED`, and `PROVIDED` relationships.
+
+// TODO: The Stack Overflow example notebook (examples/python/ in the relate
+// repository) was lost in the repo migration and is being re-added. Once it
+// is back, replace the CLI-based walkthrough below with a short notebook
+// walkthrough: link the notebook, import the data, 2-3 queries from it, and
+// the interactive graph rendering (to_visualization_graph / render_widget).
 Two ways to get it into Relate:
 
 * **Live, from the Stack Exchange API** -- the worked `so-to-graph` extension example imports the newest questions for a tag. From a checkout of the https://github.com/relatedb/relate[Relate repository^]:
