@@ -87,6 +87,7 @@ https://relatedb.ai/[Relate^] -- the embedded, agent-native Cypher graph databas
 
 [source,bash]
 ----
+curl -sSfL https://relatedb.ai/install.sh | bash
 relate skill install    # every detected agent
 ----
 
