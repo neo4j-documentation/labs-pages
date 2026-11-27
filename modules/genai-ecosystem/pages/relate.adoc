@@ -12,9 +12,9 @@ https://relatedb.ai/[Relate^] is a graph database in a single binary -- query it
 It is an embedded, in-memory property-graph engine written in Rust, with a CLI for interactive and scripted queries.
 A graph is a single `.rl` file, a (markdown) folder, or pure in-memory -- durable through a fsync'd write-ahead log and Parquet checkpoints.
 The same engine powers the `relate` CLI, a Python package, Node.js and browser (WASM) npm packages, a Rust crate, an optional one-process server speaking Bolt, HTTP, and MCP, and clients for Java, .NET, Go, Swift, and C.
-No server to babysit, no infrastructure to operate.
+No server to manage, no infrastructure to operate.
 
-Relate is open source (Apache License 2.0) at https://github.com/relatedb/relate[github.com/relatedb/relate^], with documentation, guides, and API references at https://relatedb.ai/docs/[relatedb.ai/docs^].
+Relate is open source (Apache License 2.0) at https://github.com/relatedb/relate[github.com/relatedb/relate^], with documentation, cookbooks, playground, guides, and API references at https://relatedb.ai/docs/[relatedb.ai/docs^].
 
 == Why You Should Care
 
@@ -27,17 +27,17 @@ Three use cases cover most of the ground:
 |===
 | You want | Relate gives you
 
-| Throwaway graph compute, like SQLite or DuckDB -- but for connected data
-| `relate "MATCH (n) RETURN count(n)"` and you are done. In-memory by default, no setup, no teardown.
+| Throwaway graph management and compute, like SQLite or DuckDB -- but for connected data
+| `relate "MATCH path = (:Package)-[:DEPENDS_ON*0..5]->() RETURN path LIMIT 5"` and you are done. In-memory by default, no setup, no teardown.
 
 | Processing data in sessions, from Python
 | `pip install relate-db`, `relate.connect(":memory:")`, and queries execute in-process -- a native extension module, no server, no subprocess. Runs in scripts, Jupyter notebooks, Streamlit apps, or an agent's tool code.
 
 | Agent sandboxes and agent memory
-| A durable, queryable graph in one `.rl` file -- recall is a `MATCH`. Read-only opens and a row cap keep agents safe; `EXPLAIN`/`PROFILE` let them self-correct.
+| A durable, queryable graph in one `.rl` file -- recall is a `MATCH`. Read-only opens and a row cap keep agents safe; `EXPLAIN`/`PROFILE` and the error messages and agent-context let them self-correct.
 
 | An agent that already speaks Cypher
-| The agent skill (`relate skill install`) teaches Claude Code, Cursor, Codex, Gemini CLI, Copilot, and friends the CLI flags, the Cypher dialect, and the gotchas. `relate serve --mcp stdio` exposes the store over MCP.
+| The agent skill (`relate skill install`) teaches Claude Code, Cursor, Codex, Antigravity, Kiro, Copilot, and friends the CLI flags, the Cypher dialect, and the gotchas. `relate serve --mcp stdio` exposes the store over MCP.
 |===
 
 === Embedded, Low Resource, Anywhere
@@ -51,36 +51,39 @@ One engine, every form factor:
 
 === Neo4j Compatibility
 
-Relate speaks the same language as Neo4j -- the Cypher 25 dialect, with label expressions, quantified path patterns, path selectors, `GROUP BY`, and the openCypher TCK as the language contract:
+Relate speaks the same language as Neo4j -- the Cypher 25 dialect (superset of GQL and openCypher), with label expressions, quantified path patterns, vector and fulltext search, validated by the languager compatibility kit:
 
 * `relate pull` copies a subgraph from a Neo4j/Aura instance into a local store; `relate push` mirrors it back, merging on keys.
-* `relate serve --bolt 7687` speaks Bolt -- Neo4j drivers and neo4j-browser connect out of the box; the HTTP surface is Neo4j's Query API v2 shape.
+* `relate serve --bolt 7687 --http 7474` speaks Bolt or Http -- Neo4j drivers and neo4j-browser connect out of the box; the HTTP surface is Neo4j's Query API v2 shape.
 * Test fixtures and golden graphs: pull a slice of production into a `.rl` file, commit it, test offline.
+* Markdown mode to turn any local knowledge repository, Obsidian vault or docs set into a graph
 * Where the dialect differs from Neo4j habits, the https://relatedb.ai/docs/reference/cypher/differences-from-neo4j/[differences page^] names the exact error and the form to write instead.
+* Extension system to quickly turn data sources into graphs `git-to-graph`, `fs-to-graph` easy to add your own with `relate extension init <name> [--lang sh|py|ts|rust]` 
 
 TIP: Not sure whether a Neo4j workload fits Relate? Read https://relatedb.ai/docs/concepts/where-relate-fits/[Where relate fits^] and the honest https://relatedb.ai/docs/reference/limitations/[limitations list^] -- the working set fits in memory, one graph per store, one writer per process. Relate is not a larger-than-memory warehouse or a multi-tenant server.
 
 == Quick Start
 
-**macOS and Linux:**
+=== Installation
 
+The installer verifies the pinned-key release signature (SSHSIG) and SHA256SUMS before installing anything.
+
+.Linux, Mac
 [source,bash]
 ----
 curl -sSfL https://relatedb.ai/install.sh | bash
+
 relate skill install    # optional: teach your AI coding agents to drive relate
 ----
 
-**Windows (PowerShell):**
-
+.Windows (PowerShell)
 [source,powershell]
 ----
 irm https://relatedb.ai/install.ps1 | iex
 relate skill install
 ----
 
-The installer verifies the pinned-key release signature (SSHSIG) and SHA256SUMS before installing anything.
-
-First queries -- copy the whole block into a terminal:
+=== First statements
 
 [source,bash]
 ----
@@ -112,9 +115,22 @@ import relate
 
 db = relate.connect(":memory:")   # or "./friends"
 
-db.execute("CREATE (p:Person {name: $name, age: $age})", {"name": "Alice", "age": 30})
-for row in db.execute("MATCH (p:Person) RETURN p.name AS name"):
-    print(row["name"])            # Alice
+db.execute("""
+UNWIND $rows as row
+MERGE (p:Person {name: row.name}) SET p.age=row.age
+UNWIND row.knows as friend
+MERGE (p)-[:KNOWS]-(:Person {name: friend})
+""", 
+{"rows":[{"name": "David", "age": 23, "knows":["Alice","Eve"]}, 
+ {"name": "Eve", "age": 34, "knows":["Bob","Frank","David"]}, 
+ {"name": "Frank", "age": 56, "knows":["Charlie","Bob","Alice"]}]})
+
+for row in db.execute("""
+MATCH (p:Person)-[:KNOWS*2]-(foaf) RETURN p.name as person, collect(distinct foaf.name) AS foaf
+"""):
+    print(row['person']," friend of a friend ",row["foaf"])           
+
+# Alice  friend of a friend  ['Eve', 'Bob', 'Charlie'] ...
 ----
 
 Node.js:
@@ -124,13 +140,23 @@ Node.js:
 // npm install @relate/relate
 const { Database } = require("@relate/relate");
 const db = Database.open("./friends");        // or ":memory:"
-const result = db.connect().query("MATCH (p:Person) RETURN p.name");
-result.rows;                   // [{ "p.name": "Alice" }, ...]
+const result = db.connect().query(`
+MATCH (p:Person)-[:KNOWS*2]-(reco) 
+WHERE NOT exists { (p)-[:KNOWS]-(reco)} 
+RETURN p.name, reco.name as reco LIMIT 2
+`);
+result.rows;
+/*
+[
+  { 'p.name': 'Alice', reco: 'Eve' },
+  { 'p.name': 'Eve', reco: 'Alice' }
+]
+*/
 ----
 
 == A Worked Example: Stack Overflow as a Graph
 
-A classic "why graphs" dataset: questions, answers, users, and tags, connected by `ASKED`, `TAGGED`, `ANSWERED`, and `PROVIDED` relationships.
+A classic "why graphs" dataset: Question, Answer, User, and Tag nodes, connected by `ASKED`, `TAGGED`, `ANSWERED`, and `PROVIDED` relationships.
 
 // TODO: The Stack Overflow example notebook (examples/python/ in the relate
 // repository) was lost in the repo migration and is being re-added. Once it
@@ -139,7 +165,24 @@ A classic "why graphs" dataset: questions, answers, users, and tags, connected b
 // the interactive graph rendering (to_visualization_graph / render_widget).
 Two ways to get it into Relate:
 
-* **Live, from the Stack Exchange API** -- the worked `so-to-graph` extension example imports the newest questions for a tag. From a checkout of the https://github.com/relatedb/relate[Relate repository^]:
+=== From a running Neo4j instance
+
+`relate pull` copies a Stack Overflow subgraph out of a Neo4j/Aura instance into a local store.
+Here from the https://github.com/neo4j-graph-examples/stackoverflow[neo4j-graph-examples/stackoverflow^] dataset running in demo.neo4jlabs.com.
+
+[source,bash]
+----
+NEO4J_URI=https://demo.neo4jlabs.com:7473 \
+NEO4J_USERNAME=stackoverflow2 NEO4J_PASSWORD=stackoverflow2 NEO4J_DATABASE=stackoverflow2 \
+relate pull --database ./so --query 'MATCH (n)-[r]->(m) RETURN n,r,m'
+
+# pulled 6193 new / 5619 reused nodes, 11540 new / 0 reused rels (+ 0 constraints, 0 indexes; 5 schema skipped) to ./so
+----
+
+=== Live, from the Stack Exchange API
+
+The worked `so-to-graph` extension example imports the newest questions for a tag. 
+From a checkout of the https://github.com/relatedb/relate[Relate repository^]:
 
 [source,bash]
 ----
@@ -153,9 +196,9 @@ relate run so-to-graph --tag neo4j --pages 1 --body -d ./so
 
 (Python and TypeScript variants of the same importer are beside it in `docs/api/extensions/examples/`.)
 
-* **From Neo4j** -- `relate pull` copies a Stack Overflow subgraph out of a Neo4j/Aura instance into a local store (see the https://github.com/neo4j-graph-examples[neo4j-graph-examples^] datasets).
+=== Running queries
 
-Then the questions the flat data cannot answer:
+Then the questions the flat data cannot answer: `relate -d ./so`
 
 [source,cypher]
 ----
@@ -164,7 +207,7 @@ MATCH (t1:Tag)<-[:TAGGED]-(q)-[:TAGGED]->(t2:Tag)
 WHERE id(t1) < id(t2)
 WITH t1, t2, count(*) AS freq WHERE freq >= 2
 RETURN t1.name AS tag1, t2.name AS tag2, freq
-ORDER BY freq DESC LIMIT 10
+ORDER BY freq DESC LIMIT 10;
 ----
 
 [source,cypher]
@@ -177,7 +220,7 @@ WITH t1, t2, size(qs1) AS d1, size(qs2) AS d2, [x IN qs1 WHERE x IN qs2] AS both
 WITH t1, t2, d1, d2, size(both) AS inter WHERE inter >= 2
 RETURN t1.name AS tag1, t2.name AS tag2,
        (inter * 1.0) / (d1 + d2 - inter) AS jaccard
-ORDER BY jaccard DESC LIMIT 10
+ORDER BY jaccard DESC LIMIT 10;
 ----
 
 Both queries run in milliseconds on a store of roughly 1,000 nodes and 1,300 relationships.
