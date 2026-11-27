@@ -19,7 +19,7 @@ Neo4j supports complementary integration layers for AI agents:
 
 * xref:agent-skills/coding-skills.adoc[*Coding Tool Integrations*] -- The https://github.com/neo4j/mcp[Neo4j MCP server^] and dedicated editor extensions connect agents directly to a live Neo4j database for schema inspection, Cypher execution, and real-data validation. Supported in VS Code, Gemini CLI, Antigravity, Kiro, Claude Code, Cursor, and more.
 
-* xref:agent-skills/relate.adoc[*Relate*] -- An embedded, agent-native graph database in a single binary. The same Cypher you know, in-process: throwaway graph compute in scripts, notebooks, and agent sandboxes, a queryable memory in one `.rl` file, or a store pulled from and pushed to Neo4j. Installs its own agent skill with `relate skill install`.
+* xref:relate.adoc[*Relate*] -- An embedded, agent-native graph database in a single binary. The same Cypher you know, in-process: throwaway graph compute in scripts, notebooks, and agent sandboxes, a queryable memory in one `.rl` file, or a store pulled from and pushed to Neo4j. Installs its own agent skill with `relate skill install`.
 
 == Neo4j Agent Skills
 

@@ -78,6 +78,8 @@ npx skills add neo4j/agent-skills/neo4j-cypher-skill
 
 === All Skills by Category
 
+TIP: Skills route by their description -- each one states what it does *not* handle and names the sibling skill to use instead, so an agent loads the right one without guessing. Two boundaries that come up often: plain vector search without graph traversal is `neo4j-vector-index-skill`, retrieval that traverses the graph after the lookup is `neo4j-graphrag-skill`; structured CSV/JSON loading is `neo4j-import-skill`, unstructured documents and PDFs are `neo4j-document-import-skill`.
+
 ==== Querying and Modeling
 
 [cols="1,3", options="header"]
