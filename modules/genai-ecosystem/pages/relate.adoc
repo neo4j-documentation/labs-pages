@@ -14,7 +14,7 @@ A graph is a single `.rl` file, a (markdown) folder, or pure in-memory -- durabl
 The same engine powers the `relate` CLI, a Python package, Node.js and browser (WASM) npm packages, a Rust crate, an optional one-process server speaking Bolt, HTTP, and MCP, and clients for Java, .NET, Go, Swift, and C.
 No server to manage, no infrastructure to operate.
 
-Relate is open source (Apache License 2.0) at https://github.com/relatedb/relate[github.com/relatedb/relate^], with documentation, cookbooks, playground, guides, and API references at https://relatedb.ai/docs/[relatedb.ai/docs^].
+Relate is open source (Apache License 2.0) at https://github.com/relatedb/relate[github.com/relatedb/relate^] (leave a star), with documentation, cookbooks, playground, guides, and API references at https://relatedb.ai/docs/[relatedb.ai/docs^].
 
 == Why You Should Care
 
@@ -304,9 +304,7 @@ Every binding wraps one engine.
 | `relate.h` + `librelate_ffi` -- https://relatedb.ai/docs/get-started/c/[get started^], https://relatedb.ai/docs/reference/api/c/[API reference^]
 |===
 
-== FAQ
-
-Questions in the shape agents and developers actually ask.
+== Relate FAQ
 
 **What is Relate?**
 An embedded, in-memory property-graph engine written in Rust, with a CLI. A graph is a single `.rl` file, a directory, a markdown folder, or in-memory. One binary, no server.
@@ -339,7 +337,7 @@ https://relatedb.ai/docs/reference/limitations/[The limitations page^] -- the ho
 
 * https://relatedb.ai/[Relate homepage^] and the https://relatedb.ai/blog/[launch blog posts^]
 * https://relatedb.ai/docs/[Full documentation^] -- tutorials, guides, CLI / Cypher / API references; the curated agent index at https://relatedb.ai/docs/llms.txt[relatedb.ai/docs/llms.txt^]
-* https://relatedb.ai/cookbook/[The cookbook^] -- task-shaped, tested recipes; its machine index at https://relatedb.ai/cookbook/llms.txt[relatedb.ai/cookbook/llms.txt^]
+* https://relatedb.ai/cookbook/[The cookbooks^] -- task-shaped, tested recipes; its machine index at https://relatedb.ai/cookbook/llms.txt[relatedb.ai/cookbook/llms.txt^]
 * https://relatedb.ai/playground/[The browser playground^] -- run Cypher in the page, no install
 * https://github.com/relatedb/relate[GitHub repository^], https://github.com/relatedb/relate/issues[issues^], and the https://github.com/relatedb/relate/blob/main/docs/tck/compliance.md[TCK compliance record^]
 * xref:agent-skills/coding-skills.adoc[Coding Tool Integrations^] -- connect coding tools to a live Neo4j database over MCP
