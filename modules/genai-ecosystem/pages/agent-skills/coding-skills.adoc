@@ -81,6 +81,22 @@ To refresh later: `codex plugin marketplace upgrade neo4j-skills-marketplace`.
 
 See xref:agent-skills/neo4j-skills.adoc[Neo4j Agent Skills] for the full list of available skills.
 
+=== Relate
+
+https://relatedb.ai/[Relate^] -- the embedded, agent-native Cypher graph database -- ships its own skill, separate from the Neo4j skills above:
+
+[source,bash]
+----
+curl -sSfL https://relatedb.ai/install.sh | bash
+relate skill install    # every detected agent
+----
+
+That teaches Claude Code, Cursor, Codex, Gemini CLI, Copilot, and more the Relate CLI flags, the Cypher dialect, and the gotchas; `relate upgrade` keeps it current.
+The skill is also readable directly at https://relatedb.ai/skill.md[relatedb.ai/skill.md^], with the full documentation index for agents at https://relatedb.ai/docs/llms.txt[relatedb.ai/docs/llms.txt^].
+For live database access from an agent over MCP: `relate serve --mcp stdio --database ./graph.rl --read-only`.
+
+See xref:relate.adoc[Relate] for what it is and why an agent would want a graph database in-process.
+
 == What You Can Do
 
 With Neo4j connected to your coding tool, your AI assistant can:
@@ -271,6 +287,14 @@ Most editors use the same `mcpServers` JSON structure — only the config file p
 |===
 
 The Neo4j MCP server works with any https://modelcontextprotocol.io/clients[MCP-compatible client^], including GitHub Copilot (agent mode in VS Code, JetBrains, Eclipse, and Xcode), JetBrains AI Assistant, Zed, Continue.dev, Sourcegraph Cody, and Replit — configure it the same way using each tool's MCP settings.
+
+=== Agent Safety with the MCP Server
+
+When an agent executes Cypher against your live database, a few habits prevent most accidents:
+
+* **Read-only by default.** Start the server with `NEO4J_READ_ONLY=true` and drop the flag only for sessions that must write.
+* **Confirm before writes.** Have the agent show the statement and its expected impact before running `CREATE`, `MERGE`, `SET`, `DELETE`, or `DETACH DELETE` through `write-cypher` -- and never let it auto-run `CALL { ... } IN TRANSACTIONS` without approval.
+* **Size before you run.** `EXPLAIN` the statement (or run a `count(*)` variant) before traversals on large graphs, and keep a `LIMIT` on exploratory queries -- a pattern that can match millions of nodes will otherwise flood the agent's context.
 
 [source,json]
 ----
