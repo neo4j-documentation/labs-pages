@@ -1,0 +1,296 @@
+= Relate: The Embedded, Agent-Native Graph Database
+:slug: relate
+:author: Neo4j Labs
+:category: genai-ecosystem
+:tags: agents, llm, neo4j, cypher, embedded, graph database, sqlite, duckdb, python, wasm, rust, relate
+:neo4j-versions: 5.x
+:page-pagination:
+:page-product: Relate
+:attribute-missing: skip
+
+https://relatedb.ai/[Relate^] is a graph database in a single binary -- query it in Cypher, embed it anywhere, deploy nothing.
+It is an embedded, in-memory property-graph engine written in Rust, with a CLI for interactive and scripted queries.
+A graph is a single `.rl` file, a (markdown) folder, or pure in-memory -- durable through a fsync'd write-ahead log and Parquet checkpoints.
+The same engine powers the `relate` CLI, a Python package, Node.js and browser (WASM) npm packages, a Rust crate, an optional one-process server speaking Bolt, HTTP, and MCP, and clients for Java, .NET, Go, Swift, and C.
+No server to babysit, no infrastructure to operate.
+
+Relate is open source (Apache License 2.0) at https://github.com/relatedb/relate[github.com/relatedb/relate^], with documentation, guides, and API references at https://relatedb.ai/docs/[relatedb.ai/docs^].
+
+== Why You Should Care
+
+If you have ever wanted "SQLite for graphs" -- something you can spin up in a script, a notebook, or an agent sandbox, query with real Cypher, and throw away or keep as a single file -- Relate is that.
+Three use cases cover most of the ground:
+
+=== Agentic Development
+
+[cols="1,3", options="header"]
+|===
+| You want | Relate gives you
+
+| Throwaway graph compute, like SQLite or DuckDB -- but for connected data
+| `relate "MATCH (n) RETURN count(n)"` and you are done. In-memory by default, no setup, no teardown.
+
+| Processing data in sessions, from Python
+| `pip install relate-db`, `relate.connect(":memory:")`, and queries execute in-process -- a native extension module, no server, no subprocess. Runs in scripts, Jupyter notebooks, Streamlit apps, or an agent's tool code.
+
+| Agent sandboxes and agent memory
+| A durable, queryable graph in one `.rl` file -- recall is a `MATCH`. Read-only opens and a row cap keep agents safe; `EXPLAIN`/`PROFILE` let them self-correct.
+
+| An agent that already speaks Cypher
+| The agent skill (`relate skill install`) teaches Claude Code, Cursor, Codex, Gemini CLI, Copilot, and friends the CLI flags, the Cypher dialect, and the gotchas. `relate serve --mcp stdio` exposes the store over MCP.
+|===
+
+=== Embedded, Low Resource, Anywhere
+
+One engine, every form factor:
+
+* **On device / in app** -- a Rust crate (`cargo add relate`), Python wheel, or npm package as a single dependency; no sidecar service.
+* **In a notebook** -- the Python package runs wherever Python runs; `execute_arrow()` hands results to pandas or Polars as Arrow IPC bytes.
+* **In the browser** -- the engine compiled to WebAssembly: run Cypher in a page, durable via OPFS, no server. Try it in the https://relatedb.ai/playground/[browser playground^].
+* **A store is a file** -- a directory, a single `.rl` bundle, or a folder of markdown notes (every node a note, every relationship a `[[wikilink]]`; open it in Obsidian, diff it in git, query it with Cypher).
+
+=== Neo4j Compatibility
+
+Relate speaks the same language as Neo4j -- the Cypher 25 dialect, with label expressions, quantified path patterns, path selectors, `GROUP BY`, and the openCypher TCK as the language contract:
+
+* `relate pull` copies a subgraph from a Neo4j/Aura instance into a local store; `relate push` mirrors it back, merging on keys.
+* `relate serve --bolt 7687` speaks Bolt -- Neo4j drivers and neo4j-browser connect out of the box; the HTTP surface is Neo4j's Query API v2 shape.
+* Test fixtures and golden graphs: pull a slice of production into a `.rl` file, commit it, test offline.
+* Where the dialect differs from Neo4j habits, the https://relatedb.ai/docs/reference/cypher/differences-from-neo4j/[differences page^] names the exact error and the form to write instead.
+
+TIP: Not sure whether a Neo4j workload fits Relate? Read https://relatedb.ai/docs/concepts/where-relate-fits/[Where relate fits^] and the honest https://relatedb.ai/docs/reference/limitations/[limitations list^] -- the working set fits in memory, one graph per store, one writer per process. Relate is not a larger-than-memory warehouse or a multi-tenant server.
+
+== Quick Start
+
+**macOS and Linux:**
+
+[source,bash]
+----
+curl -sSfL https://relatedb.ai/install.sh | bash
+relate skill install    # optional: teach your AI coding agents to drive relate
+----
+
+**Windows (PowerShell):**
+
+[source,powershell]
+----
+irm https://relatedb.ai/install.ps1 | iex
+relate skill install
+----
+
+The installer verifies the pinned-key release signature (SSHSIG) and SHA256SUMS before installing anything.
+
+First queries -- copy the whole block into a terminal:
+
+[source,bash]
+----
+# A one-shot query on an in-memory database
+relate "RETURN 1 + 2 AS sum"
+
+# Create a small graph in a store
+relate -d ./friends "CREATE (:Person {name: 'Alice'})-[:KNOWS]->(:Person {name: 'Bob'})-[:KNOWS]->(:Person {name: 'Charlie'})"
+
+# Script-friendly JSON: whom does Alice know?
+relate --json -d ./friends "MATCH p = (:Person {name: 'Alice'})-[:KNOWS]->() RETURN p"
+
+# Several statements at once, then a transitive reach query
+relate -d ./friends "
+MATCH (c:Person {name: 'Charlie'}) CREATE (c)-[:KNOWS {since: 2024}]->(:Person {name: 'Dana'});
+MATCH (:Person {name: 'Alice'})-[:KNOWS]->+(p) RETURN p.name AS reachable ORDER BY reachable;
+"
+
+# Explore the same store in the interactive shell (.quit to exit)
+relate query -d ./friends
+----
+
+Python, in-process:
+
+[source,python]
+----
+# pip install relate-db
+import relate
+
+db = relate.connect(":memory:")   # or "./friends"
+
+db.execute("CREATE (p:Person {name: $name, age: $age})", {"name": "Alice", "age": 30})
+for row in db.execute("MATCH (p:Person) RETURN p.name AS name"):
+    print(row["name"])            # Alice
+----
+
+Node.js:
+
+[source,js]
+----
+// npm install @relate/relate
+const { Database } = require("@relate/relate");
+const db = Database.open("./friends");        // or ":memory:"
+const result = db.connect().query("MATCH (p:Person) RETURN p.name");
+result.rows;                   // [{ "p.name": "Alice" }, ...]
+----
+
+== A Worked Example: Stack Overflow as a Graph
+
+A classic "why graphs" dataset: questions, answers, users, and tags, connected by `ASKED`, `TAGGED`, `ANSWERED`, and `PROVIDED` relationships.
+Two ways to get it into Relate:
+
+* **Live, from the Stack Exchange API** -- the worked `so-to-graph` extension example imports the newest questions for a tag. From a checkout of the https://github.com/relatedb/relate[Relate repository^]:
+
+[source,bash]
+----
+mkdir -p /tmp/so-to-graph
+cp docs/api/extensions/examples/so-to-graph.sh /tmp/so-to-graph/
+cp docs/api/extensions/examples/extension.bash.json /tmp/so-to-graph/extension.json
+chmod +x /tmp/so-to-graph/so-to-graph.sh
+relate extension install so-to-graph --from /tmp/so-to-graph
+relate run so-to-graph --tag neo4j --pages 1 --body -d ./so
+----
+
+(Python and TypeScript variants of the same importer are beside it in `docs/api/extensions/examples/`.)
+
+* **From Neo4j** -- `relate pull` copies a Stack Overflow subgraph out of a Neo4j/Aura instance into a local store (see the https://github.com/neo4j-graph-examples[neo4j-graph-examples^] datasets).
+
+Then the questions the flat data cannot answer:
+
+[source,cypher]
+----
+// Which tags appear together on questions?
+MATCH (t1:Tag)<-[:TAGGED]-(q)-[:TAGGED]->(t2:Tag)
+WHERE id(t1) < id(t2)
+WITH t1, t2, count(*) AS freq WHERE freq >= 2
+RETURN t1.name AS tag1, t2.name AS tag2, freq
+ORDER BY freq DESC LIMIT 10
+----
+
+[source,cypher]
+----
+// Which tags are similar, by the Jaccard overlap of their questions?
+MATCH (t1:Tag)<-[:TAGGED]-(q1:Question) WITH t1, collect(id(q1)) AS qs1
+MATCH (t2:Tag)<-[:TAGGED]-(q2:Question) WHERE id(t1) < id(t2)
+WITH t1, t2, qs1, collect(id(q2)) AS qs2
+WITH t1, t2, size(qs1) AS d1, size(qs2) AS d2, [x IN qs1 WHERE x IN qs2] AS both
+WITH t1, t2, d1, d2, size(both) AS inter WHERE inter >= 2
+RETURN t1.name AS tag1, t2.name AS tag2,
+       (inter * 1.0) / (d1 + d2 - inter) AS jaccard
+ORDER BY jaccard DESC LIMIT 10
+----
+
+Both queries run in milliseconds on a store of roughly 1,000 nodes and 1,300 relationships.
+In a notebook, draw any result as an interactive graph:
+
+[source,python]
+----
+# pip install neo4j-viz
+from relate.viz import to_visualization_graph
+
+graph = to_visualization_graph(db.execute("MATCH p = ()-[:TAGGED]->() RETURN p"))
+graph.render()  # an interactive graph in Jupyter
+----
+
+== Features
+
+[cols="1,3", options="header"]
+|===
+| Area | What it covers
+
+| Cypher
+| Reading and writing (`MATCH`, `CREATE`, `MERGE`, `SET`, `DELETE`, `FOREACH`), composing (`WITH`, `UNWIND`, `UNION`, `CALL {}` subqueries), schema DDL (indexes, constraints, graph types), 80+ built-in functions, and modern pattern matching -- label expressions, quantified path patterns, path selectors. One dialect: current Cypher.
+
+| Vector search
+| `vector()` properties, `CREATE VECTOR INDEX` plus the `SEARCH` clause for index-backed top-K with pre-filtering, and hybrid vector + full-text queries.
+
+| Geospatial
+| WGS-84 and Cartesian points, `point.distance()`, radius and bounding-box predicates, R-tree point indexes.
+
+| Profiling
+| `EXPLAIN` renders the plan tree; `PROFILE` adds per-operator rows and time. Profiling costs nothing on non-PROFILE runs.
+
+| Import / sync
+| `LOAD CSV` in Cypher; `--fetch-params` binds a fetched URL/file JSON document as a parameter; `pull`/`push` mirror subgraphs between Relate and a Neo4j/Aura instance; `clone` copies a whole store across layouts.
+
+| Markdown mode
+| A folder of notes is the store -- every node a note, every relationship a `[[wikilink]]`. Open it in Obsidian, diff it in git, query it with Cypher.
+
+| Read-only & follow
+| `--read-only` opens an existing store without writing; `--read-only=live` follows a writer's WAL from a second process.
+
+| Surfaces
+| Rust crate, Python + Arrow IPC, JS/Java/Go/Swift/.NET over the typed C ABI, Bolt, HTTP, MCP, WASM.
+|===
+
+Tested, runnable recipes for most of the above are in the https://relatedb.ai/cookbook/[Relate cookbook^] -- entity resolution, dependency blast radius, hybrid recall, long-term agent memory, and more, each step runnable in the browser.
+
+== Language Bindings
+
+Every binding wraps one engine.
+
+[cols="1,3", options="header"]
+|===
+| Language | Package and docs
+
+| Python
+| `pip install relate-db` -- https://relatedb.ai/docs/get-started/python/[get started^], https://relatedb.ai/docs/reference/api/python/[API reference^]
+
+| Node.js
+| `npm install @relate/relate` -- https://relatedb.ai/docs/get-started/node/[get started^], https://relatedb.ai/docs/reference/api/javascript/[API reference^]
+
+| Browser (WASM)
+| `npm install @relate/relate-wasm` -- https://relatedb.ai/docs/get-started/browser/[get started^], https://relatedb.ai/docs/reference/api/wasm/[API reference^]
+
+| Rust
+| `cargo add relate` -- https://relatedb.ai/docs/get-started/rust/[get started^], https://relatedb.ai/docs/reference/api/rust/[API reference^]
+
+| Java
+| `ai.relatedb:relate` -- https://relatedb.ai/docs/get-started/java/[get started^], https://relatedb.ai/docs/reference/api/java/[API reference^]
+
+| .NET
+| `Relate.Net` (.NET 8+) -- https://relatedb.ai/docs/get-started/dotnet/[get started^], https://relatedb.ai/docs/reference/api/dotnet/[API reference^]
+
+| Go
+| `github.com/relatedb/relate/clients/go` -- https://relatedb.ai/docs/get-started/go/[get started^], https://relatedb.ai/docs/reference/api/go/[API reference^]
+
+| Swift
+| SwiftPM package (iOS 16+ / macOS 13+) -- https://relatedb.ai/docs/get-started/swift/[get started^], https://relatedb.ai/docs/reference/api/swift/[API reference^]
+
+| C
+| `relate.h` + `librelate_ffi` -- https://relatedb.ai/docs/get-started/c/[get started^], https://relatedb.ai/docs/reference/api/c/[API reference^]
+|===
+
+== FAQ
+
+Questions in the shape agents and developers actually ask.
+
+**What is Relate?**
+An embedded, in-memory property-graph engine written in Rust, with a CLI. A graph is a single `.rl` file, a directory, a markdown folder, or in-memory. One binary, no server.
+
+**How is Relate different from Neo4j?**
+Neo4j is a multi-tenant client/server database for teams and large graphs. Relate is a single-process, memory-resident engine for working sets that fit in RAM: agent memory, sandboxes, notebooks, apps, tests. You move data between them with `relate pull` / `relate push`, and Neo4j drivers connect to `relate serve --bolt` directly.
+
+**Does it really speak Cypher?**
+Yes -- the Cypher 25 dialect with label expressions, quantified path patterns, path selectors, string interpolation, `GROUP BY`, and more. The openCypher TCK is the language contract. Differences from Neo4j habits are https://relatedb.ai/docs/reference/cypher/differences-from-neo4j/[documented with their exact errors^].
+
+**Do I need to run a server?**
+No. The default is a library or CLI call, in-process. When you do want a socket, `relate serve --database ./g --bolt 7687 --http 7474 --mcp 7475` hosts Bolt, the HTTP Query API, and MCP on one store in one process.
+
+**How do I install it?**
+`curl -sSfL https://relatedb.ai/install.sh | bash` (macOS/Linux), `irm https://relatedb.ai/install.ps1 | iex` (Windows), `pip install relate-db` (Python), `npm install @relate/relate` (Node.js), `cargo add relate` (Rust).
+
+**How do I give my AI agent Relate?**
+`relate skill install` -- installs the agent skill (CLI, Cypher, vector, and spatial references) into every detected agent (Claude Code, Cursor, Codex, Gemini CLI, Copilot, and more). The skill is also at https://relatedb.ai/skill.md[relatedb.ai/skill.md^]. For MCP: `relate serve --mcp stdio --database ./graph.rl --read-only`.
+
+**Is it free and open source?**
+Yes -- Apache License 2.0, source public at https://github.com/relatedb/relate[github.com/relatedb/relate^].
+
+**Is my data safe with an agent writing to it?**
+Open the store `--read-only` and writes are refused. Back up with `relate clone` before writes; the row cap and typed error objects keep agents from silently drowning in output. The https://relatedb.ai/docs/guides/agents/agent-safety/[agent safety guide^] covers the rest.
+
+**Where are the limits?**
+https://relatedb.ai/docs/reference/limitations/[The limitations page^] -- the honest list: the working set fits in memory, one graph per store, a single writer per process.
+
+== Where to Go Next
+
+* https://relatedb.ai/[Relate homepage^] and the https://relatedb.ai/blog/[launch blog posts^]
+* https://relatedb.ai/docs/[Full documentation^] -- tutorials, guides, CLI / Cypher / API references; the curated agent index at https://relatedb.ai/docs/llms.txt[relatedb.ai/docs/llms.txt^]
+* https://relatedb.ai/cookbook/[The cookbook^] -- task-shaped, tested recipes; its machine index at https://relatedb.ai/cookbook/llms.txt[relatedb.ai/cookbook/llms.txt^]
+* https://relatedb.ai/playground/[The browser playground^] -- run Cypher in the page, no install
+* https://github.com/relatedb/relate[GitHub repository^], https://github.com/relatedb/relate/issues[issues^], and the https://github.com/relatedb/relate/blob/main/docs/tck/compliance.md[TCK compliance record^]
+* xref:agent-skills/coding-skills.adoc[Coding Tool Integrations^] -- connect coding tools to a live Neo4j database over MCP

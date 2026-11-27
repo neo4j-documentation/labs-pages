@@ -88,6 +88,7 @@
 *** xref:agent-skills/index.adoc[Agent Skills]
 **** xref:agent-skills/neo4j-skills.adoc[Neo4j Skills]
 **** xref:agent-skills/coding-skills.adoc[Coding Tools]
+**** xref:agent-skills/relate.adoc[Relate]
 // **** xref:genai-frameworks/servicenow-ai-agents.adoc[ServiceNow AI Agents]
 // *** Workflow & Orchestration
 // **** xref:genai-frameworks/n8n.adoc[n8n]
